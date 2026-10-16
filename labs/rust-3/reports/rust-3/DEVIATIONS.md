@@ -1,0 +1,6 @@
+# rust-3 deviation notes (append-only)
+
+## 2026-10-12 20:42Z - provenance of the started ref, and start-gate change
+- cm-exp refuses amend-bar after start, so this note is the record. No registered bar, class, label, flag, seed, operator or sentence changed.
+- `cm-exp start rust-3` (20:40:33Z) recorded ref cm/rust-lab@ce3e7107c04e3d254b289ad6874e11ede820131f. The regenerated wrappers (rust-lab/rust3/jobs/*.sh) and rust-lab/rust3/FREEZE.txt were uncommitted at that moment. They are now committed on cm/rust-lab (private Aefinity-AI/alice-model) as commit b6ff0413e066a6e02f68dcaec02678176898b44d. FREEZE.txt sha256 33a9726736d9244df61a5e2d03c5cc851409e3b5a2c30e68dd1014199e0fd2b7 equals the freeze= value recorded at start; the payload hash 6cd45a34... is unchanged. The commit adds only the wrappers and FREEZE.txt; no source file in the payload changed.
+- Start gate needs_idle_load raised from 0.3 to 0.6 for rust3-R1-box1 and rust3-C1-box1 (feed job.json), because box1's baseline load is 0.3-0.5 and 0.3 would never admit the job. This is a START GATE (when the feed may launch the job), not a measurement condition: rust-3 has no timing label (executions are reported, not labelled; Rule A not engaged). The 'host idle' sentence in the bar is unchanged; load at launch is recorded in the job log.

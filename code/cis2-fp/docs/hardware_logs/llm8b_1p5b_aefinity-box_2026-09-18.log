@@ -1,0 +1,69 @@
+=== leg-llm8b-1p5b start 2026-09-18T10:44:12+00:00 ===
+host: aefinity-box, pinned target digest (LLM-4/LLM-5b Kaggle) = 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+=== downloading model.safetensors 2026-09-18T10:44:12+00:00 ===
+=== download done 2026-09-18T11:54:33+00:00 ===
+total 3012728
+drwxrwxr-x  2 cm cm       4096 Sep 18 10:44 .
+drwxrwxr-x 17 cm cm       4096 Sep 18 10:41 ..
+-rw-rw-r--  1 cm cm        662 Sep 18 10:41 config.json
+-rw-rw-r--  1 cm cm 3077985397 Sep 18 11:54 model.safetensors
+-rw-rw-r--  1 cm cm    7028015 Sep 18 10:41 tokenizer.json
+482b0ed4644809afe908cdc26152b75fa76202becd671f3ec963efb5d721bba6  weights_qwen2_1_5b/model.safetensors
+f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36  weights_qwen2_1_5b/config.json
+f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8  weights_qwen2_1_5b/tokenizer.json
+=== cis2_ref run start 2026-09-18T11:54:49+00:00 ===
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+
+thread 'main' (531298) panicked at src/stream_widen.rs:146:31:
+read tensor model.norm.weight: failed to fill whole buffer
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+=== cis2_ref run end 2026-09-18T11:55:42+00:00 rc=101 ===
+=== leg-llm8b-1p5b start 2026-09-18T12:26:44+00:00 ===
+host: aefinity-box, pinned target digest (LLM-4/LLM-5b Kaggle) = 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+=== download/resume attempt 1 (have 3077985397 / 3087467144 bytes) 2026-09-18T12:26:44+00:00 ===
+=== download done 2026-09-18T12:27:12+00:00 size=3087467144 expected=3087467144 ===
+weights sha256 OK (6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb == HF x-linked-etag)
+total 3021988
+drwxrwxr-x  2 cm cm       4096 Sep 18 10:44 .
+drwxrwxr-x 17 cm cm       4096 Sep 18 10:41 ..
+-rw-rw-r--  1 cm cm        662 Sep 18 10:41 config.json
+-rw-rw-r--  1 cm cm 3087467144 Sep 18 12:27 model.safetensors
+-rw-rw-r--  1 cm cm    7028015 Sep 18 10:41 tokenizer.json
+f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36  weights_qwen2_1_5b/config.json
+f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8  weights_qwen2_1_5b/tokenizer.json
+=== cis2_ref run start 2026-09-18T12:27:29+00:00 ===
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+[run1] step 1: token_id=1052
+[run1] step 2: token_id=572
+[run1] step 3: token_id=264
+[run1] step 4: token_id=2632
+[run1] step 5: token_id=3743
+[run1] step 6: token_id=879
+[run1] step 7: token_id=10245
+[run2] step 0: token_id=11
+[run2] step 1: token_id=1052
+[run2] step 2: token_id=572
+[run2] step 3: token_id=264
+[run2] step 4: token_id=2632
+[run2] step 5: token_id=3743
+[run2] step 6: token_id=879
+[run2] step 7: token_id=10245
+weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb
+tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8
+config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+prompt_idx=0 runs_identical=true
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential
+=== cis2_ref run end 2026-09-18T12:30:14+00:00 rc=0 ===

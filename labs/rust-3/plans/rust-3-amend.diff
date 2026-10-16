@@ -1,0 +1,8 @@
+--- rust-3.txt (registered)
++++ rust-3-amended-bar.txt
+@@ -34,3 +34,5 @@
+  "LANGUAGE (our Rust loader against our C loader, same fuzzer, same sanitiser, 1 hour each, <class>): Rust shows <n_R> distinct findings, C shows <n_C>: <RUST LOWER | TIE | RUST HIGHER>. Counts are small and the C loader parses one format. Classes are not added together."
+  K2 (informational, no label): "LANGUAGE (K2, controlled failures, informational): our Rust loader shows <n_R> and our C loader shows <n_C>; the C loader's error-code returns are not counted, so this is not a defect ranking."
+  Reported rows: "FRAMEWORK/third-party (no label): <arm> shows <counts per class>; this says nothing about our Rust or our C."
++
++ORACLE PIN: sha256 of state/plans/rust-lab/oracle/k5_oracle.py = e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739.

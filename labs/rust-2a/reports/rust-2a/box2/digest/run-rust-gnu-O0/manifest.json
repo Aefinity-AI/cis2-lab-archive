@@ -1,0 +1,16 @@
+{
+  "seed": 20260924,
+  "total_steps": 200,
+  "ckpt_every": 50,
+  "seq_len": 64,
+  "d_model": 16,
+  "hidden": 32,
+  "vocab": 256,
+  "lr": 0.150000,
+  "checkpoints": [
+    {"step": 50, "loss": 5.492920, "checkpoint_sha256": "fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12", "checkpoint_file": "ckpt_step050.bin"},
+    {"step": 100, "loss": 5.438680, "checkpoint_sha256": "d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c", "checkpoint_file": "ckpt_step100.bin"},
+    {"step": 150, "loss": 5.373738, "checkpoint_sha256": "3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd", "checkpoint_file": "ckpt_step150.bin"},
+    {"step": 200, "loss": 5.264791, "checkpoint_sha256": "f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e", "checkpoint_file": "ckpt_step200.bin"}
+  ]
+}

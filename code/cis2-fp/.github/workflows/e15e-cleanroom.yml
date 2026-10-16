@@ -1,0 +1,71 @@
+name: E15e clean-room cis2-verify (cross-ISA)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - cm/e15e-cleanroom-verify
+
+jobs:
+  cleanroom-verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assert ISA
+        run: uname -m
+
+      - uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: Fetch SmolLM2-135M weights (public, no auth)
+        run: |
+          mkdir -p verify/weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify/weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify/weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify/weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum verify/weights/model.safetensors verify/weights/config.json verify/weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  verify/weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: cargo test (release)
+        working-directory: verify
+        run: cargo test --release
+
+      - name: no-FMA gate (grep)
+        working-directory: verify
+        run: |
+          if grep -rn "\.mul_add(" src/; then
+            echo "FAIL: .mul_add( call site found in src/"
+            exit 1
+          fi
+          echo "PASS: no .mul_add( call sites in src/"
+
+      - name: Build release
+        working-directory: verify
+        run: cargo build --release
+
+      - name: no-FMA gate (disassembly)
+        working-directory: verify
+        run: |
+          BIN=target/release/cis2-verify
+          if objdump -d "$BIN" | grep -Eqi 'vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub'; then
+            echo "FAIL: FMA instruction found in $BIN"
+            objdump -d "$BIN" | grep -Ei 'vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub'
+            exit 1
+          fi
+          echo "PASS: no FMA instructions found in $BIN"
+
+      - name: Run cis2-verify
+        working-directory: verify
+        run: ./target/release/cis2-verify | tee /tmp/cis2_verify_out.txt
+
+      - name: Report (no gate; a mismatch here is itself the E15e finding)
+        working-directory: verify
+        run: |
+          echo "== ${{ matrix.os }} ($(uname -m)) =="
+          grep '^CIS2_VERIFY' /tmp/cis2_verify_out.txt || true
+          grep '^inv_freq' /tmp/cis2_verify_out.txt || true
+          grep '^generated_token_ids' /tmp/cis2_verify_out.txt || true

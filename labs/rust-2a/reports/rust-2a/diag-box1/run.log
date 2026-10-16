@@ -1,0 +1,10 @@
+perf_event_paranoid=3 perf version 6.12.111 date=2026-10-04T12:25:39Z
+STAT C1  =# started on Sun Oct  4 12:25:40 2026 = 
+STAT R1  =# started on Sun Oct  4 12:25:40 2026 = 
+STAT C2  =# started on Sun Oct  4 12:25:40 2026 = 
+STAT R2  =# started on Sun Oct  4 12:25:40 2026 = 
+STAT C3  =# started on Sun Oct  4 12:25:40 2026 = 
+STAT R3  =# started on Sun Oct  4 12:25:40 2026 = 
+REC C rc=255 
+REC R rc=255 
+RESULT: OK diag1 perf stat 3x2 + record 2 (diagnostic, no label)

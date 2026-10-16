@@ -1,0 +1,5 @@
+x86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0
+musl-tools 1.2.5-3.1~deb13u1
+make GNU Make 4.4.1
+CFLAGS=-O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<src>=/src
+LDFLAGS=-static -s -Wl,--build-id=none -lm; jobs=1; netns=1

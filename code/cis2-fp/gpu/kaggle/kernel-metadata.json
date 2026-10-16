@@ -1,0 +1,14 @@
+{
+  "id": "aefinityaiinc/e18b-gpu",
+  "title": "e18b-gpu",
+  "code_file": "e18b_gpu.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": [
+    "aefinityaiinc/cis2-e18b-gpu",
+    "aefinityaiinc/cis2-e18b-gpu-overlay"
+  ]
+}

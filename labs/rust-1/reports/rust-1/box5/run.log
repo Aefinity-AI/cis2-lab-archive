@@ -1,0 +1,51 @@
+RUN host=box5 date=2026-10-04T09:26:50Z mode=timing stub=False reps=5 cap_s=43200 arms=['rs-musl-O2', 'rs-musl-O3', 'c-musl-O2', 'c-musl-O3']
+host_info cpu=Intel(R) Pentium(R) Dual  CPU  T2310  @ 1.46GHz ncpu=2 kernel=6.12.94+deb13-amd64 flags=fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl cpuid aperfmperf pni dtes64 monitor ds_cpl est tm2 ssse3 cx16 xtpr pdcm lahf_lm pti dtherm
+host_cpufreq governor=schedutil max_khz=1467000
+overrides {}
+job_id=20261004T092650Z-p84994 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c
+cpu_max cgroups=leg-rust1-box5.service=200000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 allowed_cpus=2 binding=no (a quota of 100 percent x the number of logical CPUs does not bind)
+pin arm_cpu=1 runner_cpu=0 mode=separate_cores
+cap registered_s=43200 used_before_s=0 remaining_s=43200 cap_s=43200
+payload_check ok; PAYLOAD_SHA256 sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9
+pinned_file <home>/sv5/arma/weights/model.safetensors sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1 ok
+pinned_file <home>/sv5/arma/weights/config.json sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843 ok
+pinned_file <home>/sv5/arma/weights/tokenizer.json sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c ok
+memory_limit cgroup_memory_max_mib=1571 expected_mib=1571 (free -m total 1964 MiB)
+SNAP start-gate {"t": "2026-10-04T09:26:54Z", "load": [0.0, 0.0, 0.0], "run": "1/107", "mhz": [1463.075, 1463.008], "thr": null, "other_units": []}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.002 foreign_host=0.004
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.002
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.0015 foreign_host=0.005
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.017 foreign_host=0.037
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0025
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.003 foreign_host=0.006
+BASELINE max_arm=0.017 max_host=0.037 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.037 limit_host=0.1
+CHECK before arm=rs-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=rs-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+ROW rep=0 arm=rs-musl-O2 value_tps=2.853374 peak_pss_kb=787912 peak_anon_kb=786476 vmhwm_kb=790876 threads=1 tries=1
+ROW rep=0 arm=c-musl-O2 value_tps=3.179528 peak_pss_kb=783356 peak_anon_kb=783264 vmhwm_kb=789412 threads=1 tries=1
+ROW rep=0 arm=c-musl-O3 value_tps=2.675111 peak_pss_kb=772788 peak_anon_kb=772684 vmhwm_kb=789400 threads=1 tries=1
+ROW rep=0 arm=rs-musl-O3 value_tps=2.806640 peak_pss_kb=776428 peak_anon_kb=775004 vmhwm_kb=790916 threads=1 tries=1
+ROW rep=1 arm=c-musl-O3 value_tps=2.669526 peak_pss_kb=787240 peak_anon_kb=787136 vmhwm_kb=789392 threads=1 tries=1
+ROW rep=1 arm=rs-musl-O3 value_tps=2.805003 peak_pss_kb=779160 peak_anon_kb=777736 vmhwm_kb=790860 threads=1 tries=1
+ROW rep=1 arm=rs-musl-O2 value_tps=2.830080 peak_pss_kb=774468 peak_anon_kb=773032 vmhwm_kb=790848 threads=1 tries=1
+ROW rep=1 arm=c-musl-O2 value_tps=3.176034 peak_pss_kb=776344 peak_anon_kb=776252 vmhwm_kb=789352 threads=1 tries=1
+ROW rep=2 arm=rs-musl-O3 value_tps=2.806355 peak_pss_kb=779952 peak_anon_kb=778528 vmhwm_kb=790868 threads=1 tries=1
+ROW rep=2 arm=c-musl-O3 value_tps=2.664751 peak_pss_kb=786076 peak_anon_kb=785972 vmhwm_kb=789300 threads=1 tries=1
+ROW rep=2 arm=c-musl-O2 value_tps=3.186717 peak_pss_kb=779340 peak_anon_kb=779248 vmhwm_kb=789376 threads=1 tries=1
+ROW rep=2 arm=rs-musl-O2 value_tps=2.838781 peak_pss_kb=780832 peak_anon_kb=779396 vmhwm_kb=790780 threads=1 tries=1
+ROW rep=3 arm=c-musl-O2 value_tps=3.184940 peak_pss_kb=783280 peak_anon_kb=783188 vmhwm_kb=789340 threads=1 tries=1
+ROW rep=3 arm=rs-musl-O2 value_tps=2.840071 peak_pss_kb=780000 peak_anon_kb=778564 vmhwm_kb=790812 threads=1 tries=1
+ROW rep=3 arm=rs-musl-O3 value_tps=2.796745 peak_pss_kb=777516 peak_anon_kb=776092 vmhwm_kb=790828 threads=1 tries=1
+ROW rep=3 arm=c-musl-O3 value_tps=2.664856 peak_pss_kb=784740 peak_anon_kb=784636 vmhwm_kb=789352 threads=1 tries=1
+ROW rep=4 arm=rs-musl-O2 value_tps=2.840064 peak_pss_kb=777752 peak_anon_kb=776316 vmhwm_kb=790772 threads=1 tries=1
+ROW rep=4 arm=c-musl-O2 value_tps=3.188794 peak_pss_kb=772148 peak_anon_kb=772056 vmhwm_kb=789368 threads=1 tries=1
+ROW rep=4 arm=c-musl-O3 value_tps=2.676159 peak_pss_kb=777884 peak_anon_kb=777780 vmhwm_kb=789400 threads=1 tries=1
+ROW rep=4 arm=rs-musl-O3 value_tps=2.806989 peak_pss_kb=774268 peak_anon_kb=772844 vmhwm_kb=790848 threads=1 tries=1
+CHECK after arm=rs-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=rs-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+SNAP end {"t": "2026-10-04T12:11:15Z", "load": [1.0, 1.04, 1.0], "run": "2/107", "mhz": [1463.075, 1463.009], "thr": null, "other_units": []}
+RESULT: OK host=box5 reason=none reps={"c-musl-O2":5,"c-musl-O3":5,"rs-musl-O2":5,"rs-musl-O3":5} reps_requested=5 values_tps={"c-musl-O2":[3.179528,3.176034,3.186717,3.18494,3.188794],"c-musl-O3":[2.675111,2.669526,2.664751,2.664856,2.676159],"rs-musl-O2":[2.853374,2.83008,2.838781,2.840071,2.840064],"rs-musl-O3":[2.80664,2.805003,2.806355,2.796745,2.806989]} medians_tps={"c-musl-O2":3.18494,"c-musl-O3":2.669526,"rs-musl-O2":2.840064,"rs-musl-O3":2.806355} peak_pss_kb_median={"c-musl-O2":779340,"c-musl-O3":784740,"rs-musl-O2":780000,"rs-musl-O3":777516} peak_anon_kb_median={"c-musl-O2":779248,"c-musl-O3":784636,"rs-musl-O2":778564,"rs-musl-O3":776092} vmhwm_kb_median={"c-musl-O2":789368,"c-musl-O3":789392,"rs-musl-O2":790812,"rs-musl-O3":790860} digests_before=equal digests_after=equal ref_witness_sha256=1a0ff035daf2124dba11b958b2ae8187438b430dc07675a3453314f935d7453c digest_witness_prompt0={"c-musl-O2":"145e875abf13b3c8","c-musl-O3":"145e875abf13b3c8","rs-musl-O2":"145e875abf13b3c8","rs-musl-O3":"145e875abf13b3c8"} discards=0 voids=0 oom=[] elapsed_s=9864 cap_s=43200 order_cycle=[["rs-musl-O2","c-musl-O2","c-musl-O3","rs-musl-O3"],["c-musl-O3","rs-musl-O3","rs-musl-O2","c-musl-O2"],["rs-musl-O3","c-musl-O3","c-musl-O2","rs-musl-O2"],["c-musl-O2","rs-musl-O2","rs-musl-O3","c-musl-O3"]] mean_position_per_arm={"c-musl-O2":1.4,"c-musl-O3":1.6,"rs-musl-O2":1.2,"rs-musl-O3":1.8} mean_position_per_language={"c":1.5,"rs":1.5} job=20261004T092650Z-p84994 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c payload_match=yes foreign_max_arm_cpu=0.037 foreign_max_host=0.1 baseline={"base_arm":0.017,"base_host":0.037,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.037,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"measured":"yes","window_s":20.0,"windows":[[0.002,0.004],[0.0005,0.002],[0.0015,0.005],[0.017,0.037],[0.0,0.0025],[0.003,0.006]]} timers_paused=NA overrides={} cpu_max=leg-rust1-box5.service=200000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 cpu_quota_binding=no arm_cpu=1 runner_cpu=0 pin=separate_cores used_before_s=0 cap_registered_s=43200 elapsed_job_s=9864

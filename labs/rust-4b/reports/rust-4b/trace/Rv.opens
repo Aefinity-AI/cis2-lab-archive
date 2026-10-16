@@ -1,0 +1,7 @@
+1493244 execve 0 0 <home>/feed-payload/rust4/bin/R_cis2_ref
+1493244 open 4 88000 <home>/sv5/arma/weights/model.safetensors
+1493244 open 4 88000 <home>/sv5/arma/weights/tokenizer.json
+1493244 open 4 88000 <home>/sv5/arma/weights/config.json
+1493244 open 4 88000 <home>/sv5/arma/weights/config.json
+1493244 open 4 88000 <home>/sv5/arma/weights/model.safetensors
+1493244 open 4 88000 <home>/feed-payload/rust4/inputs/work_cold.jsonl

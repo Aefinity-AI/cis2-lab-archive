@@ -1,0 +1,10 @@
+1493301 execve 0 0 <home>/feed-payload/rust1b/bin/llama-drv-avx2
+1493301 openat 4 80000 /etc/ld.so.cache
+1493301 openat 4 80000 /lib/x86_64-linux-gnu/libstdc++.so.6
+1493301 openat 4 80000 /lib/x86_64-linux-gnu/libm.so.6
+1493301 openat 4 80000 /lib/x86_64-linux-gnu/libgcc_s.so.1
+1493301 openat 4 80000 /lib/x86_64-linux-gnu/libc.so.6
+1493301 openat 4 0 /proc/cpuinfo
+1493301 openat 4 0 <home>/feed-payload/rust1b/gguf/model-f32.gguf
+1493301 openat 4 0 <home>/feed-payload/rust1b/gguf/model-f32.gguf
+1493301 openat 4 0 <home>/feed-payload/rust4/inputs/work_cold.jsonl

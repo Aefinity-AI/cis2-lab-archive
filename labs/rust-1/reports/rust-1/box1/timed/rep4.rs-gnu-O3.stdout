@@ -1,0 +1,11 @@
+LOAD load_ns=527038986
+ROW idx=8 n_prompt=61 n_gen=64 prefill_ns=11916639215 decode_ns=12613908281 mismatches=0
+ROW idx=0 n_prompt=39 n_gen=64 prefill_ns=7513305673 decode_ns=12480950928 mismatches=0
+ROW idx=1 n_prompt=22 n_gen=64 prefill_ns=4232183112 decode_ns=12343769966 mismatches=0
+ROW idx=2 n_prompt=44 n_gen=64 prefill_ns=8529613981 decode_ns=12442437670 mismatches=0
+ROW idx=3 n_prompt=8 n_gen=64 prefill_ns=1549871964 decode_ns=12259771893 mismatches=0
+ROW idx=4 n_prompt=25 n_gen=64 prefill_ns=4813923989 decode_ns=12327966033 mismatches=0
+ROW idx=5 n_prompt=25 n_gen=64 prefill_ns=4806801338 decode_ns=12359247538 mismatches=0
+ROW idx=6 n_prompt=38 n_gen=64 prefill_ns=7315185008 decode_ns=12394494529 mismatches=0
+ROW idx=7 n_prompt=13 n_gen=64 prefill_ns=2519836128 decode_ns=12267472826 mismatches=0
+DONE plain=time rows=9

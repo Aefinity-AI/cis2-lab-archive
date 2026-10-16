@@ -1,0 +1,685 @@
+
+========================================================================
+0. Environment
+========================================================================
+$ nvcc --version
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Fri_Feb_21_20:23:50_PST_2025
+Cuda compilation tools, release 12.8, V12.8.93
+Build cuda_12.8.r12.8/compiler.35583870_0
+
+$ nvidia-smi --query-gpu=name --format=csv,noheader
+Tesla P100-PCIE-16GB
+
+GPU name (nvidia-smi): Tesla P100-PCIE-16GB
+Selected NVCC_ARCH: sm_60
+
+========================================================================
+1. Stage dataset -> writable working dir
+========================================================================
+dataset mounted at: /kaggle/input/datasets/aefinityaiinc/cis2-e18b-gpu
+overlay Makefile sha256=5d57be7ad968b8d97df114e72c01d93e686068eb74fc6a2b5b9e23bfb229beeb
+overlay cis2_sass_probe.cu sha256=e7fc571224acd1b6205a58325022fff46e3e16a5d7998680a36aa01024ae2ba2
+
+========================================================================
+2. SASS FMA gate (no GPU execution needed): make -C gpu nofma-cuda
+========================================================================
+$ make -C /kaggle/working/e18b/gpu nofma-cuda NVCC_ARCH=sm_60
+make: Entering directory '/kaggle/working/e18b/gpu'
+flock /tmp/aefinity-os.lock nice -n 10 nvcc -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -arch=sm_60 -I/kaggle/working/e18b/gpu -c -o /kaggle/working/e18b/gpu/cis2_sass_probe.o /kaggle/working/e18b/gpu/cis2_sass_probe.cu
+k_dot_seq (SASS, sm_60): FFMA count = 0
+k_sum_seq (SASS, sm_60): FFMA count = 0
+k_dot_tree (SASS, sm_60): FFMA count = 0
+k_sum_tree (SASS, sm_60): FFMA count = 0
+k_softmax_seq (SASS, sm_60): FFMA count = 47 (expected: attributable to -prec-div division refinement, NOT gated to zero)
+k_softmax_tree (SASS, sm_60): FFMA count = 47 (expected: attributable to -prec-div division refinement, NOT gated to zero)
+no-FMA-cuda gate: PASS (k_dot_seq/k_sum_seq/k_dot_tree/k_sum_tree strictly zero FFMA; softmax reported separately)
+make: Leaving directory '/kaggle/working/e18b/gpu'
+
+---- nofma-cuda (SASS, sm_60): PASS
+
+========================================================================
+3. Build: nvcc link, sequential  (cis2_cuda)
+========================================================================
+$ nvcc -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -arch=sm_60 -I /kaggle/working/e18b/gpu -o /kaggle/working/e18b/gpu/cis2_cuda /kaggle/working/e18b/gpu/cis2_host.cpp
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+
+========================================================================
+4. Build: nvcc link, tree CANDIDATE  (cis2_cuda_tree, -DCIS2_REDUCTION_TREE)
+========================================================================
+
+$ nvcc -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -arch=sm_60 -I /kaggle/working/e18b/gpu -DCIS2_REDUCTION_TREE -o /kaggle/working/e18b/gpu/cis2_cuda_tree /kaggle/working/e18b/gpu/cis2_host.cpp
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+
+
+========================================================================
+5. Control: build the HOST target here, on the Kaggle CPU (sequential only)
+========================================================================
+clang++ not found on this image — falling back to host-gcc (gpu/README.md SS8 already shows host-gcc reproduces the same digest and a byte-identical trace, so this is still a valid control build, just via a different compiler).
+$ make -C /kaggle/working/e18b/gpu host-gcc
+make: Entering directory '/kaggle/working/e18b/gpu'
+flock /tmp/aefinity-os.lock nice -n 10 g++ -std=c++17 -O2 -ffp-contract=off  -fno-fast-math -I/kaggle/working/e18b/gpu -msse2 -mfpmath=sse -o /kaggle/working/e18b/gpu/cis2_host_gcc /kaggle/working/e18b/gpu/cis2_host.cpp
+make: Leaving directory '/kaggle/working/e18b/gpu'
+
+
+========================================================================
+6. Host control run (host-gcc (g++)) — sequential, 16 tokens, digest + trace
+========================================================================
+$ /kaggle/working/e18b/gpu/cis2_host_gcc --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_16tok.txt --gen-toks 16 --trace /kaggle/working/e18b/gate/host_16tok.trace
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+[run1] step 2: token_id=436
+[run1] step 3: token_id=253
+[run1] step 4: token_id=1838
+[run1] step 5: token_id=8180
+[run1] step 6: token_id=3365
+[run1] step 7: token_id=14176
+[run1] step 8: token_id=30
+[run1] step 9: token_id=2306
+[run1] step 10: token_id=4161
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+[run1] step 13: token_id=2066
+[run1] step 14: token_id=2291
+[run1] step 15: token_id=351
+
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351]
+prompt_idx=0 run1_witness_digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+prompt_idx=0 run1_argmax_digest=0b9c8f3ac90d0b9cd5f1719ac327dca1fc639fd87468305fccebbe3d56f67aff
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df prompt_idx=0 prompt_toks=4 gen_toks=16 dtype=fp32 reduction_mode=sequential
+
+---- host_16tok: expected digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+---- host_16tok: got      digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+---- host_16tok: digest PASS
+---- host_16tok: trace PASS (byte-identical)
+---- host_16tok: OVERALL PASS
+
+========================================================================
+7. Host control run (host-gcc (g++)) — sequential, 128 tokens, digest only
+========================================================================
+$ /kaggle/working/e18b/gpu/cis2_host_gcc --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_128tok.txt --gen-toks 128
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+[run1] step 2: token_id=436
+[run1] step 3: token_id=253
+[run1] step 4: token_id=1838
+[run1] step 5: token_id=8180
+[run1] step 6: token_id=3365
+[run1] step 7: token_id=14176
+[run1] step 8: token_id=30
+[run1] step 9: token_id=2306
+[run1] step 10: token_id=4161
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+[run1] step 13: token_id=2066
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+[run1] step 14: token_id=2291
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+[run1] step 15: token_id=351
+[run1] step 16: token_id=874
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351, 874, 1564, 28, 564, 1041, 3683, 982, 457, 800, 9173, 288, 1238, 351, 30, 1963, 1194, 28, 874, 2910, 3783, 874, 338, 1041, 856, 685, 288, 253, 1767, 1379, 1217, 253, 476, 11980, 18, 288, 835, 725, 1495, 284, 1438, 253, 3743, 30, 14176, 436, 8916, 288, 685, 17, 198, 198, 43490, 506, 2910, 5192, 338, 1041, 736, 325, 3229, 874, 563, 260, 905, 284, 638, 288, 325, 253, 1123, 3289, 288, 2573, 30, 2306, 736, 597, 325, 1380, 563, 896, 2355, 284, 638, 502, 2330, 1592, 30, 14176, 436, 588, 8916, 288, 835, 17, 198, 198, 1653, 14176, 2841, 288, 835, 28, 1041, 7062, 338, 634, 282, 874, 2428, 592, 441]
+[run1] step 17: token_id=1564
+prompt_idx=0 run1_witness_digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+prompt_idx=0 run1_argmax_digest=2ad201fcfe9c7cd774fd96000f0be102bdc2699d1acf91a73491aaba9889f5b7
+[run1] step 18: token_id=28
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 prompt_idx=0 prompt_toks=4 gen_toks=128 dtype=fp32 reduction_mode=sequential
+
+---- host_128tok: expected digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+---- host_128tok: got      digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+---- host_128tok: digest PASS
+---- host_128tok: OVERALL PASS
+[run1] step 19: token_id=564
+
+[run1] step 20: token_id=1041
+[run1] step 21: token_id=3683
+[run1] step 22: token_id=982
+[run1] step 23: token_id=457
+[run1] step 24: token_id=800
+[run1] step 25: token_id=9173
+[run1] step 26: token_id=288
+[run1] step 27: token_id=1238
+[run1] step 28: token_id=351
+[run1] step 29: token_id=30
+[run1] step 30: token_id=1963
+[run1] step 31: token_id=1194
+[run1] step 32: token_id=28
+[run1] step 33: token_id=874
+[run1] step 34: token_id=2910
+[run1] step 35: token_id=3783
+[run1] step 36: token_id=874
+[run1] step 37: token_id=338
+[run1] step 38: token_id=1041
+[run1] step 39: token_id=856
+[run1] step 40: token_id=685
+[run1] step 41: token_id=288
+========================================================================
+[run1] step 42: token_id=253
+8. GPU run (cis2_cuda) — SEQUENTIAL (spec-normative), 16 tokens, digest + trace
+[run1] step 43: token_id=1767
+========================================================================
+[run1] step 44: token_id=1379
+$ /kaggle/working/e18b/gpu/cis2_cuda --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_16tok.txt --gen-toks 16 --trace /kaggle/working/e18b/gate/gpu_16tok.trace
+[run1] step 45: token_id=1217
+[run1] step 46: token_id=253
+[run1] step 47: token_id=476
+[run1] step 48: token_id=11980
+[run1] step 49: token_id=18
+[run1] step 50: token_id=288
+[run1] step 51: token_id=835
+[run1] step 52: token_id=725
+[run1] step 53: token_id=1495
+[run1] step 54: token_id=284
+[run1] step 55: token_id=1438
+[run1] step 56: token_id=253
+[run1] step 57: token_id=3743
+[run1] step 58: token_id=30
+[run1] step 59: token_id=14176
+[run1] step 60: token_id=436
+[run1] step 61: token_id=8916
+[run1] step 62: token_id=288
+[run1] step 63: token_id=685
+[run1] step 64: token_id=17
+[run1] step 65: token_id=198
+[run1] step 66: token_id=198
+[run1] step 67: token_id=43490
+[run1] step 68: token_id=506
+[run1] step 69: token_id=2910
+[run1] step 70: token_id=5192
+[run1] step 71: token_id=338
+[run1] step 72: token_id=1041
+[run1] step 73: token_id=736
+[run1] step 74: token_id=325
+[run1] step 75: token_id=3229
+[run1] step 76: token_id=874
+[run1] step 77: token_id=563
+[run1] step 78: token_id=260
+[run1] step 79: token_id=905
+[run1] step 80: token_id=284
+[run1] step 81: token_id=638
+[run1] step 82: token_id=288
+[run1] step 83: token_id=325
+[run1] step 84: token_id=253
+[run1] step 85: token_id=1123
+[run1] step 86: token_id=3289
+[run1] step 87: token_id=288
+[run1] step 88: token_id=2573
+[run1] step 89: token_id=30
+[run1] step 90: token_id=2306
+[run1] step 91: token_id=736
+[run1] step 92: token_id=597
+[run1] step 93: token_id=325
+[run1] step 94: token_id=1380
+[run1] step 95: token_id=563
+[run1] step 96: token_id=896
+[run1] step 97: token_id=2355
+[run1] step 98: token_id=284
+[run1] step 99: token_id=638
+[run1] step 100: token_id=502
+[run1] step 101: token_id=2330
+[run1] step 102: token_id=1592
+[run1] step 103: token_id=30
+[run1] step 104: token_id=14176
+[run1] step 105: token_id=436
+[run1] step 106: token_id=588
+[run1] step 107: token_id=8916
+[run1] step 108: token_id=288
+[run1] step 109: token_id=835
+[run1] step 110: token_id=17
+[run1] step 111: token_id=198
+[run1] step 112: token_id=198
+[run1] step 113: token_id=1653
+[run1] step 114: token_id=14176
+[run1] step 115: token_id=2841
+[run1] step 116: token_id=288
+[run1] step 117: token_id=835
+[run1] step 118: token_id=28
+[run1] step 119: token_id=1041
+[run1] step 120: token_id=7062
+[run1] step 121: token_id=338
+[run1] step 122: token_id=634
+[run1] step 123: token_id=282
+[run1] step 124: token_id=874
+[run1] step 125: token_id=2428
+[run1] step 126: token_id=592
+[run1] step 127: token_id=441
+
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+[run1] step 2: token_id=436
+[run1] step 3: token_id=253
+[run1] step 4: token_id=1838
+[run1] step 5: token_id=8180
+[run1] step 6: token_id=3365
+[run1] step 7: token_id=14176
+[run1] step 8: token_id=30
+[run1] step 9: token_id=2306
+[run1] step 10: token_id=4161
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+[run1] step 13: token_id=2066
+[run1] step 14: token_id=2291
+[run1] step 15: token_id=351
+
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351]
+prompt_idx=0 run1_witness_digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+prompt_idx=0 run1_argmax_digest=0b9c8f3ac90d0b9cd5f1719ac327dca1fc639fd87468305fccebbe3d56f67aff
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df prompt_idx=0 prompt_toks=4 gen_toks=16 dtype=fp32 reduction_mode=sequential
+
+---- gpu_16tok: expected digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+---- gpu_16tok: got      digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+---- gpu_16tok: digest PASS
+---- gpu_16tok: trace PASS (byte-identical)
+---- gpu_16tok: OVERALL PASS
+
+========================================================================
+9. GPU run (cis2_cuda) — SEQUENTIAL, 128 tokens, digest only
+========================================================================
+$ /kaggle/working/e18b/gpu/cis2_cuda --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_128tok.txt --gen-toks 128
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+[run1] step 2: token_id=436
+[run1] step 3: token_id=253
+[run1] step 4: token_id=1838
+[run1] step 5: token_id=8180
+[run1] step 6: token_id=3365
+[run1] step 7: token_id=14176
+[run1] step 8: token_id=30
+[run1] step 9: token_id=2306
+[run1] step 10: token_id=4161
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351, 874, 1564, 28, 564, 1041, 3683, 982, 457, 800, 9173, 288, 1238, 351, 30, 1963, 1194, 28, 874, 2910, 3783, 874, 338, 1041, 856, 685, 288, 253, 1767, 1379, 1217, 253, 476, 11980, 18, 288, 835, 725, 1495, 284, 1438, 253, 3743, 30, 14176, 436, 8916, 288, 685, 17, 198, 198, 43490, 506, 2910, 5192, 338, 1041, 736, 325, 3229, 874, 563, 260, 905, 284, 638, 288, 325, 253, 1123, 3289, 288, 2573, 30, 2306, 736, 597, 325, 1380, 563, 896, 2355, 284, 638, 502, 2330, 1592, 30, 14176, 436, 588, 8916, 288, 835, 17, 198, 198, 1653, 14176, 2841, 288, 835, 28, 1041, 7062, 338, 634, 282, 874, 2428, 592, 441]
+prompt_idx=0 run1_witness_digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+prompt_idx=0 run1_argmax_digest=2ad201fcfe9c7cd774fd96000f0be102bdc2699d1acf91a73491aaba9889f5b7
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 prompt_idx=0 prompt_toks=4 gen_toks=128 dtype=fp32 reduction_mode=sequential
+
+---- gpu_128tok: expected digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+---- gpu_128tok: got      digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6
+---- gpu_128tok: digest PASS
+---- gpu_128tok: OVERALL PASS
+
+========================================================================
+10. GPU run (cis2_cuda_tree) — v0.4 CANDIDATE tree, 16 tokens, digest + trace
+========================================================================
+[run1] step 13: token_id=2066
+[run1] step 14: token_id=2291
+[run1] step 15: token_id=351
+[run1] step 16: token_id=874
+[run1] step 17: token_id=1564
+[run1] step 18: token_id=28
+[run1] step 19: token_id=564
+[run1] step 20: token_id=1041
+[run1] step 21: token_id=3683
+[run1] step 22: token_id=982
+[run1] step 23: token_id=457
+[run1] step 24: token_id=800
+[run1] step 25: token_id=9173
+[run1] step 26: token_id=288
+[run1] step 27: token_id=1238
+[run1] step 28: token_id=351
+[run1] step 29: token_id=30
+[run1] step 30: token_id=1963
+[run1] step 31: token_id=1194
+[run1] step 32: token_id=28
+[run1] step 33: token_id=874
+[run1] step 34: token_id=2910
+[run1] step 35: token_id=3783
+[run1] step 36: token_id=874
+[run1] step 37: token_id=338
+[run1] step 38: token_id=1041
+[run1] step 39: token_id=856
+[run1] step 40: token_id=685
+[run1] step 41: token_id=288
+[run1] step 42: token_id=253
+[run1] step 43: token_id=1767
+[run1] step 44: token_id=1379
+[run1] step 45: token_id=1217
+[run1] step 46: token_id=253
+[run1] step 47: token_id=476
+[run1] step 48: token_id=11980
+[run1] step 49: token_id=18
+[run1] step 50: token_id=288
+[run1] step 51: token_id=835
+[run1] step 52: token_id=725
+[run1] step 53: token_id=1495
+[run1] step 54: token_id=284
+[run1] step 55: token_id=1438
+[run1] step 56: token_id=253
+[run1] step 57: token_id=3743
+[run1] step 58: token_id=30
+[run1] step 59: token_id=14176
+[run1] step 60: token_id=436
+[run1] step 61: token_id=8916
+[run1] step 62: token_id=288
+[run1] step 63: token_id=685
+[run1] step 64: token_id=17
+[run1] step 65: token_id=198
+[run1] step 66: token_id=198
+[run1] step 67: token_id=43490
+[run1] step 68: token_id=506
+[run1] step 69: token_id=2910
+[run1] step 70: token_id=5192
+[run1] step 71: token_id=338
+[run1] step 72: token_id=1041
+[run1] step 73: token_id=736
+[run1] step 74: token_id=325
+[run1] step 75: token_id=3229
+[run1] step 76: token_id=874
+[run1] step 77: token_id=563
+[run1] step 78: token_id=260
+[run1] step 79: token_id=905
+[run1] step 80: token_id=284
+[run1] step 81: token_id=638
+[run1] step 82: token_id=288
+[run1] step 83: token_id=325
+[run1] step 84: token_id=253
+[run1] step 85: token_id=1123
+[run1] step 86: token_id=3289
+[run1] step 87: token_id=288
+[run1] step 88: token_id=2573
+[run1] step 89: token_id=30
+[run1] step 90: token_id=2306
+[run1] step 91: token_id=736
+[run1] step 92: token_id=597
+[run1] step 93: token_id=325
+[run1] step 94: token_id=1380
+[run1] step 95: token_id=563
+[run1] step 96: token_id=896
+[run1] step 97: token_id=2355
+[run1] step 98: token_id=284
+[run1] step 99: token_id=638
+[run1] step 100: token_id=502
+[run1] step 101: token_id=2330
+[run1] step 102: token_id=1592
+[run1] step 103: token_id=30
+[run1] step 104: token_id=14176
+[run1] step 105: token_id=436
+[run1] step 106: token_id=588
+[run1] step 107: token_id=8916
+[run1] step 108: token_id=288
+[run1] step 109: token_id=835
+[run1] step 110: token_id=17
+[run1] step 111: token_id=198
+[run1] step 112: token_id=198
+[run1] step 113: token_id=1653
+[run1] step 114: token_id=14176
+[run1] step 115: token_id=2841
+[run1] step 116: token_id=288
+[run1] step 117: token_id=835
+[run1] step 118: token_id=28
+[run1] step 119: token_id=1041
+[run1] step 120: token_id=7062
+[run1] step 121: token_id=338
+[run1] step 122: token_id=634
+[run1] step 123: token_id=282
+[run1] step 124: token_id=874
+[run1] step 125: token_id=2428
+[run1] step 126: token_id=592
+[run1] step 127: token_id=441
+
+$ /kaggle/working/e18b/gpu/cis2_cuda_tree --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_16tok_tree.txt --gen-toks 16 --trace /kaggle/working/e18b/gate/gpu_16tok_tree.trace
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351]
+prompt_idx=0 run1_witness_digest=3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3
+prompt_idx=0 run1_argmax_digest=0b9c8f3ac90d0b9cd5f1719ac327dca1fc639fd87468305fccebbe3d56f67aff
+prompt_idx=0 reduction_mode=tree
+CIS2_REF digest=3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3 prompt_idx=0 prompt_toks=4 gen_toks=16 dtype=fp32 reduction_mode=tree
+
+---- gpu_16tok_tree: expected digest=3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3
+---- gpu_16tok_tree: got      digest=3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3
+---- gpu_16tok_tree: digest PASS
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+[run1] step 2: token_id=436
+[run1] step 3: token_id=253
+[run1] step 4: token_id=1838
+[run1] step 5: token_id=8180
+[run1] step 6: token_id=3365
+[run1] step 7: token_id=14176
+[run1] step 8: token_id=30
+[run1] step 9: token_id=2306
+[run1] step 10: token_id=4161
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+[run1] step 13: token_id=2066
+[run1] step 14: token_id=2291
+[run1] step 15: token_id=351
+
+---- gpu_16tok_tree: trace PASS (byte-identical)
+---- gpu_16tok_tree: OVERALL PASS
+
+========================================================================
+11. GPU run (cis2_cuda_tree) — v0.4 CANDIDATE tree, 128 tokens, digest only
+========================================================================
+$ /kaggle/working/e18b/gpu/cis2_cuda_tree --weights-dir /kaggle/working/e18b/weights --ids /kaggle/working/e18b/gate/ids_128tok_tree.txt --gen-toks 128
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [6403, 1980, 253, 655]
+[run1] step 0: token_id=28
+[run1] step 1: token_id=665
+weights_sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+tokenizer_sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+config_sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+prompt_idx=0 prompt_tokens=[6403, 1980, 253, 655]
+[run1] step 2: token_id=436
+prompt_idx=0 run1_tokens=[6403, 1980, 253, 655, 28, 665, 436, 253, 1838, 8180, 3365, 14176, 30, 2306, 4161, 281, 253, 2066, 2291, 351, 874, 1564, 28, 564, 1041, 3683, 982, 457, 800, 9173, 288, 1238, 351, 30, 1963, 1194, 28, 874, 2910, 3783, 874, 338, 1041, 856, 685, 288, 253, 1767, 1379, 1217, 253, 476, 11980, 18, 288, 835, 725, 1495, 284, 1438, 253, 3743, 30, 14176, 436, 8916, 288, 685, 17, 198, 198, 43490, 506, 2910, 5192, 338, 1041, 736, 325, 3229, 874, 563, 260, 905, 284, 638, 288, 325, 253, 1123, 3289, 288, 2573, 30, 2306, 736, 597, 325, 1380, 563, 896, 2355, 284, 638, 502, 2330, 1592, 30, 14176, 436, 588, 8916, 288, 835, 17, 198, 198, 1653, 14176, 2841, 288, 835, 28, 1041, 7062, 338, 634, 282, 874, 2428, 592, 441]
+prompt_idx=0 run1_witness_digest=112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf
+prompt_idx=0 run1_argmax_digest=2ad201fcfe9c7cd774fd96000f0be102bdc2699d1acf91a73491aaba9889f5b7
+prompt_idx=0 reduction_mode=tree
+CIS2_REF digest=112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf prompt_idx=0 prompt_toks=4 gen_toks=128 dtype=fp32 reduction_mode=tree
+
+---- gpu_128tok_tree: expected digest=112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf
+---- gpu_128tok_tree: got      digest=112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf
+---- gpu_128tok_tree: digest PASS
+---- gpu_128tok_tree: OVERALL PASS
+
+[run1] step 3: token_id=253
+========================================================================
+[run1] step 4: token_id=1838
+FINAL TABLE
+[run1] step 5: token_id=8180
+========================================================================
+[run1] step 6: token_id=3365
+mode        tokens  expected           got                verdict
+[run1] step 7: token_id=14176
+-----------------------------------------------------------------
+[run1] step 8: token_id=30
+sequential  16      d82743059d1db929…  d82743059d1db929…  PASS
+[run1] step 9: token_id=2306
+sequential  128     22f69ad87a615d66…  22f69ad87a615d66…  PASS
+[run1] step 10: token_id=4161
+sequential  16      d82743059d1db929…  d82743059d1db929…  PASS
+sequential  128     22f69ad87a615d66…  22f69ad87a615d66…  PASS
+tree        16      3f3b1ffceca02e8e…  3f3b1ffceca02e8e…  CANDIDATE PASS
+[run1] step 11: token_id=281
+[run1] step 12: token_id=253
+[run1] step 13: token_id=2066
+[run1] step 14: token_id=2291
+[run1] step 15: token_id=351
+[run1] step 16: token_id=874
+[run1] step 17: token_id=1564
+[run1] step 18: token_id=28
+[run1] step 19: token_id=564
+[run1] step 20: token_id=1041
+[run1] step 21: token_id=3683
+[run1] step 22: token_id=982
+[run1] step 23: token_id=457
+[run1] step 24: token_id=800
+[run1] step 25: token_id=9173
+[run1] step 26: token_id=288
+[run1] step 27: token_id=1238
+[run1] step 28: token_id=351
+[run1] step 29: token_id=30
+[run1] step 30: token_id=1963
+[run1] step 31: token_id=1194
+[run1] step 32: token_id=28
+[run1] step 33: token_id=874
+[run1] step 34: token_id=2910
+[run1] step 35: token_id=3783
+[run1] step 36: token_id=874
+[run1] step 37: token_id=338
+[run1] step 38: token_id=1041
+[run1] step 39: token_id=856
+[run1] step 40: token_id=685
+[run1] step 41: token_id=288
+[run1] step 42: token_id=253
+[run1] step 43: token_id=1767
+[run1] step 44: token_id=1379
+[run1] step 45: token_id=1217
+[run1] step 46: token_id=253
+[run1] step 47: token_id=476
+[run1] step 48: token_id=11980
+[run1] step 49: token_id=18
+[run1] step 50: token_id=288
+[run1] step 51: token_id=835
+[run1] step 52: token_id=725
+[run1] step 53: token_id=1495
+[run1] step 54: token_id=284
+[run1] step 55: token_id=1438
+[run1] step 56: token_id=253
+[run1] step 57: token_id=3743
+[run1] step 58: token_id=30
+tree        128     112661fbfcb11440…  112661fbfcb11440…  CANDIDATE PASS
+[run1] step 59: token_id=14176
+
+[run1] step 60: token_id=436
+nvidia-smi GPU name : Tesla P100-PCIE-16GB
+[run1] step 61: token_id=8916
+nvcc version        : Build cuda_12.8.r12.8/compiler.35583870_0
+[run1] step 62: token_id=288
+nofma-cuda SASS gate: PASS (arch=sm_60)
+
+========================================================================
+SEQUENTIAL VERDICT (spec-normative v0.3b — governs exit status)
+========================================================================
+SEQUENTIAL: ALL PASS
+
+========================================================================
+TREE VERDICT (v0.4 CANDIDATE — reported only, never gates exit status)
+========================================================================
+TREE: CANDIDATE ALL PASS
+[run1] step 63: token_id=685
+[run1] step 64: token_id=17
+[run1] step 65: token_id=198
+[run1] step 66: token_id=198
+[run1] step 67: token_id=43490
+[run1] step 68: token_id=506
+[run1] step 69: token_id=2910
+[run1] step 70: token_id=5192
+[run1] step 71: token_id=338
+[run1] step 72: token_id=1041
+[run1] step 73: token_id=736
+[run1] step 74: token_id=325
+[run1] step 75: token_id=3229
+[run1] step 76: token_id=874
+[run1] step 77: token_id=563
+[run1] step 78: token_id=260
+[run1] step 79: token_id=905
+[run1] step 80: token_id=284
+[run1] step 81: token_id=638
+
+[run1] step 82: token_id=288
+Wrote /kaggle/working/e18_results.json
+[run1] step 83: token_id=325
+[run1] step 84: token_id=253
+[run1] step 85: token_id=1123
+[run1] step 86: token_id=3289
+[run1] step 87: token_id=288
+[run1] step 88: token_id=2573
+[run1] step 89: token_id=30
+[run1] step 90: token_id=2306
+[run1] step 91: token_id=736
+[run1] step 92: token_id=597
+[run1] step 93: token_id=325
+[run1] step 94: token_id=1380
+[run1] step 95: token_id=563
+[run1] step 96: token_id=896
+[run1] step 97: token_id=2355
+[run1] step 98: token_id=284
+[run1] step 99: token_id=638
+[run1] step 100: token_id=502
+[run1] step 101: token_id=2330
+[run1] step 102: token_id=1592
+[run1] step 103: token_id=30
+[run1] step 104: token_id=14176
+[run1] step 105: token_id=436
+[run1] step 106: token_id=588
+[run1] step 107: token_id=8916
+[run1] step 108: token_id=288
+[run1] step 109: token_id=835
+[run1] step 110: token_id=17
+[run1] step 111: token_id=198
+[run1] step 112: token_id=198
+[run1] step 113: token_id=1653
+[run1] step 114: token_id=14176
+[run1] step 115: token_id=2841
+[run1] step 116: token_id=288
+[run1] step 117: token_id=835
+[run1] step 118: token_id=28
+[run1] step 119: token_id=1041
+[run1] step 120: token_id=7062
+[run1] step 121: token_id=338
+[run1] step 122: token_id=634
+[run1] step 123: token_id=282
+[run1] step 124: token_id=874
+[run1] step 125: token_id=2428
+[run1] step 126: token_id=592
+[run1] step 127: token_id=441
+
+/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+  cells[i][c] = re.sub('\\\\\|', '|', cell)
+/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[NbConvertApp] Converting notebook __script__.ipynb to html
+[NbConvertApp] Writing 347952 bytes to __results__.html

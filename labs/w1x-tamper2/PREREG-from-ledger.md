@@ -1,0 +1,4 @@
+## registered (2026-10-16T09:29:10Z) bar_sha256=4c146db39d2f52c7aa23a85a92972bec00d6aeebb1bced23ad5c0d572dd5b560
+
+MET if on every host run: the base (unmutated) trial reproduces the pinned 16-token CIS2_REF; sha256 and the witness move for 100% of data mutations; the witness BODY digest moves for 100% of 1-ULP single-element edits and 100% of INT8 tensor round-trips, and for >=95% of sign/exponent single-bit flips (mantissa flips reported as measured, no bar); the header-only control moves sha256 and the witness (the §12.1 witness header folds weights_sha256) and does NOT move the body digest nor the argmax digest; argmax-level (greedy-token) detection is reported as measured per class, no bar. Seeds 20261016 (w3), 20261017 (w4), 20261018 (hq) = the same mutants as w1x-tamper v1. Mutant files are never published. Registered after w1x-tamper v1 results were seen (its control clause was mis-specified; v1 is scored against its frozen bar as registered).
+

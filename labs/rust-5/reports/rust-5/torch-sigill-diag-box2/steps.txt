@@ -1,0 +1,11 @@
+s1_import rc=0
+s2_fp32_256x256 rc=0
+s2_fp32_576x1536 rc=0
+s2_fp32_2048x2048 rc=0
+s3_qbuild rc=0
+s4_qforward_default rc=132
+s4_qforward_x86 rc=77
+s4_qforward_fbgemm rc=77
+s4_qforward_onednn rc=132
+s4_qforward_qnnpack rc=0
+s5_int8_matmul rc=0

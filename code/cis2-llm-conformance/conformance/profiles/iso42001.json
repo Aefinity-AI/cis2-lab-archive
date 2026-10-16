@@ -1,0 +1,28 @@
+{
+  "name": "iso42001",
+  "title": "ISO/IEC 42001:2023 (AI management systems) — Annex A.6.2.8 event-logging slice",
+  "description": "A single-control profile. ISO 42001 is a management-system standard; CIS-2's only genuine, sourced fit is Annex A.6.2.8 (AI system recording of event logs), and that row rests on a compliance vendor's paraphrase since the standard itself is paywalled (see compliance/CROSSWALK.md row 20 and its honest verdict). This profile does not and cannot demonstrate ISO 42001 certification readiness.",
+  "vectors": [
+    {
+      "id": "receipt_schema",
+      "crosswalk_control": "CROSSWALK.md row 20 (Annex A.6.2.8 event log recording)",
+      "rationale": "A schema-valid receipt is a concrete enabled event-log mechanism for the inference-execution phase of the AI system lifecycle."
+    },
+    {
+      "id": "chain_integrity",
+      "crosswalk_control": "CROSSWALK.md row 20 (Annex A.6.2.8)",
+      "rationale": "Tamper-evidence of the log strengthens the 'recording of event logs' control beyond a plain unlinked log file."
+    },
+    {
+      "id": "replay_tamper",
+      "crosswalk_control": "CROSSWALK.md row 20 (Annex A.6.2.8)",
+      "rationale": "Demonstrates the event log actually detects the tamper/replay classes of integrity failure a log is supposed to catch."
+    }
+  ],
+  "not_covered": [
+    "The entire ISO 42001 management-system scope: roles, resourcing, risk assessment, supplier controls, monitoring, continual improvement -- audited by an accredited certification body, not producible by any test suite.",
+    "Every other ISO 42001 Annex A control besides A.6.2.8 -- not assessed in compliance/CROSSWALK.md and therefore not in this profile either.",
+    "Certification itself -- a receipt is audit evidence for one control, not a substitute for the accredited external audit ISO 42001 certification requires.",
+    "Primary ISO clause text was never independently obtained (paywalled) -- this whole profile rests on a secondary paraphrase, a real sourcing weakness carried over honestly from CROSSWALK.md."
+  ]
+}

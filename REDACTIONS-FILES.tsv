@@ -1,0 +1,240 @@
+venue	conference/journal/review-system name	labs/pre-ledger-gpu/reports/2026-09-02-E18-prior-art.md
+venue	conference/journal/review-system name	labs/pre-ledger-prior-art/reports/2026-08-28-CIS2-priorart-fulltext.md
+venue	conference/journal/review-system name	labs/pre-ledger-prior-art/reports/2026-08-28-CIS2-priorart.md
+venue	conference/journal/review-system name	labs/pre-ledger-prior-art/reports/prior-art__CIS2-CLOSEST-ART-2026-10-16.md
+venue	conference/journal/review-system name	labs/sv-5/reports/2026-10-01-SV5-RESEARCH.md
+venue	conference/journal/review-system name	paper/cis2-fp-paper-draft/docs/paper/02_related_work.md
+venue	conference/journal/review-system name	paper/cis2-fp-paper-draft/docs/paper/10_references.md
+venue	conference/journal/review-system name	paper/cis2-fp-paper-draft/docs/paper/paper.md
+business	funding-program reference	paper/cis2-fp-paper-draft/docs/paper/REVIEW_2026-08-28.md
+paths	home directory path	code/cis2-fp/docs/hardware_logs/llm8b_7b_aefinity-box_2026-09-18.log
+paths	home directory path	code/cis2-fp/scripts/oracle_compare.py
+paths	home directory path	code/cis2-fp/scripts/oracle_compare_qwen.py
+paths	home directory path	code/cis2-fp/scripts/run_llm8b_1p5b.sh
+paths	home directory path	code/cis2-fp/scripts/run_llm8b_7b.sh
+paths	home directory path	code/cis2-llm/tests/TEST-CHAIN-LOG.md
+paths	home directory path	code/cis2-llm/verifier/vendor/cis2-verify2/VENDOR.md
+paths	home directory path	code/patches/cis2-fp__cm_gpu3-batched-full.patch
+paths	home directory path	code/patches/cis2-llm__cis3-2b.patch
+paths	home directory path	labs/cis2-oflags-1/ledger.jsonl
+paths	home directory path	labs/cis2-oflags-2/ledger.jsonl
+paths	home directory path	labs/pre-ledger-gpu/reports/2026-09-19-gpu2-kaggle-sweep.md
+paths	home directory path	labs/pre-ledger-gpu/reports/2026-09-25-lt2-lightning-t4-batched.md
+paths	home directory path	labs/pre-ledger-models-and-scale/reports/2026-09-18-llm8b-7b-digest-result.md
+paths	home directory path	labs/pre-ledger-replay-selfcheck-vectors/reports/2026-10-01-SV2-REPLAY-AND-ATTACK.md
+paths	home directory path	labs/rust-1/reports/rust-1/BUILD.md
+paths	home directory path	labs/rust-1/reports/rust-1/STARTED.md
+paths	home directory path	labs/rust-1/reports/rust-1/box1/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/box1/run.sh
+paths	home directory path	labs/rust-1/reports/rust-1/box4/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/box4/run.sh
+paths	home directory path	labs/rust-1/reports/rust-1/box5/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/box5/run.sh
+paths	home directory path	labs/rust-1/reports/rust-1/logs/cargo_tree_normal_build.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t1-normal/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t1-normal/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t2-void/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t2-void/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t3-notidle/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t3-notidle/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t4-exception/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t4-exception/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t5-term/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t5-term/run.log
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t7-llama/RESULT.txt
+paths	home directory path	labs/rust-1/reports/rust-1/plumbing-round3/t7-llama/run.log
+paths	home directory path	labs/rust-1b/reports/rust-1b/BUILD.md
+paths	home directory path	labs/rust-1b/reports/rust-1b/FREEZE-STAGE2.md
+paths	home directory path	labs/rust-1b/reports/rust-1b/RESULT-N1.md
+paths	home directory path	labs/rust-1b/reports/rust-1b/STARTED.md
+paths	home directory path	labs/rust-1b/reports/rust-1b/box1-n2/run.log
+paths	home directory path	labs/rust-1b/reports/rust-1b/box1-n2/run.sh
+paths	home directory path	labs/rust-1b/reports/rust-1b/box1/run.log
+paths	home directory path	labs/rust-1b/reports/rust-1b/box1/run.sh
+paths	home directory path	labs/rust-1b/reports/rust-1b/box2/run.log
+paths	home directory path	labs/rust-1b/reports/rust-1b/box2/run.sh
+paths	home directory path	labs/rust-1b/reports/rust-1b/box3/job.json
+paths	home directory path	labs/rust-1b/reports/rust-1b/box3/job.sh
+paths	home directory path	labs/rust-2a/reports/rust-2a/BUILD.md
+paths	home directory path	labs/rust-2a/reports/rust-2a/DIAG-SLOWDOWN.md
+paths	home directory path	labs/rust-2a/reports/rust-2a/RESULT.md
+paths	home directory path	labs/rust-2a/reports/rust-2a/box1/RESULT_timing.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/box1/run.log
+paths	home directory path	labs/rust-2a/reports/rust-2a/box2/digest/job.json
+paths	home directory path	labs/rust-2a/reports/rust-2a/box2/timing/RESULT_feed.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/box2/timing/job.json
+paths	home directory path	labs/rust-2a/reports/rust-2a/box2/timing/run.log
+paths	home directory path	labs/rust-2a/reports/rust-2a/box3/RESULT_timing.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/box3/run.log
+paths	home directory path	labs/rust-2a/reports/rust-2a/box4/RESULT_timing.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/box4/run.log
+paths	home directory path	labs/rust-2a/reports/rust-2a/box5/RESULT_timing.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/box5/run.log
+paths	home directory path	labs/rust-2a/reports/rust-2a/diag-box1/RESULT2.txt
+paths	home directory path	labs/rust-2a/reports/rust-2a/diag-box1/run.sh
+paths	home directory path	labs/rust-2a/reports/rust-2a/diag-box1/run2.log
+paths	home directory path	labs/rust-2b/plans/rust-2b-amend-proposed.txt
+paths	home directory path	labs/rust-2b/reports/rust-2b/BUILD.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/RULING-A1.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-code-R1.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-code-R2.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-conformance-R1.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-conformance-R2.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-conformance-R3.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/VERIFY-PRESTART-conformance-R4.md
+paths	home directory path	labs/rust-2b/reports/rust-2b/WRAPPERS-FINAL.sha256
+paths	home directory path	labs/rust-2b/reports/rust-2b/WRAPPERS-box2.sha256
+paths	home directory path	labs/rust-2b/reports/rust-2b/WRAPPERS-box3.sha256
+paths	home directory path	labs/rust-2b/reports/rust-2b/box1-docbuild/result.json
+paths	home directory path	labs/rust-2b/reports/rust-2b/box1/result.json
+paths	home directory path	labs/rust-2b/reports/rust-2b/box2/result.json
+paths	home directory path	labs/rust-2b/reports/rust-2b/build-box1.log
+paths	home directory path	labs/rust-3/reports/rust-3/BUILD.md
+paths	home directory path	labs/rust-3/reports/rust-3/FREEZE.txt
+paths	home directory path	labs/rust-3/reports/rust-3/L1-repro-hq/RESULT.txt
+paths	home directory path	labs/rust-3/reports/rust-3/L1-repro-w3/RESULT.txt
+paths	home directory path	labs/rust-3/reports/rust-3/RESULT.md
+paths	home directory path	labs/rust-3/reports/rust-3/VERIFY-PRESTART-code-R1.md
+paths	home directory path	labs/rust-3/reports/rust-3/VERIFY-PRESTART-code-R2.md
+paths	home directory path	labs/rust-3/reports/rust-3/VERIFY-PRESTART-conformance-R1.md
+paths	home directory path	labs/rust-3/reports/rust-3/VERIFY-PRESTART-conformance-R2.md
+paths	home directory path	labs/rust-3/reports/rust-3/build.log
+paths	home directory path	labs/rust-3/reports/rust-3/raw/result-C1.json
+paths	home directory path	labs/rust-3/reports/rust-3/raw/result-P1.json
+paths	home directory path	labs/rust-3/reports/rust-3/raw/result-R1.json
+paths	home directory path	labs/rust-3/reports/rust-3/smoke/FREEZE-TEST-BUILD.txt
+paths	home directory path	labs/rust-3/reports/rust-3/smoke/build-test.log
+paths	home directory path	labs/rust-3/reports/rust-3/smoke/fuzz-seed-runs.txt
+paths	home directory path	labs/rust-3/reports/rust-3/smoke/toy-pipeline-R2.log
+paths	home directory path	labs/rust-4/plans/rust-4b.txt
+paths	home directory path	labs/rust-4/reports/rust-4/BUILD.md
+paths	home directory path	labs/rust-4/reports/rust-4/RESULT.md
+paths	home directory path	labs/rust-4/reports/rust-4/box1/RESULT.txt
+paths	home directory path	labs/rust-4/reports/rust-4/box1/result.json
+paths	home directory path	labs/rust-4/reports/rust-4/box1/run.log
+paths	home directory path	labs/rust-4/reports/rust-4/box1/run.sh
+paths	home directory path	labs/rust-4/reports/rust-4/box1/timed/m3-C-rep1.out
+paths	home directory path	labs/rust-4/reports/rust-4/box1/timed/m3-C-rep2.out
+paths	home directory path	labs/rust-4/reports/rust-4/box1/timed/m3-C-rep3.out
+paths	home directory path	labs/rust-4/reports/rust-4/box2/RESULT.txt
+paths	home directory path	labs/rust-4/reports/rust-4/box2/result.json
+paths	home directory path	labs/rust-4/reports/rust-4/box2/run.log
+paths	home directory path	labs/rust-4/reports/rust-4/box2/run.sh
+paths	home directory path	labs/rust-4/reports/rust-4/box3/RESULT.txt
+paths	home directory path	labs/rust-4/reports/rust-4/box3/result.json
+paths	home directory path	labs/rust-4/reports/rust-4/box3/run.log
+paths	home directory path	labs/rust-4/reports/rust-4/box3/run.sh
+paths	home directory path	labs/rust-4/reports/rust-4/box4/RESULT.txt
+paths	home directory path	labs/rust-4/reports/rust-4/box4/result.json
+paths	home directory path	labs/rust-4/reports/rust-4/box4/run.log
+paths	home directory path	labs/rust-4/reports/rust-4/box4/run.sh
+paths	home directory path	labs/rust-4/reports/rust-4/box5/RESULT.txt
+paths	home directory path	labs/rust-4/reports/rust-4/box5/result.json
+paths	home directory path	labs/rust-4/reports/rust-4/box5/run.log
+paths	home directory path	labs/rust-4/reports/rust-4/box5/run.sh
+paths	home directory path	labs/rust-4/reports/rust-4/m4-penguin/build-C-1.log
+paths	home directory path	labs/rust-4/reports/rust-4/m4-penguin/build-C-2.log
+paths	home directory path	labs/rust-4/reports/rust-4/scoring/figs.json
+paths	home directory path	labs/rust-4/reports/rust-4/scoring/gen.py
+paths	home directory path	labs/rust-4/reports/rust-4/scoring/venv_build.sh
+paths	home directory path	labs/rust-4b/plans/rust-4b.txt
+paths	home directory path	labs/rust-4b/reports/rust-4b/BUILD.md
+paths	home directory path	labs/rust-4b/reports/rust-4b/FREEZE.md
+paths	home directory path	labs/rust-4b/reports/rust-4b/VERIFY-PREREG-code-R1.md
+paths	home directory path	labs/rust-4b/reports/rust-4b/VERIFY-PREREG-code-R3.md
+paths	home directory path	labs/rust-4b/reports/rust-4b/VERIFY-PREREG-code-R4.md
+paths	home directory path	labs/rust-4b/reports/rust-4b/box1/run.sh
+paths	home directory path	labs/rust-4b/reports/rust-4b/box2/run.sh
+paths	home directory path	labs/rust-4b/reports/rust-4b/box3/run.sh
+paths	home directory path	labs/rust-4b/reports/rust-4b/box4/run.sh
+paths	home directory path	labs/rust-4b/reports/rust-4b/box5/run.sh
+paths	home directory path	labs/rust-4b/reports/rust-4b/trace/C.opens
+paths	home directory path	labs/rust-4b/reports/rust-4b/trace/Cv.opens
+paths	home directory path	labs/rust-4b/reports/rust-4b/trace/Q.opens
+paths	home directory path	labs/rust-4b/reports/rust-4b/trace/R.opens
+paths	home directory path	labs/rust-4b/reports/rust-4b/trace/Rv.opens
+paths	home directory path	labs/rust-5/reports/rust-5/BUILD.md
+paths	home directory path	labs/rust-5/reports/rust-5/RESULT.md
+paths	home directory path	labs/rust-5/reports/rust-5/STARTED.md
+paths	home directory path	labs/rust-5/reports/rust-5/box1/build_harness.log
+paths	home directory path	labs/rust-5/reports/rust-5/box1/run.log
+paths	home directory path	labs/rust-5/reports/rust-5/box2-attempt1/job.json
+paths	home directory path	labs/rust-5/reports/rust-5/box2-attempt1/job.sh
+paths	home directory path	labs/rust-5/reports/rust-5/box2-attempt2/build_harness.log
+paths	home directory path	labs/rust-5/reports/rust-5/box2-attempt2/run.log
+paths	home directory path	labs/rust-5/reports/rust-5/box3/build_harness.log
+paths	home directory path	labs/rust-5/reports/rust-5/box3/run.log
+paths	home directory path	labs/rust-5/reports/rust-5/box4/build_harness.log
+paths	home directory path	labs/rust-5/reports/rust-5/box4/run.log
+paths	home directory path	labs/rust-5/reports/rust-5/box5/build_harness.log
+paths	home directory path	labs/rust-5/reports/rust-5/box5/run.log
+paths	home directory path	labs/rust-5/reports/rust-5/torch-sigill-diag-box2/s4_qforward_default.out
+paths	home directory path	labs/rust-5/reports/rust-5/torch-sigill-diag-box2/s4_qforward_onednn.out
+paths	home directory path	labs/shape-1/ledger.jsonl
+paths	home directory path	labs/sv-5/reports/2026-10-01-SV5-RESEARCH.md
+paths	home directory path	labs/sv-5d/reports/sv5d/2026-10-03-sv5d-recount.py
+paths	home directory path	labs/w1x-batch/feed/cm-hq__cis2-batch-hq/job.json
+paths	home directory path	labs/w1x-batch/feed/cm-w2__cis2-batch-w2/job.json
+paths	home directory path	labs/w1x-coverage/reports/w1x-coverage/RESULT-hq.txt
+paths	home directory path	labs/w1x-coverage/reports/w1x-coverage/RESULT-w2.txt
+paths	home directory path	labs/w1x-coverage/reports/w1x-coverage/RESULT-w3.txt
+paths	home directory path	labs/w1x-coverage/reports/w1x-coverage/RESULT-w4.txt
+paths	home directory path	labs/w1x-horizon/feed/cm-hq__cis2-horizon-hq/job.json
+paths	home directory path	labs/w1x-horizon/feed/cm-w2__cis2-horizon-w2/job.json
+paths	home directory path	labs/w1x-horizon/feed/cm-w4__cis2-horizon-w4/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-hq__cis2-opencl-hq-r2/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-hq__cis2-opencl-hq/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-w1__cis2-opencl-w1/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-w3__cis2-opencl-w3-r2/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-w3__cis2-opencl-w3/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-w4__cis2-opencl-w4-r2/job.json
+paths	home directory path	labs/w1x-opencl/feed/cm-w4__cis2-opencl-w4/job.json
+paths	home directory path	labs/w1x-qwen3/scripts/QUEUE.txt
+paths	home directory path	labs/w1x-sample/feed/cm-hq__cis2-sample-hq-r2/job.json
+paths	home directory path	labs/w1x-sample/feed/cm-hq__cis2-sample-hq.20261016T104319Z/job.json
+paths	home directory path	labs/w1x-sample/feed/cm-w2__cis2-sample-w2/job.json
+paths	home directory path	labs/w1x-sample/reports/w1x-sample/RESULTS-hq-builder.md
+paths	home directory path	labs/w6/reports/w6/supplementary/RESULT-partA-box1.txt
+paths	home directory path	labs/w6/reports/w6/supplementary/RESULT-partA-box2.txt
+paths	home directory path (claudius-maximus root)	code/cis2-llm/compliance/CROSSWALK.md
+paths	home directory path (claudius-maximus root)	labs/rust-1/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-1/reports/rust-1/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-1b/reports/rust-1b/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-1b/reports/rust-1b/RESULT.md
+paths	home directory path (claudius-maximus root)	labs/rust-2a/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-2a/reports/rust-2a/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-2b/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-2b/reports/rust-2b/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-3/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-3/plans/rust-3-amend-staged.txt
+paths	home directory path (claudius-maximus root)	labs/rust-3/reports/rust-3/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-4/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-4/reports/rust-4/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-4/reports/rust-4/RESULT.md
+paths	home directory path (claudius-maximus root)	labs/rust-4/reports/rust-4/scoring/compute.py
+paths	home directory path (claudius-maximus root)	labs/rust-4/reports/rust-4/scoring/gen.py
+paths	home directory path (claudius-maximus root)	labs/rust-4/reports/rust-4/scoring/show.json
+paths	home directory path (claudius-maximus root)	labs/rust-4b/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-4b/reports/rust-4b/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/rust-5/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/rust-5/reports/rust-5/BUILD.md
+paths	home directory path (claudius-maximus root)	labs/shape-1/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/shape-2/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/sv-5/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/sv-5b/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/sv-5c/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/sv-5d/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/sv-5d/reports/2026-10-03-SV5D-PER-TOKEN-DIVERGENCE.md
+paths	home directory path (claudius-maximus root)	labs/sv-5d/reports/sv5d/2026-10-03-sv5d-recount.out
+paths	home directory path (claudius-maximus root)	labs/sv-5d/reports/sv5d/2026-10-03-sv5d-recount.py
+paths	home directory path (claudius-maximus root)	labs/w1x-coverage/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/w1x-opencl/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/w1x-sample/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/w3/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/w4/ledger.jsonl
+paths	home directory path (claudius-maximus root)	labs/w6/ledger.jsonl
+transcripts	agent session link / trailer	code/patches/cis2-spec__seeded-sampling.patch
+network	LAN IP	labs/pre-ledger-models-and-scale/reports/2026-09-22-pc2-smollm2-360m.md
+network	LAN IP	labs/pre-ledger-models-and-scale/reports/2026-09-23-fast1b-crossbox-replay.md
+network	LAN IP	labs/pre-ledger-replay-selfcheck-vectors/reports/2026-10-01-BOX4-SSE3-SELFCHECK.md
+secret-paths	reference to private config directory	labs/pre-ledger-gpu/reports/2026-09-25-lt3-lightning-t4-fm5-replay.md

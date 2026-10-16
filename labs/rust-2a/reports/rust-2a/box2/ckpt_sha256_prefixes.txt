@@ -1,0 +1,13 @@
+digest run-c-orig-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-c-orig-O2 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-c-patched-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-c-patched-O2 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-rust-gnu-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-rust-gnu-O3 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-rust-musl-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+digest run-rust-musl-O3 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+timing run-c-patched-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+timing run-c-patched-O2 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+timing run-rust-gnu-O0 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+timing run-rust-gnu-O3 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 
+timing run-rust-musl-O3 fd64cf9e032ee182 d36bd7fd164ba774 3887f7b3f512a6a2 f665ffecfabba7a4 

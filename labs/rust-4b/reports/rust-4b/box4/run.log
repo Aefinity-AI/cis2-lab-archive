@@ -1,0 +1,48 @@
+rust-4b run host=box4 job=20261005T232450Z-111624 start=2026-10-05T23:24:50Z smoke=False reps=5 cap_s=5400 budget_used_s=0
+HOSTCHECK open {"t": "2026-10-05T23:24:50Z", "load": [0.44, 0.34, 0.62], "run": "5/96", "mhz": [2100], "thr": null, "other_units": [], "scaling_max_khz": "2100000"}
+host=box4 cpu=AMD Sempron(tm) SI-42 ncpu=1 arm_cpu=0 runner_cpu=0 pin=shared_single_cpu kernel=6.12.94+deb13-amd64
+payload ok: PAYLOAD_SHA256 sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 run.py sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 helper sha256=a08c989bf4855064b911b1bbf3e361900030d4bbc8d71700bf5ee7aca3876812
+pinned weights, config, tokenizer: sha256 ok
+DISK {"fs_type": "ext4", "mount_source": "/dev/sda4", "diskstats_name": "sda4", "disk": "sda", "model": "HGST HTS541075A9", "rotational": "yes (1)", "size_gb": 750.2, "short": "sda/HGST HTS541075A9/ext4/rot=yes (1)"}
+SNAP opening-gate {"t": "2026-10-05T23:25:44Z", "load": [0.27, 0.32, 0.6], "run": "1/94", "mhz": [2100], "thr": null, "other_units": [], "scaling_max_khz": "2100000"}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.0005
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.0005
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE max_arm=0.0005 max_host=0.0005 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.0205 limit_host=0.1
+TOOLS {"python": "Python 3.13.5", "kernel": "6.12.94+deb13-amd64", "cpu": "AMD Sempron(tm) SI-42", "avx2": false, "mem_total_kb": "3757104", "page_size": 4096, "q_binary": "llama-drv-sse42"}
+GATE {"R": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"], "C": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"]} expected ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9
+P install rc=0
+NOT RUN P start reason=stack did not start: rc=-4 (Illegal instruction) ()
+NOT RUN Q start reason=llama.cpp driver did not start or did not print its check line: rc=-4 (Illegal instruction) ()
+ARMS ["R", "C", "Rv", "Cv"]
+CONTROL warm_open {"kind": "warm", "tag": "open", "resident_pages": 65689, "total_pages": 65689, "pct": 100.0, "ok": true, "min_pct": 90.0}
+CONTROL cold_open {"kind": "cold", "tag": "open", "ok": true, "tries": [{"try": 1, "resident_pages": 0, "total_pages": 65689, "cached_kb_before": 3161424, "cached_kb_after": 111404, "drop_ok": true, "ok": true}], "resident_pages": 0, "total_pages": 65689}
+m2 arm=R rep=1 status=KEPT rc=0
+m2 arm=Cv rep=1 status=KEPT rc=0
+m2 arm=C rep=1 status=KEPT rc=0
+m2 arm=Rv rep=1 status=KEPT rc=0
+m2 arm=Rv rep=2 status=KEPT rc=0
+m2 arm=C rep=2 status=KEPT rc=0
+m2 arm=Cv rep=2 status=KEPT rc=0
+m2 arm=R rep=2 status=KEPT rc=0
+m2 arm=C rep=3 status=KEPT rc=0
+m2 arm=R rep=3 status=KEPT rc=0
+m2 arm=Rv rep=3 status=KEPT rc=0
+m2 arm=Cv rep=3 status=KEPT rc=0
+m2 arm=Cv rep=4 status=VOID rc=0
+m2 arm=Cv rep=4 status=KEPT rc=0
+m2 arm=C rep=4 status=KEPT rc=0
+m2 arm=R rep=4 status=KEPT rc=0
+m2 arm=Rv rep=4 status=KEPT rc=0
+m2 arm=Rv rep=5 status=DISCARD rc=0
+m2 arm=Rv rep=5 status=KEPT rc=0
+m2 arm=R rep=5 status=KEPT rc=0
+m2 arm=Cv rep=5 status=KEPT rc=0
+m2 arm=C rep=5 status=KEPT rc=0
+CONTROL warm_final {"kind": "warm", "tag": "final", "resident_pages": 65689, "total_pages": 65689, "pct": 100.0, "ok": true, "min_pct": 90.0}
+GATE after {"R": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"], "C": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"]}
+HOSTCHECK close {"t": "2026-10-05T23:40:32Z", "load": [1.03, 0.98, 0.8], "run": "1/95", "mhz": [1050], "thr": null, "other_units": [], "scaling_max_khz": "2100000"}
+RESULT: OK-PARTIAL host=box4 job=20261005T232450Z-111624 baseline={"base_arm":0.0005,"base_host":0.0005,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.0205,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"masked":"no","max_arm":0.15,"max_host":0.3,"measured":"yes","window_s":20.0,"windows":[[0.0,0.0],[0.0005,0.0005],[0.0005,0.0005],[0.0,0.0],[0.0,0.0],[0.0,0.0]]} payload_sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 frozen_payload_sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 run_py_sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 frozen_run_py_sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 helper_sha256=a08c989bf4855064b911b1bbf3e361900030d4bbc8d71700bf5ee7aca3876812 disk={"disk":"sda","diskstats_name":"sda4","fs_type":"ext4","model":"HGST HTS541075A9","mount_source":"/dev/sda4","rotational":"yes (1)","short":"sda/HGST HTS541075A9/ext4/rot=yes (1)","size_gb":750.2} weights_bytes=269060552 tools={"avx2":false,"cpu":"AMD Sempron(tm) SI-42","kernel":"6.12.94+deb13-amd64","mem_total_kb":"3757104","page_size":4096,"python":"Python 3.13.5","q_binary":"llama-drv-sse42"} gate_witness=ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9 p={"probe_ok":false,"probe_rc":-4,"probe_tail":[],"probe_token":null,"venv_files":29942,"venv_list_sha256":"32d560b025dc4660dcb8640be15628460a0dddbaa3a638f2b28cfbc45cb96069","venv_python_regular":true,"wheelhouse_sha256":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e","wheelhouse_sha256_here":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"} q={"binary":"llama-drv-sse42","info":null,"probe_mismatches":null,"probe_ok":false,"probe_rc":-4,"probe_tail":[],"probe_witness":null} m2={"arm_status":{"C":"OK","Cv":"OK","R":"OK","Rv":"OK"},"arms":["R","C","Rv","Cv"],"design_mean_positions":[1.4,1.4,1.6,1.6],"design_rows":[[0,3,1,2],[2,1,3,0],[1,0,2,3],[3,1,0,2],[2,0,3,1]],"load_ns":{"C":[3595916375,3590934217,3574033943,3569496171,3573770755],"R":[3775799062,3789124960,3791235905,3795240791,3788242376]},"majflt":{"C":[2,2,2,2,2],"Cv":[2,2,2,2,2],"R":[15,15,15,15,15],"Rv":[15,15,15,15,15]},"mismatches":{"C":[0,0,0,0,0],"Cv":[0,0,0,0,0],"R":[0,0,0,0,0],"Rv":[0,0,0,0,0]},"order_performed":[["R","Cv","C","Rv"],["Rv","C","Cv","R"],["C","R","Rv","Cv"],["Cv","C","R","Rv"],["Rv","R","Cv","C"]],"positions":{"C":[2,1,0,1,3],"Cv":[1,2,3,0,2],"R":[0,3,1,2,1],"Rv":[3,0,2,3,0]},"prefill_ns":{"C":[10627339519,10606138859,10598312745,10597463233,10653191734],"R":[13089938033,13085150067,13111684962,13086040813,13183296126]},"reps_done":{"C":5,"Cv":5,"R":5,"Rv":5},"sectors_to_exit":{"C":[525832,525824,525824,525840,526928],"Cv":[530208,531056,530208,530208,529952],"R":[532208,530760,531864,530768,531056],"Rv":[535984,534888,534880,535984,535976]},"sectors_to_open":{"C":[525832,525824,525824,525840,526928],"Cv":[530208,531056,530208,530208,529952],"R":[532208,530760,531864,530768,531056],"Rv":[535984,534888,534880,535984,535976]},"tokens":{"C":[null,null,null,null,null],"Cv":[null,null,null,null,null],"R":[null,null,null,null,null],"Rv":[null,null,null,null,null]},"values_exit_s":{"C":[14.3211,14.2955,14.2713,14.2664,14.3283],"Cv":[14.3991,14.3443,14.3607,14.3415,14.3475],"R":[17.0989,17.1201,17.1212,17.1104,17.2216],"Rv":[20.2298,20.1911,20.2433,20.4381,20.1409]},"values_open_s":{"C":[14.2625,14.2369,14.2122,14.2062,14.2668],"Cv":[14.3385,14.2863,14.3045,14.2836,14.291],"R":[17.0349,17.0574,17.0614,17.0481,17.1608],"Rv":[20.169,20.129,20.1783,20.3731,20.0808]},"weights_resident_after":{"C":[65689,65689,65689,65689,65689],"Cv":[65689,65689,65689,65689,65689],"R":[65689,65689,65689,65689,65689],"Rv":[65689,65689,65689,65689,65689]}} gate_after={"C":"ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9","R":"ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9"} timers_paused=NA notrun=["P start: stack did not start: rc=-4 (Illegal instruction) ()","Q start: llama.cpp driver did not start or did not print its check line: rc=-4 (Illegal instruction) ()"] discards=1 voids=1 notcold_attempts=0 reps=5 elapsed_job_s=942 controls={"cold_open":{"kind":"cold","ok":true,"resident_pages":0,"tag":"open","total_pages":65689,"tries":[{"cached_kb_after":111404,"cached_kb_before":3161424,"drop_ok":true,"ok":true,"resident_pages":0,"total_pages":65689,"try":1}]},"warm_final":{"kind":"warm","min_pct":90.0,"ok":true,"pct":100.0,"resident_pages":65689,"tag":"final","total_pages":65689},"warm_open":{"kind":"warm","min_pct":90.0,"ok":true,"pct":100.0,"resident_pages":65689,"tag":"open","total_pages":65689}}

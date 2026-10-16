@@ -1,0 +1,175 @@
+# sv-5d recount output, run 2026-10-03T07:43:14Z on penguin (stdout and stderr of the systemd-run job, MemoryMax=1500M MemorySwapMax=0)
+# command: systemd-run --user --wait --collect --pipe -p MemoryMax=1500M -p MemorySwapMax=0 python3 <root>/state/reports/sv5d/2026-10-03-sv5d-recount.py
+# script sha256 958f41a74ac36ab6d8bd663c21eeddff64fdd47027f26212b41807437a54f093
+# compare.json sha256 c011efee032dbc1769df69f4cede0cf3a5f225049d025a5797ab212c9f9457ce
+Running as unit: run-r3b22bbee4ff140ec9cb43056cda5cec3.service; invocation ID: 75c61598ffcd44e8ba725b9339eae4d6
+windows.jsonl sha256 20c94006e05d6b86e52cf92443bc3118cc8c3c2c70cb98c2671823f7b5dafe61
+n windows 8000 ids contiguous 0..7999: True
+min/max/mean len 160 256 208.12 sum 1664964
+loading R box1 B1T1
+  ok box1/B1T1_0-8000/p0of2.npz aefinity-box ) i5-5200U CPU @ 2.20GHz thr 1 batch 1 rng [0, 4000] n 833394 torch 2.10.0+cpu transformers 5.0.0
+  ok box1/B1T1_0-8000/p1of2.npz aefinity-box ) i5-5200U CPU @ 2.20GHz thr 1 batch 1 rng [4000, 8000] n 831570 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 8000 range 0 7999
+loading B box1 B8T1
+  ok box1/B8T1_0-8000/p0of1.npz aefinity-box ) i5-5200U CPU @ 2.20GHz thr 1 batch 8 rng [0, 8000] n 1664964 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 8000 range 0 7999
+loading T box1 B1T2
+  ok box1/B1T2_0-2000/p0of1.npz aefinity-box ) i5-5200U CPU @ 2.20GHz thr 2 batch 1 rng [0, 2000] n 416030 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 2000 range 0 1999
+loading box2 B1T1
+  ok box2/B1T1_0-4000/p0of2.npz aefinity-box2 n(R) N4020 CPU @ 1.10GHz thr 1 batch 1 rng [0, 2000] n 416030 torch 2.10.0+cpu transformers 5.0.0
+  ok box2/B1T1_0-4000/p1of2.npz aefinity-box2 n(R) N4020 CPU @ 1.10GHz thr 1 batch 1 rng [2000, 4000] n 417364 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 4000 range 0 3999
+loading box3 B1T1
+  ok box3/B1T1_4000-8000/p0of2.npz aefinity-box-2a7e (R) N4020C CPU @ 1.10GHz thr 1 batch 1 rng [4000, 6000] n 416057 torch 2.10.0+cpu transformers 5.0.0
+  ok box3/B1T1_4000-8000/p1of2.npz aefinity-box-2a7e (R) N4020C CPU @ 1.10GHz thr 1 batch 1 rng [6000, 8000] n 415513 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 4000 range 4000 7999
+loading box3 B8T1
+  ok box3/B8T1_4000-8000/p0of1.npz aefinity-box-2a7e (R) N4020C CPU @ 1.10GHz thr 1 batch 8 rng [4000, 8000] n 831570 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 4000 range 4000 7999
+loading peng 0-2000
+  ok penguin/B1T1_0-2000/p0of1.npz penguin  i5-10210U CPU @ 1.60GHz thr 1 batch 1 rng [0, 2000] n 416030 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 2000 range 0 1999
+loading peng 2000-8000
+  ok penguin/B1T1_2000-8000/p0of1.npz penguin  i5-10210U CPU @ 1.60GHz thr 1 batch 1 rng [2000, 8000] n 1248934 torch 2.10.0+cpu transformers 5.0.0
+   windows covered 6000 range 2000 7999
+R: ids range 0 49149 sec range 0 49149 margin min 0.0 nan 0
+R: ids==sec anywhere: 0  margin<0: 0  margin==0: 1
+R: margin<1e-5: 12  <=5.722e-6: 10  <1e-4: 123  of 1664964
+R positions with margin <= 5.722e-6 (10):
+   w274/p144 R top1/top2/margin 2166 2364 1.9073486328125e-06
+   w677/p168 R top1/top2/margin 357 284 5.7220458984375e-06
+   w1302/p143 R top1/top2/margin 281 30 0.0
+   w3154/p88 R top1/top2/margin 451 354 3.814697265625e-06
+   w3279/p116 R top1/top2/margin 3001 325 3.814697265625e-06
+   w3334/p101 R top1/top2/margin 1453 325 5.7220458984375e-06
+   w3687/p106 R top1/top2/margin 282 739 3.814697265625e-06
+   w5595/p154 R top1/top2/margin 451 260 1.9073486328125e-06
+   w6300/p248 R top1/top2/margin 550 805 1.9073486328125e-06
+   w7304/p125 R top1/top2/margin 288 411 5.7220458984375e-06
+
+== B box1 B8T1: windows 8000 positions 1664964 flips 4 rate/M 2.4025  margin-not-identical 74.2286%  max|dmargin| 0.0001106262  mean|dmargin| 4.389e-06
+   exact fp32 ties (margin==0) in this cell: 0  in R over the same positions: 1
+   flip w274/p144  R top1 2166 top2 2364 margin 1.90735e-06 | other top1 2364 top2 2166 margin 7.62939e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 9.5367e-06 | R-margin in 2^-20 units 2.000
+   flip w1302/p143  R top1 281 top2 30 margin 0 | other top1 30 top2 281 margin 1.90735e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) False | gap change 1.9073e-06 | R-margin in 2^-20 units 0.000
+   flip w3334/p101  R top1 1453 top2 325 margin 5.72205e-06 | other top1 325 top2 1453 margin 1.90735e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 7.6294e-06 | R-margin in 2^-20 units 6.000
+   flip w5595/p154  R top1 451 top2 260 margin 1.90735e-06 | other top1 260 top2 451 margin 3.8147e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 5.722e-06 | R-margin in 2^-20 units 2.000
+   R near-ties (<=5.722e-6) inside this cell: 10  flipped: 4
+   max R margin among flips: 5.7220458984375e-06
+
+== T box1 B1T2: windows 2000 positions 416030 flips 1 rate/M 2.4037  margin-not-identical 74.7381%  max|dmargin| 6.67572e-05  mean|dmargin| 4.072e-06
+   exact fp32 ties (margin==0) in this cell: 2  in R over the same positions: 1
+     tie w677/p168 own top1/top2 357 284 | R top1/top2/margin 357 284 5.7220458984375e-06 | own top1 == R top1: True (not a flip)
+     tie w1302/p143 own top1/top2 281 30 | R top1/top2/margin 281 30 0.0 | own top1 == R top1: True (not a flip)
+   flip w274/p144  R top1 2166 top2 2364 margin 1.90735e-06 | other top1 2364 top2 2166 margin 7.62939e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 9.5367e-06 | R-margin in 2^-20 units 2.000
+   R near-ties (<=5.722e-6) inside this cell: 3  flipped: 1
+   max R margin among flips: 1.9073486328125e-06
+
+== box2 B1T1: windows 4000 positions 833394 flips 2 rate/M 2.3998  margin-not-identical 91.4657%  max|dmargin| 9.727478e-05  mean|dmargin| 7.048e-06
+   exact fp32 ties (margin==0) in this cell: 2  in R over the same positions: 1
+     tie w677/p168 own top1/top2 357 284 | R top1/top2/margin 357 284 5.7220458984375e-06 | own top1 == R top1: True (not a flip)
+     tie w3279/p116 own top1/top2 3001 325 | R top1/top2/margin 3001 325 3.814697265625e-06 | own top1 == R top1: True (not a flip)
+   flip w3334/p101  R top1 1453 top2 325 margin 5.72205e-06 | other top1 325 top2 1453 margin 7.62939e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 1.3351e-05 | R-margin in 2^-20 units 6.000
+   flip w3687/p106  R top1 282 top2 739 margin 3.8147e-06 | other top1 739 top2 282 margin 9.53674e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 1.3351e-05 | R-margin in 2^-20 units 4.000
+   R near-ties (<=5.722e-6) inside this cell: 7  flipped: 2
+   max R margin among flips: 5.7220458984375e-06
+
+== box3 B1T1: windows 4000 positions 831570 flips 1 rate/M 1.2025  margin-not-identical 91.5182%  max|dmargin| 0.0001373291  mean|dmargin| 7.063e-06
+   exact fp32 ties (margin==0) in this cell: 0  in R over the same positions: 0
+   flip w6300/p248  R top1 550 top2 805 margin 1.90735e-06 | other top1 805 top2 550 margin 4.76837e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 6.6757e-06 | R-margin in 2^-20 units 2.000
+   R near-ties (<=5.722e-6) inside this cell: 3  flipped: 1
+   max R margin among flips: 1.9073486328125e-06
+
+== box3 B8T1: windows 4000 positions 831570 flips 2 rate/M 2.4051  margin-not-identical 91.6430%  max|dmargin| 0.0001392365  mean|dmargin| 7.174e-06
+   exact fp32 ties (margin==0) in this cell: 0  in R over the same positions: 0
+   flip w5595/p154  R top1 451 top2 260 margin 1.90735e-06 | other top1 260 top2 451 margin 2.86102e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 4.7684e-06 | R-margin in 2^-20 units 2.000
+   flip w6300/p248  R top1 550 top2 805 margin 1.90735e-06 | other top1 805 top2 550 margin 4.76837e-06 | exact swap True | strict both sides (R margin>0 and own margin>0) True | gap change 6.6757e-06 | R-margin in 2^-20 units 2.000
+   R near-ties (<=5.722e-6) inside this cell: 3  flipped: 2
+   max R margin among flips: 1.9073486328125e-06
+
+== peng 0-2000: windows 2000 positions 416030 flips 0 rate/M 0.0000  margin-not-identical 0.0000%  max|dmargin| 0  mean|dmargin| 0
+   exact fp32 ties (margin==0) in this cell: 1  in R over the same positions: 1
+     tie w1302/p143 own top1/top2 281 30 | R top1/top2/margin 281 30 0.0 | own top1 == R top1: True (not a flip)
+   R near-ties (<=5.722e-6) inside this cell: 3  flipped: 0
+   max R margin among flips: 0.0
+
+== peng 2000-8000: windows 6000 positions 1248934 flips 0 rate/M 0.0000  margin-not-identical 0.0000%  max|dmargin| 0  mean|dmargin| 0
+   exact fp32 ties (margin==0) in this cell: 0  in R over the same positions: 0
+   R near-ties (<=5.722e-6) inside this cell: 7  flipped: 0
+   max R margin among flips: 0.0
+
+== X pooled (box2 B1T1 w0-3999 + box3 B1T1 w4000-7999): positions 1664964 flips 3 (box2 2, box3 1) rate/M 1.8018
+   X cells tile windows 0..7999 exactly, no overlap
+   X pooled margin-not-identical 91.4919%
+   X pooled flips: strict on both sides (R margin>0 and own margin>0): True -> 3 of 3
+   R near-ties (<=5.722e-6) in X: 10  flipped: 3
+   X pooled exact ties (own margin==0): 2 [('w677/p168', 'own top1 == R top1: True'), ('w3279/p116', 'own top1 == R top1: True')]
+distinct flip positions: B 4 X 3 union 6 shared 1
+  B: [(274, 144), (1302, 143), (3334, 101), (5595, 154)]
+  X: [(3334, 101), (3687, 106), (6300, 248)]
+  union: [(274, 144), (1302, 143), (3334, 101), (3687, 106), (5595, 154), (6300, 248)]
+B without the exact-tie flip(s) (R margin == 0): 3 flips, rate/M 1.8018
+B flips strict on both sides: 3 of 4
+
+penguin all-window flips 0 of 1664964
+peng 0-2000 ids identical True second identical True margins bit-identical True
+peng 2000-8000 ids identical True second identical True margins bit-identical True
+R argmax sha256 w0-1999 f8e8cd4b4a22b5c66e02eaa283d098740a483d83c079fc622b8451c46f6ee450
+penguin own sha256 w0-1999 f8e8cd4b4a22b5c66e02eaa283d098740a483d83c079fc622b8451c46f6ee450
+
+Near-tie positions, run by run: signed gap in favour of R's top-1 token (negative = the run prefers R's top-2 token)
+  w274/p144 R top1/top2 2166/2364 | R box1 B1T1: +1.9073e-06 | B box1 B8T1: -7.6294e-06 | T box1 B1T2: -7.6294e-06 | box2 B1T1: +1.1444e-05 | peng 0-2000: +1.9073e-06
+  w677/p168 R top1/top2 357/284 | R box1 B1T1: +5.722e-06 | B box1 B8T1: +3.8147e-06 | T box1 B1T2: +0 | box2 B1T1: +0 | peng 0-2000: +5.722e-06
+  w1302/p143 R top1/top2 281/30 | R box1 B1T1: +0 | B box1 B8T1: -1.9073e-06 | T box1 B1T2: +0 | box2 B1T1: +3.8147e-06 | peng 0-2000: +0
+  w3154/p88 R top1/top2 451/354 | R box1 B1T1: +3.8147e-06 | B box1 B8T1: +1.3351e-05 | box2 B1T1: +1.9073e-06 | peng 2000-8000: +3.8147e-06
+  w3279/p116 R top1/top2 3001/325 | R box1 B1T1: +3.8147e-06 | B box1 B8T1: +7.6294e-06 | box2 B1T1: +0 | peng 2000-8000: +3.8147e-06
+  w3334/p101 R top1/top2 1453/325 | R box1 B1T1: +5.722e-06 | B box1 B8T1: -1.9073e-06 | box2 B1T1: -7.6294e-06 | peng 2000-8000: +5.722e-06
+  w3687/p106 R top1/top2 282/739 | R box1 B1T1: +3.8147e-06 | B box1 B8T1: +3.8147e-06 | box2 B1T1: -9.5367e-06 | peng 2000-8000: +3.8147e-06
+  w5595/p154 R top1/top2 451/260 | R box1 B1T1: +1.9073e-06 | B box1 B8T1: -3.8147e-06 | box3 B1T1: +9.5367e-07 | box3 B8T1: -2.861e-06 | peng 2000-8000: +1.9073e-06
+  w6300/p248 R top1/top2 550/805 | R box1 B1T1: +1.9073e-06 | B box1 B8T1: +1.9073e-06 | box3 B1T1: -4.7684e-06 | box3 B8T1: -4.7684e-06 | peng 2000-8000: +1.9073e-06
+  w7304/p125 R top1/top2 288/411 | R box1 B1T1: +5.722e-06 | B box1 B8T1: +1.1444e-05 | box3 B1T1: +1.1444e-05 | box3 B8T1: +1.9073e-05 | peng 2000-8000: +5.722e-06
+
+Cross-check against state/reports/sv5d/2026-10-03-sv5d-compare.json
+CHECK compare JSON has exactly these 7 pairs: PASS
+CHECK compare JSON == recount for box1/B8T1_0-8000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for box1/B1T2_0-2000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for box2/B1T1_0-4000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for box3/B1T1_4000-8000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for box3/B8T1_4000-8000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for penguin/B1T1_0-2000 (counts, every flip, margin-shift stats): PASS
+CHECK compare JSON == recount for penguin/B1T1_2000-8000 (counts, every flip, margin-shift stats): PASS
+
+Stats per million. upper95 / lower95 are ONE-SIDED exact 95% bounds; 2s_lo / 2s_hi are the TWO-SIDED exact 95% interval
+(each tail 2.5%). P256 = 1-(1-rate)^256 and the same at the upper bound; both assume independent positions, one common rate.
+B (box1 B8T1)              x=4 n=1664964 rate 2.4025 upper95 5.4977 lower95 0.8206 2s_lo 0.6546 2s_hi 6.1512 P256 0.000615 (1 in 1626) P256@upper 0.001406 (1 in 711)
+X pooled                   x=3 n=1664964 rate 1.8018 upper95 4.6569 lower95 0.4911 2s_lo 0.3716 2s_hi 5.2657 P256 0.000461 (1 in 2168) P256@upper 0.001191 (1 in 839)
+X box2 part                x=2 n=833394 rate 2.3998 upper95 7.5544 lower95 0.4264 2s_lo 0.2906 2s_hi 8.6690 P256 0.000614 (1 in 1628) P256@upper 0.001932 (1 in 518)
+X box3 part                x=1 n=831570 rate 1.2025 upper95 5.7047 lower95 0.0617 2s_lo 0.0304 2s_hi 6.7001 P256 0.000308 (1 in 3249) P256@upper 0.001459 (1 in 685)
+T (two threads)            x=1 n=416030 rate 2.4037 upper95 11.4026 lower95 0.1233 2s_lo 0.0609 2s_hi 13.3923 P256 0.000615 (1 in 1626) P256@upper 0.002915 (1 in 343)
+S penguin w0-1999          x=0 n=416030 rate 0.0000 upper95 7.2007 lower95 0.0000 2s_lo 0.0000 2s_hi 8.8668 P256 0.000000 (1 in inf) P256@upper 0.001842 (1 in 543)
+penguin w2000-7999         x=0 n=1248934 rate 0.0000 upper95 2.3986 lower95 0.0000 2s_lo 0.0000 2s_hi 2.9536 P256 0.000000 (1 in inf) P256@upper 0.000614 (1 in 1629)
+penguin all windows        x=0 n=1664964 rate 0.0000 upper95 1.7993 lower95 0.0000 2s_lo 0.0000 2s_hi 2.2156 P256 0.000000 (1 in inf) P256@upper 0.000461 (1 in 2172)
+box3 B8T1 (extra)          x=2 n=831570 rate 2.4051 upper95 7.5710 lower95 0.4273 2s_lo 0.2913 2s_hi 8.6880 P256 0.000616 (1 in 1625) P256@upper 0.001936 (1 in 516)
+B without exact-tie flip   x=3 n=1664964 rate 1.8018 upper95 4.6569 lower95 0.4911 2s_lo 0.3716 2s_hi 5.2657 P256 0.000461 (1 in 2168) P256@upper 0.001191 (1 in 839)
+CHECK compare JSON rate, upper95 and P256 == recount for box1/B8T1_0-8000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for box2/B1T1_0-4000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for box3/B1T1_4000-8000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for box1/B1T2_0-2000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for penguin/B1T1_0-2000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for penguin/B1T1_2000-8000: PASS
+CHECK compare JSON rate, upper95 and P256 == recount for box3/B8T1_4000-8000: PASS
+expected positions at 2/M and 4/M (registered prediction): 3.33 6.66
+P(0 flips in 51,200 positions) at 2.4025/M (sv-5c comparison): 0.884
+if the true rate were 0.5/M: P(count>=3 in 1664964 positions) = 0.052
+if the true rate were 1/M: P(count>=3 in 1664964 positions) = 0.234
+if the true rate were 1.8/M: P(count>=3 in 1664964 positions) = 0.576
+if the true rate were 2.4/M: P(count>=3 in 1664964 positions) = 0.761
+
+SUMMARY: X pooled flips 3 (box2 2, box3 1) of 1664964; B flips 4 of 1664964; T 1 of 416030; penguin 0 of 1664964
+ALL CHECKS PASS
+Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+Service runtime: 1.400s
+CPU time consumed: 1.325s
+Memory peak: 256M (swap: 0B)
+# exit status 0

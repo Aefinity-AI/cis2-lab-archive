@@ -1,0 +1,55 @@
+# VERIFY-PREREG-code-R2 (rust-4b, lens: code, pins, safety; 2026-10-05; read-only except this file and scratch ~/scratch-rust4b/verify-code-r2/)
+
+VERDICT: REGISTER. No MUST. Eight SHOULD items (none changes a result, a band, a pin or a test outcome).
+
+## Tests run (copies in scratch; package untouched; no sudo, no drop, no ssh, no network, no git change)
+- selftest.py (copy): "SELFTEST PASS: 82 passed, 0 failed" (0 FAIL lines).
+- smoke_batch.sh on a scratch copy of the payload (symlinked bin/gguf/inputs/p, same run.py, PAYLOAD_SHA256 -c all OK), 9 scenarios, last lines of batch.log:
+  full OK, order OK-PARTIAL, notcold3 OK-PARTIAL, warmfail INVALID, coldctl3 INVALID, warmfinal INVALID, cap OK-PARTIAL, nostack OK-PARTIAL, nosudo FAIL, each "PASS"; final line "SMOKE ASSERT PASS".
+- wrapper_test.sh (copy): 7 cases as designed (timers paused/restored, SIGTERM to wrapper+runner restores and writes RESULT, box2 leaves timers, payload/runner difference = INVALID, redo10 carries R4B_REPS=10).
+- Smoke prints no timing: wall_to_open_s, sectors_to_open, majflt all null in every row; grep for *_ns=<digits>, elapsed, wall values in logs, rows.jsonl, run.log, timed/* = nothing. (maxrss_kb and load/MHz print, as designed, not arm timings.)
+- Nothing queued/registered/pushed: worktree clean, HEAD 79099130fce2cef959534dba82fe6bc9cd5e843e, origin/cm/rust-lab still 1cdedca; state/ledger and cm-feed hold no rust-4b record (only QUEUE.md plan line); cm-ledger status: private 197, public 195.
+
+## Hashes (all computed from disk now; every one equal)
+- Every sha256 in FREEZE.md sections 1,2,3,6,7 (sources, run.py = payload run.py, filelists, resident.c, build_helper.sh, helper binary a08c989b..., selftest/summ/smoke/wrapper_test, pstart.py, lock, inputs), PAYLOAD_SHA256 135f14f5... and `sha256sum -c` (0 failures), six wrappers (b00214d7, a258291f, 996b1400, 4014e86d, b45aaaa1, 3aedf504) and the repo jobs/ copies (cmp equal).
+- R and C binaries: cmp equal to ~/feed-payload/rust4/bin, sha d0f8ec89... and 5a6ccc32...
+- Weights model.safetensors 80521b40..., config 1d556eab..., tokenizer 9ca9acdd... on penguin; GGUF 8de5be71..., both llama drivers; prompts.jsonl 4b4e7924... (three copies under ~/sv5); wheelhouse list recomputed 21360ef9...; REF witness ecafd089... is the content of REF_COLD_WITNESS.txt.
+- Every 64-hex value in the pass mark's text (27 distinct): all PIN lines match disk; the other four are the wheelhouse list (recomputed), prompts.jsonl, the REF witness, and the superseded first-text bar hash 662db68b... (history, not a pin). Pass mark file now sha256 728d3fcb... (BUILD.md says the same).
+
+## Runner against rust-4 run.py
+Function-level diff (rust4/run.py vs rust4b/run.py). Changed beyond what D1-D9 ask: nothing found that touches a band, rule, hygiene constant or program command. Changes are: module-level script turned into main() (rust-4 had a phase script), arm_cmd paths (BINDIR/INDIR/PDIR instead of bins/WORK; Q branch added), run_proc (t_row renamed t_open, open_re argument, diskstats sectors, majflt/minflt), judge (signature, smoke masking), measure_baseline/Sampler/clamp_verdict (docstring and moved constants only), p_probe (returns its time, P_ENV constant, same env values), finish (budget line, controls). Removed: build/snapshot helpers (M1/M3/M4 code). The hygiene constants (6 windows x 20 s, margins, floors, ceilings, budgets) are the same values.
+
+## Helper (resident.c) behaviour, tested by hand on a scratch file on disk (ext4 on /dev/vdb, ~/scratch-rust4b/verify-code-r2)
+- 40 MiB random file, fsync + posix_fadvise DONTNEED: resident_pages=0 total_pages=10240. After cat: F 10240 10240, resident_pages=10240. After DONTNEED again: 0.
+- Odd size 10000 bytes: total_pages=3 (ceil), resident 3 after read.
+- File on tmpfs (/dev/shm, 8 MiB): reports all 2048 pages resident (cannot read as cold; matches the pass mark's "cannot be cold" reason).
+- Missing path: "E 2" errors+1. Dangling symlink: "E 2". Permission denied (mode 000): "E 13". Symlink to a good file: followed, counted as the target. Directory: "N <path>" (nonregular=1, no pages). Empty file: regular=1 empty=1, 0 pages. Exit code is 0 whenever the SUM line is written.
+- The runner decides cold only on resident==0 AND total>0 AND errors==0 (attempt and cold_control); a missing/denied/crashed-helper (no SUM line) gives errors=1 and resident None, so never cold. The helper rc is recorded, not used (see SHOULD 3).
+
+## Mutants of run.py (22 in scratch/mut, selftest run on each; a few also through the smoke)
+Caught by selftest ("SELFTEST FAIL"): a1 warm threshold clause removed; a2 WARM_MIN=0; b1 cold=True in attempt; b2 check call replaced by a fake zero result; c1 one-plus resident pages tolerated in attempt (<=5); c2 resident tolerated in cold control (<=100); d1 helper errors ignored in attempt; d2 helper without SUM read as 0 resident/1 page/0 errors; e1 sudo drop replaced by a no-op success; e2 drop not called in attempt; e3 drop return code ignored; f1 not-cold attempt counted KEPT (crash); f2 MAX_NOTCOLD=10; g1 cold control 1 try; h1 cap_ok always True; h2 cap_ok without estimate; j1 order row fixed.
+Survived the selftest:
+- i1 (warm control after the last rep ignored) and i2 (warm control at the open ignored): CAUGHT BY THE SMOKE (smoke_batch.sh on a mutant payload with the run.py hash re-listed): warmfinal gave OK-PARTIAL, warmfail gave OK, expected INVALID, "SMOKE ASSERT FAIL". This is the "runner's own smoke catches it" path the design names.
+- d3 (helper rc forced 0): EQUIVALENT mutant, the rc is never read by any decision (a helper that dies has no SUM line and is already not cold). Nothing to catch.
+- e4 (drop skipped from rep 2 on): not caught by the selftest and not by the smoke word (order scenario still OK-PARTIAL), BUT the per-file check catches it: the smoke row shows all six arms "NOT RUN INVALID (cold cache not dropped)" (19 NOT COLD lines vs 4). It fails safe (no number can come from an inherited cache). Not a MUST; see SHOULD 1.
+- k1 was a null control (no change), survives by construction.
+
+## Other code checks
+- Every attempt() calls drop_caches(paths) then helper_check(paths) then spawns; no cache state is carried between arms. A not-cold, discarded or void attempt loops `while True` at the same pos (verified in the code and by selftest "loop" checks and smoke order/notcold3).
+- Order design: computed from run.py DESIGN: n=5 position sums 10,10,10,10,10 (mean 2.0); n=6 sums 12,12,12,13,13,13 (R, C, P 2.4; Rv, Cv, Q 2.6); n=4 sums 7,7,8,8 (R, C 1.4; Rv, Cv 1.6); every row a permutation; no arm at the same position in consecutive rows (row 5 to 1 included). As D6/pass mark say. Rep k uses row (k-1) mod 5, so the redo repeats.
+- Cap: cap_ok(est, reserve) checked at the start of every attempt (including each repeat after a NOTCOLD); CAP_S 5400 and R4B_CAP_S is read only in smoke; budget file ~/.rust4b_budget_<host> adds each job's elapsed (the redo shares it). h1/h2 mutants caught. The pre-timed part (install, gates, controls) counts against T_JOB0.
+- sudo: used only in drop_caches (sync; echo 3 > drop_caches) and in the start probe `sudo -n sh -c true` (same shape). No sudo in any wrapper.
+- Wrappers: each compares sha256 of $HOME/rust4b/PAYLOAD_SHA256 and run.py to frozen values before anything runs (INVALID with both values), exports them, and run.py re-checks every payload file against PAYLOAD_SHA256 and the frozen values on real hosts (smoke skips the frozen test only). box1 trap: trap restore_timers EXIT; trap 'exit 143' TERM INT HUP; the paused-list is written before the stop; failsafe transient timer 7200 s (above the 5400 s cap) is stopped on restore. box4/box5 wrappers differ only in the host name; box1 and redo10 differ in the R4B_REPS=10 line and one comment.
+
+## SHOULD (nothing here blocks registration; change only if the operator accepts re-pinning)
+1. selftest/smoke do not pin "a drop and a check on EVERY attempt of every rep" for reps >= 2 (mutant e4 survives both; it fails safe via the check). Cheap guard: in smoke_batch.sh add an assertion on the order scenario that arm_status of R, C, Rv, P, Q is OK (only Cv NOT RUN); or a selftest that counts drop_caches calls == attempts over 2 reps.
+2. D2/D3 helper semantics: runner ignores nonregular and empty. A listed path that is a directory or an empty file reads "0 pages, cold" if other files in the list have pages. Unreachable for the frozen lists (hash-pinned files; the venv walk is regular files only), but a one-line guard `chk["nonregular"] == 0 and chk["empty"] == 0` closes it (the SUM line already prints both; helper_check parses nonregular, not empty).
+3. The helper's exit code is recorded only. Harmless now (no SUM line already means not cold); say so in BUILD.md or require rc == 0 in the decision to keep a future helper honest.
+4. Box1 wrapper runs `python3 $P/run.py $H` in the foreground; bash defers the TERM trap until it returns, so a TERM to the wrapper alone restores the timers only when the runner ends (worst case 5400 s plus; the 7200 s failsafe still covers). Running it as `python3 ... & wait $!` (as the sleep loop already does) makes the trap prompt. wrapper_test case 3 signals both processes, so it does not show this.
+5. R4B_REPS, R4B_VENV and R4B_WEIGHTS_DIR are read from the environment on real hosts (R4B_CAP_S, baseline and smoke knobs are smoke-only). A stray R4B_REPS=3 in a feed environment would change the rep count with no hash change. Clamp: accept only 5 or 10 on a real host (the redo wrapper sets 10).
+6. filelists.json (pinned) still carries the "not_listed" sentence whose reason ("cannot be cold") FREEZE.md section 4 calls wrong; the pass mark COLD sentence supersedes it. Fine as documented; do not edit the pinned file. Make sure the RESULT text quotes the pass mark, not filelists.json.
+7. Cap margin on box1 in the redo as 10: estimate.py gives 1,624 + 2,815 = 4,439 s (5,327 s at +20 percent) against 5,400 s, a 1.3 percent margin; a cold R/C wall on a slow disk well above the 15.8 s sizing run would COST-CAP the redo and leave the pair with no label (the pass mark already says so). The "(not a result)" caveat on 15.8 s is present; consider stating the first-job elapsed threshold at which the redo should not be started.
+8. A run killed before finish() writes no budget line, so a redo of a crashed job starts with the full 5,400 s (cap bypass by crash, small). Record the budget at the opening and update at the end, or add a note in BUILD.md that crashed jobs are charged by the operator.
+
+## Confirmed
+Hashes (payload, runner, helper, wrappers, programs, weights, inputs, pass mark PIN lines) equal disk; selftest 82/0; smoke batch PASS on 9 scenarios; wrapper test 7 cases; helper behaves as stated on disk and tmpfs and each error class gives a defined non-cold result; every cold-bypass mutant a-e1..e3, f, g, h, j is caught by the selftest, i1/i2 by the smoke, d3 is equivalent, e4 fails safe; order design and cap as described; nothing queued, registered, pushed.

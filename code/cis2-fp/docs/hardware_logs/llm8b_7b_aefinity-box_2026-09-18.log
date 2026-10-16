@@ -1,0 +1,109 @@
+=== leg-llm8b-7b start 2026-09-18T12:45:14+00:00 ===
+host: aefinity-box, pinned target digest (LLM-5b/LLM-5c Kaggle, prompt_toks=4 gen_toks=4 fp32 sequential) = 1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a
+config/tokenizer sha256 OK
+=== model-00001-of-00004.safetensors download/resume attempt 1 (have 0 / 3945426872) 2026-09-18T12:45:14+00:00 ===
+model-00001-of-00004.safetensors size+sha256 OK 2026-09-18T14:13:33+00:00
+=== model-00002-of-00004.safetensors download/resume attempt 1 (have 0 / 3864726352) 2026-09-18T14:13:33+00:00 ===
+model-00002-of-00004.safetensors size+sha256 OK 2026-09-18T15:23:07+00:00
+=== model-00003-of-00004.safetensors download/resume attempt 1 (have 0 / 3864726408) 2026-09-18T15:23:07+00:00 ===
+model-00003-of-00004.safetensors size+sha256 OK 2026-09-18T16:42:30+00:00
+=== model-00004-of-00004.safetensors download/resume attempt 1 (have 0 / 3556392240) 2026-09-18T16:42:30+00:00 ===
+model-00004-of-00004.safetensors size+sha256 OK 2026-09-18T18:01:21+00:00
+=== merge start 2026-09-18T18:01:21+00:00 ===
+shard model-00001-of-00004.safetensors: streaming
+shard model-00002-of-00004.safetensors: streaming
+shard model-00003-of-00004.safetensors: streaming
+shard model-00004-of-00004.safetensors: streaming
+merged 339 tensors -> weights_qwen2_7b/model.safetensors size=15231272088 sha256=13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3
+=== merge end 2026-09-18T18:10:22+00:00 (Kaggle merged sha256 for comparison only: 0e218d281ea2c86c281db9cc6491f4a37ef7b931e57cd63b70cde999bce265ee) ===
+ABORT: merged size 15231272088 != 15231233024
+=== leg-llm8b-7b start 2026-09-18T20:14:08+00:00 ===
+host: aefinity-box, pinned target digest (LLM-5b/LLM-5c Kaggle, prompt_toks=4 gen_toks=4 fp32 sequential) = 1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a
+config/tokenizer sha256 OK
+model-00001-of-00004.safetensors size+sha256 OK 2026-09-18T20:14:08+00:00
+model-00002-of-00004.safetensors size+sha256 OK 2026-09-18T20:14:08+00:00
+model-00003-of-00004.safetensors size+sha256 OK 2026-09-18T20:14:08+00:00
+model-00004-of-00004.safetensors size+sha256 OK 2026-09-18T20:14:08+00:00
+total 29755508
+drwxrwxr-x  2 cm cm        4096 Sep 18 18:10 .
+drwxrwxr-x 18 cm cm        4096 Sep 18 12:43 ..
+-rw-rw-r--  1 cm cm         664 Sep 18 12:43 config.json
+-rw-rw-r--  1 cm cm  3945426872 Sep 18 14:13 model-00001-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 14:13 model-00001-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3864726352 Sep 18 15:22 model-00002-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 15:23 model-00002-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3864726408 Sep 18 16:41 model-00003-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 16:42 model-00003-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3556392240 Sep 18 18:00 model-00004-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 18:01 model-00004-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm 15231272088 Sep 18 18:10 model.safetensors
+-rw-rw-r--  1 cm cm       27752 Sep 18 12:43 model.safetensors.index.json
+-rw-rw-r--  1 cm cm     7028015 Sep 18 12:43 tokenizer.json
+               total        used        free      shared  buff/cache   available
+Mem:            5841         882         145           0        5106        4958
+Swap:           3905          60        3845
+=== cis2_ref run start 2026-09-18T20:14:08+00:00 ===
+
+thread 'main' (581504) panicked at src/main.rs:641:55:
+read "<home>/projects/cis2-fp-cm-llm8b-stream/weights_qwen2_7b/model.safetensors": out of memory
+stack backtrace:
+   0: __rustc::rust_begin_unwind
+   1: core::panicking::panic_fmt
+   2: cis2_ref::sha256_file::{closure#0}
+   3: cis2_ref::sha256_file
+   4: cis2_ref::main
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+=== cis2_ref run end 2026-09-18T20:14:09+00:00 rc=101 ===
+=== leg-llm8b-7b start 2026-09-18T21:18:32+00:00 ===
+host: aefinity-box, pinned target digest (LLM-5b/LLM-5c Kaggle, prompt_toks=4 gen_toks=4 fp32 sequential) = 1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a
+config/tokenizer sha256 OK
+model-00001-of-00004.safetensors size+sha256 OK 2026-09-18T21:18:32+00:00
+model-00002-of-00004.safetensors size+sha256 OK 2026-09-18T21:18:32+00:00
+model-00003-of-00004.safetensors size+sha256 OK 2026-09-18T21:18:32+00:00
+model-00004-of-00004.safetensors size+sha256 OK 2026-09-18T21:18:32+00:00
+total 29755508
+drwxrwxr-x  2 cm cm        4096 Sep 18 18:10 .
+drwxrwxr-x 18 cm cm        4096 Sep 18 12:43 ..
+-rw-rw-r--  1 cm cm         664 Sep 18 12:43 config.json
+-rw-rw-r--  1 cm cm  3945426872 Sep 18 14:13 model-00001-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 14:13 model-00001-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3864726352 Sep 18 15:22 model-00002-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 15:23 model-00002-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3864726408 Sep 18 16:41 model-00003-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 16:42 model-00003-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm  3556392240 Sep 18 18:00 model-00004-of-00004.safetensors
+-rw-rw-r--  1 cm cm           0 Sep 18 18:01 model-00004-of-00004.safetensors.sha256.ok
+-rw-rw-r--  1 cm cm 15231272088 Sep 18 18:10 model.safetensors
+-rw-rw-r--  1 cm cm       27752 Sep 18 12:43 model.safetensors.index.json
+-rw-rw-r--  1 cm cm     7028015 Sep 18 12:43 tokenizer.json
+               total        used        free      shared  buff/cache   available
+Mem:            5841         934        1472           1        3751        4906
+Swap:           3905          60        3845
+=== cis2_ref run start 2026-09-18T21:18:32+00:00 ===
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+[run1] step 1: token_id=1052
+[run1] step 2: token_id=572
+[run1] step 3: token_id=264
+[run2] step 0: token_id=11
+[run2] step 1: token_id=1052
+[run2] step 2: token_id=572
+[run2] step 3: token_id=264
+weights_sha256=13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3
+tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8
+config_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]
+prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]
+prompt_idx=0 run1_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3
+prompt_idx=0 run2_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3
+prompt_idx=0 run1_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265
+prompt_idx=0 run2_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265
+prompt_idx=0 runs_identical=true
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3 prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential
+=== cis2_ref run end 2026-09-18T22:19:00+00:00 rc=0 ===

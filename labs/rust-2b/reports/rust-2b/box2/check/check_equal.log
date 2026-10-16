@@ -1,0 +1,11 @@
+n_params T=1841280 B=1841280
+init_sha256 T=1157493146ec88dd320c87acec1c47b816fce8c378ba830df54302349416129b B=1157493146ec88dd320c87acec1c47b816fce8c378ba830df54302349416129b
+order_sha256 T=4b96f5af608af0b1aa90805085a74f584c4b17fc6d5bbceebef99e1ee448593f B=4b96f5af608af0b1aa90805085a74f584c4b17fc6d5bbceebef99e1ee448593f
+loss_fwd T=5.54213667 B=5.5421367 absdiff=3.08e-08 tol=1e-05 ok
+loss_after_step1 T=4.86082554 B=4.8608255 absdiff=3.86e-08 tol=1e-05 ok
+loss_step2 T=4.9291811 B=4.9291816 absdiff=5.01e-07 tol=0.0001 ok
+loss_step3 T=4.72942638 B=4.7294264 absdiff=1.6e-08 tol=0.0001 ok
+params1 max absolute diff 3.32e-05 in l1.ff2.w (tol 0.0001) ok
+grads1 max relative diff 1.2e-06 in lnf.gain (tol 0.0001) ok
+grads1 tensors skipped as noise (largest |g| below 1e-6 of the global largest): l0.k.b,l1.k.b,l2.k.b,l3.k.b
+CHECK PASS

@@ -1,0 +1,4 @@
+## registered (2026-10-16T10:45:40Z) bar_sha256=777d11ce914ffdfa56d8e20381dfecd3ca593b8b2c6a0b2638fcbdb1a864fa2d
+
+Via cm-feed legs cis2-coverage-<host> on hq, w2, w3, w4 (CPU-only host g++ builds of payload ~/feed-payload/cis2-coverage, template jobs/cis2-coverage.template.sh, gen_toks 8): every host reports RESULT: OK with the same ref8 CIS2_REF digest (expected 4660d6c33b6c0d51529b4be43687c004c8b7c0d8804439999b5af32683528734 from the build host of record), m01=MOVED and m15=MOVED on every host, ids0=5 (TIE_A) on every host, repeat=SAME on every host, and the payload sha prefixes weights 677a5a25 / config af88fb25 / ids aa1bb87d confirmed. Any host FAIL, any SAME, any ids0 != 5, any repeat=DIFF or any ref8 disagreement between hosts = NOT MET. The from-text numpy check is informative only (same author).
+

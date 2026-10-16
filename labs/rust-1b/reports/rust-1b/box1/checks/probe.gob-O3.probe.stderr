@@ -1,0 +1,3 @@
+Core: Haswell
+loading weights (read() into per-tensor heap buffers)...
+weights loaded.

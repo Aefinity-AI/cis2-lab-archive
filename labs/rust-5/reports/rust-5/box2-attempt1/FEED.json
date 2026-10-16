@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-04T05:16:31Z",
+  "host": "cm-box2",
+  "name": "rust5-box2",
+  "pushed_at": "2026-10-04T05:00:30Z",
+  "result_line": "RESULT: FAIL host=box2 timing pass did not finish OK: harness_time.out:RESULT: FAIL host=box2 tier=T0 INVALID discard budget 2 used up, one more discard (clock/throttle) k2_passA.out: k2_passB.out:",
+  "status": "fail"
+}

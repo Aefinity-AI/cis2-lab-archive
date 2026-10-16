@@ -1,0 +1,134 @@
+--- a/gpu/cis2_host.cpp
++++ b/gpu/cis2_host.cpp
+@@ -68,6 +68,8 @@
+   std::string trace_path;
+   int gen_toks = 16;
+   int prompt_idx = 0;
++  std::string score_path, score_out_path;  // w6 scoring mode
++  long score_max = -1;
+ 
+   for (int i = 1; i < argc; ++i) {
+     std::string a = argv[i];
+@@ -76,9 +78,12 @@
+     else if (a == "--gen-toks" && i + 1 < argc) gen_toks = atoi(argv[++i]);
+     else if (a == "--trace" && i + 1 < argc) trace_path = argv[++i];
+     else if (a == "--prompt-idx" && i + 1 < argc) prompt_idx = atoi(argv[++i]);
++    else if (a == "--score-windows" && i + 1 < argc) score_path = argv[++i];
++    else if (a == "--score-out" && i + 1 < argc) score_out_path = argv[++i];
++    else if (a == "--score-max" && i + 1 < argc) score_max = atol(argv[++i]);
+     else { fprintf(stderr, "FATAL: unknown CLI argument: %s\n", a.c_str()); return 2; }
+   }
+-  if (ids_path.empty()) {
++  if (ids_path.empty() && score_path.empty()) {
+     fprintf(stderr, "FATAL: --ids FILE is required (produce it with "
+                     "`cargo run --release --bin cis2_ref -- --dump-ids FILE`)\n");
+     return 2;
+@@ -162,6 +167,78 @@
+   st.data = nullptr;
+   fprintf(stderr, "weights loaded.\n");
+ 
++  // ---- w6 scoring mode (teacher-forced, no decoding) ---------------------
++  // --score-windows FILE: one window per line, whitespace-separated token ids.
++  // Each window restarts at position 0. Per position, records the top-1 and
++  // top-2 logits (lowest index wins ties, as cis2_argmax). Output lines:
++  //   w pos top1_idx top1_f32bits top2_idx top2_f32bits
++  // The --gen-toks path below is untouched.
++  if (!score_path.empty()) {
++    if (score_out_path.empty()) { fprintf(stderr, "FATAL: --score-out FILE required\n"); return 2; }
++    std::vector<std::vector<uint32_t>> wins;
++    {
++      std::string text = cis2_read_file(score_path);
++      size_t i = 0;
++      std::vector<uint32_t> cur;
++      while (i <= text.size()) {
++        char c = i < text.size() ? text[i] : '\n';
++        if (c >= '0' && c <= '9') {
++          size_t j = i;
++          while (j < text.size() && text[j] >= '0' && text[j] <= '9') ++j;
++          cur.push_back((uint32_t)strtoul(text.substr(i, j - i).c_str(), nullptr, 10));
++          i = j;
++          continue;
++        }
++        if (c == '\n' && !cur.empty()) { wins.push_back(cur); cur.clear(); }
++        ++i;
++      }
++    }
++    size_t maxlen = 0;
++    for (auto &w : wins) if (w.size() > maxlen) maxlen = w.size();
++    if (maxlen == 0) { fprintf(stderr, "FATAL: no windows in %s\n", score_path.c_str()); return 2; }
++    Cis2Workspace sws;
++    sws.alloc(model, (int)maxlen);
++    std::vector<float> lg((size_t)model.vocab);
++    FILE *fo = fopen(score_out_path.c_str(), "wb");
++    if (!fo) { fprintf(stderr, "FATAL: cannot write %s\n", score_out_path.c_str()); return 2; }
++    Cis2Sha256 osha;
++    long done = 0;
++    for (size_t w = 0; w < wins.size() && (score_max < 0 || done < score_max); ++w) {
++      for (size_t pos = 0; pos < wins[w].size() && (score_max < 0 || done < score_max); ++pos) {
++        cis2_forward_token(model, sws, (int)pos, wins[w][pos], nullptr);
++        cis2_download(lg.data(), sws.logits, (size_t)model.vocab);
++        int b1 = 0, b2 = -1;
++        float v1 = lg[0], v2 = 0.0f;
++        for (int i = 1; i < model.vocab; ++i) {
++          float v = lg[(size_t)i];
++          if (v > v1) { b2 = b1; v2 = v1; b1 = i; v1 = v; }
++          else if (b2 < 0 || v > v2) { b2 = i; v2 = v; }
++        }
++        char line[160];
++        int n = snprintf(line, sizeof(line), "%zu %zu %d %08x %d %08x\n", w, pos, b1,
++                         cis2_f32_bits(v1), b2, cis2_f32_bits(v2));
++        fwrite(line, 1, (size_t)n, fo);
++        osha.update((const unsigned char *)line, (size_t)n);
++        ++done;
++        if (done % 1000 == 0) fprintf(stderr, "[score] %ld positions\n", done);
++      }
++    }
++    fclose(fo);
++    unsigned char od[32];
++    osha.finalize(od);
++#if defined(CIS2_W6_EXP_GLIBC)
++    const char *mode = "glibc";
++#elif defined(CIS2_W6_EXP_CORE)
++    const char *mode = "core-math";
++#else
++    const char *mode = "pinned";
++#endif
++    printf("W6_SCORE exp=%s windows=%zu positions=%ld out_sha256=%s\n", mode,
++           wins.size(), done, cis2_hex(od, 32).c_str());
++    sws.free_all();
++    return 0;
++  }
++
+   // ---- prompt ----------------------------------------------------------
+   std::vector<uint32_t> prompt_ids = read_ids(ids_path);
+   fprintf(stderr, "[prompt %d] token ids (%zu toks): %s\n", prompt_idx,
+--- a/gpu/cis2_math.h
++++ b/gpu/cis2_math.h
+@@ -424,7 +424,27 @@
+   return cis2_f32_from_bits(new_bits);
+ }
+ 
++// w6 scoring-mode patch: compile-time exp substitution for the libm-hazard
++// lab. Default build (no define) is the pinned polynomial, unchanged. Host
++// builds only; every call site of cis2_exp_pinned (softmax, SiLU, RoPE table)
++// goes through the substitution.
++#if defined(CIS2_W6_EXP_GLIBC) && defined(CIS2_W6_EXP_CORE)
++#error "CIS2_W6_EXP_GLIBC and CIS2_W6_EXP_CORE are exclusive"
++#endif
++#if defined(CIS2_W6_EXP_GLIBC) || defined(CIS2_W6_EXP_CORE)
++#ifdef __CUDACC__
++#error "w6 exp substitution is a host-only build"
++#endif
++#include <math.h>
++extern "C" float cr_expf(float);
++#endif
++
+ CIS2_FN inline float cis2_exp_pinned(float x) {
++#if defined(CIS2_W6_EXP_GLIBC)
++  return expf(x);
++#elif defined(CIS2_W6_EXP_CORE)
++  return cr_expf(x);
++#endif
+   if (cis2_isnan_f32(x)) return cis2_nan_f32();
+   if (x > 88.0f) return cis2_inf_f32();
+   if (x < -88.0f) return 0.0f;

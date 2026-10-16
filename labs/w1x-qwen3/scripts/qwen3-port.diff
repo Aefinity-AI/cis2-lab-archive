@@ -1,0 +1,144 @@
+--- a/gpu/cis2_model.h	2026-10-16 08:55:05.662143840 +0000
++++ b/gpu/cis2_model.h	2026-10-16 15:25:56.253885390 +0000
+@@ -391,6 +391,8 @@
+   const float *q_bias;  // nullptr when the checkpoint has no bias tensors
+   const float *k_bias;
+   const float *v_bias;
++  const float *q_norm;  // Qwen3 per-head RMSNorm weight [head_dim]; nullptr => absent
++  const float *k_norm;
+ };
+ 
+ struct Cis2Model {
+@@ -401,6 +403,7 @@
+   std::vector<Cis2Layer> layers;
+   int hidden = 0, inter = 0, n_layers = 0, n_heads = 0, n_kv_heads = 0;
+   int head_dim = 0, vocab = 0;
++  int q_dim = 0;  // n_heads * head_dim; == hidden for every pre-Qwen3 model
+   float eps = 0.0f;
+   std::vector<float> inv_freq_host;
+   unsigned char inv_freq_table_digest[32];
+@@ -644,16 +647,16 @@
+ 
+   void alloc(const Cis2Model &m, int max_positions) {
+     max_pos = max_positions;
+-    int hidden = m.hidden, inter = m.inter, kvd = m.kv_dim();
++    int hidden = m.hidden, inter = m.inter, kvd = m.kv_dim(), qd = m.q_dim;
+     h = cis2_dev_alloc((size_t)hidden);
+     h2 = cis2_dev_alloc((size_t)hidden);
+     ln = cis2_dev_alloc((size_t)hidden);
+-    sq = cis2_dev_alloc((size_t)hidden);
++    sq = cis2_dev_alloc((size_t)(hidden > m.head_dim ? hidden : m.head_dim));
+     red = cis2_dev_alloc(1);
+-    q = cis2_dev_alloc((size_t)hidden);
++    q = cis2_dev_alloc((size_t)qd);
+     k = cis2_dev_alloc((size_t)kvd);
+     v = cis2_dev_alloc((size_t)kvd);
+-    attn_out = cis2_dev_alloc((size_t)hidden);
++    attn_out = cis2_dev_alloc((size_t)qd);
+     o = cis2_dev_alloc((size_t)hidden);
+     gate = cis2_dev_alloc((size_t)inter);
+     up = cis2_dev_alloc((size_t)inter);
+@@ -689,6 +692,7 @@
+   const int n_heads = m.n_heads;
+   const int group = m.n_heads / m.n_kv_heads;
+   const int kvd = m.kv_dim();
++  const int qd = m.q_dim;
+   const float scale = cis2_rsqrt_cr((float)head_dim);
+ 
+   cis2_k_embed(m.embed_tokens, (int)token_id, hidden, ws.h);
+@@ -700,9 +704,9 @@
+     cis2_rmsnorm(ws.h, L.input_layernorm, m.eps, hidden, ws.sq, ws.red, ws.ln);
+     if (trace && trace->on()) trace->emit(pos, li, "norm1", ws.ln, (size_t)hidden);
+ 
+-    cis2_k_matvec(L.q_proj, ws.ln, hidden, hidden, ws.q);
+-    cis2_k_add_bias(ws.q, L.q_bias, hidden);
+-    if (trace && trace->on()) trace->emit(pos, li, "q", ws.q, (size_t)hidden);
++    cis2_k_matvec(L.q_proj, ws.ln, qd, hidden, ws.q);
++    cis2_k_add_bias(ws.q, L.q_bias, qd);
++    if (trace && trace->on()) trace->emit(pos, li, "q", ws.q, (size_t)qd);
+     cis2_k_matvec(L.k_proj, ws.ln, kvd, hidden, ws.k);
+     cis2_k_add_bias(ws.k, L.k_bias, kvd);
+     if (trace && trace->on()) trace->emit(pos, li, "k", ws.k, (size_t)kvd);
+@@ -710,8 +714,24 @@
+     cis2_k_add_bias(ws.v, L.v_bias, kvd);
+     if (trace && trace->on()) trace->emit(pos, li, "v", ws.v, (size_t)kvd);
+ 
++    // Qwen3 QK-norm: spec section 8 RMSNorm (cis2_rmsnorm unchanged) applied
++    // in place to each head's head_dim slice, q and k, after projection and
++    // before RoPE. Absent (q_norm == nullptr) for every earlier model.
++    if (L.q_norm) {
++      for (int hh = 0; hh < n_heads; ++hh)
++        cis2_rmsnorm(ws.q + (size_t)hh * head_dim, L.q_norm, m.eps, head_dim, ws.sq, ws.red,
++                     ws.q + (size_t)hh * head_dim);
++      if (trace && trace->on()) trace->emit(pos, li, "q_norm", ws.q, (size_t)qd);
++    }
++    if (L.k_norm) {
++      for (int hh = 0; hh < m.n_kv_heads; ++hh)
++        cis2_rmsnorm(ws.k + (size_t)hh * head_dim, L.k_norm, m.eps, head_dim, ws.sq, ws.red,
++                     ws.k + (size_t)hh * head_dim);
++      if (trace && trace->on()) trace->emit(pos, li, "k_norm", ws.k, (size_t)kvd);
++    }
++
+     cis2_k_rope(ws.q, n_heads, head_dim, pos, m.inv_freq);
+-    if (trace && trace->on()) trace->emit(pos, li, "rope_q", ws.q, (size_t)hidden);
++    if (trace && trace->on()) trace->emit(pos, li, "rope_q", ws.q, (size_t)qd);
+     cis2_k_rope(ws.k, m.n_kv_heads, head_dim, pos, m.inv_freq);
+     if (trace && trace->on()) trace->emit(pos, li, "rope_k", ws.k, (size_t)kvd);
+ 
+@@ -730,9 +750,9 @@
+ 
+     cis2_k_attn_weighted_sum(ws.scores, ws.vcache[(size_t)li], n_heads, group,
+                              head_dim, kvd, pos, ws.attn_out);
+-    if (trace && trace->on()) trace->emit(pos, li, "attn_out", ws.attn_out, (size_t)hidden);
++    if (trace && trace->on()) trace->emit(pos, li, "attn_out", ws.attn_out, (size_t)qd);
+ 
+-    cis2_k_matvec(L.o_proj, ws.attn_out, hidden, hidden, ws.o);
++    cis2_k_matvec(L.o_proj, ws.attn_out, hidden, qd, ws.o);
+     if (trace && trace->on()) trace->emit(pos, li, "o_proj", ws.o, (size_t)hidden);
+     cis2_k_add(ws.h, ws.o, hidden, ws.h2);
+     { float *t = ws.h; ws.h = ws.h2; ws.h2 = t; }
+--- a/gpu/cis2_host.cpp	2026-10-16 08:55:05.662143840 +0000
++++ b/gpu/cis2_host.cpp	2026-10-16 15:25:45.849758582 +0000
+@@ -112,6 +112,11 @@
+   model.eps = (float)need("rms_norm_eps").num;
+   const double rope_theta = need("rope_theta").num;
+   model.head_dim = model.hidden / model.n_heads;
++  // Qwen3 sets head_dim independently of hidden/n_heads (128 vs 64 for 0.6B).
++  // Only honoured when config.json carries the key; configs without it
++  // (SmolLM2, Qwen2.5) keep hidden/n_heads, so their behaviour is unchanged.
++  if (const Cis2Json *hd = cfg.get("head_dim")) model.head_dim = (int)hd->num;
++  model.q_dim = model.n_heads * model.head_dim;
+   bool tie_word_embeddings = true;
+   if (const Cis2Json *t = cfg.get("tie_word_embeddings"))
+     tie_word_embeddings = (t->kind == Cis2Json::BOOL) ? t->b : true;
+@@ -127,6 +132,7 @@
+   fprintf(stderr, "loading + widening weights (bf16 -> fp32, exact bit-shift)...\n");
+   Cis2SafeTensors st;
+   st.open(weights_path);
++  const size_t QD = (size_t)model.q_dim;
+   const size_t H = (size_t)model.hidden, I = (size_t)model.inter;
+   const size_t KV = (size_t)model.n_kv_heads * (size_t)model.head_dim;
+   const size_t V = (size_t)model.vocab;
+@@ -142,16 +148,19 @@
+     Cis2Layer &L = model.layers[(size_t)i];
+     L.input_layernorm = st.load_bf16(nm("input_layernorm.weight"), {H});
+     L.post_attention_layernorm = st.load_bf16(nm("post_attention_layernorm.weight"), {H});
+-    L.q_proj = st.load_bf16(nm("self_attn.q_proj.weight"), {H, H});
++    L.q_proj = st.load_bf16(nm("self_attn.q_proj.weight"), {QD, H});
+     L.k_proj = st.load_bf16(nm("self_attn.k_proj.weight"), {KV, H});
+     L.v_proj = st.load_bf16(nm("self_attn.v_proj.weight"), {KV, H});
+-    L.o_proj = st.load_bf16(nm("self_attn.o_proj.weight"), {H, H});
++    L.o_proj = st.load_bf16(nm("self_attn.o_proj.weight"), {H, QD});
+     L.gate_proj = st.load_bf16(nm("mlp.gate_proj.weight"), {I, H});
+     L.up_proj = st.load_bf16(nm("mlp.up_proj.weight"), {I, H});
+     L.down_proj = st.load_bf16(nm("mlp.down_proj.weight"), {H, I});
+     // Optional QKV bias — absent for Llama-family SmolLM2, present for
+     // Qwen2-family checkpoints (attention_bias=true).
+-    L.q_bias = st.has(nm("self_attn.q_proj.bias")) ? st.load_bf16(nm("self_attn.q_proj.bias"), {H}) : nullptr;
++    L.q_bias = st.has(nm("self_attn.q_proj.bias")) ? st.load_bf16(nm("self_attn.q_proj.bias"), {QD}) : nullptr;
++    // Qwen3 per-head q_norm / k_norm (shape [head_dim]); data-driven by tensor presence.
++    L.q_norm = st.has(nm("self_attn.q_norm.weight")) ? st.load_bf16(nm("self_attn.q_norm.weight"), {(size_t)model.head_dim}) : nullptr;
++    L.k_norm = st.has(nm("self_attn.k_norm.weight")) ? st.load_bf16(nm("self_attn.k_norm.weight"), {(size_t)model.head_dim}) : nullptr;
+     L.k_bias = st.has(nm("self_attn.k_proj.bias")) ? st.load_bf16(nm("self_attn.k_proj.bias"), {KV}) : nullptr;
+     L.v_bias = st.has(nm("self_attn.v_proj.bias")) ? st.load_bf16(nm("self_attn.v_proj.bias"), {KV}) : nullptr;
+   }

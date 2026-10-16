@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T09:37:21Z",
+  "host": "cm-hq",
+  "name": "cis2-horizon-hq",
+  "pushed_at": "2026-10-16T08:53:46Z",
+  "result_line": "RESULT: OK cis2-horizon-hq host16=MATCH host256=CANDIDATE host512=CANDIDATE host1024=CANDIDATE host2048=CANDIDATE cuda16=MATCH cuda256=CANDIDATE cuda512=CANDIDATE cuda1024=CANDIDATE cuda2048=CANDIDATE weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}

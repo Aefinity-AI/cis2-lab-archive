@@ -1,0 +1,11 @@
+rustc 1.98.0 (88d9e12ae 2026-08-18)
+binary: rustc
+commit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea
+commit-date: 2026-08-18
+host: x86_64-unknown-linux-gnu
+release: 1.98.0
+LLVM version: 22.1.8
+cargo 1.98.0 (797e8a9bc 2026-08-05)
+RUSTFLAGS=--remap-path-prefix=<src>=/src
+target=x86_64-unknown-linux-musl cc=musl-gcc 1.2.5-3.1~deb13u1 x86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0
+profile.release env: opt-level=3 lto=fat codegen-units=1 panic=abort strip=symbols; jobs=1; SOURCE_DATE_EPOCH=1759536000; vendored, --locked --offline; netns=1

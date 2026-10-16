@@ -1,0 +1,5 @@
+gcc: gcc (Debian 14.2.0-19) 14.2.0 host=aefinity-box-1605
+GCC c_gcc_O2_t0: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O2_t1: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+GCC c_gcc_O3_t0: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O3_t1: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2

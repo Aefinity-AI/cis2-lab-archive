@@ -1,0 +1,56 @@
+{
+  "name": "eu-ai-act",
+  "title": "EU AI Act (Regulation (EU) 2024/1689) — Art. 12/13/14/15 record-keeping slice",
+  "description": "Vectors that produce evidence relevant to Art. 12 (logging), 13 (transparency), 14 (human oversight), 15 (accuracy/robustness/consistency), scoped strictly to the record-keeping/reproducibility slice CIS-2 actually covers. See compliance/CROSSWALK.md rows 1-9 for the full honest coverage table this profile is a machine-checkable subset of.",
+  "vectors": [
+    {
+      "id": "receipt_schema",
+      "crosswalk_control": "CROSSWALK.md row 1 (Art. 12(1) automatic event logging)",
+      "rationale": "A schema-valid receipt with a witness digest is the concrete artifact that IS the 'automatic recording of events' Art. 12(1) asks for, for the model-execution slice."
+    },
+    {
+      "id": "chain_integrity",
+      "crosswalk_control": "CROSSWALK.md row 1 (Art. 12(1)) and row 2 (Art. 12(2) risk/incident identification)",
+      "rationale": "Hash-chained, independently re-verifiable logs are what makes the log tamper-evident, which is what makes it usable for post-hoc risk/incident review (Art. 12(2))."
+    },
+    {
+      "id": "replay_tamper",
+      "crosswalk_control": "CROSSWALK.md row 2 (Art. 12(2)) and row 6 (Art. 15(1) consistent performance)",
+      "rationale": "A digest mismatch on replay/tamper is the concrete 'risk situation' detection signal cited in row 2, and demonstrates the log's tamper-evidence supporting Art. 15's consistency claim."
+    },
+    {
+      "id": "wrong_model_binding",
+      "crosswalk_control": "CROSSWALK.md row 1 (Art. 12(1)) — binding of the log entry to the system that produced it",
+      "rationale": "Art. 12 logging is only meaningful if the record can be shown to bind to the actual model instance that ran. NOT COVERED by the current v0.1 scaffold — see vector detail."
+    },
+    {
+      "id": "wrong_prompt_binding",
+      "crosswalk_control": "CROSSWALK.md row 1 (Art. 12(1)) — binding of the log entry to the actual input",
+      "rationale": "Same as above, for the input side. NOT COVERED by the current v0.1 scaffold — see vector detail."
+    },
+    {
+      "id": "license_expired_refusal",
+      "crosswalk_control": "not in CROSSWALK.md — commercial/licensing control, included here only as an operational integrity check (a system that keeps running unlicensed is a governance gap, not an Art. 12 logging gap)",
+      "rationale": "Included for completeness of the conformance suite's own claims, not because CIS-2 asserts EU AI Act relevance for license enforcement."
+    },
+    {
+      "id": "token_log_completeness",
+      "crosswalk_control": "CROSSWALK.md row 1 (Art. 12(1)) — logs must be complete, not sampled",
+      "rationale": "A log with dropped tokens is not 'automatic recording of events' in the sense Art. 12(1) requires; this vector checks the logged token sequence has no gaps and reproduces the returned output."
+    },
+    {
+      "id": "tool_gate_deny",
+      "crosswalk_control": "not in CROSSWALK.md — this is an alice-aegis gateway property, not an Art. 12/13/14/15 logging property",
+      "rationale": "Included because a corporate deployer will likely ask about tool-use governance under Art. 14 (human oversight/override); the honest answer today is NOT COVERED (see vector detail) — no tool allow/deny policy exists in cis2-llm's gateway."
+    }
+  ],
+  "not_covered": [
+    "Art. 12(3) biometric-system logging minimums — no domain-specific metadata fields in the receipt schema.",
+    "Art. 13 transparency's core ask (accuracy metrics, known limitations, intended purpose disclosure) — CIS-2 documents how the arithmetic works, not the model's behavioral characteristics.",
+    "Art. 14 human oversight — interface design, stop-button/override authority. CIS-2 has no UI and does not touch override mechanisms.",
+    "Art. 15 accuracy as a statistical/task-performance concept — CIS-2 proves reproducibility of computation, never correctness, fairness, or safety of any output.",
+    "Adversarial robustness / cybersecurity (data or model poisoning) — explicitly out of scope per the CIS-2 spec's own 'Known gaps'.",
+    "Any GPAI Annex XI/XII technical documentation beyond the inference-engine determinism sub-item (training data, compute, energy use, architecture).",
+    "A full EU AI Act conformity assessment — this suite produces evidence a conformity-assessment process could use, it is not that process."
+  ]
+}

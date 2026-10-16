@@ -1,0 +1,4 @@
+<!doctype html><pre id=o>start</pre><script src="cis2_host.js"></script><script>
+CIS2({noInitialRun:true,print:s=>o.textContent+='\nOUT '+s,printErr:s=>o.textContent+='\nERR '+s}).then(M=>{
+ try{M.callMain([])}catch(e){o.textContent+='\nEXC '+e}
+ o.textContent+='\nDONE FS='+(typeof M.FS.writeFile)});</script>

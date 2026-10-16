@@ -1,0 +1,9 @@
+{
+  "added_at": "2026-10-16T08:53:40Z",
+  "cpu_quota": "200%",
+  "memory_max": "2500M",
+  "name": "cis2-horizon-w4",
+  "payload": "<home>/feed-payload/cis2-digest",
+  "payload_dest": "cis2-digest",
+  "pushed_at": "2026-10-16T08:53:45Z"
+}

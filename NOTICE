@@ -1,0 +1,9 @@
+Aefinity AI CIS-2 lab archive
+
+The Apache License 2.0 in the file LICENSE covers everything in this repository
+except the directory code/. Documentation, lab records, ledger rows, reports and
+paper drafts are under Apache-2.0.
+
+Code under code/ is published for reference; no licence is granted for it at this
+time. Third-party files keep their own notices (for example
+labs/w6/scripts/CORE-MATH-LICENSE.txt).

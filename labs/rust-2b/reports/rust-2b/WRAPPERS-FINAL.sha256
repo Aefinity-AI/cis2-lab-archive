@@ -1,0 +1,15 @@
+-rwxr-xr-x 1 <user> <user>  813 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-build-box1.sh
+-rwxr-xr-x 1 <user> <user>  813 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-build-box2.sh
+-rwxr-xr-x 1 <user> <user>  813 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-build-box3.sh
+-rwxr-xr-x 1 <user> <user> 3956 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-redo10-box1.sh
+-rwxr-xr-x 1 <user> <user> 3867 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-run-box1.sh
+-rwxr-xr-x 1 <user> <user> 1341 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-run-box2.sh
+-rwxr-xr-x 1 <user> <user> 1339 Oct  5 20:07 <home>/feed-payload/jobs/rust2b-run-box3.sh
+wrapper sha256 (record at operator step 6; the wrappers are not part of the payload):
+791d4924b8a51fc2bdbce7eb737996d4dcbd0a9fc51020459f720f7e83edc69f  rust2b-build-box1.sh
+1840d019c49103283dc1d8bdbed05ae63e3a0f6fc2740e40cb11e38e47b2dcad  rust2b-build-box2.sh
+99500abff46f33e3eb759ae949f40ae395120d381dd4f3d874c8d27aea12b995  rust2b-build-box3.sh
+1e2888f04d979e3f4b1afd4fbad99e89a6a4a8d46328ece30ae44f970840d5eb  rust2b-redo10-box1.sh
+3cf37ccd992986a3651ffa305cd22cddde656118074dc476b15efe5fa339a9bf  rust2b-run-box1.sh
+b08e840f66d3047040f2a2d4f1ea527d4431f80ef7d22da5f4a5dbb45c620e0b  rust2b-run-box2.sh
+b1f6636a53fcfeab6ea99083c8bf7aa148a48a63aa84fa6a8856d8384f09fd9b  rust2b-run-box3.sh

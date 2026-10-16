@@ -1,0 +1,979 @@
+[{"stream_name":"stdout","time":1.026600163,"data":"\n"}
+,{"stream_name":"stdout","time":1.027736271,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.027758914,"data":"environment\n"}
+,{"stream_name":"stdout","time":1.027762142,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.027765428,"data":"$ bash -c free -h; nproc; uname -a; df -h /kaggle/working; lscpu | grep -i flags | tr \" \" \"\\n\" | grep -Ei \"^(avx2|avx512|fma)\" | sort -u; echo ENGINE_COMMIT=c0a2c346430c34dd54c9c0adc78829beb8755d32\n"}
+,{"stream_name":"stdout","time":1.117670145,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":1.117708405,"data":"Mem:            31Gi       470Mi        28Gi       1.0Mi       2.3Gi        30Gi\n"}
+,{"stream_name":"stdout","time":1.117714295,"data":"Swap:             0B          0B          0B\n"}
+,{"stream_name":"stdout","time":1.117718505,"data":"4\n"}
+,{"stream_name":"stdout","time":1.118324849,"data":"Linux a5947f7b7030 6.12.90+ #1 SMP Sat May 30 15:40:53 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n"}
+,{"stream_name":"stdout","time":1.118347403,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":1.118353337,"data":"/dev/loop1       20G  148K   20G   1% /kaggle/working\n"}
+,{"stream_name":"stdout","time":1.11835745,"data":"avx2\n"}
+,{"stream_name":"stdout","time":1.118361137,"data":"fma\n"}
+,{"stream_name":"stdout","time":1.118364601,"data":"ENGINE_COMMIT=c0a2c346430c34dd54c9c0adc78829beb8755d32\n"}
+,{"stream_name":"stdout","time":1.118368372,"data":"\n"}
+,{"stream_name":"stdout","time":1.1183836679999999,"data":"  (exit=0, 0.1s)\n"}
+,{"stream_name":"stdout","time":1.141855261,"data":"\n"}
+,{"stream_name":"stdout","time":1.1418948,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.141898715,"data":"installing rust toolchain (rustup, matches rust-toolchain.toml)\n"}
+,{"stream_name":"stdout","time":1.141901853,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.141904636,"data":"$ bash -c curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none --profile minimal\n"}
+,{"stream_name":"stdout","time":2.73942768,"data":"\n"}
+,{"stream_name":"stdout","time":2.739457749,"data":"\n"}
+,{"stream_name":"stdout","time":2.739462848,"data":"Rust is installed now. Great!\n"}
+,{"stream_name":"stdout","time":2.739466335,"data":"\n"}
+,{"stream_name":"stdout","time":2.739470073,"data":"To get started you may need to restart your current shell.\n"}
+,{"stream_name":"stdout","time":2.739473857,"data":"This would reload your PATH environment variable to include\n"}
+,{"stream_name":"stdout","time":2.739477552,"data":"Cargo's bin directory ($HOME/.cargo/bin).\n"}
+,{"stream_name":"stdout","time":2.739481292,"data":"\n"}
+,{"stream_name":"stdout","time":2.739484978,"data":"To configure your current shell, you need to source the\n"}
+,{"stream_name":"stdout","time":2.739488778,"data":"corresponding env file under $HOME/.cargo.\n"}
+,{"stream_name":"stdout","time":2.739492314,"data":"\n"}
+,{"stream_name":"stdout","time":2.7394959979999998,"data":"Consider running the right command for your shell (note the leading DOT):\n"}
+,{"stream_name":"stdout","time":2.739500055,"data":". \"$HOME/.cargo/env\" # For sh/ash/dash/pdksh/bash\n"}
+,{"stream_name":"stdout","time":2.7395044349999997,"data":"cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stdout","time":2.739523181,"data":"CC_x86_64-unknown-linux-gnu = None\n"}
+,{"stream_name":"stdout","time":2.739527759,"data":"cargo:rerun-if-env-changed=CC_x86_64_unknown_linux_gnu\n"}
+,{"stream_name":"stdout","time":2.739532219,"data":"CC_x86_64_unknown_linux_gnu = None\n"}
+,{"stream_name":"stderr","time":2.739421025,"data":"info: downloading installer\n"}
+,{"stream_name":"stderr","time":2.739546291,"data":"info: profile set to minimal\n"}
+,{"stream_name":"stderr","time":2.739552321,"data":"info: default host tuple is x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stderr","time":2.739556337,"data":"info: skipping toolchain installation\n"}
+,{"stream_name":"stderr","time":2.739560101,"data":"\n"}
+,{"stream_name":"stdout","time":2.739535844,"data":"cargo:rerun-if-env-changed=HOST_CC\n"}
+,{"stream_name":"stdout","time":2.739568286,"data":"HOST_CC = None\n"}
+,{"stream_name":"stdout","time":2.7395717040000003,"data":"cargo:rerun-if-env-changed=CC\n"}
+,{"stream_name":"stdout","time":2.739575103,"data":"CC = None\n"}
+,{"stream_name":"stdout","time":2.73957776,"data":"cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT\n"}
+,{"stream_name":"stdout","time":2.739580346,"data":"cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS\n"}
+,{"stream_name":"stdout","time":2.739582755,"data":"CRATE_CC_NO_DEFAULTS = None\n"}
+,{"stream_name":"stdout","time":2.7395851430000002,"data":"cargo:rerun-if-env-changed=CFLAGS\n"}
+,{"stream_name":"stdout","time":2.739587582,"data":"CFLAGS = None\n"}
+,{"stream_name":"stdout","time":2.739590023,"data":"cargo:rerun-if-env-changed=HOST_CFLAGS\n"}
+,{"stream_name":"stdout","time":2.739592395,"data":"HOST_CFLAGS = None\n"}
+,{"stream_name":"stdout","time":2.73959473,"data":"cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu\n"}
+,{"stream_name":"stdout","time":2.73959736,"data":"CFLAGS_x86_64_unknown_linux_gnu = None\n"}
+,{"stream_name":"stdout","time":2.739600014,"data":"cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stdout","time":2.73960354,"data":"CFLAGS_x86_64-unknown-linux-gnu = None\n"}
+,{"stream_name":"stdout","time":2.7396071539999998,"data":"\n"}
+,{"stream_name":"stdout","time":2.739610615,"data":"  (exit=0, 1.6s)\n"}
+,{"stream_name":"stdout","time":2.739652842,"data":"\n"}
+,{"stream_name":"stdout","time":2.7396594800000003,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":2.739663595,"data":"building cis2_ref (release) from /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-cis3-0k\n"}
+,{"stream_name":"stdout","time":2.739667904,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":2.739671881,"data":"$ bash -c rm -rf /kaggle/working/engine \u0026\u0026 cp -r /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-cis3-0k /kaggle/working/engine\n"}
+,{"stream_name":"stdout","time":2.791100909,"data":"  (exit=0, 0.1s)\n"}
+,{"stream_name":"stdout","time":2.791130472,"data":"$ cargo build --release\n"}
+,{"stream_name":"stdout","time":95.947421123,"data":"  (exit=0, 93.2s)\n"}
+,{"stream_name":"stderr","time":95.947560494,"data":"info: syncing channel updates for 1.98.0-x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stderr","time":95.947588864,"data":"info: latest update on 2026-08-20 for version 1.98.0 (88d9e12ae 2026-08-18)\n"}
+,{"stream_name":"stderr","time":95.947596456,"data":"info: downloading 4 components\n"}
+,{"stream_name":"stderr","time":95.94760243,"data":"warn: the missing active toolchain `1.98.0-x86_64-unknown-linux-gnu` has been auto-installed\n"}
+,{"stream_name":"stderr","time":95.947625793,"data":"warn: this might cause rustup commands to take longer time to finish than expected\n"}
+,{"stream_name":"stderr","time":95.947630923,"data":"info: you may opt out with `RUSTUP_AUTO_INSTALL=0` or `rustup set auto-install disable`\n"}
+,{"stream_name":"stderr","time":95.947634933,"data":"    Updating crates.io index\n"}
+,{"stream_name":"stderr","time":95.947638377,"data":" Downloading crates ...\n"}
+,{"stream_name":"stderr","time":95.947641826,"data":"  Downloaded ahash v0.8.12\n"}
+,{"stream_name":"stderr","time":95.947645647,"data":"  Downloaded fnv v1.0.7\n"}
+,{"stream_name":"stderr","time":95.947649867,"data":"  Downloaded base64 v0.13.1\n"}
+,{"stream_name":"stderr","time":95.94765404,"data":"  Downloaded derive_builder_macro v0.20.2\n"}
+,{"stream_name":"stderr","time":95.947657987,"data":"  Downloaded allocator-api2 v0.2.21\n"}
+,{"stream_name":"stderr","time":95.947661646,"data":"  Downloaded bitflags v2.13.1\n"}
+,{"stream_name":"stderr","time":95.94766541,"data":"  Downloaded cfg-if v1.0.4\n"}
+,{"stream_name":"stderr","time":95.947668634,"data":"  Downloaded block-buffer v0.12.1\n"}
+,{"stream_name":"stderr","time":95.947672274,"data":"  Downloaded equivalent v1.0.2\n"}
+,{"stream_name":"stderr","time":95.947675629,"data":"  Downloaded errno v0.3.14\n"}
+,{"stream_name":"stderr","time":95.947679004,"data":"  Downloaded ident_case v1.0.1\n"}
+,{"stream_name":"stderr","time":95.947682819,"data":"  Downloaded monostate v0.1.18\n"}
+,{"stream_name":"stderr","time":95.947686217,"data":"  Downloaded macro_rules_attribute-proc_macro v0.2.3\n"}
+,{"stream_name":"stderr","time":95.947689736,"data":"  Downloaded monostate-impl v0.1.18\n"}
+,{"stream_name":"stderr","time":95.947717345,"data":"  Downloaded version_check v0.9.5\n"}
+,{"stream_name":"stderr","time":95.947721415,"data":"  Downloaded darling_macro v0.20.11\n"}
+,{"stream_name":"stderr","time":95.947724657,"data":"  Downloaded crypto-common v0.2.2\n"}
+,{"stream_name":"stderr","time":95.947728007,"data":"  Downloaded rayon-cond v0.4.0\n"}
+,{"stream_name":"stderr","time":95.947731889,"data":"  Downloaded strsim v0.11.1\n"}
+,{"stream_name":"stderr","time":95.947735393,"data":"  Downloaded castaway v0.2.4\n"}
+,{"stream_name":"stderr","time":95.947739122,"data":"  Downloaded cpufeatures v0.3.1\n"}
+,{"stream_name":"stderr","time":95.947742707,"data":"  Downloaded derive_builder_core v0.20.2\n"}
+,{"stream_name":"stderr","time":95.947746352,"data":"  Downloaded either v1.18.0\n"}
+,{"stream_name":"stderr","time":95.947749782,"data":"  Downloaded find-msvc-tools v0.1.11\n"}
+,{"stream_name":"stderr","time":95.947753402,"data":"  Downloaded itoa v1.0.18\n"}
+,{"stream_name":"stderr","time":95.947756765,"data":"  Downloaded macro_rules_attribute v0.2.3\n"}
+,{"stream_name":"stderr","time":95.947760164,"data":"  Downloaded digest v0.11.3\n"}
+,{"stream_name":"stderr","time":95.947763398,"data":"  Downloaded foldhash v0.2.0\n"}
+,{"stream_name":"stderr","time":95.947767049,"data":"  Downloaded onig v6.5.3\n"}
+,{"stream_name":"stderr","time":95.9477703,"data":"  Downloaded paste v1.0.15\n"}
+,{"stream_name":"stderr","time":95.947773777,"data":"  Downloaded fastrand v2.5.0\n"}
+,{"stream_name":"stderr","time":95.947776948,"data":"  Downloaded pastey v0.2.3\n"}
+,{"stream_name":"stderr","time":95.947780309,"data":"  Downloaded pkg-config v0.3.34\n"}
+,{"stream_name":"stderr","time":95.94778365,"data":"  Downloaded ppv-lite86 v0.2.21\n"}
+,{"stream_name":"stderr","time":95.947787298,"data":"  Downloaded rustversion v1.0.23\n"}
+,{"stream_name":"stderr","time":95.947799202,"data":"  Downloaded thiserror v2.0.20\n"}
+,{"stream_name":"stderr","time":95.947803584,"data":"  Downloaded zmij v1.0.23\n"}
+,{"stream_name":"stderr","time":95.947807284,"data":"  Downloaded quote v1.0.47\n"}
+,{"stream_name":"stderr","time":95.947810752,"data":"  Downloaded rand_chacha v0.9.0\n"}
+,{"stream_name":"stderr","time":95.94781441,"data":"  Downloaded rand_core v0.9.5\n"}
+,{"stream_name":"stderr","time":95.947817743,"data":"  Downloaded crossbeam-deque v0.8.7\n"}
+,{"stream_name":"stderr","time":95.947821185,"data":"  Downloaded dary_heap v0.3.9\n"}
+,{"stream_name":"stderr","time":95.94782456,"data":"  Downloaded shlex v2.0.1\n"}
+,{"stream_name":"stderr","time":95.947827872,"data":"  Downloaded daachorse v1.0.1\n"}
+,{"stream_name":"stderr","time":95.947831718,"data":"  Downloaded darling v0.20.11\n"}
+,{"stream_name":"stderr","time":95.947835801,"data":"  Downloaded once_cell v1.21.4\n"}
+,{"stream_name":"stderr","time":95.947840032,"data":"  Downloaded crossbeam-utils v0.8.22\n"}
+,{"stream_name":"stderr","time":95.947843729,"data":"  Downloaded hybrid-array v0.4.14\n"}
+,{"stream_name":"stdout","time":95.947841613,"data":"built /kaggle/working/engine/target/release/cis2_ref in 93.2s\n"}
+,{"stream_name":"stdout","time":95.947853765,"data":"\n"}
+,{"stream_name":"stdout","time":95.947857331,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":95.947861074,"data":"PHASE 1: Qwen/Qwen2-7B attempt\n"}
+,{"stream_name":"stdout","time":95.947864535,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":95.947847256,"data":"  Downloaded crossbeam-epoch v0.9.20\n"}
+,{"stream_name":"stderr","time":95.947877285,"data":"  Downloaded smallvec v1.15.2\n"}
+,{"stream_name":"stderr","time":95.94788129,"data":"  Downloaded tempfile v3.27.0\n"}
+,{"stream_name":"stderr","time":95.947884903,"data":"  Downloaded safetensors v0.8.0\n"}
+,{"stream_name":"stderr","time":95.947888392,"data":"  Downloaded sha2 v0.11.0\n"}
+,{"stream_name":"stderr","time":95.947891733,"data":"  Downloaded thiserror-impl v2.0.20\n"}
+,{"stream_name":"stderr","time":95.94789538,"data":"  Downloaded derive_builder v0.20.2\n"}
+,{"stream_name":"stderr","time":95.94789932,"data":"  Downloaded getrandom v0.4.3\n"}
+,{"stream_name":"stderr","time":95.947902119,"data":"  Downloaded serde_core v1.0.229\n"}
+,{"stream_name":"stderr","time":95.947904668,"data":"  Downloaded log v0.4.34\n"}
+,{"stream_name":"stderr","time":95.947907251,"data":"  Downloaded proc-macro2 v1.0.107\n"}
+,{"stream_name":"stderr","time":95.947909775,"data":"  Downloaded serde_derive v1.0.229\n"}
+,{"stream_name":"stderr","time":95.947912878,"data":"  Downloaded static_assertions v1.1.0\n"}
+,{"stream_name":"stderr","time":95.947916341,"data":"  Downloaded const-oid v0.10.2\n"}
+,{"stream_name":"stderr","time":95.947919856,"data":"  Downloaded darling_core v0.20.11\n"}
+,{"stream_name":"stderr","time":95.947923143,"data":"  Downloaded getrandom v0.3.4\n"}
+,{"stream_name":"stderr","time":95.947926925,"data":"  Downloaded ryu v1.0.23\n"}
+,{"stream_name":"stderr","time":95.94793078,"data":"  Downloaded unicode-ident v1.0.24\n"}
+,{"stream_name":"stderr","time":95.947934261,"data":"  Downloaded unicode_categories v0.1.1\n"}
+,{"stream_name":"stderr","time":95.947938149,"data":"  Downloaded compact_str v0.9.1\n"}
+,{"stream_name":"stderr","time":95.947942206,"data":"  Downloaded minimal-lexical v0.2.1\n"}
+,{"stream_name":"stderr","time":95.94795666,"data":"  Downloaded serde v1.0.229\n"}
+,{"stream_name":"stderr","time":95.947961176,"data":"  Downloaded typenum v1.20.1\n"}
+,{"stream_name":"stderr","time":95.947965117,"data":"  Downloaded unicode-normalization-alignments v0.1.12\n"}
+,{"stream_name":"stderr","time":95.947969296,"data":"  Downloaded cc v1.4.4\n"}
+,{"stream_name":"stderr","time":95.947972925,"data":"  Downloaded memchr v2.8.3\n"}
+,{"stream_name":"stderr","time":95.947976639,"data":"  Downloaded nom v7.1.3\n"}
+,{"stream_name":"stderr","time":95.947980329,"data":"  Downloaded rand v0.9.5\n"}
+,{"stream_name":"stderr","time":95.947983887,"data":"  Downloaded rayon-core v1.13.0\n"}
+,{"stream_name":"stderr","time":95.947987672,"data":"  Downloaded unicode-segmentation v1.13.3\n"}
+,{"stream_name":"stderr","time":95.947990317,"data":"  Downloaded hashbrown v0.16.1\n"}
+,{"stream_name":"stderr","time":95.947992936,"data":"  Downloaded aho-corasick v1.1.5\n"}
+,{"stream_name":"stderr","time":95.947995579,"data":"  Downloaded itertools v0.14.0\n"}
+,{"stream_name":"stderr","time":95.947997963,"data":"  Downloaded regex v1.13.1\n"}
+,{"stream_name":"stderr","time":95.948000575,"data":"  Downloaded serde_json v1.0.151\n"}
+,{"stream_name":"stderr","time":95.948003039,"data":"  Downloaded esaxx-rs v0.1.10\n"}
+,{"stream_name":"stderr","time":95.948005484,"data":"  Downloaded rayon v1.12.0\n"}
+,{"stream_name":"stderr","time":95.948007907,"data":"  Downloaded tokenizers v0.23.1\n"}
+,{"stream_name":"stderr","time":95.948010422,"data":"  Downloaded syn v3.0.4\n"}
+,{"stream_name":"stderr","time":95.948012771,"data":"  Downloaded zerocopy v0.8.56\n"}
+,{"stream_name":"stderr","time":95.948015335,"data":"  Downloaded syn v2.0.119\n"}
+,{"stream_name":"stderr","time":95.94801842,"data":"  Downloaded regex-syntax v0.8.11\n"}
+,{"stream_name":"stderr","time":95.948020943,"data":"  Downloaded rustix v1.1.4\n"}
+,{"stream_name":"stderr","time":95.948023348,"data":"  Downloaded spm_precompiled v0.1.4\n"}
+,{"stream_name":"stderr","time":95.948025768,"data":"  Downloaded regex-automata v0.4.18\n"}
+,{"stream_name":"stderr","time":95.948028098,"data":"  Downloaded onig_sys v69.9.3\n"}
+,{"stream_name":"stderr","time":95.94803043,"data":"  Downloaded libc v0.2.189\n"}
+,{"stream_name":"stderr","time":95.948032769,"data":"  Downloaded linux-raw-sys v0.12.1\n"}
+,{"stream_name":"stderr","time":95.948035366,"data":"   Compiling proc-macro2 v1.0.107\n"}
+,{"stream_name":"stderr","time":95.948037932,"data":"   Compiling unicode-ident v1.0.24\n"}
+,{"stream_name":"stderr","time":95.948040422,"data":"   Compiling quote v1.0.47\n"}
+,{"stream_name":"stderr","time":95.948042852,"data":"   Compiling serde_core v1.0.229\n"}
+,{"stream_name":"stderr","time":95.94804525,"data":"   Compiling cfg-if v1.0.4\n"}
+,{"stream_name":"stderr","time":95.948047582,"data":"   Compiling libc v0.2.189\n"}
+,{"stream_name":"stderr","time":95.948050149,"data":"   Compiling serde v1.0.229\n"}
+,{"stream_name":"stderr","time":95.9480525,"data":"   Compiling memchr v2.8.3\n"}
+,{"stream_name":"stderr","time":95.948055054,"data":"   Compiling syn v3.0.4\n"}
+,{"stream_name":"stderr","time":95.948057465,"data":"   Compiling syn v2.0.119\n"}
+,{"stream_name":"stderr","time":95.948059869,"data":"   Compiling crossbeam-utils v0.8.22\n"}
+,{"stream_name":"stderr","time":95.94806226,"data":"   Compiling fnv v1.0.7\n"}
+,{"stream_name":"stderr","time":95.948064631,"data":"   Compiling strsim v0.11.1\n"}
+,{"stream_name":"stderr","time":95.948066977,"data":"   Compiling getrandom v0.3.4\n"}
+,{"stream_name":"stderr","time":95.948072404,"data":"   Compiling ident_case v1.0.1\n"}
+,{"stream_name":"stderr","time":95.948074815,"data":"   Compiling zerocopy v0.8.56\n"}
+,{"stream_name":"stderr","time":95.948077395,"data":"   Compiling crossbeam-epoch v0.9.20\n"}
+,{"stream_name":"stderr","time":95.948079811,"data":"   Compiling find-msvc-tools v0.1.11\n"}
+,{"stream_name":"stderr","time":95.948082347,"data":"   Compiling shlex v2.0.1\n"}
+,{"stream_name":"stderr","time":95.948085362,"data":"   Compiling crossbeam-deque v0.8.7\n"}
+,{"stream_name":"stderr","time":95.948087899,"data":"   Compiling cc v1.4.4\n"}
+,{"stream_name":"stderr","time":95.948090254,"data":"   Compiling serde_derive v1.0.229\n"}
+,{"stream_name":"stderr","time":95.948092883,"data":"   Compiling darling_core v0.20.11\n"}
+,{"stream_name":"stderr","time":95.948095359,"data":"   Compiling rayon-core v1.13.0\n"}
+,{"stream_name":"stderr","time":95.948097993,"data":"   Compiling bitflags v2.13.1\n"}
+,{"stream_name":"stderr","time":95.948100382,"data":"   Compiling typenum v1.20.1\n"}
+,{"stream_name":"stderr","time":95.948102794,"data":"   Compiling once_cell v1.21.4\n"}
+,{"stream_name":"stderr","time":95.948105291,"data":"   Compiling darling_macro v0.20.11\n"}
+,{"stream_name":"stderr","time":95.948107938,"data":"   Compiling zmij v1.0.23\n"}
+,{"stream_name":"stderr","time":95.948110532,"data":"   Compiling pkg-config v0.3.34\n"}
+,{"stream_name":"stderr","time":95.948113152,"data":"   Compiling rustversion v1.0.23\n"}
+,{"stream_name":"stderr","time":95.948115496,"data":"   Compiling darling v0.20.11\n"}
+,{"stream_name":"stderr","time":95.948118208,"data":"   Compiling hybrid-array v0.4.14\n"}
+,{"stream_name":"stderr","time":95.948120755,"data":"   Compiling onig_sys v69.9.3\n"}
+,{"stream_name":"stderr","time":95.948123299,"data":"   Compiling rustix v1.1.4\n"}
+,{"stream_name":"stderr","time":95.94812583,"data":"   Compiling itoa v1.0.18\n"}
+,{"stream_name":"stderr","time":95.948128643,"data":"   Compiling serde_json v1.0.151\n"}
+,{"stream_name":"stderr","time":95.948131097,"data":"   Compiling getrandom v0.4.3\n"}
+,{"stream_name":"stderr","time":95.948133427,"data":"   Compiling either v1.18.0\n"}
+,{"stream_name":"stderr","time":95.94813616,"data":"   Compiling version_check v0.9.5\n"}
+,{"stream_name":"stderr","time":95.948138785,"data":"   Compiling ppv-lite86 v0.2.21\n"}
+,{"stream_name":"stderr","time":95.948141243,"data":"   Compiling ahash v0.8.12\n"}
+,{"stream_name":"stderr","time":95.948143783,"data":"   Compiling derive_builder_core v0.20.2\n"}
+,{"stream_name":"stderr","time":95.948146252,"data":"   Compiling rand_core v0.9.5\n"}
+,{"stream_name":"stderr","time":95.948148672,"data":"   Compiling aho-corasick v1.1.5\n"}
+,{"stream_name":"stderr","time":95.948151174,"data":"   Compiling minimal-lexical v0.2.1\n"}
+,{"stream_name":"stderr","time":95.948153559,"data":"   Compiling esaxx-rs v0.1.10\n"}
+,{"stream_name":"stderr","time":95.948155908,"data":"   Compiling regex-syntax v0.8.11\n"}
+,{"stream_name":"stderr","time":95.948158672,"data":"   Compiling paste v1.0.15\n"}
+,{"stream_name":"stderr","time":95.948161785,"data":"   Compiling thiserror v2.0.20\n"}
+,{"stream_name":"stderr","time":95.9481653,"data":"   Compiling linux-raw-sys v0.12.1\n"}
+,{"stream_name":"stderr","time":95.948169033,"data":"   Compiling regex-automata v0.4.18\n"}
+,{"stream_name":"stderr","time":95.948171965,"data":"   Compiling nom v7.1.3\n"}
+,{"stream_name":"stderr","time":95.948174423,"data":"   Compiling derive_builder_macro v0.20.2\n"}
+,{"stream_name":"stderr","time":95.948179272,"data":"   Compiling rand_chacha v0.9.0\n"}
+,{"stream_name":"stderr","time":95.948181859,"data":"   Compiling castaway v0.2.4\n"}
+,{"stream_name":"stderr","time":95.948184522,"data":"   Compiling rayon v1.12.0\n"}
+,{"stream_name":"stderr","time":95.948187203,"data":"   Compiling itertools v0.14.0\n"}
+,{"stream_name":"stderr","time":95.948190221,"data":"   Compiling block-buffer v0.12.1\n"}
+,{"stream_name":"stderr","time":95.948193021,"data":"   Compiling crypto-common v0.2.2\n"}
+,{"stream_name":"stderr","time":95.948195672,"data":"   Compiling monostate-impl v0.1.18\n"}
+,{"stream_name":"stderr","time":95.948198222,"data":"   Compiling thiserror-impl v2.0.20\n"}
+,{"stream_name":"stderr","time":95.948201213,"data":"   Compiling macro_rules_attribute-proc_macro v0.2.3\n"}
+,{"stream_name":"stderr","time":95.948203679,"data":"   Compiling const-oid v0.10.2\n"}
+,{"stream_name":"stderr","time":95.948206565,"data":"   Compiling equivalent v1.0.2\n"}
+,{"stream_name":"stderr","time":95.948208967,"data":"   Compiling foldhash v0.2.0\n"}
+,{"stream_name":"stderr","time":95.948211618,"data":"   Compiling unicode-segmentation v1.13.3\n"}
+,{"stream_name":"stderr","time":95.948214505,"data":"   Compiling allocator-api2 v0.2.21\n"}
+,{"stream_name":"stderr","time":95.948216892,"data":"   Compiling fastrand v2.5.0\n"}
+,{"stream_name":"stderr","time":95.948219258,"data":"   Compiling static_assertions v1.1.0\n"}
+,{"stream_name":"stderr","time":95.948221881,"data":"   Compiling ryu v1.0.23\n"}
+,{"stream_name":"stderr","time":95.948224374,"data":"   Compiling base64 v0.13.1\n"}
+,{"stream_name":"stderr","time":95.948227085,"data":"   Compiling smallvec v1.15.2\n"}
+,{"stream_name":"stderr","time":95.94822952,"data":"   Compiling pastey v0.2.3\n"}
+,{"stream_name":"stderr","time":95.948232023,"data":"   Compiling unicode-normalization-alignments v0.1.12\n"}
+,{"stream_name":"stderr","time":95.948234667,"data":"   Compiling spm_precompiled v0.1.4\n"}
+,{"stream_name":"stderr","time":95.948237065,"data":"   Compiling macro_rules_attribute v0.2.3\n"}
+,{"stream_name":"stderr","time":95.948239419,"data":"   Compiling compact_str v0.9.1\n"}
+,{"stream_name":"stderr","time":95.94824182,"data":"   Compiling hashbrown v0.16.1\n"}
+,{"stream_name":"stderr","time":95.948244201,"data":"   Compiling tempfile v3.27.0\n"}
+,{"stream_name":"stderr","time":95.948246814,"data":"   Compiling digest v0.11.3\n"}
+,{"stream_name":"stderr","time":95.948249308,"data":"   Compiling monostate v0.1.18\n"}
+,{"stream_name":"stderr","time":95.948253134,"data":"   Compiling rayon-cond v0.4.0\n"}
+,{"stream_name":"stderr","time":95.948309755,"data":"   Compiling rand v0.9.5\n"}
+,{"stream_name":"stderr","time":95.948313118,"data":"   Compiling derive_builder v0.20.2\n"}
+,{"stream_name":"stderr","time":95.948315568,"data":"   Compiling onig v6.5.3\n"}
+,{"stream_name":"stderr","time":95.948318162,"data":"   Compiling regex v1.13.1\n"}
+,{"stream_name":"stderr","time":95.94832067,"data":"   Compiling dary_heap v0.3.9\n"}
+,{"stream_name":"stderr","time":95.948323124,"data":"   Compiling daachorse v1.0.1\n"}
+,{"stream_name":"stderr","time":95.948325933,"data":"   Compiling unicode_categories v0.1.1\n"}
+,{"stream_name":"stderr","time":95.948328626,"data":"   Compiling cpufeatures v0.3.1\n"}
+,{"stream_name":"stderr","time":95.948331065,"data":"   Compiling log v0.4.34\n"}
+,{"stream_name":"stderr","time":95.948333501,"data":"   Compiling sha2 v0.11.0\n"}
+,{"stream_name":"stderr","time":95.948335836,"data":"   Compiling tokenizers v0.23.1\n"}
+,{"stream_name":"stderr","time":95.948342935,"data":"   Compiling safetensors v0.8.0\n"}
+,{"stream_name":"stderr","time":95.948345501,"data":"   Compiling cis2_ref v0.1.0 (/kaggle/working/engine)\n"}
+,{"stream_name":"stderr","time":95.948348194,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948351012,"data":"  --\u003e src/bin/../denormal.rs:31:19\n"}
+,{"stream_name":"stderr","time":95.948354044,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948356441,"data":"31 |         let csr = _mm_getcsr();\n"}
+,{"stream_name":"stderr","time":95.948359071,"data":"   |                   ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948361646,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948364261,"data":"   = note: `#[warn(deprecated)]` on by default\n"}
+,{"stream_name":"stderr","time":95.948367033,"data":"\n"}
+,{"stream_name":"stderr","time":95.948369795,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.94837265,"data":"  --\u003e src/bin/../denormal.rs:32:9\n"}
+,{"stream_name":"stderr","time":95.948375134,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948377466,"data":"32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);\n"}
+,{"stream_name":"stderr","time":95.948380289,"data":"   |         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948382792,"data":"\n"}
+,{"stream_name":"stderr","time":95.948385382,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948388064,"data":"  --\u003e src/bin/../denormal.rs:27:29\n"}
+,{"stream_name":"stderr","time":95.948390596,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948392929,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":95.948395399,"data":"   |                             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948398079,"data":"\n"}
+,{"stream_name":"stderr","time":95.948400376,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948402914,"data":"  --\u003e src/bin/../denormal.rs:27:41\n"}
+,{"stream_name":"stderr","time":95.948405579,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948407983,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":95.948410521,"data":"   |                                         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948413249,"data":"\n"}
+,{"stream_name":"stderr","time":95.94841551,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948418043,"data":"  --\u003e src/bin/../denormal.rs:71:24\n"}
+,{"stream_name":"stderr","time":95.948420479,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948422742,"data":"71 |     let csr = unsafe { _mm_getcsr() };\n"}
+,{"stream_name":"stderr","time":95.948425387,"data":"   |                        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948427843,"data":"\n"}
+,{"stream_name":"stderr","time":95.948430291,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948433123,"data":"  --\u003e src/bin/../denormal.rs:70:28\n"}
+,{"stream_name":"stderr","time":95.948437854,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948440418,"data":"70 |     use std::arch::x86_64::_mm_getcsr;\n"}
+,{"stream_name":"stderr","time":95.948443549,"data":"   |                            ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948446206,"data":"\n"}
+,{"stream_name":"stderr","time":95.948448812,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948451454,"data":"  --\u003e src/denormal.rs:31:19\n"}
+,{"stream_name":"stderr","time":95.948454025,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948456339,"data":"31 |         let csr = _mm_getcsr();\n"}
+,{"stream_name":"stderr","time":95.948458679,"data":"   |                   ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948461204,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948463674,"data":"   = note: `#[warn(deprecated)]` on by default\n"}
+,{"stream_name":"stderr","time":95.948466333,"data":"\n"}
+,{"stream_name":"stderr","time":95.948468992,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948471602,"data":"  --\u003e src/denormal.rs:32:9\n"}
+,{"stream_name":"stderr","time":95.948474034,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948476347,"data":"32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);\n"}
+,{"stream_name":"stderr","time":95.948478735,"data":"   |         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948481196,"data":"\n"}
+,{"stream_name":"stderr","time":95.948483616,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948486224,"data":"  --\u003e src/denormal.rs:27:29\n"}
+,{"stream_name":"stderr","time":95.948488821,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948491896,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":95.948494571,"data":"   |                             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948497025,"data":"\n"}
+,{"stream_name":"stderr","time":95.948499279,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948501812,"data":"  --\u003e src/denormal.rs:27:41\n"}
+,{"stream_name":"stderr","time":95.948504229,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948506516,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":95.948509111,"data":"   |                                         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948511601,"data":"\n"}
+,{"stream_name":"stderr","time":95.948514138,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948516828,"data":"  --\u003e src/denormal.rs:71:24\n"}
+,{"stream_name":"stderr","time":95.948520049,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948522329,"data":"71 |     let csr = unsafe { _mm_getcsr() };\n"}
+,{"stream_name":"stderr","time":95.94852486,"data":"   |                        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948527407,"data":"\n"}
+,{"stream_name":"stderr","time":95.948529976,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":95.948534757,"data":"  --\u003e src/denormal.rs:70:28\n"}
+,{"stream_name":"stderr","time":95.948537244,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.94853979,"data":"70 |     use std::arch::x86_64::_mm_getcsr;\n"}
+,{"stream_name":"stderr","time":95.94854239,"data":"   |                            ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948544821,"data":"\n"}
+,{"stream_name":"stderr","time":95.948547248,"data":"warning: function `widen_bf16` is never used\n"}
+,{"stream_name":"stderr","time":95.948549717,"data":"  --\u003e src/bin/../math.rs:33:8\n"}
+,{"stream_name":"stderr","time":95.948552463,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948554877,"data":"33 | pub fn widen_bf16(bits: u16) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948557421,"data":"   |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948559818,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948562198,"data":"   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":95.94856464,"data":"\n"}
+,{"stream_name":"stderr","time":95.948567058,"data":"warning: function `dot_seq` is never used\n"}
+,{"stream_name":"stderr","time":95.948569435,"data":"  --\u003e src/bin/../math.rs:40:8\n"}
+,{"stream_name":"stderr","time":95.948572141,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948574553,"data":"40 | pub fn dot_seq(a: \u0026[f32], b: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.94857732,"data":"   |        ^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948579756,"data":"\n"}
+,{"stream_name":"stderr","time":95.948584639,"data":"warning: function `sum_seq` is never used\n"}
+,{"stream_name":"stderr","time":95.948587013,"data":"  --\u003e src/bin/../math.rs:52:8\n"}
+,{"stream_name":"stderr","time":95.948589431,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948592452,"data":"52 | pub fn sum_seq(a: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948595333,"data":"   |        ^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948597803,"data":"\n"}
+,{"stream_name":"stderr","time":95.94860013,"data":"warning: constant `TREE_BLOCK` is never used\n"}
+,{"stream_name":"stderr","time":95.948602797,"data":"  --\u003e src/bin/../math.rs:66:11\n"}
+,{"stream_name":"stderr","time":95.94860519,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948607559,"data":"66 | pub const TREE_BLOCK: usize = 32;\n"}
+,{"stream_name":"stderr","time":95.948609947,"data":"   |           ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948612496,"data":"\n"}
+,{"stream_name":"stderr","time":95.948615139,"data":"warning: function `tree_block_reduce` is never used\n"}
+,{"stream_name":"stderr","time":95.948617574,"data":"  --\u003e src/bin/../math.rs:74:4\n"}
+,{"stream_name":"stderr","time":95.948620166,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948622686,"data":"74 | fn tree_block_reduce(leaf: \u0026mut [f32; TREE_BLOCK]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948625189,"data":"   |    ^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948627609,"data":"\n"}
+,{"stream_name":"stderr","time":95.948629897,"data":"warning: function `tree_reduce_indexed` is never used\n"}
+,{"stream_name":"stderr","time":95.948632428,"data":"  --\u003e src/bin/../math.rs:95:4\n"}
+,{"stream_name":"stderr","time":95.948634998,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948637386,"data":"95 | fn tree_reduce_indexed\u003cF: Fn(usize) -\u003e f32\u003e(n: usize, leaf_at: F) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948642485,"data":"   |    ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948645061,"data":"\n"}
+,{"stream_name":"stderr","time":95.948647506,"data":"warning: function `tree_sum` is never used\n"}
+,{"stream_name":"stderr","time":95.948649893,"data":"   --\u003e src/bin/../math.rs:116:8\n"}
+,{"stream_name":"stderr","time":95.948652625,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948654951,"data":"116 | pub fn tree_sum(a: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948657608,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948667086,"data":"\n"}
+,{"stream_name":"stderr","time":95.94866967,"data":"warning: function `tree_dot` is never used\n"}
+,{"stream_name":"stderr","time":95.948672081,"data":"   --\u003e src/bin/../math.rs:122:8\n"}
+,{"stream_name":"stderr","time":95.948674513,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948676977,"data":"122 | pub fn tree_dot(a: \u0026[f32], b: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948679552,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.94868218,"data":"\n"}
+,{"stream_name":"stderr","time":95.948684568,"data":"warning: function `softmax_seq` is never used\n"}
+,{"stream_name":"stderr","time":95.948686941,"data":"   --\u003e src/bin/../math.rs:425:8\n"}
+,{"stream_name":"stderr","time":95.948689304,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948691624,"data":"425 | pub fn softmax_seq(logits: \u0026mut [f32]) {\n"}
+,{"stream_name":"stderr","time":95.948694141,"data":"    |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948696578,"data":"\n"}
+,{"stream_name":"stderr","time":95.948698851,"data":"warning: function `softmax_tree` is never used\n"}
+,{"stream_name":"stderr","time":95.948701446,"data":"   --\u003e src/bin/../math.rs:448:8\n"}
+,{"stream_name":"stderr","time":95.948703966,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948706317,"data":"448 | pub fn softmax_tree(logits: \u0026mut [f32]) {\n"}
+,{"stream_name":"stderr","time":95.948708915,"data":"    |        ^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948711504,"data":"\n"}
+,{"stream_name":"stderr","time":95.948713757,"data":"warning: function `pin_ftz_daz` is never used\n"}
+,{"stream_name":"stderr","time":95.948716265,"data":"  --\u003e src/bin/../denormal.rs:22:8\n"}
+,{"stream_name":"stderr","time":95.948718945,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948721524,"data":"22 | pub fn pin_ftz_daz() {\n"}
+,{"stream_name":"stderr","time":95.948724004,"data":"   |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.94872651,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948728854,"data":"   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":95.948731295,"data":"\n"}
+,{"stream_name":"stderr","time":95.948733679,"data":"warning: function `mxcsr_ftz_daz_on` is never used\n"}
+,{"stream_name":"stderr","time":95.948736074,"data":"  --\u003e src/bin/../denormal.rs:69:8\n"}
+,{"stream_name":"stderr","time":95.948738493,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948740996,"data":"69 | pub fn mxcsr_ftz_daz_on() -\u003e bool {\n"}
+,{"stream_name":"stderr","time":95.948743521,"data":"   |        ^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948746035,"data":"\n"}
+,{"stream_name":"stderr","time":95.948748333,"data":"warning: function `ftz_daz_on` is never used\n"}
+,{"stream_name":"stderr","time":95.948753321,"data":"  --\u003e src/bin/../denormal.rs:92:8\n"}
+,{"stream_name":"stderr","time":95.948756107,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.948758541,"data":"92 | pub fn ftz_daz_on() -\u003e bool {\n"}
+,{"stream_name":"stderr","time":95.948761374,"data":"   |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948764486,"data":"\n"}
+,{"stream_name":"stderr","time":95.948766859,"data":"warning: function `rsqrt_cr` is never used\n"}
+,{"stream_name":"stderr","time":95.948769369,"data":"   --\u003e src/bin/../math.rs:133:8\n"}
+,{"stream_name":"stderr","time":95.948771847,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948774136,"data":"133 | pub fn rsqrt_cr(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948776654,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948778994,"data":"\n"}
+,{"stream_name":"stderr","time":95.948781353,"data":"warning: constant `EXP_LOG2E` is never used\n"}
+,{"stream_name":"stderr","time":95.948784021,"data":"   --\u003e src/bin/../math.rs:153:7\n"}
+,{"stream_name":"stderr","time":95.948786608,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948789015,"data":"153 | const EXP_LOG2E: f32 = 1.442_695_04_f32; // 1/ln2\n"}
+,{"stream_name":"stderr","time":95.948791453,"data":"    |       ^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948794044,"data":"\n"}
+,{"stream_name":"stderr","time":95.948796327,"data":"warning: constant `EXP_C1` is never used\n"}
+,{"stream_name":"stderr","time":95.948799107,"data":"   --\u003e src/bin/../math.rs:154:7\n"}
+,{"stream_name":"stderr","time":95.948801798,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948805009,"data":"154 | const EXP_C1: f32 = 0.693_359_375_f32; // ln2 hi (Cephes split)\n"}
+,{"stream_name":"stderr","time":95.948807554,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948810147,"data":"\n"}
+,{"stream_name":"stderr","time":95.948812566,"data":"warning: constant `EXP_C2` is never used\n"}
+,{"stream_name":"stderr","time":95.948815009,"data":"   --\u003e src/bin/../math.rs:155:7\n"}
+,{"stream_name":"stderr","time":95.948817383,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948819764,"data":"155 | const EXP_C2: f32 = -2.121_944_4e-4_f32; // ln2 lo (Cephes split)\n"}
+,{"stream_name":"stderr","time":95.948822212,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948824779,"data":"\n"}
+,{"stream_name":"stderr","time":95.948827178,"data":"warning: constant `EXP_P` is never used\n"}
+,{"stream_name":"stderr","time":95.948834876,"data":"   --\u003e src/bin/../math.rs:157:7\n"}
+,{"stream_name":"stderr","time":95.948838239,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948840762,"data":"157 | const EXP_P: [f32; 6] = [\n"}
+,{"stream_name":"stderr","time":95.948843088,"data":"    |       ^^^^^\n"}
+,{"stream_name":"stderr","time":95.948845751,"data":"\n"}
+,{"stream_name":"stderr","time":95.948848252,"data":"warning: function `exp_pinned` is never used\n"}
+,{"stream_name":"stderr","time":95.948850681,"data":"   --\u003e src/bin/../math.rs:167:8\n"}
+,{"stream_name":"stderr","time":95.948853096,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948855559,"data":"167 | pub fn exp_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948858114,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948860446,"data":"\n"}
+,{"stream_name":"stderr","time":95.948862671,"data":"warning: function `ldexp_exact` is never used\n"}
+,{"stream_name":"stderr","time":95.948868483,"data":"   --\u003e src/bin/../math.rs:206:4\n"}
+,{"stream_name":"stderr","time":95.948871312,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.94887368,"data":"206 | fn ldexp_exact(x: f32, k: i32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.948876371,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948878893,"data":"\n"}
+,{"stream_name":"stderr","time":95.94888115,"data":"warning: constant `PI_2_F64` is never used\n"}
+,{"stream_name":"stderr","time":95.948883584,"data":"   --\u003e src/bin/../math.rs:248:7\n"}
+,{"stream_name":"stderr","time":95.94888603,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948888331,"data":"248 | const PI_2_F64: f64 = 1.570_796_326_794_896_619_231_321_691_639_8_f64; // pi/2\n"}
+,{"stream_name":"stderr","time":95.948891096,"data":"    |       ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948893505,"data":"\n"}
+,{"stream_name":"stderr","time":95.948895827,"data":"warning: function `reduce_pi_2` is never used\n"}
+,{"stream_name":"stderr","time":95.948898335,"data":"   --\u003e src/bin/../math.rs:253:4\n"}
+,{"stream_name":"stderr","time":95.948900725,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948903076,"data":"253 | fn reduce_pi_2(x: f32) -\u003e (f32, i64) {\n"}
+,{"stream_name":"stderr","time":95.948905754,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948908224,"data":"\n"}
+,{"stream_name":"stderr","time":95.948910747,"data":"warning: constant `SIN_C0` is never used\n"}
+,{"stream_name":"stderr","time":95.948913186,"data":"   --\u003e src/bin/../math.rs:266:7\n"}
+,{"stream_name":"stderr","time":95.948915693,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948918039,"data":"266 | const SIN_C0: f32 = -1.666_665_461_1e-1; // r^3 coefficient\n"}
+,{"stream_name":"stderr","time":95.948920458,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948922799,"data":"\n"}
+,{"stream_name":"stderr","time":95.948925047,"data":"warning: constant `SIN_C1` is never used\n"}
+,{"stream_name":"stderr","time":95.948927403,"data":"   --\u003e src/bin/../math.rs:267:7\n"}
+,{"stream_name":"stderr","time":95.948930048,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.94893249,"data":"267 | const SIN_C1: f32 = 8.332_160_873_6e-3; // r^5 coefficient\n"}
+,{"stream_name":"stderr","time":95.948935417,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948942401,"data":"\n"}
+,{"stream_name":"stderr","time":95.948945122,"data":"warning: constant `SIN_C2` is never used\n"}
+,{"stream_name":"stderr","time":95.948947483,"data":"   --\u003e src/bin/../math.rs:268:7\n"}
+,{"stream_name":"stderr","time":95.948949844,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948952374,"data":"268 | const SIN_C2: f32 = -1.951_529_589_1e-4; // r^7 coefficient\n"}
+,{"stream_name":"stderr","time":95.948954877,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948957384,"data":"\n"}
+,{"stream_name":"stderr","time":95.948959682,"data":"warning: constant `COS_C0` is never used\n"}
+,{"stream_name":"stderr","time":95.948962132,"data":"   --\u003e src/bin/../math.rs:270:7\n"}
+,{"stream_name":"stderr","time":95.948964497,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948966941,"data":"270 | const COS_C0: f32 = 4.166_664_568_298_827e-2; // r^4 coefficient\n"}
+,{"stream_name":"stderr","time":95.948969517,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948972338,"data":"\n"}
+,{"stream_name":"stderr","time":95.948974893,"data":"warning: constant `COS_C1` is never used\n"}
+,{"stream_name":"stderr","time":95.948980012,"data":"   --\u003e src/bin/../math.rs:271:7\n"}
+,{"stream_name":"stderr","time":95.948982732,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.948985144,"data":"271 | const COS_C1: f32 = -1.388_731_625_493_765e-3; // r^6 coefficient\n"}
+,{"stream_name":"stderr","time":95.948987574,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.948989905,"data":"\n"}
+,{"stream_name":"stderr","time":95.948992161,"data":"warning: constant `COS_C2` is never used\n"}
+,{"stream_name":"stderr","time":95.948994754,"data":"   --\u003e src/bin/../math.rs:272:7\n"}
+,{"stream_name":"stderr","time":95.9489973,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949001375,"data":"272 | const COS_C2: f32 = 2.443_315_711_809_948e-5; // r^8 coefficient\n"}
+,{"stream_name":"stderr","time":95.949003942,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949006347,"data":"\n"}
+,{"stream_name":"stderr","time":95.949008595,"data":"warning: function `sin_poly` is never used\n"}
+,{"stream_name":"stderr","time":95.949011103,"data":"   --\u003e src/bin/../math.rs:275:4\n"}
+,{"stream_name":"stderr","time":95.949013477,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949016137,"data":"275 | fn sin_poly(r: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949018914,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949021371,"data":"\n"}
+,{"stream_name":"stderr","time":95.949023764,"data":"warning: function `cos_poly` is never used\n"}
+,{"stream_name":"stderr","time":95.949026203,"data":"   --\u003e src/bin/../math.rs:288:4\n"}
+,{"stream_name":"stderr","time":95.949028632,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949031022,"data":"288 | fn cos_poly(r: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949033406,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949035973,"data":"\n"}
+,{"stream_name":"stderr","time":95.949038328,"data":"warning: function `quadrant` is never used\n"}
+,{"stream_name":"stderr","time":95.949040919,"data":"   --\u003e src/bin/../math.rs:304:4\n"}
+,{"stream_name":"stderr","time":95.949043432,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949045748,"data":"304 | fn quadrant(k: i64) -\u003e i64 {\n"}
+,{"stream_name":"stderr","time":95.949048116,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949050458,"data":"\n"}
+,{"stream_name":"stderr","time":95.949052768,"data":"warning: function `sin_pinned` is never used\n"}
+,{"stream_name":"stderr","time":95.949055419,"data":"   --\u003e src/bin/../math.rs:310:8\n"}
+,{"stream_name":"stderr","time":95.949057944,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949060554,"data":"310 | pub fn sin_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949063008,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949065366,"data":"\n"}
+,{"stream_name":"stderr","time":95.94906762,"data":"warning: function `cos_pinned` is never used\n"}
+,{"stream_name":"stderr","time":95.949069993,"data":"   --\u003e src/bin/../math.rs:324:8\n"}
+,{"stream_name":"stderr","time":95.94907236,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949074894,"data":"324 | pub fn cos_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949077385,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949079803,"data":"\n"}
+,{"stream_name":"stderr","time":95.949082188,"data":"warning: constant `LOG_SQRTHF` is never used\n"}
+,{"stream_name":"stderr","time":95.949090807,"data":"   --\u003e src/bin/../math.rs:347:7\n"}
+,{"stream_name":"stderr","time":95.949095907,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949098242,"data":"347 | const LOG_SQRTHF: f32 = 0.707_106_78_f32; // sqrt(0.5)\n"}
+,{"stream_name":"stderr","time":95.949101263,"data":"    |       ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949103769,"data":"\n"}
+,{"stream_name":"stderr","time":95.949106144,"data":"warning: constant `LOG_Q1` is never used\n"}
+,{"stream_name":"stderr","time":95.949108622,"data":"   --\u003e src/bin/../math.rs:348:7\n"}
+,{"stream_name":"stderr","time":95.949111366,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949113961,"data":"348 | const LOG_Q1: f32 = -2.121_944_4e-4_f32; // ln2 lo (same split as EXP_C2)\n"}
+,{"stream_name":"stderr","time":95.94911654,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949119059,"data":"\n"}
+,{"stream_name":"stderr","time":95.949121744,"data":"warning: constant `LOG_Q2` is never used\n"}
+,{"stream_name":"stderr","time":95.949124215,"data":"   --\u003e src/bin/../math.rs:349:7\n"}
+,{"stream_name":"stderr","time":95.949126907,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949129327,"data":"349 | const LOG_Q2: f32 = 0.693_359_375_f32; // ln2 hi (same split as EXP_C1)\n"}
+,{"stream_name":"stderr","time":95.949131915,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949134264,"data":"\n"}
+,{"stream_name":"stderr","time":95.949136759,"data":"warning: constant `LOG_P` is never used\n"}
+,{"stream_name":"stderr","time":95.949139351,"data":"   --\u003e src/bin/../math.rs:351:7\n"}
+,{"stream_name":"stderr","time":95.949143286,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949145703,"data":"351 | const LOG_P: [f32; 9] = [\n"}
+,{"stream_name":"stderr","time":95.949148669,"data":"    |       ^^^^^\n"}
+,{"stream_name":"stderr","time":95.949151109,"data":"\n"}
+,{"stream_name":"stderr","time":95.949153515,"data":"warning: function `frexp_exact` is never used\n"}
+,{"stream_name":"stderr","time":95.949155873,"data":"   --\u003e src/bin/../math.rs:366:4\n"}
+,{"stream_name":"stderr","time":95.949158361,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949161149,"data":"366 | fn frexp_exact(x: f32) -\u003e (f32, i32) {\n"}
+,{"stream_name":"stderr","time":95.949166066,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949168825,"data":"\n"}
+,{"stream_name":"stderr","time":95.94917118,"data":"warning: function `ln_pinned` is never used\n"}
+,{"stream_name":"stderr","time":95.94917367,"data":"   --\u003e src/bin/../math.rs:379:8\n"}
+,{"stream_name":"stderr","time":95.949176052,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949178355,"data":"379 | pub fn ln_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949180742,"data":"    |        ^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949183085,"data":"\n"}
+,{"stream_name":"stderr","time":95.949185573,"data":"warning: function `silu_pinned` is never used\n"}
+,{"stream_name":"stderr","time":95.949187997,"data":"   --\u003e src/bin/../math.rs:414:8\n"}
+,{"stream_name":"stderr","time":95.949190749,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949193384,"data":"414 | pub fn silu_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":95.949195836,"data":"    |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949198228,"data":"\n"}
+,{"stream_name":"stderr","time":95.949200565,"data":"warning: function `table_digest` is never used\n"}
+,{"stream_name":"stderr","time":95.949202921,"data":"   --\u003e src/bin/../math.rs:472:8\n"}
+,{"stream_name":"stderr","time":95.949208899,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949211319,"data":"472 | pub fn table_digest() -\u003e [u8; 32] {\n"}
+,{"stream_name":"stderr","time":95.949213942,"data":"    |        ^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.94921635,"data":"\n"}
+,{"stream_name":"stderr","time":95.949218778,"data":"warning: function `exported_f32_consts` is never used\n"}
+,{"stream_name":"stderr","time":95.949221787,"data":"   --\u003e src/bin/../math.rs:507:8\n"}
+,{"stream_name":"stderr","time":95.949224195,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949226583,"data":"507 | pub fn exported_f32_consts() -\u003e Vec\u003c(\u0026'static str, f32)\u003e {\n"}
+,{"stream_name":"stderr","time":95.949229582,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949232089,"data":"\n"}
+,{"stream_name":"stderr","time":95.949234539,"data":"warning: function `exported_f64_consts` is never used\n"}
+,{"stream_name":"stderr","time":95.949237031,"data":"   --\u003e src/bin/../math.rs:542:8\n"}
+,{"stream_name":"stderr","time":95.94923951,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949242659,"data":"542 | pub fn exported_f64_consts() -\u003e Vec\u003c(\u0026'static str, f64)\u003e {\n"}
+,{"stream_name":"stderr","time":95.949245441,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949247879,"data":"\n"}
+,{"stream_name":"stderr","time":95.949250375,"data":"warning: function `load_f32_tensor_whole_buffer` is never used\n"}
+,{"stream_name":"stderr","time":95.949252928,"data":"  --\u003e src/bin/../whole_buffer_widen.rs:16:8\n"}
+,{"stream_name":"stderr","time":95.949284838,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.949287424,"data":"16 | pub fn load_f32_tensor_whole_buffer(\n"}
+,{"stream_name":"stderr","time":95.949289929,"data":"   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949292326,"data":"\n"}
+,{"stream_name":"stderr","time":95.949294871,"data":"warning: function `exported_f32_consts` is never used\n"}
+,{"stream_name":"stderr","time":95.949297345,"data":"   --\u003e src/math.rs:507:8\n"}
+,{"stream_name":"stderr","time":95.949299757,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949302154,"data":"507 | pub fn exported_f32_consts() -\u003e Vec\u003c(\u0026'static str, f32)\u003e {\n"}
+,{"stream_name":"stderr","time":95.94930481,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949307223,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949309523,"data":"    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":95.949312045,"data":"\n"}
+,{"stream_name":"stderr","time":95.949314577,"data":"warning: function `exported_f64_consts` is never used\n"}
+,{"stream_name":"stderr","time":95.949317148,"data":"   --\u003e src/math.rs:542:8\n"}
+,{"stream_name":"stderr","time":95.949319545,"data":"    |\n"}
+,{"stream_name":"stderr","time":95.949321909,"data":"542 | pub fn exported_f64_consts() -\u003e Vec\u003c(\u0026'static str, f64)\u003e {\n"}
+,{"stream_name":"stderr","time":95.949324486,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949326829,"data":"\n"}
+,{"stream_name":"stderr","time":95.949329156,"data":"warning: function `load_f32_tensor_whole_buffer` is never used\n"}
+,{"stream_name":"stderr","time":95.949331636,"data":"  --\u003e src/whole_buffer_widen.rs:16:8\n"}
+,{"stream_name":"stderr","time":95.949334344,"data":"   |\n"}
+,{"stream_name":"stderr","time":95.949340707,"data":"16 | pub fn load_f32_tensor_whole_buffer(\n"}
+,{"stream_name":"stderr","time":95.949343484,"data":"   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":95.949345898,"data":"\n"}
+,{"stream_name":"stderr","time":95.949348187,"data":"warning: `cis2_ref` (bin \"math_dump\") generated 16 warnings\n"}
+,{"stream_name":"stderr","time":95.949350781,"data":"warning: `cis2_ref` (bin \"h1_lm_head_check\") generated 49 warnings (15 duplicates)\n"}
+,{"stream_name":"stderr","time":95.949353338,"data":"warning: `cis2_ref` (bin \"mem_probe\") generated 48 warnings (48 duplicates)\n"}
+,{"stream_name":"stderr","time":95.949355916,"data":"warning: `cis2_ref` (bin \"cis2_ref\") generated 9 warnings\n"}
+,{"stream_name":"stderr","time":95.949358679,"data":"    Finished `release` profile [optimized] target(s) in 1m 17s\n"}
+,{"stream_name":"stderr","time":95.949361294,"data":"\n"}
+,{"stream_name":"stdout","time":96.755964315,"data":"\n"}
+,{"stream_name":"stdout","time":96.755995269,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":96.75600056,"data":"downloading metadata for Qwen/Qwen2-7B -\u003e /kaggle/working/hf/qwen2-7b\n"}
+,{"stream_name":"stdout","time":96.756004654,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":97.322281818,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":97.397916634,"data":"  fetched /kaggle/working/hf/qwen2-7b/config.json\n"}
+,{"stream_name":"stdout","time":97.586683637,"data":"  fetched /kaggle/working/hf/qwen2-7b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":97.697579334,"data":"  fetched /kaggle/working/hf/qwen2-7b/model.safetensors.index.json\n"}
+,{"stream_name":"stdout","time":97.697888618,"data":"\n"}
+,{"stream_name":"stdout","time":97.697900618,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":97.69790497299999,"data":"merging 4 shards one at a time -\u003e /kaggle/working/hf/qwen2-7b-merged.safetensors\n"}
+,{"stream_name":"stdout","time":97.697909302,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":162.557571241,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":162.566167493,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":162.566203801,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":162.566209901,"data":"\n"}
+,{"stream_name":"stdout","time":162.566214994,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":184.113303989,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":184.117074121,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":184.117110367,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":184.117118319,"data":"\n"}
+,{"stream_name":"stdout","time":184.117124458,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":200.562493033,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":200.568721729,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":200.568756515,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":200.568765339,"data":"\n"}
+,{"stream_name":"stdout","time":200.568788558,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":214.699416375,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":214.699460791,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":214.699466495,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":214.699471113,"data":"\n"}
+,{"stream_name":"stdout","time":214.699475623,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":214.699480267,"data":"merged 339 tensors, 15231233024 bytes, in 117.0s\n"}
+,{"stream_name":"stdout","time":214.704033731,"data":"merged header self-check OK: 339 tensors contiguous in write order\n"}
+,{"stream_name":"stdout","time":214.705364262,"data":"merge peak RSS so far: 2533 MB\n"}
+,{"stream_name":"stdout","time":224.549601347,"data":"$ cp -L /kaggle/working/hf/qwen2-7b/config.json /kaggle/working/weights_qwen2_7b/config.json\n"}
+,{"stream_name":"stdout","time":224.561311094,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":224.561345557,"data":"$ cp -L /kaggle/working/hf/qwen2-7b/tokenizer.json /kaggle/working/weights_qwen2_7b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":224.610535545,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":224.610607807,"data":"$ ln -sf /kaggle/working/hf/qwen2-7b-merged.safetensors /kaggle/working/weights_qwen2_7b/model.safetensors\n"}
+,{"stream_name":"stdout","time":224.633997821,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":224.637708696,"data":"\n"}
+,{"stream_name":"stdout","time":224.63773846,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":224.637765456,"data":"7B: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":224.637851292,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":224.637857817,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":224.66500383,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":224.665037468,"data":"Mem:              31           0           3           0          26          30\n"}
+,{"stream_name":"stdout","time":224.66504398,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":224.665049496,"data":"\n"}
+,{"stream_name":"stdout","time":224.665054742,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":572.415397603,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":572.648400046,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":572.648437657,"data":"Mem:              31           0          29           0           0          30\n"}
+,{"stream_name":"stdout","time":572.648444348,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":572.649581121,"data":"\n"}
+,{"stream_name":"stdout","time":572.65098985,"data":"  (exit=0, 0.2s)\n"}
+,{"stream_name":"stdout","time":572.651018081,"data":"LAYER_DIGEST embed 20d1c3114f5af59661f1d30c60e45d3d220cd9cceff7c7cb19fc4924b69cd416\n"}
+,{"stream_name":"stdout","time":572.651025017,"data":"LAYER_DIGEST block_0 b62ef72537abbda08442ec68b8349a8d52c3eb7cb452447358a43cfe2dc23aa5\n"}
+,{"stream_name":"stdout","time":572.65103092,"data":"LAYER_DIGEST block_1 a2cc20831a8dc837a570d10a67cc6608f6eefcca8e9248474eeed7c5c80f1909\n"}
+,{"stream_name":"stdout","time":572.651036064,"data":"LAYER_DIGEST block_2 4e6dcc65d55d3efd21a04438081a4063efae3cad215fd718e4c31a9522d1344f\n"}
+,{"stream_name":"stdout","time":572.651079295,"data":"LAYER_DIGEST block_3 443ad0746320603624af67330fedcf74c2a25272bbe0439f3fdf0b71c7faa278\n"}
+,{"stream_name":"stdout","time":572.651085258,"data":"LAYER_DIGEST block_4 a98a54d7c4532916ff04f4570482d1e3e247c0d5d0b3e5c4882cb39f7ba3e3a7\n"}
+,{"stream_name":"stdout","time":572.6510894,"data":"LAYER_DIGEST block_5 3c5dc16e6503405e63a29dce215154991acb8fc29f1a6e67cc27ff6a52618d1d\n"}
+,{"stream_name":"stderr","time":572.651053157,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":572.651099287,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":572.651103375,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":572.651107607,"data":"[run1] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":572.651111227,"data":"[run1] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":572.651114987,"data":"[run1] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":572.651118405,"data":"[run1] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":572.651122396,"data":"[run2] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":572.65112599,"data":"[run2] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":572.651129682,"data":"[run2] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":572.651133514,"data":"[run2] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":572.651137718,"data":"\n"}
+,{"stream_name":"stdout","time":572.651093863,"data":"LAYER_DIGEST block_6 73108bd54eeb56315441b375ed5b596796f6c8acdc138114c97c87518f5843b1\n"}
+,{"stream_name":"stdout","time":572.65114655,"data":"LAYER_DIGEST block_7 fedc90c2fd17bb45f4fa2c0d415658ecb716f037d763884ea61c2d8c75c06b16\n"}
+,{"stream_name":"stdout","time":572.651149655,"data":"LAYER_DIGEST block_8 d12a46e22296606f0274f9f7a80c7f98c8b0c6fb90306f57092845697075567f\n"}
+,{"stream_name":"stdout","time":572.651152168,"data":"LAYER_DIGEST block_9 31461e2b932b2bb75b881a3f9156b02a6e89244831b2405e348066f303c92d5d\n"}
+,{"stream_name":"stdout","time":572.651154644,"data":"LAYER_DIGEST block_10 0ef7caac10b4661d5519713378a9bc2fa2f699aa95da036cc44953f257355f28\n"}
+,{"stream_name":"stdout","time":572.651157871,"data":"LAYER_DIGEST block_11 cb8827a5da643087a64e193b63a570aa56340555b98bd48253878de5daa9caeb\n"}
+,{"stream_name":"stdout","time":572.651161892,"data":"LAYER_DIGEST block_12 3687ab01ba2e8f5224e8aae417b87228ca1d76b477676e133e1702708fd9003e\n"}
+,{"stream_name":"stdout","time":572.651165887,"data":"LAYER_DIGEST block_13 a791fa976435ef6c6523c1f54d103059b8f7ee589d6c2bd001c3c15d2586c9e5\n"}
+,{"stream_name":"stdout","time":572.651169574,"data":"LAYER_DIGEST block_14 84f2885eec84f38b4cf4e641217588c4a2b0e391eabbb3a395499fcba0e983a2\n"}
+,{"stream_name":"stdout","time":572.651173403,"data":"LAYER_DIGEST block_15 e80116e25956b323b95f4f10fcb452e6a19e90ce340d2c5c45b69389afa5035c\n"}
+,{"stream_name":"stdout","time":572.651177259,"data":"LAYER_DIGEST block_16 8b2ebdd363e41b713b563f904ad068ef90652465a0ec442a12375947ef28dcb1\n"}
+,{"stream_name":"stdout","time":572.651181309,"data":"LAYER_DIGEST block_17 d3ecfa6c24ca82c911279f838dc6d14a0501de891b9cd780f427ab2f01e03c34\n"}
+,{"stream_name":"stdout","time":572.651185075,"data":"LAYER_DIGEST block_18 4bd660746cffa6641629702549d25e35fbb1536d0d0fad1fa1227cc25c9da6a8\n"}
+,{"stream_name":"stdout","time":572.651188835,"data":"LAYER_DIGEST block_19 a3dd6400e6ca62bfb42ae4824b1b1e03ea8f6dfea9a7bddbc676c78395e626e0\n"}
+,{"stream_name":"stdout","time":572.651193255,"data":"LAYER_DIGEST block_20 7b171eec2c0355f118a36922dc809569486c5cc73b527d03fd7e27f21851770c\n"}
+,{"stream_name":"stdout","time":572.651206915,"data":"LAYER_DIGEST block_21 71a618e7fc4d4518988e090f33931a302521c664d0a7c21a9e41625885881908\n"}
+,{"stream_name":"stdout","time":572.651212278,"data":"LAYER_DIGEST block_22 68abc10432f83af0b600db15061607d71b7bc659c17a6a9b62778df1e3d2207d\n"}
+,{"stream_name":"stdout","time":572.651216201,"data":"LAYER_DIGEST block_23 53b24c6deaebb1762cbbc82ceaf7ce8fa37c760214eed9e8a81100ad3b825124\n"}
+,{"stream_name":"stdout","time":572.651220107,"data":"LAYER_DIGEST block_24 afbb187dedc45ca9a5c62a3a0aa6ac07d8e2bf67e60a3c4698de966432e15343\n"}
+,{"stream_name":"stdout","time":572.651223939,"data":"LAYER_DIGEST block_25 35fbd3afbf78d3530b15eb07568478049f40a8daa5b95b512810223d3072cb0a\n"}
+,{"stream_name":"stdout","time":572.651228026,"data":"LAYER_DIGEST block_26 5ffad7dd3d795659642cdc1479bf058c25e610f3b2291fe7481d895844a56ad7\n"}
+,{"stream_name":"stdout","time":572.651231919,"data":"LAYER_DIGEST block_27 e3117c5b404be9e1cd17b7759b6983f1e26bd7e2cda4c7c3b914dc753ed06a44\n"}
+,{"stream_name":"stdout","time":572.651235893,"data":"LAYER_DIGEST final_norm c56066fa9594801fbf6fee2ca925a39977ad8041335a323989c1808521b477d2\n"}
+,{"stream_name":"stdout","time":572.651240248,"data":"LAYER_DIGEST logits e24e704bfdd04f10fdec91307e013f238d0d207b421f6e441ac2a6fa65780073\n"}
+,{"stream_name":"stdout","time":572.651243399,"data":"weights_sha256=4d4d9d7cbe8aa9049d7fcf8c4d4af909bfc3b562a0d3c17492acace9b78ad6bc\n"}
+,{"stream_name":"stdout","time":572.651245935,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":572.651248501,"data":"config_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810\n"}
+,{"stream_name":"stdout","time":572.651250944,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":572.651280905,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":572.651289452,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":572.651292308,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\n"}
+,{"stream_name":"stdout","time":572.651294978,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\n"}
+,{"stream_name":"stdout","time":572.651297444,"data":"prompt_idx=0 run1_witness_digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57\n"}
+,{"stream_name":"stdout","time":572.651299944,"data":"prompt_idx=0 run2_witness_digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57\n"}
+,{"stream_name":"stdout","time":572.651302485,"data":"prompt_idx=0 run1_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\n"}
+,{"stream_name":"stdout","time":572.651304963,"data":"prompt_idx=0 run2_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\n"}
+,{"stream_name":"stdout","time":572.651307746,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":572.651310191,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":572.651312711,"data":"CIS2_REF digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57 prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":572.651315565,"data":"\n"}
+,{"stream_name":"stdout","time":572.651317826,"data":"---- 7B: exit=0 elapsed=347.8s\n"}
+,{"stream_name":"stdout","time":572.654683892,"data":"---- 7B: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847808 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stdout","time":572.661865401,"data":"---- 7B: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":572.661910383,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":572.668764947,"data":"---- 7B: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":572.668800436,"data":"low 0\n"}
+,{"stream_name":"stdout","time":572.668805229,"data":"high 0\n"}
+,{"stream_name":"stdout","time":572.668808721,"data":"max 44973\n"}
+,{"stream_name":"stdout","time":572.668812212,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":572.668815557,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":572.668819006,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":572.67036376,"data":"---- 7B: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":572.670392688,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":572.670397386,"data":"$ bash -c rm -rf /kaggle/working/hf/qwen2-7b /kaggle/working/hf/qwen2-7b-merged.safetensors; df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":573.066613593,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":573.066650792,"data":"/dev/loop1       20G  279M   20G   2% /kaggle/working\n"}
+,{"stream_name":"stdout","time":573.066656358,"data":"\n"}
+,{"stream_name":"stdout","time":573.066660548,"data":"  (exit=0, 0.4s)\n"}
+,{"stream_name":"stdout","time":573.066664476,"data":"\n"}
+,{"stream_name":"stdout","time":573.066667793,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":573.066670514,"data":"PHASE 2: Qwen/Qwen2-1.5B, run twice\n"}
+,{"stream_name":"stdout","time":573.066673008,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":573.344406653,"data":"\n"}
+,{"stream_name":"stdout","time":573.344444676,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":573.344451033,"data":"downloading Qwen/Qwen2-1.5B -\u003e /kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":573.344456683,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":586.614438899,"data":"\rFetching 3 files:   0%|          | 0/3 [00:00\u003c?, ?it/s]\rFetching 3 files:  67%|██████▋   | 2/3 [00:13\u003c00:06,  6.53s/it]\rFetching 3 files: 100%|██████████| 3/3 [00:13\u003c00:00,  4.35s/it]\n"}
+,{"stream_name":"stdout","time":586.615028993,"data":"downloaded to /kaggle/working/hf/qwen2-1.5b in 13.3s\n"}
+,{"stream_name":"stdout","time":586.615048485,"data":"$ bash -c du -sh /kaggle/working/hf/qwen2-1.5b; ls -la /kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":586.66167208,"data":"2.9G\t/kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":586.66171527,"data":"total 3021992\n"}
+,{"stream_name":"stdout","time":586.661721871,"data":"drwxr-xr-x 3 root root       4096 Sep 19 08:24 .\n"}
+,{"stream_name":"stdout","time":586.661725685,"data":"drwxr-xr-x 3 root root       4096 Sep 19 08:24 ..\n"}
+,{"stream_name":"stdout","time":586.661728984,"data":"drwxr-xr-x 3 root root       4096 Sep 19 08:24 .cache\n"}
+,{"stream_name":"stdout","time":586.661732489,"data":"-rw-r--r-- 1 root root        662 Sep 19 08:24 config.json\n"}
+,{"stream_name":"stdout","time":586.661735709,"data":"-rw-r--r-- 1 root root 3087467144 Sep 19 08:24 model.safetensors\n"}
+,{"stream_name":"stdout","time":586.661738945,"data":"-rw-r--r-- 1 root root    7028015 Sep 19 08:24 tokenizer.json\n"}
+,{"stream_name":"stdout","time":586.661742026,"data":"\n"}
+,{"stream_name":"stdout","time":586.661757825,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":586.662789115,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/config.json /kaggle/working/weights_qwen2_1_5b/config.json\n"}
+,{"stream_name":"stdout","time":586.671320122,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":586.671358127,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/tokenizer.json /kaggle/working/weights_qwen2_1_5b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":586.678434172,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":586.678467764,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/model.safetensors /kaggle/working/weights_qwen2_1_5b/model.safetensors\n"}
+,{"stream_name":"stdout","time":588.960558769,"data":"  (exit=0, 2.3s)\n"}
+,{"stream_name":"stdout","time":588.963037809,"data":"\n"}
+,{"stream_name":"stdout","time":588.963083572,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":588.963092011,"data":"1.5B run1: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":588.963097663,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":588.963102481,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":588.967649568,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":588.967687875,"data":"Mem:              31           0          18           0          11          30\n"}
+,{"stream_name":"stdout","time":588.967694996,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":588.967700163,"data":"\n"}
+,{"stream_name":"stdout","time":588.967704749,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":672.429894615,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":672.43408591,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":672.434130854,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":672.434137901,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":672.434143122,"data":"\n"}
+,{"stream_name":"stdout","time":672.434148098,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":672.434153183,"data":"weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb\n"}
+,{"stream_name":"stdout","time":672.434158204,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":672.43416355,"data":"config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36\n"}
+,{"stream_name":"stdout","time":672.434168565,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":672.434173758,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":672.434179235,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":672.434182699,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":672.434185955,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":672.43418908,"data":"prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":672.434208647,"data":"prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":672.434213247,"data":"prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":672.434217336,"data":"prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":672.434221473,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":672.434225107,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stderr","time":672.434085912,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":672.434235514,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":672.434241226,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":672.434245088,"data":"[run1] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":672.434248594,"data":"[run1] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":672.434252267,"data":"[run1] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":672.434277019,"data":"[run1] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":672.434281095,"data":"[run1] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":672.43428426,"data":"[run1] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":672.434287676,"data":"[run1] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":672.434291279,"data":"[run1] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":672.434294895,"data":"[run2] step 0: token_id=11\n"}
+,{"stream_name":"stdout","time":672.434228776,"data":"CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":672.434380906,"data":"\n"}
+,{"stream_name":"stdout","time":672.434389396,"data":"---- 1.5B run1: exit=0 elapsed=83.5s\n"}
+,{"stream_name":"stdout","time":672.434393658,"data":"---- 1.5B run1: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847808 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stderr","time":672.434298087,"data":"[run2] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":672.43440534,"data":"[run2] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":672.434408887,"data":"[run2] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":672.434412539,"data":"[run2] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":672.434416531,"data":"[run2] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":672.434420336,"data":"[run2] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":672.434424433,"data":"[run2] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":672.434428299,"data":"\n"}
+,{"stream_name":"stdout","time":672.435914114,"data":"---- 1.5B run1: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":672.435933732,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":672.43736488,"data":"---- 1.5B run1: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":672.437383307,"data":"low 0\n"}
+,{"stream_name":"stdout","time":672.437386388,"data":"high 0\n"}
+,{"stream_name":"stdout","time":672.437388962,"data":"max 44973\n"}
+,{"stream_name":"stdout","time":672.437391479,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":672.437393922,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":672.437396443,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":672.438674316,"data":"---- 1.5B run1: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":672.438688731,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":672.440594956,"data":"\n"}
+,{"stream_name":"stdout","time":672.440616229,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":672.440621355,"data":"1.5B run2: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":672.440625441,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":672.440629418,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":672.444409489,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":672.44444006,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":672.444445702,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":672.444449753,"data":"\n"}
+,{"stream_name":"stdout","time":672.444453627,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":755.220081745,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stderr","time":755.224178017,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":755.224213041,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":755.224220471,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":755.224225636,"data":"[run1] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":755.22423063,"data":"[run1] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":755.224235491,"data":"[run1] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":755.224240452,"data":"[run1] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":755.224245258,"data":"[run1] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":755.224249951,"data":"[run1] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":755.224270146,"data":"[run1] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":755.224278005,"data":"[run1] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":755.224283125,"data":"[run2] step 0: token_id=11\n"}
+,{"stream_name":"stdout","time":755.224206995,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":755.224311944,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":755.224321126,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":755.224326271,"data":"\n"}
+,{"stream_name":"stdout","time":755.224330883,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":755.224335383,"data":"weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb\n"}
+,{"stream_name":"stdout","time":755.224340117,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":755.22434542,"data":"config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36\n"}
+,{"stream_name":"stdout","time":755.224350319,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":755.224355129,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":755.224360822,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":755.224384895,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":755.224389658,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":755.224393248,"data":"prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":755.224402333,"data":"prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":755.224405927,"data":"prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":755.22440985,"data":"prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":755.22441376,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":755.22441747,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":755.22442152,"data":"CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":755.22442581,"data":"\n"}
+,{"stream_name":"stderr","time":755.224288024,"data":"[run2] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":755.224443193,"data":"[run2] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":755.224449141,"data":"[run2] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":755.224452507,"data":"[run2] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":755.224456212,"data":"[run2] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":755.224460552,"data":"[run2] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":755.224464465,"data":"[run2] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":755.224468647,"data":"\n"}
+,{"stream_name":"stdout","time":755.224429689,"data":"---- 1.5B run2: exit=0 elapsed=82.8s\n"}
+,{"stream_name":"stdout","time":755.224481077,"data":"---- 1.5B run2: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847808 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stdout","time":755.225930896,"data":"---- 1.5B run2: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":755.225957061,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":755.227166706,"data":"---- 1.5B run2: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":755.227186057,"data":"low 0\n"}
+,{"stream_name":"stdout","time":755.227190608,"data":"high 0\n"}
+,{"stream_name":"stdout","time":755.227194436,"data":"max 44973\n"}
+,{"stream_name":"stdout","time":755.227198723,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":755.227203036,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":755.22720682,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":755.228338441,"data":"---- 1.5B run2: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":755.228356863,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":755.22836111,"data":"\n"}
+,{"stream_name":"stdout","time":755.228364858,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":755.228368976,"data":"SUMMARY\n"}
+,{"stream_name":"stdout","time":755.228372936,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":755.228539199,"data":"{\n"}
+,{"stream_name":"stdout","time":755.228546213,"data":"  \"7b\": {\n"}
+,{"stream_name":"stdout","time":755.228549974,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":755.228553837,"data":"    \"elapsed_s\": 347.7503180503845,\n"}
+,{"stream_name":"stdout","time":755.228557678,"data":"    \"digest\": \"7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57\",\n"}
+,{"stream_name":"stdout","time":755.228561745,"data":"    \"killed_by_signal\": null,\n"}
+,{"stream_name":"stdout","time":755.228565505,"data":"    \"peak_rss_kb\": null,\n"}
+,{"stream_name":"stdout","time":755.228569322,"data":"    \"peak_rss_gb\": null,\n"}
+,{"stream_name":"stdout","time":755.228577331,"data":"    \"stdout_tail\": \"LAYER_DIGEST block_5 3c5dc16e6503405e63a29dce215154991acb8fc29f1a6e67cc27ff6a52618d1d\\nLAYER_DIGEST block_6 73108bd54eeb56315441b375ed5b596796f6c8acdc138114c97c87518f5843b1\\nLAYER_DIGEST block_7 fedc90c2fd17bb45f4fa2c0d415658ecb716f037d763884ea61c2d8c75c06b16\\nLAYER_DIGEST block_8 d12a46e22296606f0274f9f7a80c7f98c8b0c6fb90306f57092845697075567f\\nLAYER_DIGEST block_9 31461e2b932b2bb75b881a3f9156b02a6e89244831b2405e348066f303c92d5d\\nLAYER_DIGEST block_10 0ef7caac10b4661d5519713378a9bc2fa2f699aa95da036cc44953f257355f28\\nLAYER_DIGEST block_11 cb8827a5da643087a64e193b63a570aa56340555b98bd48253878de5daa9caeb\\nLAYER_DIGEST block_12 3687ab01ba2e8f5224e8aae417b87228ca1d76b477676e133e1702708fd9003e\\nLAYER_DIGEST block_13 a791fa976435ef6c6523c1f54d103059b8f7ee589d6c2bd001c3c15d2586c9e5\\nLAYER_DIGEST block_14 84f2885eec84f38b4cf4e641217588c4a2b0e391eabbb3a395499fcba0e983a2\\nLAYER_DIGEST block_15 e80116e25956b323b95f4f10fcb452e6a19e90ce340d2c5c45b69389afa5035c\\nLAYER_DIGEST block_16 8b2ebdd363e41b713b563f904ad068ef90652465a0ec442a12375947ef28dcb1\\nLAYER_DIGEST block_17 d3ecfa6c24ca82c911279f838dc6d14a0501de891b9cd780f427ab2f01e03c34\\nLAYER_DIGEST block_18 4bd660746cffa6641629702549d25e35fbb1536d0d0fad1fa1227cc25c9da6a8\\nLAYER_DIGEST block_19 a3dd6400e6ca62bfb42ae4824b1b1e03ea8f6dfea9a7bddbc676c78395e626e0\\nLAYER_DIGEST block_20 7b171eec2c0355f118a36922dc809569486c5cc73b527d03fd7e27f21851770c\\nLAYER_DIGEST block_21 71a618e7fc4d4518988e090f33931a302521c664d0a7c21a9e41625885881908\\nLAYER_DIGEST block_22 68abc10432f83af0b600db15061607d71b7bc659c17a6a9b62778df1e3d2207d\\nLAYER_DIGEST block_23 53b24c6deaebb1762cbbc82ceaf7ce8fa37c760214eed9e8a81100ad3b825124\\nLAYER_DIGEST block_24 afbb187dedc45ca9a5c62a3a0aa6ac07d8e2bf67e60a3c4698de966432e15343\\nLAYER_DIGEST block_25 35fbd3afbf78d3530b15eb07568478049f40a8daa5b95b512810223d3072cb0a\\nLAYER_DIGEST block_26 5ffad7dd3d795659642cdc1479bf058c25e610f3b2291fe7481d895844a56ad7\\nLAYER_DIGEST block_27 e3117c5b404be9e1cd17b7759b6983f1e26bd7e2cda4c7c3b914dc753ed06a44\\nLAYER_DIGEST final_norm c56066fa9594801fbf6fee2ca925a39977ad8041335a323989c1808521b477d2\\nLAYER_DIGEST logits e24e704bfdd04f10fdec91307e013f238d0d207b421f6e441ac2a6fa65780073\\nweights_sha256=4d4d9d7cbe8aa9049d7fcf8c4d4af909bfc3b562a0d3c17492acace9b78ad6bc\\ntokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\\nconfig_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810\\ntable_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\\ninv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\\nprompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\\nprompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\\nprompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\\nprompt_idx=0 run1_witness_digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57\\nprompt_idx=0 run2_witness_digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57\\nprompt_idx=0 run1_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\\nprompt_idx=0 run2_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\\nprompt_idx=0 runs_identical=true\\nprompt_idx=0 reduction_mode=sequential\\nCIS2_REF digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57 prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential\",\n"}
+,{"stream_name":"stdout","time":755.228607874,"data":"    \"stderr_tail\": \"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, \\u00a73.5)...\\nweights loaded.\\n[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\\n[run1] step 0: token_id=11\\n[run1] step 1: token_id=1052\\n[run1] step 2: token_id=572\\n[run1] step 3: token_id=264\\n[run2] step 0: token_id=11\\n[run2] step 1: token_id=1052\\n[run2] step 2: token_id=572\\n[run2] step 3: token_id=264\"\n"}
+,{"stream_name":"stdout","time":755.228614086,"data":"  },\n"}
+,{"stream_name":"stdout","time":755.228617729,"data":"  \"1_5b_run1\": {\n"}
+,{"stream_name":"stdout","time":755.228622173,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":755.228626161,"data":"    \"elapsed_s\": 83.46208214759827,\n"}
+,{"stream_name":"stdout","time":755.228629998,"data":"    \"digest\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\",\n"}
+,{"stream_name":"stdout","time":755.228634091,"data":"    \"peak_rss_kb\": null\n"}
+,{"stream_name":"stdout","time":755.228637836,"data":"  },\n"}
+,{"stream_name":"stdout","time":755.228641698,"data":"  \"1_5b_run2\": {\n"}
+,{"stream_name":"stdout","time":755.228645486,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":755.228649172,"data":"    \"elapsed_s\": 82.77555799484253,\n"}
+,{"stream_name":"stdout","time":755.228653102,"data":"    \"digest\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\",\n"}
+,{"stream_name":"stdout","time":755.228656296,"data":"    \"peak_rss_kb\": null\n"}
+,{"stream_name":"stdout","time":755.228659174,"data":"  },\n"}
+,{"stream_name":"stdout","time":755.228662665,"data":"  \"1_5b_match\": true,\n"}
+,{"stream_name":"stdout","time":755.228666563,"data":"  \"1_5b_matches_llm4_known_digest\": true,\n"}
+,{"stream_name":"stdout","time":755.228670521,"data":"  \"1_5b_known_digest_llm4\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\"\n"}
+,{"stream_name":"stdout","time":755.228674819,"data":"}\n"}
+,{"stream_name":"stdout","time":755.228912902,"data":"\n"}
+,{"stream_name":"stdout","time":755.228923169,"data":"7B outcome: returncode=0 killed_by_signal=None digest=7752994d5d6e0dfd1a8889f781d46d057469f28ce3e3622dc99f6ffeab392b57 peak_rss_gb=None\n"}
+,{"stream_name":"stdout","time":755.228927975,"data":"1.5B run1 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":755.228931785,"data":"1.5B run2 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":755.228936086,"data":"1.5B digests match (run1 vs run2): True\n"}
+,{"stream_name":"stdout","time":755.228939424,"data":"1.5B digest matches LLM-4 known digest (9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8): True\n"}
+,{"stream_name":"stderr","time":758.644712816,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":758.644751972,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":759.098135251,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":759.098166114,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":761.312576182,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":763.040342952,"data":"[NbConvertApp] Writing 348267 bytes to __results__.html\n"}
+]

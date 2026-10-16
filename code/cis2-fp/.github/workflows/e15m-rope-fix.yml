@@ -1,0 +1,119 @@
+name: E15m — spec v0.3 f64-staged RoPE reduction (accuracy + oracle 16/128/512/2048)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [cm/e15m-spec-v0.3-rope]
+
+jobs:
+  h2m-accuracy-harness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up python + mpmath/numpy oracle
+        run: |
+          python3 -m venv .venv-h2m
+          .venv-h2m/bin/pip install --quiet mpmath numpy
+      - name: Run H2m accuracy harness (pos up to 8192)
+        run: .venv-h2m/bin/python3 scripts/h2m_accuracy_harness.py 8192 | tee h2m_result.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: h2m-accuracy-result
+          path: h2m_result.txt
+
+  oracle-smollm2:
+    strategy:
+      fail-fast: false
+      matrix:
+        n_gen: [16, 128, 512, 2048]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+      - name: Fetch SmolLM2-135M weights
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  weights/model.safetensors" | sha256sum -c -
+      - name: Build release and run Rust reference, dump final-step logits
+        run: |
+          cargo build --release
+          CIS2_DUMP_LASTSTEP_LOGITS=/tmp/rust_laststep.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights --gen-toks ${{ matrix.n_gen }} | tee rust_run.txt
+      - name: Set up python + torch/transformers oracle
+        run: |
+          python3 -m venv .venv-oracle
+          .venv-oracle/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          .venv-oracle/bin/pip install --quiet transformers safetensors
+      - name: Run oracle and diff final-step logits + full token sequence
+        run: |
+          CIS2_ORACLE_N_GEN=${{ matrix.n_gen }} CIS2_ORACLE_DUMP_LASTSTEP=/tmp/oracle_laststep.f32le \
+            .venv-oracle/bin/python scripts/oracle_compare.py /tmp/oracle_step0.f32le weights | tee oracle_run.txt
+          python3 scripts/diff_logits.py /tmp/rust_laststep.f32le /tmp/oracle_laststep.f32le | tee diff_output.txt || true
+          RUST_TOKENS=$(grep -E 'run1_tokens=' rust_run.txt | sed -E 's/.*run1_tokens=//')
+          ORACLE_TOKENS=$(grep -E '^oracle_all_tokens=' oracle_run.txt | sed -E 's/oracle_all_tokens=//')
+          echo "n_gen=${{ matrix.n_gen }} rust_tokens=$RUST_TOKENS"
+          echo "n_gen=${{ matrix.n_gen }} oracle_tokens=$ORACLE_TOKENS"
+          if [ "$RUST_TOKENS" = "$ORACLE_TOKENS" ]; then
+            echo "n_gen=${{ matrix.n_gen }}: TOKEN MATCH PASS"
+          else
+            echo "n_gen=${{ matrix.n_gen }}: TOKEN MATCH DIVERGED -- see diff_output.txt for the final-step logit delta"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oracle-smollm2-${{ matrix.n_gen }}
+          path: |
+            rust_run.txt
+            oracle_run.txt
+            diff_output.txt
+
+  oracle-qwen05b:
+    strategy:
+      fail-fast: false
+      matrix:
+        n_gen: [16, 128, 512, 2048]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+      - name: Fetch Qwen2.5-0.5B weights
+        run: |
+          mkdir -p weights_qwen
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/config.json     https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/model.safetensors https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/model.safetensors
+      - name: Build release and run Rust reference, dump final-step logits
+        run: |
+          cargo build --release
+          CIS2_DUMP_LASTSTEP_LOGITS=/tmp/rust_laststep_qwen.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen --gen-toks ${{ matrix.n_gen }} | tee rust_run_qwen.txt
+      - name: Set up python + torch/transformers oracle
+        run: |
+          python3 -m venv .venv-oracle
+          .venv-oracle/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          .venv-oracle/bin/pip install --quiet transformers safetensors
+      - name: Run oracle and diff final-step logits + full token sequence
+        run: |
+          CIS2_ORACLE_N_GEN=${{ matrix.n_gen }} CIS2_ORACLE_DUMP_LASTSTEP=/tmp/oracle_laststep_qwen.f32le \
+            .venv-oracle/bin/python scripts/oracle_compare_qwen.py /tmp/oracle_step0_qwen.f32le weights_qwen | tee oracle_run_qwen.txt
+          python3 scripts/diff_logits.py /tmp/rust_laststep_qwen.f32le /tmp/oracle_laststep_qwen.f32le | tee diff_output_qwen.txt || true
+          RUST_TOKENS=$(grep -E 'run1_tokens=' rust_run_qwen.txt | sed -E 's/.*run1_tokens=//')
+          ORACLE_TOKENS=$(grep -E '^oracle_all_tokens=' oracle_run_qwen.txt | sed -E 's/oracle_all_tokens=//')
+          echo "n_gen=${{ matrix.n_gen }} rust_tokens=$RUST_TOKENS"
+          echo "n_gen=${{ matrix.n_gen }} oracle_tokens=$ORACLE_TOKENS"
+          if [ "$RUST_TOKENS" = "$ORACLE_TOKENS" ]; then
+            echo "n_gen=${{ matrix.n_gen }}: TOKEN MATCH PASS"
+          else
+            echo "n_gen=${{ matrix.n_gen }}: TOKEN MATCH DIVERGED -- see diff_output_qwen.txt for the final-step logit delta"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oracle-qwen05b-${{ matrix.n_gen }}
+          path: |
+            rust_run_qwen.txt
+            oracle_run_qwen.txt
+            diff_output_qwen.txt

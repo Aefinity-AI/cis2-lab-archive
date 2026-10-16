@@ -1,0 +1,108 @@
+name: E15g clean-room cis2-verify2 (spec-only, cross-ISA)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - cm/e15g-cleanroom-v2
+      - cm/e15h-verify2-v0.2
+
+env:
+  # CIS-2 v0.2 (E15h): CIS2_REF changed because the witness header now also
+  # binds table_digest + inv_freq_table_digest (raw bytes) ahead of the
+  # prompt tokens, and all three artifact hashes are fed as raw 32-byte
+  # digests instead of 64-char hex ASCII. inv_freq_table_digest itself is
+  # numerically unchanged (same inv_freq table, only its *binding* changed).
+  # See docs/CIS2_SPEC_v0.2.md and docs/E15h_REFACTOR_v0.2_RESULT.md.
+  TARGET_DIGEST: a0c563ef804f50413b7fb6619ae4afe9b51b1ffa7655e944221393e85d6261da
+  TARGET_INVFREQ_DIGEST: da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+
+jobs:
+  cleanroom-verify2:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assert ISA
+        run: |
+          U=$(uname -m)
+          echo "uname -m = $U"
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      - name: rustc version
+        run: rustc -V
+
+      - name: Fetch SmolLM2-135M weights (public HF resolve, no auth)
+        run: |
+          mkdir -p verify2/weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify2/weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify2/weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o verify2/weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum verify2/weights/model.safetensors verify2/weights/config.json verify2/weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  verify2/weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: cargo test (release)
+        working-directory: verify2
+        run: cargo test --release
+
+      - name: no-FMA gate (grep source for mul_add)
+        working-directory: verify2
+        run: |
+          if grep -rn "\.mul_add(" src/; then
+            echo "FAIL: .mul_add( call site found in src/"
+            exit 1
+          fi
+          echo "PASS: no .mul_add( call sites in src/"
+
+      - name: Build release
+        working-directory: verify2
+        run: cargo build --release
+
+      - name: no-FMA gate (disassembly)
+        working-directory: verify2
+        run: |
+          BIN=target/release/cis2-verify2
+          if objdump -d "$BIN" | grep -Eqi 'vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub'; then
+            echo "FAIL: FMA instruction found in $BIN"
+            objdump -d "$BIN" | grep -Ei 'vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub'
+            exit 1
+          fi
+          echo "PASS: no FMA instructions found in $BIN"
+
+      - name: Run cis2-verify2, assert digests match pre-registered spec targets
+        working-directory: verify2
+        run: |
+          OUT=$(nice -n 10 ./target/release/cis2-verify2 2>&1)
+          echo "$OUT"
+          LINE=$(echo "$OUT" | grep -E '^CIS2_VERIFY2 digest=' | head -1)
+          INVFREQ=$(echo "$OUT" | grep -E '^inv_freq[ _]table_digest=' | head -1)
+          DIGEST=$(echo "$LINE" | sed -n 's/.*digest=\([0-9a-f]*\).*/\1/p')
+          INVFREQ_DIGEST=$(echo "$INVFREQ" | sed -n 's/.*table_digest=\([0-9a-f]*\).*/\1/p')
+          echo "got digest=$DIGEST target=$TARGET_DIGEST"
+          echo "got inv_freq table_digest=$INVFREQ_DIGEST target=$TARGET_INVFREQ_DIGEST"
+          if [ "$DIGEST" != "$TARGET_DIGEST" ]; then
+            echo "MISMATCH: CIS2_VERIFY2 digest does not match pre-registered spec target on ${{ matrix.arch_label }}"
+            exit 1
+          fi
+          if [ "$INVFREQ_DIGEST" != "$TARGET_INVFREQ_DIGEST" ]; then
+            echo "MISMATCH: inv_freq table_digest does not match pre-registered spec target on ${{ matrix.arch_label }}"
+            exit 1
+          fi
+          echo "PASS on ${{ matrix.arch_label }}: digests match pre-registered spec target"

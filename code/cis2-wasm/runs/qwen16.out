@@ -1,0 +1,11 @@
+weights_sha256=88c142557820ccad55bb59756bfcfcf891de9cc6202816bd346445188a0ed342
+tokenizer_sha256=c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539
+config_sha256=479dcf0c5286339e41ad3992cd08ae88a467c4187587936248e2b7c96283484b
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=33b4b06c37c6b5b54da225ac8de68db17e96131aef21c24ef16756e4c4d4d18b
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 6941, 47290, 13, 2932, 10245, 311, 1486, 448, 1059, 23069]
+prompt_idx=0 run1_witness_digest=c9dff099d927a6dda91514c260c7207de7aca4b361291e57fae390a352392e62
+prompt_idx=0 run1_argmax_digest=9619177f959f63d175d9442e73a6063f31654b08ba4e38717e88bd2e39b0aff5
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=c9dff099d927a6dda91514c260c7207de7aca4b361291e57fae390a352392e62 prompt_idx=0 prompt_toks=4 gen_toks=16 dtype=fp32 reduction_mode=sequential

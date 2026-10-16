@@ -1,0 +1,55 @@
+ARM G-OB / G-MKL (cblas_sgemv glue) [main.rs + math.rs] entry=decode_plain_forced
+  matvec                 main.rs      lines   81-102  total= 22 code= 22
+  rmsnorm                main.rs      lines  112-127  total= 16 code= 16
+  add_bias_opt           main.rs      lines  132-139  total=  8 code=  8
+  elementwise_add        main.rs      lines  141-147  total=  7 code=  7
+  apply_rope_head        main.rs      lines  152-174  total= 23 code= 22
+  forward_token          main.rs      lines  201-306  total=106 code= 92
+  argmax_f32             main.rs      lines  853-863  total= 11 code= 11
+  decode_plain_forced    main.rs      lines  867-893  total= 27 code= 27
+  dot_seq                math.rs      lines   40-48   total=  9 code=  9
+  sum_seq                math.rs      lines   52-58   total=  7 code=  7
+  rsqrt_cr               math.rs      lines   66-68   total=  3 code=  3
+  exp_pinned             math.rs      lines  100-133  total= 34 code= 28
+  ldexp_exact            math.rs      lines  139-158  total= 20 code= 20
+  reduce_pi_2            math.rs      lines  186-193  total=  8 code=  8
+  sin_poly               math.rs      lines  208-218  total= 11 code= 11
+  cos_poly               math.rs      lines  221-233  total= 13 code= 13
+  quadrant               math.rs      lines  237-239  total=  3 code=  3
+  sin_pinned             math.rs      lines  243-253  total= 11 code= 11
+  cos_pinned             math.rs      lines  257-267  total= 11 code= 11
+  silu_pinned            math.rs      lines  347-352  total=  6 code=  6
+  softmax_seq            math.rs      lines  358-375  total= 18 code= 18
+  SUM live (never-dumping) functions: total=374 code=353  (21 functions)
+  of which entry loop decode_plain_forced: total=27 code=27; forward pass forward_token/process_position: total=106 code=92
+  reached only through dump (off in --plain time), not counted: dump_line total=4
+ARM X (own Rust kernels) [main.rs + math.rs + xk.rs] entry=decode_plain_forced
+  matvec                 main.rs      lines  106-110  total=  5 code=  5
+  rmsnorm                main.rs      lines  112-127  total= 16 code= 16
+  add_bias_opt           main.rs      lines  132-139  total=  8 code=  8
+  elementwise_add        main.rs      lines  141-147  total=  7 code=  7
+  apply_rope_head        main.rs      lines  152-174  total= 23 code= 22
+  forward_token          main.rs      lines  201-306  total=106 code= 92
+  argmax_f32             main.rs      lines  853-863  total= 11 code= 11
+  decode_plain_forced    main.rs      lines  867-893  total= 27 code= 27
+  dot_seq                math.rs      lines   40-48   total=  9 code=  9
+  sum_seq                math.rs      lines   52-58   total=  7 code=  7
+  rsqrt_cr               math.rs      lines   66-68   total=  3 code=  3
+  exp_pinned             math.rs      lines  100-133  total= 34 code= 28
+  ldexp_exact            math.rs      lines  139-158  total= 20 code= 20
+  reduce_pi_2            math.rs      lines  186-193  total=  8 code=  8
+  sin_poly               math.rs      lines  208-218  total= 11 code= 11
+  cos_poly               math.rs      lines  221-233  total= 13 code= 13
+  quadrant               math.rs      lines  237-239  total=  3 code=  3
+  sin_pinned             math.rs      lines  243-253  total= 11 code= 11
+  cos_pinned             math.rs      lines  257-267  total= 11 code= 11
+  silu_pinned            math.rs      lines  347-352  total=  6 code=  6
+  softmax_seq            math.rs      lines  358-375  total= 18 code= 18
+  xk_matvec              xk.rs        lines    6-17   total= 12 code= 12
+  matvec_avx2            xk.rs        lines   21-57   total= 37 code= 37
+  matvec_portable        xk.rs        lines   59-76   total= 18 code= 18
+  SUM live (never-dumping) functions: total=424 code=403  (24 functions)
+  of which entry loop decode_plain_forced: total=27 code=27; forward pass forward_token/process_position: total=106 code=92
+  reached only through dump (off in --plain time), not counted: dump_line total=4
+ARM T (PyTorch, t_arm.py): decode loop lines 101-120 total=20 code=20 (check-only statements inside the loop are guarded by `if not is_time`; library code in torch and transformers not counted: see pip freeze)
+ARM Q (llama.cpp driver, llama_drv.cpp): decode loop lines 106-121 total=16 code=16 (check-only statements guarded by `if (!is_time)`; library code in llama.cpp and ggml not counted)

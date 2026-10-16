@@ -1,0 +1,14 @@
+job                     central h    worst h
+rust3-build-box1             0.42       0.42
+rust3-R1-box1                1.20       2.48
+rust3-C1-box1                1.20       2.48
+rust3-R2-box1                1.20       2.48
+rust3-R3-box1                1.88       3.16
+rust3-P1-box1                2.38       3.65
+rust3-L1-box1                1.21       2.49
+TOTAL (build + 6 arms)       9.49      17.16
+PAIR (R1 + C1 + the one build job)       2.83       5.38
+registered cap: about 6 box-hours; the six arms alone are 6 x 1 h = 6.0 h of timed fuzzing = the whole cap
+full plan exceeds the cap by 3.5 h central (58 %), 11.2 h worst (186 %)
+pass-mark pair alone: 2.8 h central, 5.4 h worst (47 % and 90 % of the cap)
+Miri on box3 (extra): 200 files x about 20 s = about 1.1 h on box3, not on box1, not in the cap of box1

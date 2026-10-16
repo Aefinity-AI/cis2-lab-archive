@@ -1,0 +1,2 @@
+sv5b-arma tag=box5 rows=200 median_wall_s=96.24
+RESULT: OK rows=200/200 rows_sha256=a32d855b6b12f0979a53b2d3f05af66cf4c9e40ee9d42ef3d483237f67f31602

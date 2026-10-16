@@ -1,0 +1,412 @@
+{
+ "mode": "full",
+ "manifest_ok": true,
+ "excluded": {},
+ "sanity_checks": [
+  {
+   "check": "R positions == 1,664,964",
+   "ok": true,
+   "detail": "1664964"
+  },
+  {
+   "check": "R covers windows 0..7999",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "R margin==0 count == 1",
+   "ok": true,
+   "detail": "1"
+  },
+  {
+   "check": "R margin<1e-5 count == 12",
+   "ok": true,
+   "detail": "12"
+  },
+  {
+   "check": "R margin<1e-4 count == 123",
+   "ok": true,
+   "detail": "123"
+  },
+  {
+   "check": "R margin<=5.722e-6 count == 10",
+   "ok": true,
+   "detail": "10"
+  },
+  {
+   "check": "B positions == 1664964",
+   "ok": true,
+   "detail": "1664964"
+  },
+  {
+   "check": "B flip table == report",
+   "ok": true,
+   "detail": "got [(274, 144, 2166, 2364, 2), (1302, 143, 281, 30, 0), (3334, 101, 1453, 325, 6), (5595, 154, 451, 260, 2)]"
+  },
+  {
+   "check": "B flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "B ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "B max margin shift == report",
+   "ok": true,
+   "detail": "0.0001106262 vs 0.0001106262"
+  },
+  {
+   "check": "X2 positions == 833394",
+   "ok": true,
+   "detail": "833394"
+  },
+  {
+   "check": "X2 flip table == report",
+   "ok": true,
+   "detail": "got [(3334, 101, 1453, 325, 6), (3687, 106, 282, 739, 4)]"
+  },
+  {
+   "check": "X2 flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "X2 ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "X2 max margin shift == report",
+   "ok": true,
+   "detail": "9.727478e-05 vs 9.727478e-05"
+  },
+  {
+   "check": "X3 positions == 831570",
+   "ok": true,
+   "detail": "831570"
+  },
+  {
+   "check": "X3 flip table == report",
+   "ok": true,
+   "detail": "got [(6300, 248, 550, 805, 2)]"
+  },
+  {
+   "check": "X3 flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "X3 ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "X3 max margin shift == report",
+   "ok": true,
+   "detail": "0.0001373291 vs 0.0001373291"
+  },
+  {
+   "check": "T positions == 416030",
+   "ok": true,
+   "detail": "416030"
+  },
+  {
+   "check": "T flip table == report",
+   "ok": true,
+   "detail": "got [(274, 144, 2166, 2364, 2)]"
+  },
+  {
+   "check": "T flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "T ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "T max margin shift == report",
+   "ok": true,
+   "detail": "6.67572e-05 vs 6.67572e-05"
+  },
+  {
+   "check": "box3B8T1 positions == 831570",
+   "ok": true,
+   "detail": "831570"
+  },
+  {
+   "check": "box3B8T1 flip table == report",
+   "ok": true,
+   "detail": "got [(5595, 154, 451, 260, 2), (6300, 248, 550, 805, 2)]"
+  },
+  {
+   "check": "box3B8T1 flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "box3B8T1 ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "box3B8T1 max margin shift == report",
+   "ok": true,
+   "detail": "0.0001392365 vs 0.0001392365"
+  },
+  {
+   "check": "pengA positions == 416030",
+   "ok": true,
+   "detail": "416030"
+  },
+  {
+   "check": "pengA flip table == report",
+   "ok": true,
+   "detail": "got []"
+  },
+  {
+   "check": "pengA flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pengA ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pengA max margin shift == report",
+   "ok": true,
+   "detail": "0 vs 0"
+  },
+  {
+   "check": "pengB positions == 1248934",
+   "ok": true,
+   "detail": "1248934"
+  },
+  {
+   "check": "pengB flip table == report",
+   "ok": true,
+   "detail": "got []"
+  },
+  {
+   "check": "pengB flips are exact swaps of R top-2",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pengB ref margin is a multiple of 2^-20",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "pengB max margin shift == report",
+   "ok": true,
+   "detail": "0 vs 0"
+  },
+  {
+   "check": "X composite tiles windows 0..7999",
+   "ok": true,
+   "detail": "checked in main()"
+  },
+  {
+   "check": "bar flips: B=4, X=3",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "tau_table": [
+  {
+   "tau": 1e-06,
+   "count": 1,
+   "fraction": 6.00613586840316e-07,
+   "cp95_upper": 2.8492262806532617e-06
+  },
+  {
+   "tau": 1e-05,
+   "count": 12,
+   "fraction": 7.207363042083793e-06,
+   "cp95_upper": 1.167744520332159e-05
+  },
+  {
+   "tau": 0.0001,
+   "count": 123,
+   "fraction": 7.387547118135887e-05,
+   "cp95_upper": 8.580733130450724e-05
+  },
+  {
+   "tau": 0.0002,
+   "count": 225,
+   "fraction": 0.00013513805703907112,
+   "cp95_upper": 0.00015092273399014444
+  },
+  {
+   "tau": 0.001,
+   "count": 1118,
+   "fraction": 0.0006714859900874734,
+   "cp95_upper": 0.0007054599436554052
+  },
+  {
+   "tau": 0.01,
+   "count": 11416,
+   "fraction": 0.006856604707369048,
+   "cp95_upper": 0.006962734018673757
+  },
+  {
+   "tau": 0.1,
+   "count": 110863,
+   "fraction": 0.06658582407787796,
+   "cp95_upper": 0.0669044807563332
+  }
+ ],
+ "counted_flips": [
+  {
+   "cell": "B",
+   "window": 274,
+   "pos": 144,
+   "ref_top1": 2166,
+   "ref_top2": 2364,
+   "own_top1": 2364,
+   "own_top2": 2166,
+   "ref_margin": 1.9073486328125e-06,
+   "own_margin": 7.62939453125e-06,
+   "shift_abs": 5.7220458984375e-06,
+   "gap_change": 9.5367431640625e-06,
+   "swap": true,
+   "ref_margin_units": 2.0
+  },
+  {
+   "cell": "B",
+   "window": 1302,
+   "pos": 143,
+   "ref_top1": 281,
+   "ref_top2": 30,
+   "own_top1": 30,
+   "own_top2": 281,
+   "ref_margin": 0.0,
+   "own_margin": 1.9073486328125e-06,
+   "shift_abs": 1.9073486328125e-06,
+   "gap_change": 1.9073486328125e-06,
+   "swap": true,
+   "ref_margin_units": 0.0
+  },
+  {
+   "cell": "B",
+   "window": 3334,
+   "pos": 101,
+   "ref_top1": 1453,
+   "ref_top2": 325,
+   "own_top1": 325,
+   "own_top2": 1453,
+   "ref_margin": 5.7220458984375e-06,
+   "own_margin": 1.9073486328125e-06,
+   "shift_abs": 3.814697265625e-06,
+   "gap_change": 7.62939453125e-06,
+   "swap": true,
+   "ref_margin_units": 6.0
+  },
+  {
+   "cell": "B",
+   "window": 5595,
+   "pos": 154,
+   "ref_top1": 451,
+   "ref_top2": 260,
+   "own_top1": 260,
+   "own_top2": 451,
+   "ref_margin": 1.9073486328125e-06,
+   "own_margin": 3.814697265625e-06,
+   "shift_abs": 1.9073486328125e-06,
+   "gap_change": 5.7220458984375e-06,
+   "swap": true,
+   "ref_margin_units": 2.0
+  },
+  {
+   "cell": "X2",
+   "window": 3334,
+   "pos": 101,
+   "ref_top1": 1453,
+   "ref_top2": 325,
+   "own_top1": 325,
+   "own_top2": 1453,
+   "ref_margin": 5.7220458984375e-06,
+   "own_margin": 7.62939453125e-06,
+   "shift_abs": 1.9073486328125e-06,
+   "gap_change": 1.33514404296875e-05,
+   "swap": true,
+   "ref_margin_units": 6.0
+  },
+  {
+   "cell": "X2",
+   "window": 3687,
+   "pos": 106,
+   "ref_top1": 282,
+   "ref_top2": 739,
+   "own_top1": 739,
+   "own_top2": 282,
+   "ref_margin": 3.814697265625e-06,
+   "own_margin": 9.5367431640625e-06,
+   "shift_abs": 5.7220458984375e-06,
+   "gap_change": 1.33514404296875e-05,
+   "swap": true,
+   "ref_margin_units": 4.0
+  },
+  {
+   "cell": "X3",
+   "window": 6300,
+   "pos": 248,
+   "ref_top1": 550,
+   "ref_top2": 805,
+   "own_top1": 805,
+   "own_top2": 550,
+   "ref_margin": 1.9073486328125e-06,
+   "own_margin": 4.76837158203125e-06,
+   "shift_abs": 2.86102294921875e-06,
+   "gap_change": 6.67572021484375e-06,
+   "swap": true,
+   "ref_margin_units": 2.0
+  }
+ ],
+ "distinct_counted_positions": 6,
+ "zero_margin_flips": [
+  {
+   "cell": "B",
+   "window": 1302,
+   "pos": 143,
+   "ref_top1": 281,
+   "ref_top2": 30,
+   "own_top1": 30,
+   "own_top2": 281,
+   "ref_margin": 0.0,
+   "own_margin": 1.9073486328125e-06,
+   "shift_abs": 1.9073486328125e-06,
+   "gap_change": 1.9073486328125e-06,
+   "swap": true,
+   "ref_margin_units": 0.0
+  }
+ ],
+ "max_counted_ref_margin": 5.7220458984375e-06,
+ "max_shift_by_cell": {
+  "B": 0.000110626220703125,
+  "X2": 9.72747802734375e-05,
+  "X3": 0.0001373291015625,
+  "T": 6.67572021484375e-05,
+  "box3B8T1": 0.0001392364501953125,
+  "pengA": 0.0,
+  "pengB": 0.0,
+  "box2B1T2": 9.72747802734375e-05,
+  "box2B8T1": 9.72747802734375e-05,
+  "box3B1T2": 0.0001373291015625
+ },
+ "count_threshold_for_1pct": 16649,
+ "verdict": "MET",
+ "sanity": true,
+ "flips_total": 7,
+ "positions": 1664964,
+ "frac_recheck": 0.006856604707369048,
+ "cond_i": true,
+ "cond_ii": true
+}

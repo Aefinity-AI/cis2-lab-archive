@@ -1,0 +1,15 @@
+{
+ "reference_rows": 200,
+ "B8T1": {
+  "rows": 200,
+  "differ": 0,
+  "median_wall_s_per_prompt": 23.57,
+  "details": []
+ },
+ "CTRL": {
+  "rows": 20,
+  "differ": 0,
+  "median_wall_s_per_prompt": 49.9,
+  "details": []
+ }
+}

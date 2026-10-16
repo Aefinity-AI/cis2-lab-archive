@@ -1,0 +1,408 @@
+commit: 205b0242a0a03a4b2855aca2747a55a05364520f
+x86_64
+avx avx2 fma 
+== CIS-2 selfcheck.sh — 2026-10-01T04:57:44Z ==
+
+-- fetching pinned weights/config/tokenizer --
+Fetching model.safetensors ...
+  expected=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+  got=     80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+Fetching config.json ...
+  expected=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+  got=     1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843
+Fetching tokenizer.json ...
+  expected=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+  got=     9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c
+All weight artifacts fetched and sha256-verified into <tmp>/<session>/scratchpad/cis2-stranger/weights/
+PASS  fetch: weights+config+tokenizer sha256-verified
+
+-- cross-checking HF dataset mirror (aefinityAIINC/cis2-conformance) --
+  EXPECTED_DIGESTS.md: mirror matches local checkout byte-for-byte
+  CIS2_SPEC_v0.3b.md: mirror matches local checkout byte-for-byte
+PASS  HF dataset mirror matches local checkout
+
+-- building cargo workspace (cis2_ref, cis2-conformance) --
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.229
+   Compiling libc v0.2.189
+   Compiling cfg-if v1.0.4
+   Compiling syn v3.0.4
+   Compiling syn v2.0.119
+   Compiling serde v1.0.229
+   Compiling crossbeam-utils v0.8.22
+   Compiling memchr v2.8.3
+   Compiling serde_derive v1.0.229
+   Compiling fnv v1.0.7
+   Compiling crossbeam-epoch v0.9.20
+   Compiling strsim v0.11.1
+   Compiling ident_case v1.0.1
+   Compiling zerocopy v0.8.56
+   Compiling getrandom v0.3.4
+   Compiling darling_core v0.20.11
+   Compiling crossbeam-deque v0.8.7
+   Compiling find-msvc-tools v0.1.11
+   Compiling shlex v2.0.1
+   Compiling cc v1.4.4
+   Compiling darling_macro v0.20.11
+   Compiling rayon-core v1.13.0
+   Compiling rustversion v1.0.23
+   Compiling once_cell v1.21.4
+   Compiling zmij v1.0.23
+   Compiling bitflags v2.13.1
+   Compiling typenum v1.20.1
+   Compiling pkg-config v0.3.34
+   Compiling onig_sys v69.9.3
+   Compiling hybrid-array v0.4.14
+   Compiling darling v0.20.11
+   Compiling version_check v0.9.5
+   Compiling either v1.18.0
+   Compiling getrandom v0.4.3
+   Compiling serde_json v1.0.151
+   Compiling itoa v1.0.18
+   Compiling rustix v1.1.4
+   Compiling ahash v0.8.12
+   Compiling derive_builder_core v0.20.2
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_core v0.9.5
+   Compiling aho-corasick v1.1.5
+   Compiling regex-syntax v0.8.11
+   Compiling minimal-lexical v0.2.1
+   Compiling paste v1.0.15
+   Compiling linux-raw-sys v0.12.1
+   Compiling esaxx-rs v0.1.10
+   Compiling thiserror v2.0.20
+   Compiling nom v7.1.3
+   Compiling regex-automata v0.4.18
+   Compiling rand_chacha v0.9.0
+   Compiling castaway v0.2.4
+   Compiling derive_builder_macro v0.20.2
+   Compiling rayon v1.12.0
+   Compiling itertools v0.14.0
+   Compiling block-buffer v0.12.1
+   Compiling crypto-common v0.2.2
+   Compiling monostate-impl v0.1.18
+   Compiling thiserror-impl v2.0.20
+   Compiling equivalent v1.0.2
+   Compiling fastrand v2.5.0
+   Compiling pastey v0.2.3
+   Compiling foldhash v0.2.0
+   Compiling macro_rules_attribute-proc_macro v0.2.3
+   Compiling unicode-segmentation v1.13.3
+   Compiling allocator-api2 v0.2.21
+   Compiling base64 v0.13.1
+   Compiling smallvec v1.15.2
+   Compiling static_assertions v1.1.0
+   Compiling const-oid v0.10.2
+   Compiling ryu v1.0.23
+   Compiling compact_str v0.9.1
+   Compiling digest v0.11.3
+   Compiling unicode-normalization-alignments v0.1.12
+   Compiling spm_precompiled v0.1.4
+   Compiling hashbrown v0.16.1
+   Compiling macro_rules_attribute v0.2.3
+   Compiling tempfile v3.27.0
+   Compiling monostate v0.1.18
+   Compiling rayon-cond v0.4.0
+   Compiling derive_builder v0.20.2
+   Compiling regex v1.13.1
+   Compiling rand v0.9.5
+   Compiling onig v6.5.3
+   Compiling dary_heap v0.3.9
+   Compiling daachorse v1.0.1
+   Compiling log v0.4.34
+   Compiling unicode_categories v0.1.1
+   Compiling cpufeatures v0.3.1
+   Compiling sha2 v0.11.0
+   Compiling tokenizers v0.23.1
+   Compiling safetensors v0.8.0
+   Compiling cis2_ref v0.1.0 (<tmp>/<session>/scratchpad/cis2-stranger)
+warning: function `widen_bf16` is never used
+  --> src/bin/../math.rs:33:8
+   |
+33 | pub fn widen_bf16(bits: u16) -> f32 {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `silu_pinned` is never used
+   --> src/bin/../math.rs:347:8
+    |
+347 | pub fn silu_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^^
+
+warning: function `table_digest` is never used
+   --> src/bin/../math.rs:382:8
+    |
+382 | pub fn table_digest() -> [u8; 32] {
+    |        ^^^^^^^^^^^^
+
+warning: `cis2_ref` (bin "cis2_conformance_reference_candidate") generated 3 warnings
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:31:19
+   |
+31 |         let csr = _mm_getcsr();
+   |                   ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:32:9
+   |
+32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);
+   |         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:29
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                             ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:41
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                                         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:71:24
+   |
+71 |     let csr = unsafe { _mm_getcsr() };
+   |                        ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:70:28
+   |
+70 |     use std::arch::x86_64::_mm_getcsr;
+   |                            ^^^^^^^^^^
+
+warning: `cis2_ref` (bin "cis2_ref") generated 6 warnings
+    Finished `release` profile [optimized] target(s) in 1m 32s
+PASS  cargo build --release
+
+-- building verify3/ (C clean-room, CC=gcc) --
+make: Entering directory '<tmp>/<session>/scratchpad/cis2-stranger/verify3'
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o main.o main.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o model.o model.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o mathpin.o mathpin.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o tokenizer.o tokenizer.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o json.o json.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -c -o sha256.o sha256.c
+gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -o cis2_verify3 main.o model.o mathpin.o tokenizer.o json.o sha256.o -lm
+make: Leaving directory '<tmp>/<session>/scratchpad/cis2-stranger/verify3'
+PASS  make -C verify3 (CC=gcc)
+
+-- FMA gate (objdump) --
+PASS  FMA gate (verify3): 0 FMA-family instructions
+
+-- primary §13.1 vector: verify3 vs EXPECTED_DIGESTS.md --
+CIS2_VERIFY3 selftest=PASS ftz_daz=pinned
+CIS2_VERIFY3 artifact_hashes=PASS
+CIS2_VERIFY3 determinism=PASS
+CIS2_VERIFY3 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df prompt_idx=0 prompt_toks=4 gen_toks=16 dtype=fp32
+CIS2_VERIFY3 argmax_digest=0b9c8f3ac90d0b9cd5f1719ac327dca1fc639fd87468305fccebbe3d56f67aff
+CIS2_VERIFY3 table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+CIS2_VERIFY3 inv_freq_table_digest=da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+CIS2_VERIFY3 generated_token_ids=28,665,436,253,1838,8180,3365,14176,30,2306,4161,281,253,2066,2291,351
+CIS2_VERIFY3 conformance=PASS
+PASS  CIS2_REF witness digest
+PASS  argmax digest
+PASS  table digest
+PASS  inv_freq_table digest
+
+-- op-level conformance vectors (cis2-conformance CLI, tests/conformance/vectors/) --
+   Compiling cis2_ref v0.1.0 (<tmp>/<session>/scratchpad/cis2-stranger)
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:31:19
+   |
+31 |         let csr = _mm_getcsr();
+   |                   ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:32:9
+   |
+32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);
+   |         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:29
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                             ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:41
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                                         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:71:24
+   |
+71 |     let csr = unsafe { _mm_getcsr() };
+   |                        ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:70:28
+   |
+70 |     use std::arch::x86_64::_mm_getcsr;
+   |                            ^^^^^^^^^^
+
+warning: function `widen_bf16` is never used
+  --> src/bin/../math.rs:33:8
+   |
+33 | pub fn widen_bf16(bits: u16) -> f32 {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `silu_pinned` is never used
+   --> src/bin/../math.rs:347:8
+    |
+347 | pub fn silu_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^^
+
+warning: function `table_digest` is never used
+   --> src/bin/../math.rs:382:8
+    |
+382 | pub fn table_digest() -> [u8; 32] {
+    |        ^^^^^^^^^^^^
+
+warning: `cis2_ref` (bin "cis2_ref") generated 6 warnings
+warning: `cis2_ref` (bin "cis2_conformance_reference_candidate") generated 3 warnings
+warning: function `sum_seq` is never used
+  --> tests/../src/math.rs:52:8
+   |
+52 | pub fn sum_seq(a: &[f32]) -> f32 {
+   |        ^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `silu_pinned` is never used
+   --> tests/../src/math.rs:347:8
+    |
+347 | pub fn silu_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^^
+
+warning: function `softmax_seq` is never used
+   --> tests/../src/math.rs:358:8
+    |
+358 | pub fn softmax_seq(logits: &mut [f32]) {
+    |        ^^^^^^^^^^^
+
+warning: function `table_digest` is never used
+   --> tests/../src/math.rs:382:8
+    |
+382 | pub fn table_digest() -> [u8; 32] {
+    |        ^^^^^^^^^^^^
+
+warning: function `silu_pinned` is never used
+   --> tests/../src/math.rs:347:8
+    |
+347 | pub fn silu_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `parse_bits_list` is never used
+  --> tests/conformance_rope.rs:36:4
+   |
+36 | fn parse_bits_list(s: &str) -> Vec<f32> {
+   |    ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `sum_seq` is never used
+  --> tests/../src/math.rs:52:8
+   |
+52 | pub fn sum_seq(a: &[f32]) -> f32 {
+   |        ^^^^^^^
+
+warning: `cis2_ref` (test "conformance_rope") generated 5 warnings (3 duplicates)
+warning: `cis2_ref` (test "conformance_matvec") generated 4 warnings
+warning: `cis2_ref` (test "conformance_rmsnorm") generated 3 warnings (2 duplicates)
+warning: `cis2_ref` (test "conformance_attention_block") generated 2 warnings (2 duplicates)
+warning: `cis2_ref` (test "conformance_exp_pinned") generated 4 warnings (4 duplicates)
+    Finished `release` profile [optimized] target(s) in 1.63s
+     Running tests/conformance_attention_block.rs (target/release/deps/conformance_attention_block-b40db818bdcc561d)
+
+running 8 tests
+test math::tests::exp_matches_std_within_tolerance ... ok
+test math::tests::dot_seq_is_order_sensitive_by_design ... ok
+test math::tests::sin_cos_match_std_within_tolerance ... ok
+test math::tests::rsqrt_matches_expected ... ok
+test print_bits_for_generation ... ignored
+test math::tests::widen_bf16_exact ... ok
+test attention_block_v1_reproduces_pinned_digest ... ok
+test math::tests::ln_matches_std_within_tolerance ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_exp_pinned.rs (target/release/deps/conformance_exp_pinned-3968a47c4efa51e8)
+
+running 8 tests
+test math::tests::dot_seq_is_order_sensitive_by_design ... ok
+test math::tests::ln_matches_std_within_tolerance ... ok
+test math::tests::sin_cos_match_std_within_tolerance ... ok
+test print_bits_for_generation ... ignored
+test math::tests::widen_bf16_exact ... ok
+test math::tests::exp_matches_std_within_tolerance ... ok
+test math::tests::rsqrt_matches_expected ... ok
+test exp_pinned_v1_reproduces_pinned_digest ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_matvec.rs (target/release/deps/conformance_matvec-f86a2ea4facf50a2)
+
+running 8 tests
+test math::tests::dot_seq_is_order_sensitive_by_design ... ok
+test math::tests::exp_matches_std_within_tolerance ... ok
+test math::tests::ln_matches_std_within_tolerance ... ok
+test math::tests::rsqrt_matches_expected ... ok
+test math::tests::widen_bf16_exact ... ok
+test print_bits_for_generation ... ignored
+test math::tests::sin_cos_match_std_within_tolerance ... ok
+test matvec_v1_reproduces_pinned_digest ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_rmsnorm.rs (target/release/deps/conformance_rmsnorm-9f447258d8037e5d)
+
+running 7 tests
+test math::tests::dot_seq_is_order_sensitive_by_design ... ok
+test math::tests::exp_matches_std_within_tolerance ... ok
+test math::tests::ln_matches_std_within_tolerance ... ok
+test math::tests::sin_cos_match_std_within_tolerance ... ok
+test math::tests::rsqrt_matches_expected ... ok
+test math::tests::widen_bf16_exact ... ok
+test rmsnorm_v1_reproduces_pinned_digest ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_rope.rs (target/release/deps/conformance_rope-6ebb67358c6bbab8)
+
+running 8 tests
+test math::tests::dot_seq_is_order_sensitive_by_design ... ok
+test math::tests::exp_matches_std_within_tolerance ... ok
+test math::tests::ln_matches_std_within_tolerance ... ok
+test math::tests::sin_cos_match_std_within_tolerance ... ok
+test print_bits_for_generation ... ignored
+test math::tests::rsqrt_matches_expected ... ok
+test math::tests::widen_bf16_exact ... ok
+test rope_v1_reproduces_pinned_digest ... ok
+
+test result: ok. 7 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+PASS  op-level conformance tests (rope, rmsnorm, matvec, attention_block, exp_pinned)
+
+== machine fingerprint ==
+cpu_model: Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz
+isa_flags(relevant): avx,avx2,fma,sse4_2
+os: Linux penguin 6.6.147-09642-gea7f90d2e99e #1 SMP PREEMPT_DYNAMIC Fri, 11 Sep 2026 00:38:01 -0700 x86_64 GNU/Linux
+
+== SUMMARY: 10 passed, 0 failed ==
+PASS: all reproducible pinned digests match this repository's own EXPECTED_DIGESTS.md.
+exit 0

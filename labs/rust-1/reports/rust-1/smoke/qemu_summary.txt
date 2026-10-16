@@ -1,0 +1,9 @@
+QEMU cpu=qemu64 arm=rs-musl-O3 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=qemu64 arm=rs-musl-O2 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=qemu64 arm=c-musl-O2 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=qemu64 arm=c-musl-O3 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=Conroe arm=rs-musl-O3 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=Conroe arm=rs-musl-O2 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=Conroe arm=c-musl-O2 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU cpu=Conroe arm=c-musl-O3 rc=0 CHECK f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d mismatches=0
+QEMU_DONE

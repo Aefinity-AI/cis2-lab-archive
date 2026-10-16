@@ -1,0 +1,9 @@
+{
+  "added_at": "2026-10-16T08:53:41Z",
+  "cpu_quota": null,
+  "memory_max": null,
+  "name": "cis2-horizon-hq",
+  "payload": "<home>/feed-payload/cis2-digest",
+  "payload_dest": "cis2-digest",
+  "pushed_at": "2026-10-16T08:53:46Z"
+}

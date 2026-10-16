@@ -1,0 +1,70 @@
+{
+ "c-gnu-O2": {
+  "digests": {
+   "0": "145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc",
+   "1": "51dc2146f447d4a91f7a07d1f06d4655ef275de7d56b5ebf8b72450741c3f1a3",
+   "2": "e638f4f8abe82bf7be4006f8cb0b262e32c647139cfbd65644fc5596fb53c709",
+   "3": "f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d",
+   "4": "bb4efbbedf9d1d5a477d7adce59c5a3fd2ef29a7be3b046a5881b2865ef46c87",
+   "5": "f18c223cd9fc0bd0ac9c482416a6fedadc5dda0440c11b80c54bbeb3117e5ffb",
+   "6": "b0550db36366f5e712ffdde453dea2b1722674038a5a132f87a0aafb17b7d27b",
+   "7": "d1d5be05f4b31064dcbd158cb040912a52fb23990368295a04bafa7483575f9d",
+   "8": "05ea246362068c6b17bc9462c567fcedcde926cbbc6b0e939178a458d9164bfc"
+  },
+  "equal_ref": true,
+  "mismatches": 0,
+  "oom": false,
+  "rc": 0
+ },
+ "c-gnu-O3": {
+  "digests": {
+   "0": "145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc",
+   "1": "51dc2146f447d4a91f7a07d1f06d4655ef275de7d56b5ebf8b72450741c3f1a3",
+   "2": "e638f4f8abe82bf7be4006f8cb0b262e32c647139cfbd65644fc5596fb53c709",
+   "3": "f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d",
+   "4": "bb4efbbedf9d1d5a477d7adce59c5a3fd2ef29a7be3b046a5881b2865ef46c87",
+   "5": "f18c223cd9fc0bd0ac9c482416a6fedadc5dda0440c11b80c54bbeb3117e5ffb",
+   "6": "b0550db36366f5e712ffdde453dea2b1722674038a5a132f87a0aafb17b7d27b",
+   "7": "d1d5be05f4b31064dcbd158cb040912a52fb23990368295a04bafa7483575f9d",
+   "8": "05ea246362068c6b17bc9462c567fcedcde926cbbc6b0e939178a458d9164bfc"
+  },
+  "equal_ref": true,
+  "mismatches": 0,
+  "oom": false,
+  "rc": 0
+ },
+ "rs-gnu-O2": {
+  "digests": {
+   "0": "145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc",
+   "1": "51dc2146f447d4a91f7a07d1f06d4655ef275de7d56b5ebf8b72450741c3f1a3",
+   "2": "e638f4f8abe82bf7be4006f8cb0b262e32c647139cfbd65644fc5596fb53c709",
+   "3": "f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d",
+   "4": "bb4efbbedf9d1d5a477d7adce59c5a3fd2ef29a7be3b046a5881b2865ef46c87",
+   "5": "f18c223cd9fc0bd0ac9c482416a6fedadc5dda0440c11b80c54bbeb3117e5ffb",
+   "6": "b0550db36366f5e712ffdde453dea2b1722674038a5a132f87a0aafb17b7d27b",
+   "7": "d1d5be05f4b31064dcbd158cb040912a52fb23990368295a04bafa7483575f9d",
+   "8": "05ea246362068c6b17bc9462c567fcedcde926cbbc6b0e939178a458d9164bfc"
+  },
+  "equal_ref": true,
+  "mismatches": 0,
+  "oom": false,
+  "rc": 0
+ },
+ "rs-gnu-O3": {
+  "digests": {
+   "0": "145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc",
+   "1": "51dc2146f447d4a91f7a07d1f06d4655ef275de7d56b5ebf8b72450741c3f1a3",
+   "2": "e638f4f8abe82bf7be4006f8cb0b262e32c647139cfbd65644fc5596fb53c709",
+   "3": "f381c1fdfe15ff87e655b54df4214023494d3bea9df611a7f300126cf2678c2d",
+   "4": "bb4efbbedf9d1d5a477d7adce59c5a3fd2ef29a7be3b046a5881b2865ef46c87",
+   "5": "f18c223cd9fc0bd0ac9c482416a6fedadc5dda0440c11b80c54bbeb3117e5ffb",
+   "6": "b0550db36366f5e712ffdde453dea2b1722674038a5a132f87a0aafb17b7d27b",
+   "7": "d1d5be05f4b31064dcbd158cb040912a52fb23990368295a04bafa7483575f9d",
+   "8": "05ea246362068c6b17bc9462c567fcedcde926cbbc6b0e939178a458d9164bfc"
+  },
+  "equal_ref": true,
+  "mismatches": 0,
+  "oom": false,
+  "rc": 0
+ }
+}

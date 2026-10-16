@@ -1,0 +1,214 @@
+From 57f157de336419198d067210a2abffffcdf9a4d4 Mon Sep 17 00:00:00 2001
+From: Justin Brian Thompson <noreply@anthropic.com>
+Date: Fri, 16 Oct 2026 11:33:47 +0000
+Subject: [PATCH] docs: draft section 14 seeded sampling (v0.4 draft,
+ informative) + candidate rows from five builds
+
+Stateless seed-keyed sampler (MurmurHash3_x86_32 Gumbel-max, rank-order top-k/top-p,
+receipt header CIS2-SAMPLE-1) as draft text for the next version. Known-answer vectors,
+a toy vector and the SmolLM2-135M 16/64-token candidate digests from host C g++, host C
+CUDA, hosts A, H and D agree; a from-text numpy implementation from the same lab agrees.
+Values stay CANDIDATE until an independent implementation reproduces them. v0.3b pinned
+digests are unchanged.
+
+[session link removed]
+---
+ README.md                                    |   1 +
+ docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md | 148 +++++++++++++++++++
+ docs/REPRODUCTIONS.md                        |  13 ++
+ 3 files changed, 162 insertions(+)
+ create mode 100644 docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md
+
+diff --git a/README.md b/README.md
+index f2298b6..c840d9c 100644
+--- a/README.md
++++ b/README.md
+@@ -211,6 +211,7 @@ Plain-language explanations, AI safety framing, continuous-validation tools, and
+ - [How Outsiders Can Help](docs/public/How_Outsiders_Can_Help.md)
+ - [Index of public materials](docs/public/README.md)
+ - [Plain-language note: what bit-identical inference and receipts buy for trust](docs/NOTE.md)
++- [Draft section 14, seeded sampling (v0.4 draft): a stateless seed-keyed sampler with known-answer vectors, CANDIDATE values from four builds](docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md)
+ 
+ Existing concrete demonstrations that the full-logit witness digest catches alterations token-level checks can miss:
+ 
+diff --git a/docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md b/docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md
+new file mode 100644
+index 0000000..383b278
+--- /dev/null
++++ b/docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md
+@@ -0,0 +1,148 @@
++# CIS-2 section 14, seeded sampling (v0.4 DRAFT, informative until adopted)
++
++Status: draft text for the next specification version. v0.3b is greedy-only
++and unchanged; nothing here moves a pinned digest. Every value below is a
++CANDIDATE produced by the lab's C++ port (host and CUDA builds) and
++re-derived by a from-text numpy implementation written in the same lab; no
++clean-room implementation by another party has run it yet.
++
++Why: no public specification we could find pins a pseudo-random source, its
++seeding and the uniform-to-float conversion so that two independent
++implementations draw the same token sequence bit for bit. Engines that offer
++seeded reproducibility offer it on one engine and one hardware class. CIS-2
++already pins every arithmetic step of the forward pass, the exponential
++(section 6.2), the logarithm (section 6.5) and the first-index argmax
++(section 11.2). A stateless sampler therefore needs one new primitive: a
++pinned 32-bit hash. Everything else reuses pinned operations.
++
++## 14.0 Scope
++
++With `sample_mode = 1` the decode step picks the next token by Gumbel-max
++sampling over the fp32 logits of section 11 with a stateless, seed-keyed
++noise source. `sample_mode = 0` is the greedy decode of section 11.2; its
++receipts are byte-identical to v0.3b.
++
++## 14.1 Parameters (all part of the receipt header, 14.5)
++
++- `seed`: u64.
++- `temperature`: f32, finite and `> 0`. `temperature == 0` with
++  `sample_mode = 1` is INVALID; use `sample_mode = 0`.
++- `top_k`: u32; `0` = disabled; a value `>= V` is treated as disabled.
++- `top_p`: f32 in `(0, 1]`; `1.0` = disabled.
++
++An implementation that receives an invalid parameter rejects the run. A
++verifier that receives a receipt whose header carries an invalid parameter
++reports the receipt as INVALID rather than re-running it.
++
++When parameters are given as decimal text, they are converted to f32 by
++correctly rounded decimal-to-binary conversion (as `strtof` does): `"0.8"`
++is `0x3f4ccccd`, `"0.95"` is `0x3f733333`. The receipt binds the f32 bit
++patterns, not the text.
++
++## 14.2 Noise source (the one new primitive)
++
++- Hash: `MurmurHash3_x86_32` (Appleby, public domain; the function of that
++  name in the reference `MurmurHash3.cpp`), with hash seed parameter
++  `0x43495332` (ASCII `CIS2`), over the 16-byte key
++  `seed (u64 LE, 8 bytes) || step (u32 LE, 4 bytes) || vocab_index (u32 LE, 4 bytes)`.
++  `step` is the 0-based generation step (the loop variable of the section 11
++  decode: the first generated token is step 0). The hash is computed for the
++  key length 16 (four 4-byte blocks, empty tail); the finalisation mixes the
++  length as the reference does. Known answers: the empty key with hash seed
++  0 gives `00000000` and with hash seed 1 gives `514e28b7` (the published
++  reference values), and the four rows of 14.6.
++- Uniform: `m = (h >> 9) * 2 + 1`, `u = f32(m) * 2^-24`. `m` is odd and
++  below `2^24`, so `f32(m)` is exact and `u` is exact, in
++  `(2^-24, 1 - 2^-24)`; `ln_pinned(u)` is finite and negative.
++- Gumbel: `g = 0.0f - ln_pinned(0.0f - ln_pinned(u))`: two section 6.5
++  calls and two exact negations, no fused multiply-add, no other arithmetic.
++  The inner argument is positive, so no domain branch of section 6.5 is
++  reached; for `u` near 1 the inner logarithm is a small negative normal
++  number (magnitude above `2^-25`).
++
++The noise for `(seed, step, index)` is a pure function. It does not depend
++on the batch, the order of evaluation, the vocabulary size, the hardware or
++any generator state.
++
++## 14.3 Candidate set, computed on the section 11 logits `l[0..V)`
++
++1. `s_i = l_i / temperature` (f32 division, always performed; division by
++   `1.0f` is exact).
++2. Rank order: `i` precedes `j` iff `s_i > s_j`, or `s_i == s_j` and
++   `i < j`. `rank(i)` is the number of indices that precede `i`.
++3. top-k: if `top_k > 0` (and `top_k < V`), keep `i` iff `rank(i) < top_k`.
++4. top-p: if `top_p < 1.0`, over the indices kept by step 3 (all `V` when
++   top-k is disabled), in rank order: `m = s` of rank 0;
++   `e_r = exp_pinned(s_r - m)` (section 6.2, f32 subtraction);
++   `denom = sum_seq(e)` in rank order (section 5.3 sequential f32 sum);
++   `p_r = e_r / denom` (plain f32 division);
++   `c_r = sum_seq(p_0 .. p_r)` in rank order (the running f32 sum, so
++   `c_r = c_{r-1} + p_r`); keep rank `r` iff `r == 0` or `c_{r-1} < top_p`.
++   `c` is non-decreasing, so the kept ranks are a prefix: the first rank
++   that fails ends it.
++
++Any algorithm that yields the same kept set is acceptable; sorting is not
++required.
++
++## 14.4 Draw
++
++For kept `i`: `z_i = s_i + g_i` (f32 addition). For masked `i`:
++`z_i = -inf`. `next_id` is the FIRST index attaining the maximum of `z`
++(the strict-greater scan of section 11.2 starting at index 0, applied to
++`z`). Rank 0 is always kept, so the maximum is finite.
++
++## 14.5 Receipt
++
++Section 12.1 is unchanged for `sample_mode = 0`. For `sample_mode = 1`,
++immediately after the prompt token ids (section 12.1 item 6) and before the
++step-0 logits, the witness chain absorbs, in this order: the ASCII bytes
++`CIS2-SAMPLE-1` (13 bytes), `seed` (u64 LE, 8 bytes), `temperature` (f32
++bit pattern as u32 LE, 4 bytes), `top_k` (u32 LE, 4 bytes), `top_p` (f32
++bit pattern as u32 LE, 4 bytes). Item 7 is unchanged: per step the full fp32
++logit vector (7a) then `next_id` (7b, now the sampled id). The argmax digest
++of section 12.2 keeps its name and is fed the sampled ids. A greedy verifier
++re-running a sampled receipt with `sample_mode = 0` diverges from step 1 on;
++that is the intended behaviour, not a defect.
++
++## 14.6 Known-answer vectors (CANDIDATE)
++
++Hash seed `0x43495332`, key as in 14.2. `u_bits` and `g_bits` are the f32
++bit patterns.
++
++| seed | step | index | hash | u_bits | g_bits |
++|---|---|---|---|---|---|
++| `0x0000000000000001` | 0 | 0 | `07731ea2` | `3cee63e0` | `bfa1b32b` |
++| `0x0000000000000001` | 0 | 1 | `c832451b` | `3f483245` | `3fb392c7` |
++| `0x0000000000000001` | 1 | 0 | `c0d0c4fa` | `3f40d0c5` | `3fa15ffe` |
++| `0xffffffffffffffff` | 7 | 49151 | `e682298d` | `3f668229` | `40104f5a` |
++
++Toy vector: `V = 8`, `l = [1.0, 2.0, 2.0, -1.0, 0.5, 3.0, 3.0, -4.0]`,
++`seed = 1`, `step = 0`, `temperature = 0.8` (`0x3f4ccccd`), `top_k = 4`,
++`top_p = 0.9` (`0x3f666666`). Kept set `{1, 2, 5, 6}` (top-k keeps ranks 0
++to 3, which are indices 5, 6, 1, 2; the running sums before ranks 1, 2 and 3
++are below 0.9, so top-p keeps all four). `z` bit patterns for the kept
++indices: `z_1 = 4079c964`, `z_2 = 4026f5c5`, `z_5 = 407320fd`,
++`z_6 = 4011c83a`; every masked `z` is `ff800000`. `next_id = 1`.
++
++Model vector: SmolLM2-135M under the section 2 pins, the section 13.1 prompt
++ids `6403, 1980, 253, 655`, `seed = 1`, `temperature = 0.8`, `top_k = 40`,
++`top_p = 0.95`.
++
++- 16 tokens: ids `28, 253, 555, 3365, 15688, 28203, 761, 354, 2359, 288,
++  724, 468, 511, 30, 909, 2275`;
++  `CIS2_REF = 98ed8bf7997816f366b7434f3fb097944cefe569debc75033f28390478f2aa35`;
++  sha256 of the 16 ids as u32 LE = `f8e7a6b6a0a6f54848d36f7fbaa08d3fcd2c89f49f5cfd585b6187c32985cfb7`.
++- 64 tokens:
++  `CIS2_REF = 6a760d9e4d7125517d8120c031327202ab1cffdb19edf24fc82b437884ccf55a`.
++
++Which builds reproduced these values is recorded in
++`docs/REPRODUCTIONS.md` (seeded-sampling rows). The greedy 16-token decode
++of every such build equals the pinned `d82743059d…` of section 13.1.
++
++## 14.7 What this does and does not claim
++
++The claim is bit-exact reproducibility of the drawn token sequence across
++implementations and hardware that implement this section. The statistical
++behaviour of the sampler is that of ordinary Gumbel-max sampling with
++temperature, top-k and top-p; nothing is claimed about sample quality. The
++hash is not a secret and is not required to be cryptographic.
+diff --git a/docs/REPRODUCTIONS.md b/docs/REPRODUCTIONS.md
+index e78fbdf..aa6671c 100644
+--- a/docs/REPRODUCTIONS.md
++++ b/docs/REPRODUCTIONS.md
+@@ -94,6 +94,19 @@ OpenCL 1.2 port of the same C++ source; write-up and unit-test counts in [`docs/
+ 
+ Every row above is a lab-run row (pre-registered leg, ledger batches 38 and 39); the software unit test (`make test_soft`) reported PASS on every device listed with a MATCH row. The run that produced the three iGPU rows was the second run of the leg: run 1 on each host produced no iGPU row because the worker account could not open the DRM render node (an infrastructure failure, recorded in the ledger as such); the bar was unchanged between runs. Host B's Intel UHD 630 row is still queued and will be added when it has run.
+ 
++## Seeded-sampling rows (v0.4 draft section 14, CANDIDATE values)
++
++Same artifacts, flags and hosts as the long-horizon rows; C++ port with the draft section 14 sampler added (`cis2_sample.h` sha256 prefix `4f2e1c88cad66517`, greedy path untouched: every run first reproduced the pinned 16-token greedy digest). Prompt ids `6403, 1980, 253, 655`, `seed = 1`, `temperature = 0.8`, `top_k = 40`, `top_p = 0.95`. Values are listed in `docs/CIS2_SPEC_v0.4-draft-seeded-sampling.md` section 14.6. "ids16" is the sha256 of the 16 sampled ids as u32 LE.
++
++| date (UTC) | build | greedy 16 | sampled `CIS2_REF` 16 | sampled `CIS2_REF` 64 | ids16 | outcome |
++|---|---|---|---|---|---|---|
++| 2026-10-16 | host C g++ (AVX2+FMA) | MATCH | `98ed8bf7…` | `6a760d9e…` | `f8e7a6b6…` | CANDIDATE |
++| 2026-10-16 | host C CUDA sm_61 | MATCH | `98ed8bf7…` | `6a760d9e…` | `f8e7a6b6…` | CANDIDATE (= host C g++) |
++| 2026-10-16 | host A g++ (SSE4.2) | MATCH | `98ed8bf7…` | `6a760d9e…` | `f8e7a6b6…` | CANDIDATE (= host C) |
++| 2026-10-16 | host H g++ (SSE4.2) | MATCH | `98ed8bf7…` | `6a760d9e…` | `f8e7a6b6…` | CANDIDATE (= host C) |
++| 2026-10-16 | host D g++ (AVX2+FMA) | MATCH | `98ed8bf7…` | `6a760d9e…` | `f8e7a6b6…` | CANDIDATE (= host C) |
++| 2026-10-16 | numpy from the draft text (same lab, not clean-room) | n/a | n/a | n/a | 16 ids identical | agrees on the 14.6 hash rows, the toy vector bits and the 16 sampled ids |
++
+ ## How to add a row
+ 
+ 1. Run the verification kit (`kits/`) or `scripts/self_check.sh` on your hardware for `gen_toks=16`, and for `gen_toks=128` where your implementation supports it, against the pinned weights (`scripts/fetch_weights.sh` checks the sha256).
+-- 
+2.47.3
+

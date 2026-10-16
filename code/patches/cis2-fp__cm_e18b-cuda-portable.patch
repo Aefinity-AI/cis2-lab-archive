@@ -1,0 +1,402 @@
+diff --git a/gpu/Makefile b/gpu/Makefile
+index c93a3e7..7a8cc96 100644
+--- a/gpu/Makefile
++++ b/gpu/Makefile
+@@ -48,13 +48,26 @@ GCCFLAGS   := -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard \
+ # and deliberately NO -use_fast_math and no __expf/__sinf/__cosf/__fdividef
+ # intrinsics anywhere in the source.
+ NVCC       ?= nvcc
+-NVCCFLAGS  := -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true \
+-              --extended-lambda -I$(GPU)
++# Kaggle offers both T4 (sm_75) and P100 (sm_60); build for both so the
++# first Kaggle run cannot fail on "no kernel image for this GPU".
++NVCC_ARCHES ?= -gencode arch=compute_60,code=sm_60 -gencode arch=compute_75,code=sm_75
++# -x cu forces genuine CUDA device compilation of this .cpp translation
++# unit. WITHOUT -x cu, nvcc silently treats a `.cpp` file as host-only C++
++# (nvcc still defines __CUDACC__ and parses the <<<>>> syntax through its
++# front end, so the file "compiles" with zero errors and zero warnings,
++# but no __global__ kernel is ever lowered to PTX/SASS — the resulting
++# binary is a host-only build wearing a CUDA hat). Confirmed by inspecting
++# --keep intermediates: without -x cu, nvcc goes straight to cicc-free
++# host compile + a no-op device link; with -x cu, cicc/ptxas actually run
++# per architecture. This was the first real bug this port's CUDA target
++# had never been compiled enough to find.
++NVCCFLAGS  := -x cu -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true \
++              --extended-lambda $(NVCC_ARCHES) -I$(GPU)
+ 
+ GEN_TOKS   ?= 16
+ SCRATCH    ?= $(GPU)/.gate
+ 
+-.PHONY: all host host-gcc cuda test-math gate gate-128 nofma nolibm rust clean
++.PHONY: all host host-gcc cuda test-math gate gate-128 nofma nofma-cuda nolibm rust clean
+ 
+ all: host test_math
+ 
+@@ -72,10 +85,43 @@ $(GPU)/cis2_host_gcc: $(GPU)/cis2_host.cpp $(GPU)/cis2_model.h $(GPU)/cis2_math.
+ 
+ # NOT BUILDABLE HERE. Kept so the intended invocation is version-controlled
+ # rather than living in a memo.
+-cuda:
+-	@echo "NOTE: this target has never been compiled — no nvcc, no GPU on this box."
++cuda: $(GPU)/cis2_cuda
++$(GPU)/cis2_cuda: $(GPU)/cis2_host.cpp $(GPU)/cis2_model.h $(GPU)/cis2_math.h \
++                  $(GPU)/cis2_fpenv.h $(GPU)/cis2_sha256.h $(GPU)/cis2_consts.inc
+ 	$(LOCK) $(NVCC) $(NVCCFLAGS) -o $(GPU)/cis2_cuda $(GPU)/cis2_host.cpp
+ 
++## §1.4 device analogue of `nofma` — NOT a whole-binary zero count. Unlike
++## x86 SSE (DIVSS/SQRTSS are single correctly-rounded hardware
++## instructions), NVIDIA GPUs have no correctly-rounded divide or sqrt
++## instruction at all: -prec-div=true/-prec-sqrt=true (which this port
++## requires — see cis2_math.h §6.1) make nvcc emit a software
++## Newton-Raphson refinement (MUFU.RCP/RCP64H seed + FFMA/DFMA correction
++## steps) to get there. That FMA is load-bearing precision machinery
++## *inside a single correctly-rounded primitive*, not contraction of this
++## port's own two-step "multiply, then separately-rounded add" statements
++## (cis2_dot_seq, the Horner loops in exp/ln, rmsnorm's (x*inv)*w). Verified
++## by inspection (gpu/README.md "device build" section): FFMA/DFMA appear
++## ONLY inside the four kernels that call a division or cis2_rsqrt_cr
++## (cis2_rmsnorm's reduction kernel, cis2_k_softmax, cis2_k_silu_mul,
++## cis2_k_rope via reduce_pi_2's f64 divide) — never in cis2_k_matvec,
++## cis2_k_scores, cis2_k_attn_weighted_sum, cis2_k_add, cis2_k_add_bias,
++## cis2_k_embed or cis2_k_store_kv, which is where source-level contraction
++## would show up if -fmad=false were not doing its job. This target checks
++## exactly that: those 7 division/sqrt-free kernels must have ZERO
++## FFMA/DFMA, in both target architectures' SASS.
++NOFMA_CUDA_KERNELS := cis2_k_matvec cis2_k_scores cis2_k_attn_weighted_sum \
++                      cis2_k_add cis2_k_add_bias cis2_k_embed cis2_k_store_kv
++nofma-cuda: $(GPU)/cis2_cuda
++	@for a in sm_60 sm_75; do \
++	  cuobjdump --dump-sass -arch $$a $(GPU)/cis2_cuda 2>/dev/null > $(SCRATCH)/sass-$$a.txt; \
++	  for k in $(NOFMA_CUDA_KERNELS); do \
++	    n=$$(awk -v pat="$$k" '/Function :/{f=($$0 ~ pat)} f && /FFMA|DFMA/{c++} END{print c+0}' $(SCRATCH)/sass-$$a.txt); \
++	    echo "$$a $$k: FMA instructions = $$n"; \
++	    if [ "$$n" != "0" ]; then echo "GATE FAIL: FMA contraction in $$k ($$a)"; exit 1; fi; \
++	  done; \
++	done
++	@echo "no-FMA (device, contraction-only) gate: PASS"
++
+ test_math: $(GPU)/test_math
+ $(GPU)/test_math: $(GPU)/test_math.cpp $(GPU)/cis2_math.h $(GPU)/cis2_fpenv.h \
+                   $(GPU)/cis2_consts.inc
+diff --git a/gpu/README.md b/gpu/README.md
+index 6cfee78..a383ceb 100644
+--- a/gpu/README.md
++++ b/gpu/README.md
+@@ -1,11 +1,13 @@
+ # `gpu/` — E18b: CUDA-portable C++ implementation of CIS-2 v0.3b
+ 
+-**Status: host build verified. The CUDA target has NEVER been compiled.**
+-This box has no NVIDIA GPU and no `nvcc`. The `cuda` Makefile target exists,
+-its flags are pinned, and the source is written single-source so that the
+-same file compiles both ways — but nothing in this directory has ever been
+-put through `nvcc`, and no claim is made that it builds, links, or runs on a
+-device. Any statement about GPU behaviour here is *intent*, not evidence.
++**Status: host build verified. The CUDA target now compiles (nvcc 12.9,
++this box) but has NEVER been run.** This box has no NVIDIA GPU. `nvcc` was
++installed compiler-only (§8.1) to make `make -C gpu cuda` produce a real
++device binary — two device-code bugs were found and fixed doing so (one of
++them a build that silently produced zero device code while reporting
++success; see §8.1) — but the resulting `gpu/cis2_cuda` has never executed
++on hardware. No claim is made that it runs correctly on a device, only
++that it builds one, with the intended flags, containing real kernels.
+ 
+ No timing figures appear anywhere in this directory, by lab policy.
+ 
+@@ -252,7 +254,8 @@ make -C gpu gate-128       # 128-token digest equality
+ make -C gpu nofma          # objdump: zero vfmadd/vfnmadd/vfmsub in the binary
+ make -C gpu nolibm         # nm -u: no expf/sinf/cosf/powf/logf/exp/log
+ make -C gpu host host-gcc  # clang++ and g++ builds
+-make -C gpu cuda           # NOT BUILDABLE HERE — no nvcc, no GPU
++make -C gpu cuda           # compiles (nvcc 12.9, this box) — never run, no GPU
++make -C gpu nofma-cuda     # per-kernel FFMA/DFMA contraction check, both archs
+ ```
+ 
+ Host flags (clang): `-std=c++17 -O2 -ffp-contract=off -fno-fast-math
+@@ -286,19 +289,163 @@ The 16-token digest is the value `docs/E15m_RESULT.md` records for v0.3b,
+ so the C++ agrees with the Rust reference *and* with the two clean-room
+ verifiers (`verify2/` Rust, `verify3/` C11) that were checked against it.
+ 
+-Not verified, and not claimed: anything about the CUDA build. It has never
+-been compiled.
+-
+-Intended device flags, **never exercised**: `-fmad=false -ftz=true
+--prec-div=true -prec-sqrt=true`, no `-use_fast_math`, and no
+-`__expf`/`__sinf`/`__cosf`/`__fdividef` intrinsics anywhere in the source.
+-`cis2_fpenv.h` `#error`s at compile time if `-ftz=true` was not passed.
++## 8.1 Device build — COMPILED, never executed (no GPU on this box)
++
++`make -C gpu cuda` now succeeds: `nvcc 12.9.86` (installed on this box; see
++"Toolchain used" below), flags `-fmad=false -ftz=true -prec-div=true
++-prec-sqrt=true`, no `-use_fast_math`, dual `-gencode` for `sm_60` (P100)
++and `sm_75` (T4) — the two GPUs Kaggle offers. This has been through the
++real device compiler (`cicc`/`ptxas`), not just the host front end — see
++below for why that distinction mattered. **The resulting binary,
++`gpu/cis2_cuda`, has never been run: this box has no NVIDIA GPU.**
++Everything past "it links" is untested.
++
++### Two real bugs, found only by actually compiling
++
++1. **`gpu/Makefile`'s `cuda` target never actually compiled device code.**
++   nvcc was being handed `cis2_host.cpp` with no `-x cu`. nvcc's file-type
++   detection is by extension: `.cu` triggers the full device pipeline
++   (`cicc` + `ptxas` per target architecture); an unrecognized extension
++   like `.cpp` falls back to host-only compilation. Critically, nvcc's
++   front end still defines `__CUDACC__` and still parses `<<<...>>>` kernel
++   launch syntax in that fallback mode, so the build finished with **zero
++   errors and zero warnings** while never lowering a single `__global__`
++   kernel to PTX or SASS — a host-only binary wearing a CUDA hat. This is
++   the exact failure mode this whole task exists to catch: a "successful"
++   nvcc invocation that proves nothing. Found by comparing `nvcc --keep`
++   intermediates with and without `-x cu` (without it: straight to a
++   host `.o` and a no-op device link, no `.ptx`/`.cubin` per kernel; with
++   it: real `cicc`/`ptxas` runs). Fixed by adding `-x cu` to `NVCCFLAGS`.
++2. **`cis2_fpenv.h`'s device-side compile-time assertion checked a macro,
++   `__CUDA_FTZ`, that does not exist in any nvcc release** (checked by
++   grepping the entire CUDA 12.9 header tree — zero hits). Once `-x cu`
++   made genuine device compilation happen, this `#error` fired
++   unconditionally, on every build, regardless of whether `-ftz=true` was
++   actually passed. There is no nvcc-side compile-time or run-time
++   readback of `-ftz=true` analogous to the host's MXCSR pin — it is a
++   pure codegen flag. Replaced the false assertion with a comment
++   explaining this and pointing at `nofma-cuda` (below) as the only
++   artifact-level check available.
++3. (Also fixed, `cis2_model.h`) `cis2_table_digest`'s `using namespace
++   cis2_hostconst;` plus unqualified constant names is ambiguous under
++   real device compilation: the global `__device__ __constant__ X` and
++   `cis2_hostconst::X` (the host mirror) are two distinct entities sharing
++   a name once nvcc is actually compiling device code, so every reference
++   became a hard "ambiguous" error. Host build was unaffected (there the
++   two names alias the *same* entity), which is exactly why this had never
++   shown up before this task's real `-x cu` compile. Fixed by fully
++   qualifying every reference (`cis2_hostconst::X`) instead of relying on
++   the using-directive.
++
++None of these three fixes touch arithmetic; `make gate` was re-run after
++each and reproduces the pinned host digest
++`d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df`
++unchanged.
++
++### `make nofma-cuda` — device analogue of `nofma`, done correctly
++
++A naive whole-binary "grep the SASS for FFMA/DFMA, must be zero" gate
++**does not pass and should not be made to pass**: NVIDIA GPUs have no
++correctly-rounded hardware divide or sqrt instruction at all (unlike x86
++SSE's `DIVSS`/`SQRTSS`). `-prec-div=true`/`-prec-sqrt=true` — which this
++port requires for §6.1's correctly-rounded `sqrt`/division — make nvcc
++emit a software Newton-Raphson refinement (`MUFU.RCP`/`RCP64H` seed +
++several `FFMA`/`DFMA` correction steps) to get a correctly-rounded result
++out of an approximate reciprocal instruction. That FMA is *inside* a
++single correctly-rounded primitive; removing it would make division and
++sqrt less accurate, which is the opposite of what the spec wants.
++
++Checked by inspection (`cuobjdump --dump-sass`, both architectures):
++`FFMA`/`DFMA` appear **only** inside the four kernels that call a division
++or `cis2_rsqrt_cr` — `cis2_rmsnorm`'s reduction lambda (`mean =
++ss/n`, `rsqrt_cr`), `cis2_k_softmax` (`logits[i]/denom`), `cis2_k_silu_mul`
++(`x/denom`), and `cis2_k_rope` (via `cis2_sin_pinned`/`cis2_cos_pinned` ->
++`cis2_reduce_pi_2`'s f64 divide) — and **never** in the seven kernels that
++contain this port's own hand-written sequential multiply-then-add
++statements with no division or sqrt in their body: `cis2_k_matvec`
++(`cis2_dot_seq`, the core projection accumulator), `cis2_k_scores`
++(also `cis2_dot_seq`), `cis2_k_attn_weighted_sum`, `cis2_k_add`,
++`cis2_k_add_bias`, `cis2_k_embed`, `cis2_k_store_kv`. That is precisely
++where source-level FMA contraction would show up if `-fmad=false` were not
++doing its job, and it is not there. `make nofma-cuda` checks exactly this
++(per-kernel, both `sm_60` and `sm_75`) and **passes**.
++
++### `-Xptxas -v` register/spill counts (compiler facts, not performance)
++
++`sm_60` and `sm_75`, one thread per output element, `-O2`. Every kernel:
++**0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads** on both
++architectures.
++
++| kernel (lambda) | sm_60 regs | sm_75 regs |
++|---|--:|--:|
++| `cis2_k_embed` | 6 | 8 |
++| `cis2_rmsnorm` #1 (square) | 7 | 10 |
++| `cis2_rmsnorm` #2 (sum_seq + rsqrt_cr, 1 thread) | 25 | 35 |
++| `cis2_rmsnorm` #3 (scale by weight) | 11 | 12 |
++| `cis2_k_matvec` (`cis2_dot_seq`) | 30 | 43 |
++| `cis2_k_add_bias` | 7 | 10 |
++| `cis2_k_add` | 8 | 12 |
++| `cis2_k_rope` (sin/cos, `reduce_pi_2`) | 21 | 25 |
++| `cis2_k_scores` (`cis2_dot_seq` + scale) | 30 | 49 |
++| `cis2_k_softmax` (max scan, exp, sum, divide) | 30 | 46 |
++| `cis2_k_attn_weighted_sum` | 32 | 54 |
++| `cis2_k_silu_mul` (`cis2_exp_pinned`) | 11 | 14 |
++| `cis2_k_store_kv` | 6 | 8 |
++
++Zero spills means none of these kernels is anywhere near register
++pressure on either target GPU at `-O2` with these flags; register counts
++per thread are well under typical occupancy-limiting thresholds (32K
++32-bit registers per SM on both architectures). No launch-bounds tuning
++was needed or attempted.
++
++### Toolchain used to compile this (nvcc, no GPU/driver)
++
++`nvcc 12.9.86` (CUDA Toolkit 12.9, packages `cuda-nvcc-12-9`,
++`cuda-cudart-dev-12-9`, `cuda-crt-12-9`, `cuda-nvvm-12-9`,
++`cuda-cuobjdump-12-9`, `cuda-nvdisasm-12-9`) from NVIDIA's official
++`debian12` apt repo, installed compiler-only — **no driver, no CUDA
++runtime library beyond the headers/stubs nvcc itself needs, no GPU**. Two
++toolchain-only workarounds were needed on this box (Debian 13 trixie),
++neither of which touches this port's source:
++
++* trixie's `sqv`-based apt signature verification rejects NVIDIA's repo
++  key (its self-signature predates the 2026-02-01 SHA1 deprecation cutoff
++  Debian now enforces). Worked around with
++  `Acquire::AllowInsecureRepositories=true` over the still-HTTPS NVIDIA
++  URL, not by disabling verification globally.
++* glibc >= 2.41 (trixie) declares `sinpi`/`cospi`/`sinpif`/`cospif` as
++  `noexcept(true)` (C23 IEC 60559 extensions); CUDA 12.9's own
++  `crt/math_functions.h` declares the same four symbols with no exception
++  specification, which C++17 treats as a hard "incompatible exception
++  specification" error the moment both headers are visible in one
++  translation unit — which happens on every `.cu` compile. Patched nvcc's
++  installed copy of `math_functions.h` to add the matching
++  `noexcept(true)` (four one-line changes; this project's arithmetic
++  functions do not call `sinpi`/`cospi` at all — the CIS-2 sin/cos path is
++  the pinned polynomial in `cis2_math.h`, never libm). Recorded in
++  `~/dev-setup/bootstrap.sh` under a marked block so it survives a box
++  reset.
++
++Both workarounds are toolchain/glibc version-skew fixes, applied outside
++this repository (to the installed nvcc, not to any file here), and are
++irrelevant on Kaggle's own container image, which ships its own
++already-working CUDA toolchain.
+ 
+ ## 9. Kaggle leg
+ 
+-**Status: staged, not run.** This box has no GPU, so the `cuda` Makefile
+-target has still never been compiled — everything in this section is
+-prepared for the first Kaggle GPU run, not a report of one.
++**Status: staged, not run.** `gpu/cis2_cuda` now *compiles* on this box
++(§8.1) with `nvcc 12.9`, real device code, `nofma-cuda` passing on both
++`sm_60` and `sm_75` — but this box has no NVIDIA GPU, so nothing here has
++ever executed on a device. Everything in this section is prepared for the
++first Kaggle GPU run, not a report of one.
++
++A note for whoever reads the first Kaggle run's output: a **clean nvcc
++build alone is not evidence of anything** on this port — §8.1 documents a
++real case where `nvcc` exited 0 with no warnings while silently compiling
++zero device code (missing `-x cu`). If the first Kaggle run's `nvcc
++--version` / `make -C gpu cuda` step looks suspiciously fast, or the build
++log has no `ptxas info` lines, treat it exactly as this box's original
++false-positive was treated: not built, regardless of exit code.
+ 
+ Files, under `gpu/kaggle/`:
+ 
+diff --git a/gpu/cis2_fpenv.h b/gpu/cis2_fpenv.h
+index 92c268e..98fe89e 100644
+--- a/gpu/cis2_fpenv.h
++++ b/gpu/cis2_fpenv.h
+@@ -86,11 +86,20 @@ static inline void cis2_fpenv_init(void) {
+ }
+ 
+ #if defined(__CUDACC__)
+-// Compile-time assertion that -ftz=true was actually passed to nvcc.
+-// __CUDA_FTZ is defined to 1 by nvcc when -ftz=true is in effect.
+-#if !defined(__CUDA_FTZ) || (__CUDA_FTZ != 1)
+-#error "CIS-2 §1.3 device build requires nvcc -ftz=true (denormals flushed)"
+-#endif
++// A compile-time assertion that -ftz=true was passed was attempted here in
++// an earlier revision, guarded on a macro `__CUDA_FTZ`. That macro does not
++// exist in any nvcc release (checked: CUDA 12.9 headers define no FTZ macro
++// anywhere) — with -x cu forcing genuine device compilation, the #error
++// this used to gate on fired unconditionally, which is how the mistake was
++// found: this header had never actually been run through the device
++// compile path before. There is no nvcc-side compile-time or run-time
++// readback of -ftz=true, unlike the host MXCSR pin above: -ftz=true is a
++// codegen flag, not a queryable device state, and CUDA has no per-thread
++// register analogous to MXCSR. The only enforcement available is process
++// discipline: `gpu/Makefile`'s NVCCFLAGS pins -ftz=true, -fmad=false,
++// -prec-div=true, -prec-sqrt=true unconditionally for every `cuda` build,
++// and `make nofma-cuda` inspects the compiled SASS for FMA contraction
++// (the one part of this pin that does leave a compiled-artifact trace).
+ #endif
+ 
+ #endif  // CIS2_FPENV_H
+diff --git a/gpu/cis2_model.h b/gpu/cis2_model.h
+index c76a5a2..b253930 100644
+--- a/gpu/cis2_model.h
++++ b/gpu/cis2_model.h
+@@ -411,28 +411,39 @@ struct Cis2Model {
+ 
+ // §6.6 table digest — the same coefficients in the same declared order as
+ // src/math.rs::table_digest(), fed as raw little-endian bytes.
++// NOTE: deliberately fully qualified (`cis2_hostconst::X`), not
++// `using namespace cis2_hostconst;` + unqualified names. Under nvcc, the
++// global `X` (a __device__ __constant__) and `cis2_hostconst::X` (the host
++// mirror, see cis2_math.h) are two DISTINCT entities with the same name;
++// after a using-directive, unqualified lookup at global scope finds both
++// and every reference is a hard "ambiguous" error. On the host build the
++// two names refer to the SAME entity (cis2_hostconst::X is a `using ::X;`
++// alias there), so this only breaks under -x cu — found by actually
++// compiling the CUDA target, which this port's `cuda` Makefile target had
++// never done before.
+ inline void cis2_table_digest(unsigned char out[32]) {
+-  using namespace cis2_hostconst;
++  namespace hc = cis2_hostconst;
+   Cis2Sha256 h;
+-  const float f32s_a[3] = {EXP_LOG2E, EXP_C1, EXP_C2};
++  const float f32s_a[3] = {hc::EXP_LOG2E, hc::EXP_C1, hc::EXP_C2};
+   for (int i = 0; i < 3; ++i) h.update_u32le(cis2_f32_bits(f32s_a[i]));
+-  const float expp[6] = {EXP_P0, EXP_P1, EXP_P2, EXP_P3, EXP_P4, EXP_P5};
++  const float expp[6] = {hc::EXP_P0, hc::EXP_P1, hc::EXP_P2,
++                         hc::EXP_P3, hc::EXP_P4, hc::EXP_P5};
+   for (int i = 0; i < 6; ++i) h.update_u32le(cis2_f32_bits(expp[i]));
+   {
+-    uint64_t b = cis2_f64_bits(PI_2_F64);
++    uint64_t b = cis2_f64_bits(hc::PI_2_F64);
+     unsigned char le[8];
+     for (int i = 0; i < 8; ++i) le[i] = (unsigned char)((b >> (8 * i)) & 0xFF);
+     h.update(le, 8);
+   }
+-  const float sinc[3] = {SIN_C0, SIN_C1, SIN_C2};
++  const float sinc[3] = {hc::SIN_C0, hc::SIN_C1, hc::SIN_C2};
+   for (int i = 0; i < 3; ++i) h.update_u32le(cis2_f32_bits(sinc[i]));
+-  const float cosc[3] = {COS_C0, COS_C1, COS_C2};
++  const float cosc[3] = {hc::COS_C0, hc::COS_C1, hc::COS_C2};
+   for (int i = 0; i < 3; ++i) h.update_u32le(cis2_f32_bits(cosc[i]));
+-  h.update_u32le(cis2_f32_bits(LOG_SQRTHF));
+-  h.update_u32le(cis2_f32_bits(LOG_Q1));
+-  h.update_u32le(cis2_f32_bits(LOG_Q2));
+-  const float logp[9] = {LOG_P0, LOG_P1, LOG_P2, LOG_P3, LOG_P4,
+-                         LOG_P5, LOG_P6, LOG_P7, LOG_P8};
++  h.update_u32le(cis2_f32_bits(hc::LOG_SQRTHF));
++  h.update_u32le(cis2_f32_bits(hc::LOG_Q1));
++  h.update_u32le(cis2_f32_bits(hc::LOG_Q2));
++  const float logp[9] = {hc::LOG_P0, hc::LOG_P1, hc::LOG_P2, hc::LOG_P3, hc::LOG_P4,
++                         hc::LOG_P5, hc::LOG_P6, hc::LOG_P7, hc::LOG_P8};
+   for (int i = 0; i < 9; ++i) h.update_u32le(cis2_f32_bits(logp[i]));
+   h.finalize(out);
+ }
+diff --git a/gpu/kaggle/e18b_gpu.py b/gpu/kaggle/e18b_gpu.py
+index 3e5eff8..05cd31c 100644
+--- a/gpu/kaggle/e18b_gpu.py
++++ b/gpu/kaggle/e18b_gpu.py
+@@ -150,6 +150,24 @@ def main():
+     if not cuda_built:
+         print("FATAL: nvcc build failed or produced no binary. See output above.")
+ 
++    hr("2b. Sanity: make -C gpu cuda actually compiled DEVICE code")
++    # The box this port was first compiled on found a real false positive:
++    # nvcc exiting 0 while silently producing a host-only binary with zero
++    # __global__ kernels (missing -x cu — fixed in gpu/Makefile, see
++    # gpu/README.md §8.1). `nofma-cuda` only passes if cuobjdump can find
++    # the seven contraction-checked kernels in the SASS at all, so it
++    # doubles as that sanity check; run it here so a silent-empty-binary
++    # regression fails loudly before the digest comparisons below, not
++    # after.
++    if cuda_built:
++        p = run(["make", "-C", str(GPU), "nofma-cuda"])
++        if p.returncode != 0:
++            print("FATAL: nofma-cuda failed — either FMA contraction leaked "
++                  "into a division/sqrt-free kernel, or nvcc silently "
++                  "produced no device code again. Treat cuda_built=True "
++                  "above as unreliable until this is understood.")
++            cuda_built = False
++
+     hr("3. Control: build the HOST target here, on the Kaggle CPU")
+     have_clang = shutil.which("clang++") is not None
+     if have_clang:

@@ -1,0 +1,9 @@
+{
+  "added_at": "2026-10-04T01:12:15Z",
+  "cpu_quota": "60%",
+  "memory_max": "500M",
+  "name": "rust2a-digest-box2",
+  "payload": "<home>/feed-payload/rust2a",
+  "payload_dest": "<home>/rust2a",
+  "pushed_at": "2026-10-04T04:49:50Z"
+}

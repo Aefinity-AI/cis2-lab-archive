@@ -1,0 +1,21 @@
+memory.max /sys/fs/cgroup/user.slice/user-1002.slice/user@1002.service/app.slice/app-org.gnome.Terminal.slice/vte-spawn-2d41c4c8-595d-49dd-8e83-56dc5e4ffa5d.scope = max
+memory.max /sys/fs/cgroup/user.slice/user-1002.slice/user@1002.service/app.slice/app-org.gnome.Terminal.slice = max
+memory.max /sys/fs/cgroup/user.slice/user-1002.slice/user@1002.service/app.slice = max
+memory.max /sys/fs/cgroup/user.slice/user-1002.slice/user@1002.service = max
+memory.max /sys/fs/cgroup/user.slice/user-1002.slice = max
+memory.max /sys/fs/cgroup/user.slice = max
+loadavg at start: 4.70 4.91 4.88 4/1004 622472
+host: aefinity-box-2273 nproc=8  Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz MemTotal:       16225900 kB
+cpu: avx2 present
+clang: unpacked debs under <tmp>/<session>/scratchpad/sc/clang-root
+Debian clang version 19.1.7 (3+b1)
+Target: x86_64-pc-linux-gnu
+Debian clang version 19.1.7 (3+b1)
+cmake version 3.31.6
+g++ (Debian 14.2.0-19) 14.2.0
+GNU ld (GNU Binutils for Debian) 2.44
+Python 3.13.5
+0a3c55936ac43954fbe4914e6e73b577ca9e35e75d89ef13d3e28c187f41ca1a  <tmp>/<session>/scratchpad/sc/clang-root/usr/lib/llvm-19/bin/clang
+l1_fuzz sha256 (this host) c515d9ac907e5249b45180ba0c1231c33bda193e20263cb791b96d5c953c1f84 ; frozen (w2) b334da683d876b94ac4a1eeb93e610aa7b62111fd2d0fb92b2c7050d08f54242 ; differs-expected-on-another-host
+build done; loadavg 5.69 5.32 5.06 4/982 623580
+loadavg at end: 5.69 5.32 5.06 11/982 623623

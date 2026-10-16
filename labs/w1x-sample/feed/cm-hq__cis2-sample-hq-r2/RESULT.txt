@@ -1,0 +1,16 @@
+=== cis2-sample-hq-r2 start 2026-10-16T10:49:01Z host=aefinity-box-2273 cpu=Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz flags=avx2,fma,sse4_2,
+sha256 model.safetensors = 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+sha256 ids16 = 4b6618b64fe0fd9c261dd30789ec69a4f84c05114820df9e45c4d2c8fac40faf
+sources sha256: 17588c815f572bfd
+g++ g++ (Debian 14.2.0-19) 14.2.0; nvcc Build cuda_12.4.r12.4/compiler.34097967_0
+build host-gcc: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o cis2_host_gcc_h gpu/cis2_host.cpp
+row host greedy16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH
+row host sample16 digest=98ed8bf7997816f366b7434f3fb097944cefe569debc75033f28390478f2aa35 ids16sha=f8e7a6b6a0a6f54848d36f7fbaa08d3fcd2c89f49f5cfd585b6187c32985cfb7 CANDIDATE
+row host sample64 digest=6a760d9e4d7125517d8120c031327202ab1cffdb19edf24fc82b437884ccf55a CANDIDATE
+build cuda: nvcc -x cu -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -DCIS2_CUDA_FTZ=1 -arch=sm_61 -I gpu -o cis2_cuda_h gpu/cis2_host.cpp
+row cuda greedy16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH
+row cuda sample16 digest=98ed8bf7997816f366b7434f3fb097944cefe569debc75033f28390478f2aa35 ids16sha=f8e7a6b6a0a6f54848d36f7fbaa08d3fcd2c89f49f5cfd585b6187c32985cfb7 CANDIDATE
+row cuda sample64 digest=6a760d9e4d7125517d8120c031327202ab1cffdb19edf24fc82b437884ccf55a CANDIDATE
+host-vs-cuda sampled: MATCH
+RESULT: OK cis2-sample-hq-r2 greedy16=MATCH s16=98ed8bf7997816f366b7434f3fb097944cefe569debc75033f28390478f2aa35 s64=6a760d9e4d7125517d8120c031327202ab1cffdb19edf24fc82b437884ccf55a ids16=f8e7a6b6a0a6f54848d36f7fbaa08d3fcd2c89f49f5cfd585b6187c32985cfb7 hostcuda=MATCH weights=80521b40 ids=4b6618b6
+=== cis2-sample-hq-r2 done 2026-10-16T10:50:10Z

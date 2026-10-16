@@ -1,0 +1,14 @@
+built with engine onednn
+Fatal Python error: Illegal instruction
+
+Current thread 0x00007f2687d32780 (most recent call first):
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/_ops.py", line 1350 in __call__
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/ao/nn/quantized/dynamic/modules/linear.py", line 58 in forward
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1794 in _call_impl
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1783 in _wrapped_call_impl
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/nn/modules/container.py", line 259 in forward
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1794 in _call_impl
+  File "<home>/venvs/torch/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1783 in _wrapped_call_impl
+  File "<string>", line 10 in <module>
+
+Extension modules: numpy._core._multiarray_umath, numpy.linalg._umath_linalg, torch._C, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, torch._C._dynamo.utils, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special (total: 13)

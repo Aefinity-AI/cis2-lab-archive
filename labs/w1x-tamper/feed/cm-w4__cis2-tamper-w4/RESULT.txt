@@ -1,0 +1,60 @@
+=== cis2-tamper-w4 start 2026-10-16T09:06:05Z host=aefinity-box-2a7e cpu=Intel(R) Celeron(R) N4020C CPU @ 1.10GHz flags=sse4_2, seed=20261017
+sha256 model.safetensors = 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+sources sha256: 10e08ea20584151f; g++ g++ (Debian 14.2.0-19) 14.2.0
+trial meta #0 sha_moved=yes witness_moved=yes rc=0 meta pad-space->tab at header byte 30527
+trial ulp1 #1 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.17.post_attention_layernorm.weight elem=9 old=3e86 new=3e87
+trial ulp1 #2 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.14.mlp.down_proj.weight elem=279957 old=3ce7 new=3ce8
+trial ulp1 #3 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.18.self_attn.k_proj.weight elem=28963 old=3eda new=3edb
+trial ulp1 #4 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.25.self_attn.v_proj.weight elem=95058 old=3e4f new=3e50
+trial ulp1 #5 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.23.mlp.down_proj.weight elem=424446 old=3e21 new=3e22
+trial ulp1 #6 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.1.self_attn.o_proj.weight elem=250131 old=3da1 new=3da2
+trial ulp1 #7 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.6.self_attn.q_proj.weight elem=152112 old=3d16 new=3d17
+trial ulp1 #8 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.5.post_attention_layernorm.weight elem=24 old=3e26 new=3e27
+trial ulp1 #9 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.22.mlp.gate_proj.weight elem=186207 old=bd60 new=bd61
+trial ulp1 #10 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.6.mlp.gate_proj.weight elem=125125 old=3e82 new=3e83
+trial ulp1 #11 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.25.input_layernorm.weight elem=332 old=3eac new=3ead
+trial ulp1 #12 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.7.mlp.up_proj.weight elem=27348 old=3e38 new=3e39
+trial ulp1 #13 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.19.self_attn.v_proj.weight elem=102521 old=bcaf new=bcb0
+trial ulp1 #14 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.2.self_attn.k_proj.weight elem=61996 old=be3e new=be3f
+trial ulp1 #15 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.23.self_attn.v_proj.weight elem=96814 old=3e90 new=3e91
+trial ulp1 #16 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.8.self_attn.v_proj.weight elem=51887 old=bde3 new=bde4
+trial ulp1 #17 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.15.self_attn.k_proj.weight elem=67133 old=be44 new=be45
+trial ulp1 #18 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.0.mlp.gate_proj.weight elem=125104 old=3deb new=3dec
+trial ulp1 #19 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.3.self_attn.o_proj.weight elem=38460 old=3d4d new=3d4e
+trial ulp1 #20 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.20.self_attn.o_proj.weight elem=85261 old=3c3a new=3c3b
+trial ulp1 #21 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.11.post_attention_layernorm.weight elem=110 old=3e86 new=3e87
+trial ulp1 #22 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.8.self_attn.q_proj.weight elem=258974 old=3e3f new=3e40
+trial ulp1 #23 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.12.self_attn.q_proj.weight elem=65093 old=3e87 new=3e88
+trial ulp1 #24 sha_moved=yes witness_moved=yes rc=0 ulp1 tensor=model.layers.25.post_attention_layernorm.weight elem=46 old=3ea2 new=3ea3
+trial int8 #0 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.embed_tokens.weight nel=28311552 amax=1.98438 scale=0.015625 changed_lo_bytes=27301004
+trial int8 #1 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.layers.0.mlp.down_proj.weight nel=884736 amax=2.875 scale=0.0226378 changed_lo_bytes=853175
+trial int8 #2 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.layers.0.mlp.gate_proj.weight nel=884736 amax=3.25 scale=0.0255906 changed_lo_bytes=855232
+trial int8 #3 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.layers.0.mlp.up_proj.weight nel=884736 amax=2.07812 scale=0.0163632 changed_lo_bytes=838409
+trial int8 #4 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.layers.1.mlp.down_proj.weight nel=884736 amax=5 scale=0.0393701 changed_lo_bytes=866944
+trial int8 #5 sha_moved=yes witness_moved=yes rc=0 int8 tensor=model.layers.1.mlp.gate_proj.weight nel=884736 amax=2.85938 scale=0.0225148 changed_lo_bytes=849470
+trial bitflip #1 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.20.self_attn.k_proj.weight elem=24914 bit=8 kind=exp old=bd42 new=bc42
+trial bitflip #2 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.16.mlp.gate_proj.weight elem=853582 bit=5 kind=mant5 old=3e29 new=3e09
+trial bitflip #3 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.22.self_attn.o_proj.weight elem=92308 bit=7 kind=exp old=be57 new=bed7
+trial bitflip #4 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.22.input_layernorm.weight elem=355 bit=0 kind=mant0 old=3ea0 new=3ea1
+trial bitflip #5 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.14.self_attn.o_proj.weight elem=152558 bit=8 kind=exp old=be66 new=bf66
+trial bitflip #6 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.4.self_attn.v_proj.weight elem=11888 bit=6 kind=mant6 old=3dd1 new=3d91
+trial bitflip #7 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.8.mlp.down_proj.weight elem=261534 bit=14 kind=exp old=3ed2 new=7ed2
+trial bitflip #8 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.21.input_layernorm.weight elem=115 bit=3 kind=mant3 old=3eb0 new=3eb8
+trial bitflip #9 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.28.post_attention_layernorm.weight elem=559 bit=11 kind=exp old=3e98 new=3698
+trial bitflip #10 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.14.self_attn.v_proj.weight elem=38636 bit=13 kind=exp old=bd4d new=9d4d
+trial bitflip #11 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.12.self_attn.k_proj.weight elem=3681 bit=15 kind=sign old=3eaa new=beaa
+trial bitflip #12 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.8.self_attn.v_proj.weight elem=15102 bit=0 kind=mant0 old=bd9d new=bd9c
+trial bitflip #13 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.13.input_layernorm.weight elem=333 bit=13 kind=exp old=3ed1 new=1ed1
+trial bitflip #14 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.6.mlp.down_proj.weight elem=526671 bit=1 kind=mant1 old=be51 new=be53
+trial bitflip #15 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.17.mlp.down_proj.weight elem=66957 bit=4 kind=mant4 old=3e14 new=3e04
+trial bitflip #16 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.9.self_attn.v_proj.weight elem=76165 bit=15 kind=sign old=bda5 new=3da5
+trial bitflip #17 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.3.self_attn.q_proj.weight elem=98008 bit=15 kind=sign old=be68 new=3e68
+trial bitflip #18 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.0.self_attn.k_proj.weight elem=15267 bit=15 kind=sign old=bcd2 new=3cd2
+trial bitflip #19 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.26.input_layernorm.weight elem=543 bit=13 kind=exp old=3ea7 new=1ea7
+trial bitflip #20 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.18.mlp.up_proj.weight elem=380481 bit=12 kind=exp old=3e7b new=2e7b
+trial bitflip #21 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.3.mlp.gate_proj.weight elem=153801 bit=3 kind=mant3 old=bd1f new=bd17
+trial bitflip #22 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.4.mlp.up_proj.weight elem=102760 bit=6 kind=mant6 old=bde5 new=bda5
+trial bitflip #23 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.13.mlp.down_proj.weight elem=293197 bit=6 kind=mant6 old=3d74 new=3d34
+trial bitflip #24 sha_moved=yes witness_moved=yes rc=0 bitflip tensor=model.layers.10.mlp.gate_proj.weight elem=353412 bit=6 kind=mant6 old=bcac new=bcec
+RESULT: OK cis2-tamper-w4 trials=55 sha_detect=55/55 witness_detect=55/55 ulp1=24/24 int8=6/6 bitflip=24/24 bitflip_sign_exp=13/13 meta:sha_moved=yes witness_moved=yes seed=20261017
+=== cis2-tamper-w4 done 2026-10-16T09:27:13Z

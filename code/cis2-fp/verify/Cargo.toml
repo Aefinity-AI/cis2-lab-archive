@@ -1,0 +1,18 @@
+[package]
+name = "cis2-verify"
+version = "0.1.0"
+edition = "2021"
+
+# Clean-room, independent implementation of the CIS-2 fp32 reference forward
+# pass + digest, built strictly from the E14a design memo + E15b/E15c result
+# docs (see CLEANROOM_LOG.md). No cis2-fp src/ or tests/ were read to build
+# this crate. Standalone crate (cis2-fp is not a Cargo workspace).
+
+[dependencies]
+safetensors = "0.8"
+tokenizers = { version = "0.23", default-features = false, features = ["onig"] }
+sha2 = "0.11"
+serde_json = "1"
+
+[profile.release]
+opt-level = 3

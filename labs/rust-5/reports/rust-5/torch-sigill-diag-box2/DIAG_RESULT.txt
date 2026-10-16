@@ -1,0 +1,1 @@
+RESULT: OK host=aefinity-box2 diag=torch-sigill torch=2.14.0+cpu s1_import=0 s2_fp32_256x256=0 s2_fp32_576x1536=0 s2_fp32_2048x2048=0 s3_qbuild=0 s4_qforward_default=132 s4_qforward_x86=77 s4_qforward_fbgemm=77 s4_qforward_onednn=132 s4_qforward_qnnpack=0 s5_int8_matmul=0 faulted=[s4_qforward_default.out,s4_qforward_onednn.out,]

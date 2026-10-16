@@ -1,0 +1,8 @@
+{
+  "added_at": "2026-10-16T08:53:41Z",
+  "after": "cis2-horizon-hq",
+  "cpu_quota": null,
+  "memory_max": null,
+  "name": "cis2-tamper-hq",
+  "pushed_at": "2026-10-16T09:37:25Z"
+}

@@ -1,0 +1,2 @@
+CHECK idx=8 witness=351fb70c206a14857cc339dfe396efa125d80402bbfe193e9a1a06ece918343b mismatches=0 max_abs_diff=1.18255615e-4
+DONE plain=check rows=1

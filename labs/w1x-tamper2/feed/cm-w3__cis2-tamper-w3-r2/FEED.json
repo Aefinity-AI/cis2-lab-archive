@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T09:42:58Z",
+  "host": "cm-w3",
+  "name": "cis2-tamper-w3-r2",
+  "pushed_at": "2026-10-16T09:26:51Z",
+  "result_line": "RESULT: OK cis2-tamper-w3-r2 base=MATCH mutants=54 sha_detect=55/55 witness_detect=55/55 body_detect=54/54 argmax_detect=4/54 ulp1:body=24/24,argmax=0/24 int8:body=6/6,argmax=3/6 bitflip:body=24/24,argmax=1/24 bitflip_sign_exp:body=11/11 argmax=1/11 meta:sha=yes witness=yes body=no argmax=no meta_control=PASS seed=20261016 template=v2",
+  "status": "ok"
+}

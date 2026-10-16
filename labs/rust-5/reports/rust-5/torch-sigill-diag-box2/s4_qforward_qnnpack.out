@@ -1,0 +1,3 @@
+built with engine qnnpack
+[W1004 08:31:23.526035373 qlinear_dynamic.cpp:251] Warning: Currently, qnnpack incorrectly ignores reduce_range when it is set to true; this may change in a future release. (function operator())
+ok (1, 256)

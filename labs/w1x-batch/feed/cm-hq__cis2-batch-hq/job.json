@@ -1,0 +1,10 @@
+{
+  "added_at": "2026-10-16T09:05:53Z",
+  "after": "cis2-tamper-hq",
+  "cpu_quota": null,
+  "memory_max": null,
+  "name": "cis2-batch-hq",
+  "payload": "<home>/feed-payload/cis2-batch",
+  "payload_dest": "<home>/cis2-batch",
+  "pushed_at": "2026-10-16T09:59:24Z"
+}

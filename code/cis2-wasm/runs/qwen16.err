@@ -1,0 +1,21 @@
+fpenv: wasm32 no FTZ/DAZ control
+fpenv: wasm32 FTZ/DAZ self-test SKIPPED (not pinned)
+loading + widening weights (bf16 -> fp32, exact bit-shift)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+[run1] step 1: token_id=1052
+[run1] step 2: token_id=572
+[run1] step 3: token_id=264
+[run1] step 4: token_id=2632
+[run1] step 5: token_id=3743
+[run1] step 6: token_id=6941
+[run1] step 7: token_id=47290
+[run1] step 8: token_id=13
+[run1] step 9: token_id=2932
+[run1] step 10: token_id=10245
+[run1] step 11: token_id=311
+[run1] step 12: token_id=1486
+[run1] step 13: token_id=448
+[run1] step 14: token_id=1059
+[run1] step 15: token_id=23069

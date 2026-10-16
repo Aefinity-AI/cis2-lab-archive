@@ -1,0 +1,5 @@
+box1, fake HOME with payload-t and bin-t (a test build), wrapper rust3-R1-box1.sh as generated; only refusals were run (a full wrapper run would fuzz a real loader before the registered run):
+T1 payload sha256 differs from frozen: RESULT: FAIL rust3 arm=R1 payload SHA256SUMS differs from frozen
+T2 binary sha256 differs from FREEZE (r1_fuzz pin altered): RESULT: FAIL rust3 arm=R1 r1_fuzz sha256 differs from FREEZE (result.json status REFUSED, no loader executed)
+T3 oracle sha256 differs from the bar's: RESULT: FAIL rust3 arm=R1 oracle sha256 differs from the bar's
+bash -n on all 8 wrappers: ok.

@@ -1,0 +1,52 @@
+RUN host=box1 date=2026-10-04T09:26:27Z mode=timing stub=False reps=5 cap_s=28800 arms=['rs-gnu-O2', 'rs-gnu-O3', 'c-gnu-O2', 'c-gnu-O3']
+host_info cpu=Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz ncpu=4 kernel=6.12.111+deb13-amd64 flags=fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+host_cpufreq governor=performance max_khz=2100000
+overrides {}
+job_id=20261004T092627Z-p696532 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c
+cpu_max cgroups=leg-rust1-box1.service=400000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 allowed_cpus=4 binding=no (a quota of 100 percent x the number of logical CPUs does not bind)
+pin arm_cpu=1 runner_cpu=0 mode=separate_cores
+cap registered_s=28800 used_before_s=0 remaining_s=28800 cap_s=28800
+payload_check ok; PAYLOAD_SHA256 sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9
+pinned_file <home>/sv5/arma/weights/model.safetensors sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1 ok
+pinned_file <home>/sv5/arma/weights/config.json sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843 ok
+pinned_file <home>/sv5/arma/weights/tokenizer.json sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c ok
+memory_limit cgroup_memory_max_mib=4500 expected_mib=4500 (free -m total 5841 MiB)
+SNAP start-gate {"t": "2026-10-04T09:26:28Z", "load": [0.13, 0.1, 0.24], "run": "1/131", "mhz": [2095.144, 2100.0, 2100.0, 2096.081], "thr": 0, "other_units": []}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.0055 foreign_host=0.011
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.005 foreign_host=0.01
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.003 foreign_host=0.005
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.007 foreign_host=0.013
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.014 foreign_host=0.023
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.0015 foreign_host=0.005
+BASELINE max_arm=0.014 max_host=0.023 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.034 limit_host=0.1
+CHECK before arm=rs-gnu-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=rs-gnu-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-gnu-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-gnu-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+ROW rep=0 arm=rs-gnu-O2 value_tps=5.037898 peak_pss_kb=758834 peak_anon_kb=757268 vmhwm_kb=792752 threads=1 tries=1
+ROW rep=0 arm=c-gnu-O2 value_tps=5.084527 peak_pss_kb=763712 peak_anon_kb=763448 vmhwm_kb=791208 threads=1 tries=1
+ROW rep=0 arm=c-gnu-O3 value_tps=5.185471 peak_pss_kb=736480 peak_anon_kb=736208 vmhwm_kb=791180 threads=1 tries=1
+ROW rep=0 arm=rs-gnu-O3 value_tps=5.094508 peak_pss_kb=755940 peak_anon_kb=754444 vmhwm_kb=792640 threads=1 tries=1
+ROW rep=1 arm=c-gnu-O3 value_tps=5.192146 peak_pss_kb=727809 peak_anon_kb=727564 vmhwm_kb=791292 threads=1 tries=1
+VOID rep=1 arm=rs-gnu-O3 reason=other_load_during_run foreign_arm=0.0419 foreign_host=0.1823 limits=0.034/0.1 (repeat 1/6)
+ROW rep=1 arm=rs-gnu-O3 value_tps=5.097205 peak_pss_kb=758891 peak_anon_kb=757396 vmhwm_kb=792564 threads=1 tries=2
+ROW rep=1 arm=rs-gnu-O2 value_tps=5.048518 peak_pss_kb=755303 peak_anon_kb=753612 vmhwm_kb=792992 threads=1 tries=1
+ROW rep=1 arm=c-gnu-O2 value_tps=5.089504 peak_pss_kb=774300 peak_anon_kb=774040 vmhwm_kb=791160 threads=1 tries=1
+ROW rep=2 arm=rs-gnu-O3 value_tps=5.098372 peak_pss_kb=762352 peak_anon_kb=760880 vmhwm_kb=792592 threads=1 tries=1
+ROW rep=2 arm=c-gnu-O3 value_tps=5.186860 peak_pss_kb=725871 peak_anon_kb=725588 vmhwm_kb=791248 threads=1 tries=1
+ROW rep=2 arm=c-gnu-O2 value_tps=5.089398 peak_pss_kb=779372 peak_anon_kb=779112 vmhwm_kb=791172 threads=1 tries=1
+ROW rep=2 arm=rs-gnu-O2 value_tps=5.044496 peak_pss_kb=789611 peak_anon_kb=787996 vmhwm_kb=792568 threads=1 tries=1
+ROW rep=3 arm=c-gnu-O2 value_tps=5.085604 peak_pss_kb=772138 peak_anon_kb=771876 vmhwm_kb=791172 threads=1 tries=1
+ROW rep=3 arm=rs-gnu-O2 value_tps=5.043909 peak_pss_kb=762409 peak_anon_kb=760728 vmhwm_kb=792788 threads=1 tries=1
+ROW rep=3 arm=rs-gnu-O3 value_tps=5.099383 peak_pss_kb=755574 peak_anon_kb=754160 vmhwm_kb=792588 threads=1 tries=1
+ROW rep=3 arm=c-gnu-O3 value_tps=5.188871 peak_pss_kb=758092 peak_anon_kb=757832 vmhwm_kb=791184 threads=1 tries=1
+ROW rep=4 arm=rs-gnu-O2 value_tps=5.044379 peak_pss_kb=762688 peak_anon_kb=761020 vmhwm_kb=792792 threads=1 tries=1
+ROW rep=4 arm=c-gnu-O2 value_tps=5.085282 peak_pss_kb=767633 peak_anon_kb=767372 vmhwm_kb=791156 threads=1 tries=1
+ROW rep=4 arm=c-gnu-O3 value_tps=5.189000 peak_pss_kb=731113 peak_anon_kb=730844 vmhwm_kb=791124 threads=1 tries=1
+ROW rep=4 arm=rs-gnu-O3 value_tps=5.097288 peak_pss_kb=762476 peak_anon_kb=760972 vmhwm_kb=792628 threads=1 tries=1
+CHECK after arm=rs-gnu-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=rs-gnu-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-gnu-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-gnu-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+SNAP end {"t": "2026-10-04T11:18:43Z", "load": [1.06, 1.02, 0.94], "run": "2/131", "mhz": [2100.0, 2100.0, 2100.0, 2100.0], "thr": 0, "other_units": []}
+RESULT: OK host=box1 reason=none reps={"c-gnu-O2":5,"c-gnu-O3":5,"rs-gnu-O2":5,"rs-gnu-O3":5} reps_requested=5 values_tps={"c-gnu-O2":[5.084527,5.089504,5.089398,5.085604,5.085282],"c-gnu-O3":[5.185471,5.192146,5.18686,5.188871,5.189],"rs-gnu-O2":[5.037898,5.048518,5.044496,5.043909,5.044379],"rs-gnu-O3":[5.094508,5.097205,5.098372,5.099383,5.097288]} medians_tps={"c-gnu-O2":5.085604,"c-gnu-O3":5.188871,"rs-gnu-O2":5.044379,"rs-gnu-O3":5.097288} peak_pss_kb_median={"c-gnu-O2":772138,"c-gnu-O3":731113,"rs-gnu-O2":762409,"rs-gnu-O3":758891} peak_anon_kb_median={"c-gnu-O2":771876,"c-gnu-O3":730844,"rs-gnu-O2":760728,"rs-gnu-O3":757396} vmhwm_kb_median={"c-gnu-O2":791172,"c-gnu-O3":791184,"rs-gnu-O2":792788,"rs-gnu-O3":792592} digests_before=equal digests_after=equal ref_witness_sha256=1a0ff035daf2124dba11b958b2ae8187438b430dc07675a3453314f935d7453c digest_witness_prompt0={"c-gnu-O2":"145e875abf13b3c8","c-gnu-O3":"145e875abf13b3c8","rs-gnu-O2":"145e875abf13b3c8","rs-gnu-O3":"145e875abf13b3c8"} discards=0 voids=1 oom=[] elapsed_s=6735 cap_s=28800 order_cycle=[["rs-gnu-O2","c-gnu-O2","c-gnu-O3","rs-gnu-O3"],["c-gnu-O3","rs-gnu-O3","rs-gnu-O2","c-gnu-O2"],["rs-gnu-O3","c-gnu-O3","c-gnu-O2","rs-gnu-O2"],["c-gnu-O2","rs-gnu-O2","rs-gnu-O3","c-gnu-O3"]] mean_position_per_arm={"c-gnu-O2":1.4,"c-gnu-O3":1.6,"rs-gnu-O2":1.2,"rs-gnu-O3":1.8} mean_position_per_language={"c":1.5,"rs":1.5} job=20261004T092627Z-p696532 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c payload_match=yes foreign_max_arm_cpu=0.034 foreign_max_host=0.1 baseline={"base_arm":0.014,"base_host":0.023,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.034,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"measured":"yes","window_s":20.0,"windows":[[0.0055,0.011],[0.005,0.01],[0.003,0.005],[0.007,0.013],[0.014,0.023],[0.0015,0.005]]} timers_paused=cm-tick.timer,cm-rc-watch.timer overrides={} cpu_max=leg-rust1-box1.service=400000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 cpu_quota_binding=no arm_cpu=1 runner_cpu=0 pin=separate_cores used_before_s=0 cap_registered_s=28800 elapsed_job_s=6735

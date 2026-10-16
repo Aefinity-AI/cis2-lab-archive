@@ -1,0 +1,35 @@
+FREEZE rust-2b build on aefinity-box-2a7e, 2026-10-06T04:19:19Z
+host cpu: Intel(R) Celeron(R) N4020C CPU @ 1.10GHz   avx2: 0
+rustc: rustc 1.98.1 (48a229cea 2026-09-01)  [host: x86_64-unknown-linux-gnu LLVM version: 22.1.8 ]
+cargo: cargo 1.98.1 (797e8a9bc 2026-08-05)
+features: burn = =0.21.0, default-features=false, features = flex, autodiff; burn-flex = =0.21.0 (direct), default-features=false, features = std, simd, rayon (burn-flex's own defaults, which burn's flex feature alone leaves off); rayon = =1.12.0 (direct, to set and read the thread pool)
+burn-flex features as built: "rayon" "simd" "std" 
+RUSTFLAGS: '' (unset); CARGO_BUILD_RUSTFLAGS unset; profile: release defaults (no lto, opt-level 3, codegen-units 16); cargo build --release --locked -j2; target-cpu: default (x86-64 baseline)
+cargo config files: 
+Cargo.lock sha256 before=1ea4de5ad00998536fcac4cde9c1972127f07315b715de38ed83761602959c4e after=1ea4de5ad00998536fcac4cde9c1972127f07315b715de38ed83761602959c4e (equal means --locked changed nothing)
+PIN binary rust2b_arm_b sha256 bf465266b49b152c49857ffb45f88940d3cc3b4846d346039e21f707cce16df5 size 7390680
+PIN Cargo.lock sha256 1ea4de5ad00998536fcac4cde9c1972127f07315b715de38ed83761602959c4e packages 373
+ldd: 	linux-vdso.so.1 (0x00007f9e1fd76000);	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f9e1fd38000);	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f9e1f710000);	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f9e1f51c000);	/lib64/ld-linux-x86-64.so.2 (0x00007f9e1fd78000);
+--- pinned payload files
+PIN 87b40101954077f08d3f5829e04732f5a8cab16ad24f3f016dabab9ac4452236  PAYLOAD_SHA256
+PIN 62dbf3824cc5daa6860620c6bd5a826687aef082acf23f0e32a4edfdbc21c144  SHA256SUMS
+PIN 2b59f172386d24ed1cffe6696cd79ada45ed1427b0bf08e310c9f06e339c6d6e  arm_t.py
+PIN 1e08bace5f762f08c609aeeced208a29d2a36f57554cf765566192b43b590c92  run_box.py
+PIN 1a5fec0bd55cda8f2622b6fa821a8d2fd8ebe05d1f97f4291cda30895b7406ba  check_equal.py
+PIN bd7e6e9ad2914e8508c4618c7ed58cca16b72536cb70c063eb6ea3f734cfab2d  arm_b/Cargo.toml
+PIN 168d56429d50527946f24218f2401289d1efab06668cb722faba4563d5cc4d6d  arm_b/src/main.rs
+PIN 1157493146ec88dd320c87acec1c47b816fce8c378ba830df54302349416129b  inputs/init.bin
+PIN 4b96f5af608af0b1aa90805085a74f584c4b17fc6d5bbceebef99e1ee448593f  inputs/order.bin
+PIN fc6adc0a8c0e78064cf518dbf678ae3210821e8053621bccb4ff125940ef7f09  inputs/data.txt
+--- purity evidence (cargo tree --edges normal,build, host target)
+unique packages in tree: 142
+-sys crates: 
+C or C++ compiler drivers (cc, cmake, bindgen, pkg-config, vcpkg, libloading): 
+crates with a build.rs among the tree (names): ahash-0.8.12 crossbeam-deque-0.8.8 crossbeam-epoch-0.9.21 crossbeam-utils-0.8.23 cubecl-common-0.10.0 getrandom-0.4.3 libc-0.2.190 libm-0.2.16 macerator-0.3.4 num-traits-0.2.19 object-0.37.3 parking_lot_core-0.9.12 paste-1.0.15 portable-atomic-1.15.0 proc-macro2-1.0.107 pulp-0.22.3 quote-1.0.47 rayon-core-1.13.0 serde_core-1.0.229 serde_json-1.0.151 serde-1.0.229 thiserror-2.0.21 zerocopy-0.8.59 zmij-1.0.23 
+ldd is the evidence for runtime loading of native libraries (a static check of the tree cannot see dlopen): see the ldd line above (libgcc_s, libm, libc are the C runtime, not a native library of the framework)
+(PURE RUST decision is the operator's from these lines: any -sys crate, any build.rs invoking a C/C++ compiler, any runtime loading of a native library makes it NOT PURE RUST)
+--- dependency counts for the trust column
+DEPS cargo_lock_packages 373
+DEPS pip_packages 75
+DEPS torch_venv_bytes_whole 1508094873
+DEPS torch 2.14.0+cpu

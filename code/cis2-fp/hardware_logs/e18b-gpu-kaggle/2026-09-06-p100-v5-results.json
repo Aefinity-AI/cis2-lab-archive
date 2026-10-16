@@ -1,0 +1,64 @@
+{
+  "gpu_name": "Tesla P100-PCIE-16GB",
+  "nvcc_arch": "sm_60",
+  "nvcc_version": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Fri_Feb_21_20:23:50_PST_2025\nCuda compilation tools, release 12.8, V12.8.93\nBuild cuda_12.8.r12.8/compiler.35583870_0",
+  "nofma_cuda_pass": true,
+  "results": {
+    "host_16tok": {
+      "mode": "sequential",
+      "digest_pass": true,
+      "trace_pass": true,
+      "expected_digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
+      "got_digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
+      "returncode": 0,
+      "divergence": null
+    },
+    "host_128tok": {
+      "mode": "sequential",
+      "digest_pass": true,
+      "trace_pass": null,
+      "expected_digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
+      "got_digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
+      "returncode": 0,
+      "divergence": null
+    },
+    "gpu_16tok": {
+      "mode": "sequential",
+      "digest_pass": true,
+      "trace_pass": true,
+      "expected_digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
+      "got_digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
+      "returncode": 0,
+      "divergence": null
+    },
+    "gpu_128tok": {
+      "mode": "sequential",
+      "digest_pass": true,
+      "trace_pass": null,
+      "expected_digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
+      "got_digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
+      "returncode": 0,
+      "divergence": null
+    },
+    "gpu_16tok_tree": {
+      "mode": "tree",
+      "digest_pass": true,
+      "trace_pass": true,
+      "expected_digest": "3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3",
+      "got_digest": "3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3",
+      "returncode": 0,
+      "divergence": null
+    },
+    "gpu_128tok_tree": {
+      "mode": "tree",
+      "digest_pass": true,
+      "trace_pass": null,
+      "expected_digest": "112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf",
+      "got_digest": "112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf",
+      "returncode": 0,
+      "divergence": null
+    }
+  },
+  "sequential_pass": true,
+  "tree_candidate_pass": true
+}

@@ -1,0 +1,2 @@
+shape1 rows=100 torch_token_agree=100/100 first_diff_positions=[] rows_sha256=fa3e52cfd8624eaea0d7f2dd63d07c836ab684656484d2658572cd9b5427e272
+RESULT: OK rows=100 torch_agree=100/100 rows_sha256=fa3e52cfd8624eaea0d7f2dd

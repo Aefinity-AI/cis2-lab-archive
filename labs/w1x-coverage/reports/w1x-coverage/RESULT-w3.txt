@@ -1,0 +1,17 @@
+=== cis2-coverage-w3 start 2026-10-16T10:54:03Z host=aefinity-box2 cpu=Intel(R) Celeron(R) N4020 CPU @ 1.10GHz
+sha256 model.safetensors = 677a5a25208b08594b0cb9375cb28ed427bdfeec72ddcd2833b0513e7031f4ca
+sha256 config.json = af88fb256b150dad9050f760c6390ef45a9c539c4d14c0bcea4fa31b125e9695
+sha256 tokenizer.json = e39fc11fc1c2b004fcf5f6b5a817f79562037c05a256439a8d4cdef8ecb5dd23
+sha256 coverage-4.txt = aa1bb87d585ab545985af17145a4e71a83bc1c0e563aec8ca9c2dd1c43f14853
+g++ g++ (Debian 14.2.0-19) 14.2.0
+build ref: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o <home>/legs/cis2-coverage-w3/bin/cis2_host_ref gpu/cis2_host.cpp
+build m01: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu-m01 -o <home>/legs/cis2-coverage-w3/bin/cis2_host_m01 gpu-m01/cis2_host.cpp
+build m15: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu-m15 -o <home>/legs/cis2-coverage-w3/bin/cis2_host_m15 gpu-m15/cis2_host.cpp
+row ref gen_toks=8 digest=4660d6c33b6c0d51529b4be43687c004c8b7c0d8804439999b5af32683528734 ids=[3, 11, 22, 8, 5, 5, 5, 5, 5, 5, 5, 5] argmax=05c95d57fe4bb048 rc=0
+row ref2 gen_toks=8 digest=4660d6c33b6c0d51529b4be43687c004c8b7c0d8804439999b5af32683528734 ids=[3, 11, 22, 8, 5, 5, 5, 5, 5, 5, 5, 5] argmax=05c95d57fe4bb048 rc=0
+row m01 gen_toks=8 digest=93ecb8384ec59629f60232aa5a184d50c38ca15cf94ee613de1e41bffe2d47f0 ids=[3, 11, 22, 8, 5, 5, 5, 5, 5, 5, 5, 5] argmax=05c95d57fe4bb048 rc=0
+row m15 gen_toks=8 digest=68dd35c5d2a969754d6fdccfda579642df43e1f4b97cc00016e32b6684b90d85 ids=[3, 11, 22, 8, 17, 17, 17, 17, 17, 17, 17, 17] argmax=ffc1b1a0069025ca rc=0
+ref8 pin MATCH
+ids0 expected TIE_A=5 (TIE_B=17 SUB=29); actual ids0=5
+RESULT: OK cis2-coverage-w3 ref8=4660d6c33b6c0d51529b4be43687c004c8b7c0d8804439999b5af32683528734 m01=MOVED m15=MOVED ids0=5 repeat=SAME weights=677a5a25 config=af88fb25 ids=aa1bb87d
+=== cis2-coverage-w3 done 2026-10-16T10:54:14Z

@@ -1,0 +1,22 @@
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+step 0 token 11
+step 1 token 1052
+step 2 token 1033
+step 3 token 220
+step 4 token 18
+step 5 token 15
+step 6 token 15
+step 7 token 15
+step 8 token 1251
+step 9 token 304
+step 10 token 264
+step 11 token 6290
+step 12 token 13
+step 13 token 576
+step 14 token 1372
+step 15 token 315
+ids=[12522, 5193, 264, 882, 11, 1052, 1033, 220, 18, 15, 15, 15, 1251, 304, 264, 6290, 13, 576, 1372, 315]
+FROMTEXT digest=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:42.15
+	Maximum resident set size (kbytes): 4270480

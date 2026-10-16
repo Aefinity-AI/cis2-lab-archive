@@ -1,0 +1,28 @@
+rust-4 run host=box3 job=20261004T203242Z-480720 start=2026-10-04T20:32:42Z smoke=False phases=['install', 'm2', 'm3'] reps=5 preps=1 m3reps=3
+HOSTCHECK open {"t": "2026-10-04T20:32:42Z", "load": [0.43, 0.24, 0.16], "run": "2/131", "mhz": [1392, 1489], "thr": 7451432, "other_units": [], "scaling_max_khz": "2800000"}
+host=box3 cpu=Intel(R) Celeron(R) N4020C CPU @ 1.10GHz ncpu=2 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.94+deb13-amd64
+payload ok: PAYLOAD_SHA256 sha256=ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85
+pinned weights, config, tokenizer: sha256 ok
+SNAP opening-gate {"t": "2026-10-04T20:34:01Z", "load": [0.27, 0.25, 0.17], "run": "1/127", "mhz": [796, 795], "thr": 7451432, "other_units": [], "scaling_max_khz": "2800000"}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.0045 foreign_host=0.0095
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.0095 foreign_host=0.016
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.003
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.005 foreign_host=0.009
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.0025 foreign_host=0.0095
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.0015 foreign_host=0.003
+BASELINE max_arm=0.0095 max_host=0.016 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.0295 limit_host=0.1
+TOOLS {"rustc": "rustc 1.98.1 (48a229cea 2026-09-01);binary: rustc;commit-hash: 48a229ceaefd4985c50990b14116b6d856af0985;", "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)", "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-uefi", "gcc": "gcc (Debian 14.2.0-19) 14.2.0", "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found", "musl_tools_pkg": "", "make": "GNU Make 4.4.1", "python": "Python 3.13.5", "kernel": "6.12.94+deb13-amd64", "audit_cargo": "error: no such command: `audit`", "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory", "audit_pip": "absent"}
+GATE {"R": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"], "C": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"]} expected ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9
+install rep=1 status=DISCARD rc=0
+install rep=2 status=DISCARD rc=0
+install rep=3 status=DISCARD rc=0
+install rep=4 status=KEPT rc=0
+P install done: venv_bytes=1111854868 packages=35 native_so_bytes=550024256 probe_ok=True
+m2 arm=R rep=1 status=KEPT rc=0
+m2 C cache not dropped (Cached 368876 -> 94340 kB)
+m2 P cache not dropped (Cached 97036 -> 94288 kB)
+m2 Rv cache not dropped (Cached 96984 -> 94288 kB)
+NOT RUN M2 reason=INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times
+NOT RUN M3 and M4 builds reason=no source payload on this host (lite payload)
+HOSTCHECK close {"t": "2026-10-04T20:51:36Z", "load": [0.69, 0.78, 0.61], "run": "1/127", "mhz": [795, 800], "thr": 7451432, "other_units": [], "scaling_max_khz": "2800000"}
+RESULT: OK-PARTIAL host=box3 job=20261004T203242Z-480720 baseline={"base_arm":0.0095,"base_host":0.016,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.0295,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"masked":"no","max_arm":0.15,"max_host":0.3,"measured":"yes","window_s":20.0,"windows":[[0.0045,0.0095],[0.0095,0.016],[0.0005,0.003],[0.005,0.009],[0.0025,0.0095],[0.0015,0.003]]} payload_sha256=ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85 frozen_payload_sha256=ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85 run_py_sha256=b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8 m1_bytes_shipped={"C":108144,"R":3826304} m1_sha256_shipped={"C":"5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8","R":"d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"} tools={"audit_advisory_db":"ls: cannot access '<home>/.cargo/advisory-db': No such file or directory","audit_cargo":"error: no such command: `audit`","audit_pip":"absent","cargo":"cargo 1.98.1 (797e8a9bc 2026-08-05)","gcc":"gcc (Debian 14.2.0-19) 14.2.0","kernel":"6.12.94+deb13-amd64","make":"GNU Make 4.4.1","musl_gcc":"/bin/bash: line 1: musl-gcc: command not found","musl_target":"x86_64-unknown-linux-gnu x86_64-unknown-uefi","musl_tools_pkg":"","python":"Python 3.13.5","rustc":"rustc 1.98.1 (48a229cea 2026-09-01);binary: rustc;commit-hash: 48a229ceaefd4985c50990b14116b6d856af0985;"} gate_witness=ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9 p={"install_s":[73.68],"native_so_bytes":550024256,"packages":35,"probe_ok":true,"probe_rc":0,"probe_tail":["ROW token=198 n_prompt=39"],"probe_token":"198","site_packages_py_lines":4314098,"venv_bytes":1111854868,"wheelhouse_sha256":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e","wheelhouse_sha256_here":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"} m2={"load_ns":{"R":[11006158649]},"prefill_ns":{"R":[7374036599]},"reps_done":{"C":0,"Cv":0,"P":0,"R":1,"Rv":0},"values_exit_s":{"R":[18.5628]},"values_row_s":{"R":[18.536]}} m3={"C_bytes":[],"C_s":[],"C_sha256":[],"R_bytes":[],"R_s":[],"R_sha256":[]} timers_paused=NA notrun=["M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times","M3 and M4 builds: no source payload on this host (lite payload)"] discards=6 voids=0 phases=install,m2,m3 reps=5 elapsed_job_s=1133

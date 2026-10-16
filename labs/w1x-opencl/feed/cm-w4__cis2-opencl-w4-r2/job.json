@@ -1,0 +1,9 @@
+{
+  "added_at": "2026-10-16T10:44:41Z",
+  "cpu_quota": "200%",
+  "memory_max": "2200M",
+  "name": "cis2-opencl-w4-r2",
+  "payload": "<home>/feed-payload/cis2-opencl",
+  "payload_dest": "<home>/cis2-opencl",
+  "pushed_at": "2026-10-16T10:44:48Z"
+}

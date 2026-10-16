@@ -1,0 +1,212 @@
+{
+ "ref": "box1/B1T1_0-8000",
+ "pairs": {
+  "box1/B8T1_0-8000": {
+   "windows_compared": 8000,
+   "windows_only_ref": 0,
+   "windows_only_other": 0,
+   "positions_compared": 1664964,
+   "positions_argmax_differ": 4,
+   "differing": [
+    {
+     "window": 274,
+     "position": 144,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 7.62939453125e-06,
+     "ref_top1": 2166,
+     "ref_top2": 2364,
+     "other_top1": 2364
+    },
+    {
+     "window": 1302,
+     "position": 143,
+     "ref_margin": 0.0,
+     "other_margin": 1.9073486328125e-06,
+     "ref_top1": 281,
+     "ref_top2": 30,
+     "other_top1": 30
+    },
+    {
+     "window": 3334,
+     "position": 101,
+     "ref_margin": 5.7220458984375e-06,
+     "other_margin": 1.9073486328125e-06,
+     "ref_top1": 1453,
+     "ref_top2": 325,
+     "other_top1": 325
+    },
+    {
+     "window": 5595,
+     "position": 154,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 3.814697265625e-06,
+     "ref_top1": 451,
+     "ref_top2": 260,
+     "other_top1": 260
+    }
+   ],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 0.000110626220703125,
+   "mean_abs_margin_diff": 4.388533551342542e-06,
+   "share_margin_not_identical": 0.7422863197042098,
+   "rate_per_million": 2.4024543473612643,
+   "rate_per_million_upper95_clopper_pearson": 5.497719386327286,
+   "p_at_least_one_in_256": 0.0006148399601119126,
+   "p_at_least_one_in_256_at_upper95": 0.0014064300806022612
+  },
+  "box1/B1T2_0-2000": {
+   "windows_compared": 2000,
+   "windows_only_ref": 6000,
+   "windows_only_other": 0,
+   "positions_compared": 416030,
+   "positions_argmax_differ": 1,
+   "differing": [
+    {
+     "window": 274,
+     "position": 144,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 7.62939453125e-06,
+     "ref_top1": 2166,
+     "ref_top2": 2364,
+     "other_top1": 2364
+    }
+   ],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 6.67572021484375e-05,
+   "mean_abs_margin_diff": 4.072381271750463e-06,
+   "share_margin_not_identical": 0.747381198471264,
+   "rate_per_million": 2.403672812056823,
+   "rate_per_million_upper95_clopper_pearson": 11.40264685860988,
+   "p_at_least_one_in_256": 0.000615151695980809,
+   "p_at_least_one_in_256_at_upper95": 0.002914837825581773
+  },
+  "box2/B1T1_0-4000": {
+   "windows_compared": 4000,
+   "windows_only_ref": 4000,
+   "windows_only_other": 0,
+   "positions_compared": 833394,
+   "positions_argmax_differ": 2,
+   "differing": [
+    {
+     "window": 3334,
+     "position": 101,
+     "ref_margin": 5.7220458984375e-06,
+     "other_margin": 7.62939453125e-06,
+     "ref_top1": 1453,
+     "ref_top2": 325,
+     "other_top1": 325
+    },
+    {
+     "window": 3687,
+     "position": 106,
+     "ref_margin": 3.814697265625e-06,
+     "other_margin": 9.5367431640625e-06,
+     "ref_top1": 282,
+     "ref_top2": 739,
+     "other_top1": 739
+    }
+   ],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 9.72747802734375e-05,
+   "mean_abs_margin_diff": 7.047609629107388e-06,
+   "share_margin_not_identical": 0.914657412940338,
+   "rate_per_million": 2.39982529271869,
+   "rate_per_million_upper95_clopper_pearson": 7.5543829147074275,
+   "p_at_least_one_in_256": 0.0006141673340931408,
+   "p_at_least_one_in_256_at_upper95": 0.0019320604945828324
+  },
+  "box3/B1T1_4000-8000": {
+   "windows_compared": 4000,
+   "windows_only_ref": 4000,
+   "windows_only_other": 0,
+   "positions_compared": 831570,
+   "positions_argmax_differ": 1,
+   "differing": [
+    {
+     "window": 6300,
+     "position": 248,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 4.76837158203125e-06,
+     "ref_top1": 550,
+     "ref_top2": 805,
+     "other_top1": 805
+    }
+   ],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 0.0001373291015625,
+   "mean_abs_margin_diff": 7.062716749605338e-06,
+   "share_margin_not_identical": 0.9151821253772984,
+   "rate_per_million": 1.2025445843404643,
+   "rate_per_million_upper95_clopper_pearson": 5.70469574352627,
+   "p_at_least_one_in_256": 0.0003078042172565132,
+   "p_at_least_one_in_256_at_upper95": 0.001459340401631981
+  },
+  "box3/B8T1_4000-8000": {
+   "windows_compared": 4000,
+   "windows_only_ref": 4000,
+   "windows_only_other": 0,
+   "positions_compared": 831570,
+   "positions_argmax_differ": 2,
+   "differing": [
+    {
+     "window": 5595,
+     "position": 154,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 2.86102294921875e-06,
+     "ref_top1": 451,
+     "ref_top2": 260,
+     "other_top1": 260
+    },
+    {
+     "window": 6300,
+     "position": 248,
+     "ref_margin": 1.9073486328125e-06,
+     "other_margin": 4.76837158203125e-06,
+     "ref_top1": 550,
+     "ref_top2": 805,
+     "other_top1": 805
+    }
+   ],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 0.0001392364501953125,
+   "mean_abs_margin_diff": 7.1740582342886506e-06,
+   "share_margin_not_identical": 0.9164303666558438,
+   "rate_per_million": 2.4050891686809286,
+   "rate_per_million_upper95_clopper_pearson": 7.570952969702739,
+   "p_at_least_one_in_256": 0.0006155140610549781,
+   "p_at_least_one_in_256_at_upper95": 0.001936294256027149
+  },
+  "penguin/B1T1_0-2000": {
+   "windows_compared": 2000,
+   "windows_only_ref": 6000,
+   "windows_only_other": 0,
+   "positions_compared": 416030,
+   "positions_argmax_differ": 0,
+   "differing": [],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 0.0,
+   "mean_abs_margin_diff": 0.0,
+   "share_margin_not_identical": 0.0,
+   "rate_per_million": 0.0,
+   "rate_per_million_upper95_clopper_pearson": 7.200734292731268,
+   "p_at_least_one_in_256": 0.0,
+   "p_at_least_one_in_256_at_upper95": 0.0018416966075142094
+  },
+  "penguin/B1T1_2000-8000": {
+   "windows_compared": 6000,
+   "windows_only_ref": 2000,
+   "windows_only_other": 0,
+   "positions_compared": 1248934,
+   "positions_argmax_differ": 0,
+   "differing": [],
+   "differing_listed_cap": 200,
+   "max_abs_margin_diff": 0.0,
+   "mean_abs_margin_diff": 0.0,
+   "share_margin_not_identical": 0.0,
+   "rate_per_million": 0.0,
+   "rate_per_million_upper95_clopper_pearson": 2.39862849496303,
+   "p_at_least_one_in_256": 0.0,
+   "p_at_least_one_in_256_at_upper95": 0.0006138611412506156
+  }
+ }
+}

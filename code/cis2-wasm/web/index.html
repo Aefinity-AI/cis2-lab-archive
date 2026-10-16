@@ -1,0 +1,37 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CIS-2 WASM re-execution</title>
+<style>body{font:14px monospace;max-width:60em;margin:2em auto}pre{background:#eee;padding:1em;white-space:pre-wrap}</style>
+<h1>CIS-2 reference host (WebAssembly)</h1>
+<p>Pick a weights folder (config.json, model.safetensors, tokenizer.json) and an ids file. Everything runs locally in this page.</p>
+<p>Expected SmolLM2-135M 16-token digest: <b>d82743059d&hellip;</b> (full: d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df).</p>
+<p>Warning: WebAssembly has no FTZ/DAZ control. Digests are valid only when no subnormal value arises (see stderr).</p>
+<p>Weights folder: <input type="file" id="w" webkitdirectory multiple></p>
+<p>Ids file: <input type="file" id="i"></p>
+<p>gen-toks: <input type="number" id="n" value="16" min="1"> <button id="go">Run</button></p>
+<pre id="out">idle</pre>
+<script src="cis2_host.js"></script>
+<script>
+const out = document.getElementById('out');
+const log = s => { out.textContent += s + '\n'; };
+document.getElementById('go').onclick = async () => {
+  out.textContent = '';
+  const wf = [...document.getElementById('w').files], idf = document.getElementById('i').files[0];
+  const need = ['config.json', 'model.safetensors', 'tokenizer.json'];
+  const by = {}; for (const f of wf) if (need.includes(f.name)) by[f.name] = f;
+  const miss = need.filter(n => !by[n]);
+  if (miss.length || !idf) { log('missing: ' + miss.concat(idf ? [] : ['ids file']).join(', ')); return; }
+  const M = await CIS2({
+    noInitialRun: true,
+    print: s => log('[out] ' + s),
+    printErr: s => log('[err] ' + s),
+  });
+  M.FS.mkdir('/weights'); M.FS.mkdir('/ids');
+  for (const n of need) M.FS.writeFile('/weights/' + n, new Uint8Array(await by[n].arrayBuffer()));
+  M.FS.writeFile('/ids/ids.txt', new Uint8Array(await idf.arrayBuffer()));
+  const t = performance.now();
+  let rc; try { rc = M.callMain(['--weights-dir', '/weights', '--ids', '/ids/ids.txt', '--gen-toks', String(document.getElementById('n').value)]); }
+  catch (e) { log('exception: ' + e); }
+  log('exit=' + rc + ' wall_ms=' + Math.round(performance.now() - t));
+};
+</script>

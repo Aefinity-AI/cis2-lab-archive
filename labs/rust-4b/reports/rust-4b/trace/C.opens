@@ -1,0 +1,4 @@
+1493219 execve 0 0 <home>/feed-payload/rust4/bin/C_sv5_driver
+1493219 open 4 8000 <home>/feed-payload/rust4/inputs/work_cold.jsonl
+1493219 open 4 8000 <home>/sv5/arma/weights/config.json
+1493219 open 4 8000 <home>/sv5/arma/weights/model.safetensors

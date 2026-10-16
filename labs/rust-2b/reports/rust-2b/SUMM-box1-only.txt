@@ -1,0 +1,17 @@
+LABEL: framework, not language
+Scale: 1 to 5 million parameters, CPU, 200 steps. GPU training and 135M to 360M models are untested and do not follow.
+== host box1 (LABELLED) result=OK
+  N=1 work check (process CPU seconds / wall seconds of the timed region, median; gate at N=1: at least 0.8; N=2 printed only): T 1.00, B 1.00
+  N=1 label: BURN BEHIND
+    r=0.447646291  B reps ['1.4962', '1.4570', '1.5111', '1.5034', '1.5054']  T reps ['3.3585', '3.2588', '3.2442', '3.3791', '3.3774']
+    loss at step 200: B 2.4778 T 2.4778
+    FRAMEWORK, not language (CPU, 1.8M-parameter byte transformer, 200 steps, N=1): Burn Flex, pure Rust is behind PyTorch on box1, steps/s ratio r=0.4476463, final loss 2.4778 against 2.4778.
+    memory: BURN LOWER, PSS ratio 0.357 (B 151603 kB, T 424351 kB)
+    FRAMEWORK (memory): Burn peak PSS is lower than PyTorch on box1, ratio 0.357; no-Python effect, not a Rust-language effect.
+  N=2 work check (process CPU seconds / wall seconds of the timed region, median; gate at N=1: at least 0.8; N=2 printed only): T 1.99, B 1.32
+  N=2: no label (Rule A): r=0.350 medians B 1.8489 T 5.2899 steps/s, loss B 2.4778 T 2.4778
+OVERALL: FRAMEWORK: BURN BEHIND. Scale: 1 to 5 million parameters on CPU only; GPU training and 135M to 360M models are untested.
+trust (1) run-to-run, T on box1 N=1: 5 runs, 1 distinct final-weights hashes (equal)
+trust (1) run-to-run, B on box1 N=1: 5 runs, 1 distinct final-weights hashes (equal)
+trust (3) dependencies on box1: Cargo.lock packages 373, pip packages 62, whole torch venv bytes (includes pip and every installed package) 1311102425
+trust (4) PURE RUST for B: yes

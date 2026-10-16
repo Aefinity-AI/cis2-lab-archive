@@ -1,0 +1,2 @@
+shape2 rows=300/300 torch_token_agree=300/300 first_diff(idx,pos)=[] rows_sha256=e37a12c98d56aed9aeb452b8882fdd51bd72947e668164d024c908f542a04013
+RESULT: OK rows=300 torch_agree=300/300 rows_sha256=e37a12c98d56aed9aeb452b8

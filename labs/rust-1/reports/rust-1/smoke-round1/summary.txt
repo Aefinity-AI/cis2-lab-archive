@@ -1,0 +1,9 @@
+SMOKE arm=rs-gnu-O3 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=c-gnu-O2 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=rs-gnu-O2 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=c-gnu-O3 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=rs-musl-O3 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=rs-musl-O2 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=c-musl-O2 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE arm=c-musl-O3 rc=0 rows=9 differ_from_reference=0 prompt0=145e875abf13b3c8
+SMOKE_DONE

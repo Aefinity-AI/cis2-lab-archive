@@ -1,0 +1,1 @@
+RESULT: OK diag1 perf stat 3x2 + record 2 (diagnostic, no label)

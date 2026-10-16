@@ -1,0 +1,11 @@
+# rust-2b: redo plan, written once before the start (operator, 2026-10-05 19:33Z)
+
+Written after the amendment was filed (2026-10-05T19:32:50Z) and before `cm-exp start`, before the build job was queued, and before any timing of the registered configuration exists. It is not changed after a number is seen. Every decision below follows the registered pass mark; where the pass mark is silent the choice is marked "operator".
+
+1. A label that is INVALID for a load, clock or harness reason (pass mark: "affected label gets no verdict, redo"). The whole run job of that host is queued again, once, after the cause is understood and fixed or the host is quiet. Both result files are kept and named in the report. The second file is the one that is scored. A second INVALID of the same host ends that host's label as INVALID with both causes written down (operator: one redo, not a loop).
+2. A label that is INCONCLUSIVE (ratio outside 0.90 to 1.10 with overlapping repetition ranges). Pass mark: "redone as 10; if still overlapping the label is TIE (NOT SEPARABLE)". The job is rust2b-redo10-box1 (10 repetitions per arm at N=1). Its result file replaces the opening file for the label of that host. The opening result stays in the report with its numbers. The N=2 lines of that host are quoted from the opening result, because the redo runs N=1 only.
+3. An INVALID label is never sent to the redo-as-10 job. It needs a full fresh run job (point 1).
+4. A Burn arm that cannot run on box1 reads "B: DID NOT RUN, cause" with no label. No redo for that, unless the cause is a fault of our harness or of the host (then point 1).
+5. box2 and box3 carry no label (Rule A). A failed or partial run there is reported as it is. A redo there is made only for a host fault that wrote nothing (the start-up crash class), once.
+6. A redo is decided from the status and cause fields of the result file only (INVALID with its cause, INCONCLUSIVE). The speed numbers play no part in the decision, and no redo is made because a number looks surprising.
+7. The unregistered documentation-build check (RULING-A1.md, BUILD.md step 8b) runs after the registered box1 files, including any redo, are collected and hashed. It has no redo rule: if it fails, the report says so.

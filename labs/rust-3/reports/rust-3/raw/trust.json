@@ -1,0 +1,46 @@
+{
+ "C1": {
+  "dependencies": 0,
+  "header_fields": "dtype, data_offsets (tensor names looked up; shape and __metadata__ are not read)",
+  "header_fields_parsed": 2,
+  "loader_lines_own": 419,
+  "loader_lines_with_vendored": 419,
+  "unsafe_lines_own": "n/a (C)"
+ },
+ "L1": {
+  "dependencies": 0,
+  "header_fields": "magic, version, tensor_count, kv_count, kv key/type/value, tensor name/n_dims/ne/type/offset, general.alignment",
+  "header_fields_parsed": 12,
+  "loader_lines_own": 1402,
+  "loader_lines_with_vendored": 1402,
+  "unsafe_lines_own": "n/a (C++)"
+ },
+ "P1": {
+  "header_fields_parsed": null,
+  "loader_lines_own": null,
+  "note": "pickle zip, torch wheel, lines not counted"
+ },
+ "R1": {
+  "dependencies": 29,
+  "header_fields": "__metadata__, dtype, shape, data_offsets",
+  "header_fields_parsed": 4,
+  "loader_lines_own": 21,
+  "loader_lines_with_vendored": 955,
+  "unsafe_lines_own": 0,
+  "unsafe_lines_vendored": 3
+ },
+ "R2": {
+  "dependencies": 13,
+  "header_fields": "dtype, shape, data_offsets (__metadata__ skipped)",
+  "header_fields_parsed": 3,
+  "loader_lines_own": 68,
+  "loader_lines_with_vendored": 1536,
+  "unsafe_lines_own": 1,
+  "unsafe_lines_vendored": 140
+ },
+ "R3": {
+  "header_fields_parsed": 4,
+  "loader_lines_own": null,
+  "note": "prebuilt wheel, lines not counted"
+ }
+}

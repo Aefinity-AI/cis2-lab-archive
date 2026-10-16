@@ -1,0 +1,4 @@
+## registered (2026-10-02T23:01:31Z) bar_sha256=c4cd1a395a593cd12771762ba46b3b9c26c4227f498f6d0a451e97499786f554
+
+Build verify3 sv5_driver on box5 (Pentium T2310, SSSE3, gcc 14.2.0) at -O0, -O1, -O2, -O3, -Os and -O3 -march=native, each with the spec flags (-ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -mno-fma); replay the 100 items of chunks c000+c001 of the 135M guard replay (weights = g2-135 WEIGHTS_SHA256 on box5) with each binary. MET only if every one of the six builds gives witness AND argmax digests identical to the recorded box5 reference rows for 100 of 100 items. Positive control -O2 -ffast-math (no spec flags) is expected to change at least one digest; if it does not, the result stands but the control is reported as not firing. Reported, no bar: wall time per build.
+

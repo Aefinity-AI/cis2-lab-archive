@@ -1,0 +1,10 @@
+CHECK idx=8 witness=e8f6de8b7b5927c3704375103922e2dc6f5ee2abd6077e1fb63c00d381208105 mismatches=3 max_abs_diff=-1.000000000e+00
+CHECK idx=0 witness=f9f9cc7d4ef5232f9fe6a337a19e73d27873bc284752cc9c1183bbb8bf3b6529 mismatches=6 max_abs_diff=-1.000000000e+00
+CHECK idx=1 witness=624adbbe6068e0eed03a91fa6afc0473c20a2c7c83757c041c50bc93ab66e529 mismatches=4 max_abs_diff=-1.000000000e+00
+CHECK idx=2 witness=041edfa00fc8f5ccdc47b67f0d375af814e4beeacd7184779377079d030caca4 mismatches=1 max_abs_diff=-1.000000000e+00
+CHECK idx=3 witness=e73d6bf9ba5fba652ff21ec62adcc47c2ae0424d87de297c9d25457cf9ffc14a mismatches=3 max_abs_diff=-1.000000000e+00
+CHECK idx=4 witness=f5653fedd1e5ac79be3e4cefdbce4f59a6ec6af2c4ad67e08b426180ac702e31 mismatches=3 max_abs_diff=-1.000000000e+00
+CHECK idx=5 witness=65b1512512480a31f8c3f16455538fbf943d3a60ec2f48825a75a0db8cfe9a88 mismatches=3 max_abs_diff=-1.000000000e+00
+CHECK idx=6 witness=dd68434ab1e1c684eb4c5fd2344df8fed9843f77338e1366d24f30e21dc5184c mismatches=2 max_abs_diff=-1.000000000e+00
+CHECK idx=7 witness=c2c750844d7687cd7983d3f963bb81f3472fc6e14be1d513f369086f6e561506 mismatches=1 max_abs_diff=-1.000000000e+00
+DONE plain=check rows=9

@@ -1,0 +1,6 @@
+r1_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.safetensors in 3 ms
+c1_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.safetensors in 2 ms
+r2_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.safetensors in 3 ms
+l1_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.gguf in 2 ms
+r3_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.safetensors in 2 ms
+p1_fuzz rc=0 Executed <home>/scratch-rust3/payload-t/seed/model.pt in 2759 ms

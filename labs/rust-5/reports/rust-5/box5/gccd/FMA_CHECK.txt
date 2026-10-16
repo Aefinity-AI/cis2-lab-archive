@@ -1,0 +1,4 @@
+FMA_CHECK c_gcc_O2_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 addps       1 mulps ]
+FMA_CHECK c_gcc_O2_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 vaddps       1 vmulps ]
+FMA_CHECK c_gcc_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      7 addps       9 mulps ]
+FMA_CHECK c_gcc_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[     15 vaddps      11 vmulps ]

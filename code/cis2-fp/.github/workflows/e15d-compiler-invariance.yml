@@ -1,0 +1,224 @@
+name: E15d(a) compiler invariance (opt-level x target-cpu x ISA)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [cm/e15d-compiler-invariance]
+
+env:
+  TARGET_DIGEST: d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+  TARGET_INVFREQ_DIGEST: da9f6dcfde0425588815509e874515cdcd3d6b8818b6d0136590052e7bbf6f12
+
+jobs:
+  # Resolve the current HF revision once and fetch the weights once, so the
+  # 20 matrix jobs below never hit huggingface.co directly. actions/cache is
+  # keyed on the resolved revision sha (falls back to a fresh download if the
+  # upstream repo moves); the artifact is what actually distributes the
+  # weights to the 20 build jobs within this run.
+  fetch-weights:
+    runs-on: ubuntu-latest
+    outputs:
+      revision: ${{ steps.rev.outputs.sha }}
+    steps:
+      - name: Resolve HF revision
+        id: rev
+        run: |
+          SHA=$(curl -sS https://huggingface.co/api/models/HuggingFaceTB/SmolLM2-135M | python3 -c "import json,sys; print(json.load(sys.stdin)['sha'])")
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "resolved HF revision: $SHA"
+
+      - name: Cache weights (keyed on model revision)
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: weights
+          key: smollm2-135m-weights-${{ steps.rev.outputs.sha }}
+
+      - name: Fetch SmolLM2-135M weights (public HF resolve, no auth)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum weights/model.safetensors weights/config.json weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: Upload weights artifact (distributes to the 20 build jobs)
+        uses: actions/upload-artifact@v4
+        with:
+          name: weights
+          path: weights
+          retention-days: 1
+
+  build:
+    needs: fetch-weights
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+        opt: ["0", "1", "2", "3", "s"]
+        cpu: [generic, native]
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    env:
+      RUSTFLAGS: "-C target-cpu=${{ matrix.cpu }}"
+      CARGO_PROFILE_RELEASE_OPT_LEVEL: ${{ matrix.opt }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          echo "uname -m = $U"
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install rustup (toolchain itself comes from rust-toolchain.toml)
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --default-toolchain none
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      - name: rustc version (auto-installs the pinned 1.98.0 toolchain via rust-toolchain.toml)
+        run: rustc -V
+
+      - name: Download cached weights
+        uses: actions/download-artifact@v4
+        with:
+          name: weights
+          path: weights
+
+      - name: sha256 of weights (provenance, informational)
+        run: sha256sum weights/model.safetensors weights/config.json weights/tokenizer.json
+
+      - name: Build release (opt-level=${{ matrix.opt }}, target-cpu=${{ matrix.cpu }})
+        run: |
+          echo "RUSTFLAGS=$RUSTFLAGS"
+          echo "CARGO_PROFILE_RELEASE_OPT_LEVEL=$CARGO_PROFILE_RELEASE_OPT_LEVEL"
+          cargo build --release
+
+      - name: objdump evidence (.text sha256/size + FMA grep gate)
+        run: |
+          BIN=target/release/cis2_ref
+          SIZE_HEX=$(objdump -h "$BIN" | awk '/\.text/{print $3}')
+          SIZE=$(printf "%d" "0x$SIZE_HEX")
+          objdump -d "$BIN" > /tmp/disasm.txt
+          TEXT_SHA=$(sha256sum /tmp/disasm.txt | awk '{print $1}')
+          echo "text_size_bytes=$SIZE"
+          echo "disasm_sha256=$TEXT_SHA"
+          FMA=$(grep -icE "vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub|fnmadd|fnmsub|fmla|fmls" /tmp/disasm.txt || true)
+          echo "fma_count=$FMA"
+          {
+            echo "text_size_bytes=$SIZE"
+            echo "disasm_sha256=$TEXT_SHA"
+            echo "fma_count=$FMA"
+          } >> evidence.txt
+          if [ "$FMA" -ne 0 ]; then
+            echo "FAIL: found $FMA FMA instruction(s) — CIS-2 sec3.2 violated (opt=${{ matrix.opt }} cpu=${{ matrix.cpu }} arch=${{ matrix.arch_label }})" >&2
+            grep -iE "vfmadd|vfnmadd|vfmsub|vfnmsub|fmadd|fmsub|fnmadd|fnmsub|fmla|fmls" /tmp/disasm.txt >&2
+            exit 1
+          fi
+          echo "PASS: 0 FMA instructions"
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: no_fma_gate.sh
+        run: ./scripts/no_fma_gate.sh
+
+      - name: Run reference, capture digests
+        id: run
+        run: |
+          OUT=$(nice -n 10 ./target/release/cis2_ref 2>&1)
+          echo "$OUT"
+          LINE=$(echo "$OUT" | grep -E '^CIS2_REF digest=' | head -1)
+          INVFREQ=$(echo "$OUT" | grep -E '^inv_freq_table_digest=' | head -1)
+          DIGEST=$(echo "$LINE" | sed -n 's/.*digest=\([0-9a-f]*\).*/\1/p')
+          INVFREQ_DIGEST=$(echo "$INVFREQ" | sed -n 's/.*table_digest=\([0-9a-f]*\).*/\1/p')
+          echo "got digest=$DIGEST target=$TARGET_DIGEST"
+          echo "got inv_freq table_digest=$INVFREQ_DIGEST target=$TARGET_INVFREQ_DIGEST"
+          {
+            echo "job=${{ matrix.arch_label }}-opt${{ matrix.opt }}-${{ matrix.cpu }}"
+            echo "arch=${{ matrix.arch_label }}"
+            echo "opt=${{ matrix.opt }}"
+            echo "cpu=${{ matrix.cpu }}"
+            echo "cis2_ref_digest=$DIGEST"
+            echo "inv_freq_digest=$INVFREQ_DIGEST"
+          } >> evidence.txt
+          if [ "$DIGEST" != "$TARGET_DIGEST" ]; then
+            echo "MISMATCH: CIS2_REF digest does not match pre-registered target (opt=${{ matrix.opt }} cpu=${{ matrix.cpu }} arch=${{ matrix.arch_label }})" >&2
+            exit 1
+          fi
+          if [ "$INVFREQ_DIGEST" != "$TARGET_INVFREQ_DIGEST" ]; then
+            echo "MISMATCH: inv_freq table_digest does not match pre-registered target (opt=${{ matrix.opt }} cpu=${{ matrix.cpu }} arch=${{ matrix.arch_label }})" >&2
+            exit 1
+          fi
+          echo "PASS on ${{ matrix.arch_label }} opt=${{ matrix.opt }} cpu=${{ matrix.cpu }}: digests match pre-registered target"
+
+      - name: Upload per-job evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ matrix.arch_label }}-opt${{ matrix.opt }}-${{ matrix.cpu }}
+          path: evidence.txt
+
+  aggregate:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all evidence artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: evidence-*
+          path: evidence
+          merge-multiple: false
+
+      - name: Build table, print job summary, fail on any digest mismatch
+        run: |
+          set +e
+          echo "| job | arch | opt | cpu | cis2_ref_digest | inv_freq_digest | text_size | disasm_sha256 | fma_count | match |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|---|---|---|---|---|---|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          MISMATCH=0
+          FOUND=0
+          TARGET="$TARGET_DIGEST"
+          for f in evidence/*/evidence.txt; do
+            [ -f "$f" ] || continue
+            FOUND=$((FOUND+1))
+            JOB=$(grep '^job=' "$f" | cut -d= -f2)
+            ARCH=$(grep '^arch=' "$f" | cut -d= -f2)
+            OPT=$(grep '^opt=' "$f" | cut -d= -f2)
+            CPU=$(grep '^cpu=' "$f" | cut -d= -f2)
+            DIGEST=$(grep '^cis2_ref_digest=' "$f" | cut -d= -f2)
+            INVFREQ=$(grep '^inv_freq_digest=' "$f" | cut -d= -f2)
+            SIZE=$(grep '^text_size_bytes=' "$f" | cut -d= -f2)
+            DISASM=$(grep '^disasm_sha256=' "$f" | cut -d= -f2)
+            FMA=$(grep '^fma_count=' "$f" | cut -d= -f2)
+            if [ "$DIGEST" = "$TARGET" ] && [ "$INVFREQ" = "$TARGET_INVFREQ_DIGEST" ] && [ "$FMA" = "0" ]; then
+              MATCH="yes"
+            else
+              MATCH="**NO**"
+              MISMATCH=$((MISMATCH+1))
+            fi
+            echo "| $JOB | $ARCH | $OPT | $CPU | $DIGEST | $INVFREQ | $SIZE | ${DISASM:0:16}... | $FMA | $MATCH |" >> "$GITHUB_STEP_SUMMARY"
+          done
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "jobs collected: $FOUND / 20" >> "$GITHUB_STEP_SUMMARY"
+          echo "mismatches: $MISMATCH" >> "$GITHUB_STEP_SUMMARY"
+          cat "$GITHUB_STEP_SUMMARY"
+          if [ "$FOUND" -ne 20 ]; then
+            echo "FAIL: expected 20 evidence artifacts, found $FOUND" >&2
+            exit 1
+          fi
+          if [ "$MISMATCH" -ne 0 ]; then
+            echo "FAIL: $MISMATCH job(s) mismatched the pre-registered target digest or had FMA>0" >&2
+            exit 1
+          fi
+          echo "PASS: 20/20 jobs match pre-registered digest a0c563ef... with 0 FMA instructions"

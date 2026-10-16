@@ -1,0 +1,27 @@
+{
+ "reference_rows": 200,
+ "B1T2": {
+  "rows": 200,
+  "differ": 0,
+  "median_wall_s_per_prompt": 19.51,
+  "details": []
+ },
+ "B8T1": {
+  "rows": 200,
+  "differ": 0,
+  "median_wall_s_per_prompt": 7.83,
+  "details": []
+ },
+ "B8T2": {
+  "rows": 200,
+  "differ": 0,
+  "median_wall_s_per_prompt": 6.45,
+  "details": []
+ },
+ "CTRL": {
+  "rows": 20,
+  "differ": 0,
+  "median_wall_s_per_prompt": 18.7,
+  "details": []
+ }
+}

@@ -1,0 +1,18 @@
+   Compiling libc v0.2.190
+   Compiling jobserver v0.1.35
+   Compiling find-msvc-tools v0.1.14
+   Compiling shlex v2.0.1
+   Compiling cc v1.6.0
+   Compiling libfuzzer-sys v0.4.13
+   Compiling arbitrary v1.4.2
+   Compiling rust3_rtoy v0.1.0 (<home>/scratch-rust3/r2fix/pay/pkg/toy/rtoy)
+   Compiling rust3_rtoy_fuzz v0.0.0 (<home>/scratch-rust3/r2fix/pay/pkg/toy/rtoy/fuzz)
+    Finished `release` profile [optimized + debuginfo] target(s) in 1m 10s
+   Compiling rust3_rtoy v0.1.0 (<home>/scratch-rust3/r2fix/pay/pkg/toy/rtoy)
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.70s
+02:18:21Z RESULT: OK rust3 arm=TOY K1=1 K2=2 K3=3 K4=2 K5=5 harness_crashes=0 unclassified=0 execs=2538+3221 oracle_sha256=e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739
+02:24:09Z RESULT: OK rust3 arm=TOY K1=1 K2=0 K3=1 K4=2 K5=1 harness_crashes=0 unclassified=0 execs=990+2284 oracle_sha256=e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739
+02:21:12Z RESULT: OK rust3 arm=TOYH K1=1 K2=0 K3=1 K4=1 K5=1 harness_crashes=1 unclassified=0 execs=5160+1373 oracle_sha256=e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739
+02:27:22Z RESULT: OK rust3 arm=RTOY K1=3 K2=2 K3=2 K4=3 K5=0 harness_crashes=0 unclassified=0 execs=187722+653 oracle_sha256=e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739
+TOY CHECK PASS 87
+FINISHED

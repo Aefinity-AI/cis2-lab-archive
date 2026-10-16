@@ -1,0 +1,1 @@
+RESULT: FAIL host=box3 timing pass did not finish OK: harness_time.out:RESULT: FAIL host=box3 tier=T0 INVALID discard budget 2 used up, one more discard (clock/throttle) k2_passA.out: k2_passB.out:

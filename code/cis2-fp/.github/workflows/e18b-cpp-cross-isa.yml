@@ -1,0 +1,141 @@
+name: E18b C++ cross-ISA CIS-2 fp32 port
+
+on:
+  push:
+    branches: [cm/e18b-*]
+  workflow_dispatch: {}
+
+env:
+  TARGET_DIGEST: d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    outputs:
+      digest_x86_64: ${{ steps.digest.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          echo "uname -m = $U"
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      - name: rustc / clang / g++ versions
+        run: |
+          rustc -V
+          clang++ --version
+          g++ --version
+
+      - name: Fetch SmolLM2-135M weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum weights/model.safetensors weights/config.json weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: Build Rust reference + math_dump
+        run: |
+          cargo build --release --bin cis2_ref --bin math_dump
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: Build C++ host port (clang++)
+        run: make -C gpu host
+
+      - name: Build C++ host port (g++)
+        run: make -C gpu host-gcc
+
+      - name: test-math — 242 428-input golden sweep, bit-exact
+        run: make -C gpu test-math
+
+      - name: nofma gate (arch-aware objdump mnemonic check)
+        run: make -C gpu nofma
+
+      - name: nolibm gate
+        run: make -C gpu nolibm
+
+      - name: gate — 16-token digest + trace equality (C++ vs Rust, this runner)
+        run: make -C gpu gate
+
+      - name: Extract this runner's CIS2_REF digest, assert equal to pinned target
+        id: digest
+        run: |
+          D=$(grep '^CIS2_REF' gpu/.gate/rust.out | sed 's/.*digest=\([0-9a-f]*\).*/\1/')
+          echo "arch=${{ matrix.arch_label }} digest=$D target=$TARGET_DIGEST"
+          echo "digest=$D" >> "$GITHUB_OUTPUT"
+          if [ "$D" != "$TARGET_DIGEST" ]; then
+            echo "MISMATCH: CIS2_REF digest does not match pre-registered target on ${{ matrix.arch_label }}"
+            exit 1
+          fi
+          echo "PASS on ${{ matrix.arch_label }}: C++==Rust on this runner, and both == pinned target"
+
+      - name: Upload trace + digest artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: e18b-cpp-${{ matrix.arch_label }}
+          path: |
+            gpu/.gate/rust.out
+            gpu/.gate/cpp.out
+            gpu/.gate/rust.trace
+            gpu/.gate/cpp.trace
+
+  compare:
+    needs: run
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: e18b-cpp-x86_64
+          path: x86_64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: e18b-cpp-aarch64
+          path: aarch64
+
+      - name: Assert x86_64 and aarch64 digests are equal to each other and to the pinned target
+        env:
+          TARGET_DIGEST: d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+        run: |
+          DX=$(grep '^CIS2_REF' x86_64/rust.out | sed 's/.*digest=\([0-9a-f]*\).*/\1/')
+          DA=$(grep '^CIS2_REF' aarch64/rust.out | sed 's/.*digest=\([0-9a-f]*\).*/\1/')
+          echo "x86_64 digest = $DX"
+          echo "aarch64 digest = $DA"
+          echo "pinned target  = $TARGET_DIGEST"
+          if [ -z "$DX" ] || [ -z "$DA" ]; then
+            echo "FAIL: missing digest from one or both runners"; exit 1
+          fi
+          if [ "$DX" != "$DA" ]; then
+            echo "FAIL: x86_64 and aarch64 CIS2_REF digests differ"; exit 1
+          fi
+          if [ "$DX" != "$TARGET_DIGEST" ]; then
+            echo "FAIL: digests agree with each other but not with the pinned target (silent regression)"; exit 1
+          fi
+
+      - name: Assert x86_64 and aarch64 traces are byte-identical
+        run: |
+          cmp x86_64/rust.trace aarch64/rust.trace || { echo "FAIL: rust traces differ across ISA"; exit 1; }
+          cmp x86_64/cpp.trace aarch64/cpp.trace   || { echo "FAIL: cpp traces differ across ISA"; exit 1; }
+          echo "cross-ISA trace equality: PASS"

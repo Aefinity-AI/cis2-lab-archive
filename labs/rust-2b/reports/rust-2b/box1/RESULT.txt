@@ -1,0 +1,1 @@
+RESULT: OK host=box1 reason=rows=20 capped=0 failed=0 elapsed_s=2002 timers_restored=cm-tick.timer,cm-rc-watch.timer

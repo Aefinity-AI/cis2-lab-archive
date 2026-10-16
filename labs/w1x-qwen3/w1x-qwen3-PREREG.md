@@ -1,0 +1,46 @@
+# PREREG w1x-qwen3: CIS-2 model breadth, Qwen3-0.6B (QK-norm, head_dim 128) reproduces one digest across hosts
+
+STATUS: DRAFT 2026-10-16 (Claudius Maximus builder subagent, hq). NOT registered, NOT ledgered, no formal leg started. Section 9 records the one untimed hq smoke (it is a smoke, not a counted run). Freeze = `cm-exp new w1x-qwen3` plus the public ledger line for this file's sha256 (batch number assigned by the parent); any later change is `w1x-qwen3-amend-N.md`. Scripts pinned at freeze (sha256 in the registration): `state/labs/w1x-qwen3/job.sh`, `stamp.sh`, `job-{hq,w2}.sh`, `fromtext_forward_qwen3.py`, `qwen3-port.diff`. Substitution note: the w1x-horizon / w1x-sample PREREGs named in the brief do not exist as files under `state/prereg/` (only PLAN files and reports do); the structure here follows `state/prereg/w10-PREREG.md` and the w1x-sample PLAN.
+
+## 1. Question
+Moat axis 5 (model breadth, `state/plans/2026-10-16-CIS2-MOAT-WIDENING.md`). Qwen2.5-0.5B already agrees across 5 builds. Qwen3-0.6B differs in four ways the existing pins never exercised: per-head RMSNorm on q and k (q_norm, k_norm, weight shape [128]), no QKV bias, head_dim 128 independent of hidden/heads (q_dim 2048 vs hidden 1024), 8 KV heads (group 2). Question: does the C++ port, with the minimal QK-norm and head_dim additions, give one identical CIS2_REF digest at 16 and at 128 generated tokens on every eligible host and build, repeatably, and does an independent numpy from-text forward reproduce the 16-token digest bit for bit?
+
+## 2. Prior art (honest)
+- Per-head QK-norm is documented model architecture (Qwen3 technical report, Qwen/Qwen3-0.6B `modeling` and config; cited from the model card at the pinned revision, not re-derived here). No determinism-spec digest for any QK-norm model is known to me; sweep not run for this draft (the parent's prior-art file `state/reports/prior-art/` has no Qwen3 entry). Register verdict: OPEN, unswept.
+- CIS-2 v0.3b section 8 defines RMSNorm over one vector. Applying it per head over head_dim after projection and before RoPE is MY reading of the Qwen3 architecture; the spec text does not name QK-norm. A spec clause is a deliverable on MET, not an assumption of this lab.
+- Fidelity to Hugging Face transformers (bf16/fp32 torch) is NOT tested here (no torch on the box). The port computes fp32 with spec reductions, which differs from torch by design. Sanity only: the 128-token continuation decodes to coherent English ("Once upon a time, there were 3000 people in a town. The number of people who are in the town is 3000. ..."), which a wrong norm placement would not give.
+
+## 3. Hypotheses and predictions (EST, written before counted runs)
+- H: hq host build, hq CUDA build and w2 host build produce identical digests at 16 and at 128 tokens; repeat SAME. [EST 0.9; the qwen05 and sample legs showed the same kind of agreement; w2 differs in ISA class only by not having the smoke here]
+- P1 [EST 0.95]: numpy from-text digest at 16 tokens equals the C++ digest (it already did for SmolLM2 and Qwen2.5-0.5B pins in validation, section 9).
+- P2 [EST 0.99]: hq CUDA equals hq host at both lengths (it did in the smoke).
+- Risk [EST 0.1]: w2 (no smoke done) fails on memory (section 5) rather than on a digest difference; that would be INCONCLUSIVE, not a refutation.
+
+## 4. Design and the port change
+Port change (`qwen3-port.diff`, against the Qwen2.5-0.5B payload gpu/): (a) `head_dim` read from config.json when the key exists, else hidden/n_heads as before; `q_dim = n_heads * head_dim`; q_proj is [q_dim, hidden], o_proj [hidden, q_dim], q and attn_out buffers sized q_dim, the norm scratch sized max(hidden, head_dim). (b) Optional `self_attn.q_norm.weight`, `self_attn.k_norm.weight` ([head_dim], bf16) loaded when present; when present, `cis2_rmsnorm` (unchanged) is applied in place to each head's slice of q and k, after bias and before RoPE. (c) `cis2_rmsnorm`, matvec, RoPE, attention, all consts untouched. Models without the new keys/tensors take exactly the old path. Regression on hq after the change, all MATCH the pins: SmolLM2-135M 16 tokens d82743059d1db929 (host and CUDA sm_61), SmolLM2-135M 128 tokens 22f69ad87a615d66, Qwen2.5-0.5B 16 tokens c9dff099d927a6dd (host and CUDA sm_61).
+Runs: per host, host-gcc `g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu`, gen_toks 16 and 128, each run twice; hq adds CUDA (sm_61, spec nvcc flags) with the same four runs. Prompt "Once upon a time" -> ids `12522 5193 264 882` through the official tokenizer.json (no BOS), file sha256 53ea8e67... (same ids as the Qwen2.5 file; the vocabularies share these tokens, the weights differ). Digest pins: none; the result is agreement. Numpy: `fromtext_forward_qwen3.py` (stdlib + numpy, FTZ/DAZ emulated, consts from `gpu/cis2_consts.inc`) rebuilds the section 12.1 witness itself (file hashes, table digest, inv_freq digest, ids, full-vocab logit bits per step) and prints its own CIS2_REF-comparable digest; run once at 16 tokens on hq.
+
+## 5. Hosts, eligibility, resources
+- Eligible: hq (i7-7700HQ, GTX 1050 sm_61) and w2 (i5-5200U, 5.8 GB RAM). Measured peak RSS of the host build on hq (`/usr/bin/time -v`): 3 801 780 kB (3.63 GiB); CUDA build 2 203 592 kB; numpy cross-check 4 270 480 kB.
+- INELIGIBLE: w3 and w4 (about 3.7 GB RAM, N4020; the rule was peak > 2.6 GB = ineligible). Peak 3.63 GiB exceeds 2.6 GB; they are not queued and are not counted in the bar. (Their absence is a limit of this lab, stated in any publication.)
+- w2 cgroup: `--memory-max 4500M` (measured peak plus about 21 percent). w2 is currently running the timing lab `w10-w2`; queue behind it (`--after w10-w2`) so no timing cell is disturbed.
+- hq: sized by `cm-hosts budget hq` at queue time. Cost $0. No timing is reported: `wall_s` in RESULT lines is a diagnostic and appears in no table, report or publication (timing ruling).
+
+## 6. Pins
+Model: Qwen/Qwen3-0.6B, revision c1899de289a04d12100db370d81485cdf75e47ca, licence apache-2.0 (card cardData and LICENSE text read at download; job records, it does not re-fetch). Files (sha256): model.safetensors f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b (1 503 300 328 B, equals the Hub's LFS ETag), config.json 660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd, tokenizer.json aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4, ids qwen3-16.txt 53ea8e67a213a84677328896d6dea41ef3841b65028cfb85b3ba844e275f5cd7. All ten repo files with sizes and sha256: `state/labs/w1x-qwen3/MANIFEST.txt`. Payload `~/feed-payload/cis2-qwen3` (gpu/ sources sha256 prefix 3e45a85dd1a0da3b in the job's source line). Weights are downloaded, not trained on, not redistributed. No Claude text enters training data.
+
+## 7. Procedure
+Queue `job-hq.sh` and `job-w2.sh` via `cm-feed add` (commands in `state/labs/w1x-qwen3/QUEUE.txt`). Each job checks the four pins, builds, runs, writes RESULT.txt. Then compare digests across RESULT lines (`cm-compare` or by eye; the bar is string equality) and run the numpy check once.
+
+## 8. THE BAR (mechanical)
+MET iff ALL hold: (1) hq host-gcc, hq CUDA sm_61 and w2 host-gcc each report RESULT: OK; (2) the three builds give one identical digest at 16 tokens and one identical digest at 128 tokens; (3) every build's repeat line is SAME at both lengths; (4) the numpy from-text digest at 16 tokens equals that 16-token digest; (5) all pins in section 6 verify on every host. NOT MET iff all runs complete and (2), (3) or (4) fail (a digest difference is the finding; report which build/length differs, do not rerun to rescue). INCONCLUSIVE iff a host fails to run (memory kill, build failure, pin mismatch, unreachable) and no completed pair of builds disagrees. w3/w4 do not enter the bar. No re-run to change a verdict; a rerun is a new lab.
+
+## 9. Status: hq smoke 2026-10-16 (untimed, not counted)
+`job-hq.sh` under systemd-run (MemoryMax 7168M): RESULT: OK. d16 = a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461, d128 = aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713, host and CUDA identical at both lengths, repeats SAME. Numpy from-text at 16 tokens: a81dd7e4... = C++ (MATCH). The numpy script was first validated on SmolLM2-135M (reproduces d82743059d1db929...) and Qwen2.5-0.5B (reproduces c9dff099d927a6dd...), so it covers biases, GQA and untied/tied heads before the QK-norm path. Logs: `state/reports/w1x-qwen3/`. Because the smoke exists, hq agreement in the counted legs is a repeat of a seen value; the independent evidence is w2 and the numpy check.
+
+## 10. Disclosures
+1. The C++ port and the numpy script have one author (this agent); they share my reading of QK-norm placement and eps (config rms_norm_eps 1e-06 for both q_norm and k_norm). Agreement shows consistent implementation of that reading, not that it equals the reference model's.
+2. Only two hosts count; w3/w4 are excluded by measured memory.
+3. 128-token digests are CANDIDATE values (no v0.3b pin exists); 16-token likewise for this model.
+4. The smoke digests above were seen before registration; they are not predictions.
+5. Moat: digests, margins and this port change are published with the CIS-2 archive (Published 2026-10-16 as part of the CIS-2 archive).

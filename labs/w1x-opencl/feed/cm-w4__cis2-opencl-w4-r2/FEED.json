@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:49:00Z",
+  "host": "cm-w4",
+  "name": "cis2-opencl-w4-r2",
+  "pushed_at": "2026-10-16T10:44:48Z",
+  "result_line": "RESULT: OK cis2-opencl-w4-r2 host16=MATCH host16=MATCH host128=MATCH pocl16=MATCH pocl16=MATCH pocl128=MATCH pocl_soft16=MATCH pocl_soft16=MATCH pocl_soft128=MATCH pocl_test=PASS igpu_soft16=MATCH igpu_soft16=MATCH igpu_soft128=MATCH igpu_test=PASS weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}

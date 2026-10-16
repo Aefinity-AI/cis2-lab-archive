@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T09:31:59Z",
+  "host": "cm-w4",
+  "name": "cis2-tamper-w4",
+  "pushed_at": "2026-10-16T09:06:05Z",
+  "result_line": "RESULT: OK cis2-tamper-w4 trials=55 sha_detect=55/55 witness_detect=55/55 ulp1=24/24 int8=6/6 bitflip=24/24 bitflip_sign_exp=13/13 meta:sha_moved=yes witness_moved=yes seed=20261017",
+  "status": "ok"
+}

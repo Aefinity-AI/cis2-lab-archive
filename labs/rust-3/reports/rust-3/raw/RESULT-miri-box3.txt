@@ -1,0 +1,1 @@
+RESULT: OK rust3-miri files=2 ub=0 (extra, not counted; aegis-core unsafe blocks not included)

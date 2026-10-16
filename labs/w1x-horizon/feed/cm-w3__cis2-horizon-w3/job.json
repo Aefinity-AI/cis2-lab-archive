@@ -1,0 +1,8 @@
+{
+  "added_at": "2026-10-16T08:53:40Z",
+  "after": "cis2-tamper-w3",
+  "cpu_quota": "200%",
+  "memory_max": "2500M",
+  "name": "cis2-horizon-w3",
+  "pushed_at": "2026-10-16T09:11:06Z"
+}

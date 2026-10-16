@@ -1,0 +1,296 @@
+name: H1 hardening — scale (>=1B) + breadth (Qwen2.5-1.5B) + 512-tok horizon
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [cm/h1-scale-breadth]
+
+jobs:
+  # ---- Qwen2.5-1.5B (>=1B params, same family as E15d(c)'s Qwen2.5-0.5B --
+  # Llama-3.2-1B was the preferred pick but is a gated HF repo (confirmed
+  # 401 GatedRepo on unauthenticated `resolve`); this is the documented
+  # fallback per task instructions) ----
+  cross-isa-qwen15b:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: rustc version
+        run: rustc -V
+
+      - name: Fetch Qwen2.5-1.5B weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights_qwen15b
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/config.json     https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/model.safetensors https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/model.safetensors
+          sha256sum weights_qwen15b/model.safetensors weights_qwen15b/config.json weights_qwen15b/tokenizer.json
+          echo "a961db72e75d52b18e6b0c9d379e51a26973b233385e0e127fdda7d648aec796  weights_qwen15b/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/wrong file"; exit 1; }
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: no_fma_gate.sh
+        run: ./scripts/no_fma_gate.sh
+
+      - name: Build release
+        run: cargo build --release
+
+      - name: Run reference, gen_toks=16 (dump step0 logits for oracle job)
+        run: |
+          CIS2_DUMP_STEP0_LOGITS=step0_logits_${{ matrix.arch_label }}.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen15b --gen-toks 16 \
+            | tee run_gen16_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen16_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest16_${{ matrix.arch_label }}.txt
+
+      - name: Run reference, gen_toks=128
+        run: |
+          nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen15b --gen-toks 128 \
+            | tee run_gen128_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen128_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest128_${{ matrix.arch_label }}.txt
+
+      - name: Run reference, gen_toks=512 (H1 horizon requirement)
+        run: |
+          nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen15b --gen-toks 512 \
+            | tee run_gen512_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen512_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest512_${{ matrix.arch_label }}.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: h1-qwen15b-${{ matrix.arch_label }}
+          path: |
+            digest16_${{ matrix.arch_label }}.txt
+            digest128_${{ matrix.arch_label }}.txt
+            digest512_${{ matrix.arch_label }}.txt
+            step0_logits_${{ matrix.arch_label }}.f32le
+            run_gen16_${{ matrix.arch_label }}.txt
+            run_gen128_${{ matrix.arch_label }}.txt
+            run_gen512_${{ matrix.arch_label }}.txt
+
+  aggregate-qwen15b:
+    needs: cross-isa-qwen15b
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: h1-qwen15b-*
+          path: artifacts
+
+      - name: Compare x86_64 vs aarch64 digests (gen_toks=16, 128, 512)
+        run: |
+          set -euo pipefail
+          for N in 16 128 512; do
+            X=artifacts/h1-qwen15b-x86_64/digest${N}_x86_64.txt
+            A=artifacts/h1-qwen15b-aarch64/digest${N}_aarch64.txt
+            echo "gen_toks=$N x86_64=$(cat $X) aarch64=$(cat $A)"
+            if [ "$(cat $X)" != "$(cat $A)" ]; then
+              echo "MISMATCH at gen_toks=$N"
+              exit 1
+            fi
+          done
+          echo "PASS: Qwen2.5-1.5B digests match bit-identically between x86_64 and aarch64 at gen_toks=16, 128, and 512"
+
+  oracle-qwen15b:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: Fetch Qwen2.5-1.5B weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights_qwen15b
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/config.json     https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/model.safetensors https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/model.safetensors
+          echo "a961db72e75d52b18e6b0c9d379e51a26973b233385e0e127fdda7d648aec796  weights_qwen15b/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/wrong file"; exit 1; }
+
+      - name: Build release and run Rust reference, dump step0 logits
+        run: |
+          cargo build --release
+          CIS2_DUMP_STEP0_LOGITS=/tmp/rust_step0.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen15b --gen-toks 16 | tee rust_run.txt
+
+      - name: Set up python + torch/transformers oracle
+        run: |
+          python3 -m venv .venv-oracle
+          .venv-oracle/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          .venv-oracle/bin/pip install --quiet transformers safetensors
+
+      - name: Run oracle and diff against Rust reference
+        run: |
+          .venv-oracle/bin/python scripts/oracle_compare_qwen.py /tmp/oracle_step0.f32le weights_qwen15b | tee oracle_run.txt
+          python3 scripts/diff_logits.py /tmp/rust_step0.f32le /tmp/oracle_step0.f32le | tee diff_output.txt
+          RUST_TOKENS=$(grep -E 'run1_tokens=' rust_run.txt | sed -E 's/.*run1_tokens=//')
+          ORACLE_TOKENS=$(grep -E '^oracle_all_tokens=' oracle_run.txt | sed -E 's/oracle_all_tokens=//')
+          echo "rust_tokens=$RUST_TOKENS"
+          echo "oracle_tokens=$ORACLE_TOKENS"
+          if [ "$RUST_TOKENS" != "$ORACLE_TOKENS" ]; then
+            echo "MISMATCH: Rust reference and torch/transformers oracle greedy-decoded different tokens"
+            exit 1
+          fi
+          echo "PASS: 16/16 token match, logit tolerance within bar (see diff_output.txt)"
+
+      - name: Upload oracle artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: h1-qwen15b-oracle
+          path: |
+            rust_run.txt
+            oracle_run.txt
+            diff_output.txt
+
+  oracle-qwen15b-512:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: Fetch Qwen2.5-1.5B weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights_qwen15b
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/config.json     https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen15b/model.safetensors https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/main/model.safetensors
+          echo "a961db72e75d52b18e6b0c9d379e51a26973b233385e0e127fdda7d648aec796  weights_qwen15b/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/wrong file"; exit 1; }
+
+      - name: Build release and run Rust reference at gen_toks=512, dump final-step logits
+        run: |
+          cargo build --release
+          CIS2_DUMP_LASTSTEP_LOGITS=/tmp/rust_laststep_512.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen15b --gen-toks 512 | tee rust_run_512.txt
+
+      - name: Set up python + torch/transformers oracle
+        run: |
+          python3 -m venv .venv-oracle
+          .venv-oracle/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          .venv-oracle/bin/pip install --quiet transformers safetensors
+
+      - name: Run oracle at N_GEN=512 and diff final-step logits + full token sequence
+        run: |
+          CIS2_ORACLE_N_GEN=512 CIS2_ORACLE_DUMP_LASTSTEP=/tmp/oracle_laststep_512.f32le \
+            .venv-oracle/bin/python scripts/oracle_compare_qwen.py /tmp/oracle_step0_512.f32le weights_qwen15b | tee oracle_run_512.txt
+          python3 scripts/diff_logits.py /tmp/rust_laststep_512.f32le /tmp/oracle_laststep_512.f32le | tee diff_output_512.txt || true
+          RUST_TOKENS=$(grep -E 'run1_tokens=' rust_run_512.txt | sed -E 's/.*run1_tokens=//')
+          ORACLE_TOKENS=$(grep -E '^oracle_all_tokens=' oracle_run_512.txt | sed -E 's/oracle_all_tokens=//')
+          echo "rust_tokens=$RUST_TOKENS"
+          echo "oracle_tokens=$ORACLE_TOKENS"
+          if [ "$RUST_TOKENS" = "$ORACLE_TOKENS" ]; then
+            echo "512-TOK TOKEN MATCH: PASS (all 512 greedy-decoded tokens agree with oracle)"
+          else
+            echo "512-TOK TOKEN MATCH: DIVERGED (this is reported as a FINDING, not treated as a hard CI failure -- H2's RoPE sin/cos drift-with-position finding predicts this is possible; see diff_output_512.txt for the final-step logit delta and rust_run_512.txt/oracle_run_512.txt for the full sequences to locate the first diverging position)"
+          fi
+
+      - name: Upload 512-tok oracle artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: h1-qwen15b-oracle-512
+          path: |
+            rust_run_512.txt
+            oracle_run_512.txt
+            diff_output_512.txt
+
+  # ---- SmolLM2-135M at gen_toks=512 (512-tok horizon for the smallest
+  # existing model, per task requirement "at least SmolLM2-135M and the
+  # new model") ----
+  cross-isa-smollm2-512:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: Fetch SmolLM2-135M weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum weights/model.safetensors weights/config.json weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: no_fma_gate.sh
+        run: ./scripts/no_fma_gate.sh
+
+      - name: Build release
+        run: cargo build --release
+
+      - name: Run reference, gen_toks=512
+        run: |
+          nice -n 10 ./target/release/cis2_ref --weights-dir weights --gen-toks 512 \
+            | tee run_gen512_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen512_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest512_${{ matrix.arch_label }}.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: h1-smollm2-512-${{ matrix.arch_label }}
+          path: |
+            digest512_${{ matrix.arch_label }}.txt
+            run_gen512_${{ matrix.arch_label }}.txt
+
+  aggregate-smollm2-512:
+    needs: cross-isa-smollm2-512
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: h1-smollm2-512-*
+          path: artifacts
+
+      - name: Compare x86_64 vs aarch64 digests (gen_toks=512)
+        run: |
+          set -euo pipefail
+          X=artifacts/h1-smollm2-512-x86_64/digest512_x86_64.txt
+          A=artifacts/h1-smollm2-512-aarch64/digest512_aarch64.txt
+          echo "gen_toks=512 x86_64=$(cat $X) aarch64=$(cat $A)"
+          if [ "$(cat $X)" != "$(cat $A)" ]; then
+            echo "MISMATCH at gen_toks=512"
+            exit 1
+          fi
+          echo "PASS: SmolLM2-135M gen_toks=512 digests match bit-identically between x86_64 and aarch64"

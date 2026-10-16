@@ -1,0 +1,11 @@
+LOAD load_ns=8251311119 load=safetensors-load_file+load_state_dict
+ROW idx=8 n_prompt=61 n_gen=64 prefill_ns=354815088 decode_ns=4686554093 mismatches=0
+ROW idx=0 n_prompt=39 n_gen=64 prefill_ns=248754287 decode_ns=4590488444 mismatches=0
+ROW idx=1 n_prompt=22 n_gen=64 prefill_ns=186662304 decode_ns=4550776182 mismatches=0
+ROW idx=2 n_prompt=44 n_gen=64 prefill_ns=311331496 decode_ns=4570156827 mismatches=0
+ROW idx=3 n_prompt=8 n_gen=64 prefill_ns=124164343 decode_ns=4561091073 mismatches=0
+ROW idx=4 n_prompt=25 n_gen=64 prefill_ns=188852851 decode_ns=4648469490 mismatches=0
+ROW idx=5 n_prompt=25 n_gen=64 prefill_ns=188943270 decode_ns=4616804355 mismatches=0
+ROW idx=6 n_prompt=38 n_gen=64 prefill_ns=243966538 decode_ns=4592193381 mismatches=0
+ROW idx=7 n_prompt=13 n_gen=64 prefill_ns=141898864 decode_ns=4552199553 mismatches=0
+DONE plain=time rows=9

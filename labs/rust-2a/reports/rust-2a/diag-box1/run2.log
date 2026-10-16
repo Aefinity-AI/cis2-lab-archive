@@ -1,0 +1,75 @@
+host=aefinity-box cpu= Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz load=0.09 0.11 0.16 date=2026-10-04T12:30:53Z
+ROW rep=0 arm=C_O2 in_process_wall_s=0.265737 equal_ref=yes rc=0
+ROW rep=0 arm=C_O3 in_process_wall_s=0.240871 equal_ref=yes rc=0
+ROW rep=0 arm=C_O2_LTO in_process_wall_s=0.236591 equal_ref=yes rc=0
+ROW rep=0 arm=R_shipped in_process_wall_s=0.413937 equal_ref=yes rc=0
+ROW rep=0 arm=R_A_base in_process_wall_s=0.412923 equal_ref=yes rc=0
+ROW rep=0 arm=R_B_unchecked in_process_wall_s=0.315032 equal_ref=yes rc=0
+ROW rep=0 arm=R_C_expcast in_process_wall_s=0.419358 equal_ref=yes rc=0
+ROW rep=0 arm=R_D_haswell in_process_wall_s=0.354879 equal_ref=yes rc=0
+ROW rep=0 arm=R_E_unchecked_haswell in_process_wall_s=0.299464 equal_ref=yes rc=0
+ROW rep=1 arm=C_O3 in_process_wall_s=0.241180 equal_ref=yes rc=0
+ROW rep=1 arm=C_O2_LTO in_process_wall_s=0.237892 equal_ref=yes rc=0
+ROW rep=1 arm=R_shipped in_process_wall_s=0.409774 equal_ref=yes rc=0
+ROW rep=1 arm=R_A_base in_process_wall_s=0.410398 equal_ref=yes rc=0
+ROW rep=1 arm=R_B_unchecked in_process_wall_s=0.289940 equal_ref=yes rc=0
+ROW rep=1 arm=R_C_expcast in_process_wall_s=0.419818 equal_ref=yes rc=0
+ROW rep=1 arm=R_D_haswell in_process_wall_s=0.358557 equal_ref=yes rc=0
+ROW rep=1 arm=R_E_unchecked_haswell in_process_wall_s=0.294940 equal_ref=yes rc=0
+ROW rep=1 arm=C_O2 in_process_wall_s=0.266731 equal_ref=yes rc=0
+ROW rep=2 arm=C_O2_LTO in_process_wall_s=0.236803 equal_ref=yes rc=0
+ROW rep=2 arm=R_shipped in_process_wall_s=0.431137 equal_ref=yes rc=0
+ROW rep=2 arm=R_A_base in_process_wall_s=0.432553 equal_ref=yes rc=0
+ROW rep=2 arm=R_B_unchecked in_process_wall_s=0.289035 equal_ref=yes rc=0
+ROW rep=2 arm=R_C_expcast in_process_wall_s=0.412581 equal_ref=yes rc=0
+ROW rep=2 arm=R_D_haswell in_process_wall_s=0.357827 equal_ref=yes rc=0
+ROW rep=2 arm=R_E_unchecked_haswell in_process_wall_s=0.295059 equal_ref=yes rc=0
+ROW rep=2 arm=C_O2 in_process_wall_s=0.267612 equal_ref=yes rc=0
+ROW rep=2 arm=C_O3 in_process_wall_s=0.241303 equal_ref=yes rc=0
+ROW rep=3 arm=R_shipped in_process_wall_s=0.411741 equal_ref=yes rc=0
+ROW rep=3 arm=R_A_base in_process_wall_s=0.410583 equal_ref=yes rc=0
+ROW rep=3 arm=R_B_unchecked in_process_wall_s=0.288934 equal_ref=yes rc=0
+ROW rep=3 arm=R_C_expcast in_process_wall_s=0.411103 equal_ref=yes rc=0
+ROW rep=3 arm=R_D_haswell in_process_wall_s=0.359258 equal_ref=yes rc=0
+ROW rep=3 arm=R_E_unchecked_haswell in_process_wall_s=0.293912 equal_ref=yes rc=0
+ROW rep=3 arm=C_O2 in_process_wall_s=0.265680 equal_ref=yes rc=0
+ROW rep=3 arm=C_O3 in_process_wall_s=0.257853 equal_ref=yes rc=0
+ROW rep=3 arm=C_O2_LTO in_process_wall_s=0.251801 equal_ref=yes rc=0
+ROW rep=4 arm=R_A_base in_process_wall_s=0.410175 equal_ref=yes rc=0
+ROW rep=4 arm=R_B_unchecked in_process_wall_s=0.290121 equal_ref=yes rc=0
+ROW rep=4 arm=R_C_expcast in_process_wall_s=0.425037 equal_ref=yes rc=0
+ROW rep=4 arm=R_D_haswell in_process_wall_s=0.349980 equal_ref=yes rc=0
+ROW rep=4 arm=R_E_unchecked_haswell in_process_wall_s=0.295160 equal_ref=yes rc=0
+ROW rep=4 arm=C_O2 in_process_wall_s=0.267417 equal_ref=yes rc=0
+ROW rep=4 arm=C_O3 in_process_wall_s=0.239532 equal_ref=yes rc=0
+ROW rep=4 arm=C_O2_LTO in_process_wall_s=0.236388 equal_ref=yes rc=0
+ROW rep=4 arm=R_shipped in_process_wall_s=0.410174 equal_ref=yes rc=0
+ROW rep=5 arm=R_B_unchecked in_process_wall_s=0.289564 equal_ref=yes rc=0
+ROW rep=5 arm=R_C_expcast in_process_wall_s=0.421790 equal_ref=yes rc=0
+ROW rep=5 arm=R_D_haswell in_process_wall_s=0.353260 equal_ref=yes rc=0
+ROW rep=5 arm=R_E_unchecked_haswell in_process_wall_s=0.294156 equal_ref=yes rc=0
+ROW rep=5 arm=C_O2 in_process_wall_s=0.266904 equal_ref=yes rc=0
+ROW rep=5 arm=C_O3 in_process_wall_s=0.266384 equal_ref=yes rc=0
+ROW rep=5 arm=C_O2_LTO in_process_wall_s=0.244034 equal_ref=yes rc=0
+ROW rep=5 arm=R_shipped in_process_wall_s=0.410996 equal_ref=yes rc=0
+ROW rep=5 arm=R_A_base in_process_wall_s=0.419619 equal_ref=yes rc=0
+ROW rep=6 arm=R_C_expcast in_process_wall_s=0.410595 equal_ref=yes rc=0
+ROW rep=6 arm=R_D_haswell in_process_wall_s=0.350439 equal_ref=yes rc=0
+ROW rep=6 arm=R_E_unchecked_haswell in_process_wall_s=0.295648 equal_ref=yes rc=0
+ROW rep=6 arm=C_O2 in_process_wall_s=0.265568 equal_ref=yes rc=0
+ROW rep=6 arm=C_O3 in_process_wall_s=0.240555 equal_ref=yes rc=0
+ROW rep=6 arm=C_O2_LTO in_process_wall_s=0.236955 equal_ref=yes rc=0
+ROW rep=6 arm=R_shipped in_process_wall_s=0.410974 equal_ref=yes rc=0
+ROW rep=6 arm=R_A_base in_process_wall_s=0.410067 equal_ref=yes rc=0
+ROW rep=6 arm=R_B_unchecked in_process_wall_s=0.289309 equal_ref=yes rc=0
+MEDIANS (in-process wall s, 7 reps)
+MED C_O2 median=0.266731 digests_equal_runs=7/7
+MED C_O3 median=0.241180 digests_equal_runs=7/7
+MED C_O2_LTO median=0.236955 digests_equal_runs=7/7
+MED R_shipped median=0.410996 digests_equal_runs=7/7
+MED R_A_base median=0.410583 digests_equal_runs=7/7
+MED R_B_unchecked median=0.289564 digests_equal_runs=7/7
+MED R_C_expcast median=0.419358 digests_equal_runs=7/7
+MED R_D_haswell median=0.354879 digests_equal_runs=7/7
+MED R_E_unchecked_haswell median=0.295059 digests_equal_runs=7/7
+RESULT: OK diag2 rows=63 digest_mismatch_rows=0 (diagnostic, no label) see <home>/legs/rust2a-diag-box1/medians2.txt

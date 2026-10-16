@@ -1,0 +1,190 @@
+=== w6 partA start 2026-10-16T03:54:34Z host=aefinity-box2 ldd (Debian GLIBC 2.41-12+deb13u4) 2.41
+core-math 2179f8dd8ec2874e2929fde1c41511b616e4d035
+LD_DEBUG bindings: 	binding file <home>/legs/w6-partA-box2/part_a [0] to /lib/x86_64-linux-gnu/libm.so.6 [0]: normal symbol `expf' [GLIBC_2.27]
+libm resolver lea targets: 2 lea instructions; see README for reading
+--- multiprecision spot check of cr_expf (PREREG step 1)
+RESULT: OK w6-verify-cr n=1000000 seed=20261016 mismatches=0
+--- range neg regime 'default'
+VARIANT: glibc_expf_ptr=0x7f2b955226f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=0
+RESULT: OK w6-partA impl=glibc range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=97016 worst_x=0xc2aff063 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=1118733577 d1=97016 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=8388582 count_ulp_ge1=9519704 worst_x=0xc2aeac50 glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=1109310889 d1=9432743 d2=0 d3plus=86961 inf_where_cr_finite=0
+WORST: impl=glibc x=0xc2aff063 result=0x0043f861 cr=0x0043f860
+WORST: impl=glibc x=0xc2afe6c2 result=0x004542b7 cr=0x004542b6
+WORST: impl=glibc x=0xc2afbed7 result=0x004ae067 cr=0x004ae066
+WORST: impl=glibc x=0xc2af99ab result=0x005083d1 cr=0x005083d0
+WORST: impl=glibc x=0xc2af996f result=0x00508d41 cr=0x00508d40
+WORST: impl=glibc x=0xc2af8d77 result=0x005274fc cr=0x005274fb
+WORST: impl=glibc x=0xc2af8bf4 result=0x0052b367 cr=0x0052b366
+WORST: impl=glibc x=0xc2af890e result=0x00532b98 cr=0x00532b97
+WORST: impl=glibc x=0xc2af8231 result=0x00544aed cr=0x00544aec
+WORST: impl=glibc x=0xc2af6bcf result=0x00580f34 cr=0x00580f33
+WORST: impl=glibc x=0xc2af6482 result=0x005952f5 cr=0x005952f4
+WORST: impl=glibc x=0xc2af4a96 result=0x005df67d cr=0x005df67c
+WORST: impl=glibc x=0xc2af442f result=0x005f252b cr=0x005f252a
+WORST: impl=glibc x=0xc2af4113 result=0x005fb98a cr=0x005fb989
+WORST: impl=glibc x=0xc2af3e2a result=0x00604539 cr=0x00604538
+WORST: impl=glibc x=0xc2af2ca8 result=0x00639e8a cr=0x00639e89
+WORST: impl=pinned x=0xc2aeac50 result=0x00000000 cr=0x007fffe6
+--- range pos regime 'default'
+VARIANT: glibc_expf_ptr=0x7f33b15f46f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=0
+RESULT: OK w6-partA impl=glibc range=[0x1p-149,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=73536 worst_x=0x37ff7f01 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=1118757056 d1=73536 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[0x1p-149,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=8605654 worst_x=0x33800000 glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=1110224938 d1=8605654 d2=0 d3plus=0 inf_where_cr_finite=0
+WORST: impl=glibc x=0x37ff7f01 result=0x3f800100 cr=0x3f8000ff
+WORST: impl=glibc x=0x38ad9e29 result=0x3f8002b7 cr=0x3f8002b6
+WORST: impl=glibc x=0x38e69cc1 result=0x3f80039b cr=0x3f80039a
+WORST: impl=glibc x=0x38efdc7d result=0x3f8003c0 cr=0x3f8003bf
+WORST: impl=glibc x=0x38fddc11 result=0x3f8003f8 cr=0x3f8003f7
+WORST: impl=glibc x=0x39312c2b result=0x3f80058a cr=0x3f800589
+WORST: impl=glibc x=0x39438b55 result=0x3f80061d cr=0x3f80061c
+WORST: impl=glibc x=0x394b2af6 result=0x3f80065a cr=0x3f800659
+WORST: impl=glibc x=0x395baa1c result=0x3f8006de cr=0x3f8006dd
+WORST: impl=glibc x=0x3965e98c result=0x3f800730 cr=0x3f80072f
+WORST: impl=glibc x=0x3967297a result=0x3f80073a cr=0x3f800739
+WORST: impl=glibc x=0x39776887 result=0x3f8007bc cr=0x3f8007bb
+WORST: impl=glibc x=0x39798866 result=0x3f8007cd cr=0x3f8007cc
+WORST: impl=glibc x=0x397cc833 result=0x3f8007e7 cr=0x3f8007e6
+WORST: impl=glibc x=0x398343cb result=0x3f800835 cr=0x3f800834
+WORST: impl=glibc x=0x398c732f result=0x3f8008c8 cr=0x3f8008c7
+WORST: impl=pinned x=0x33800000 result=0x3f800000 cr=0x3f800001
+WORST: impl=pinned x=0x352ffffc result=0x3f800006 cr=0x3f800005
+WORST: impl=pinned x=0x354ffffb result=0x3f800006 cr=0x3f800007
+WORST: impl=pinned x=0x3597fffa result=0x3f80000a cr=0x3f800009
+WORST: impl=pinned x=0x35e7fff3 result=0x3f80000e cr=0x3f80000f
+WORST: impl=pinned x=0x360bfff6 result=0x3f800012 cr=0x3f800011
+WORST: impl=pinned x=0x361bfff4 result=0x3f800014 cr=0x3f800013
+WORST: impl=pinned x=0x3623fff3 result=0x3f800014 cr=0x3f800015
+WORST: impl=pinned x=0x365bffe8 result=0x3f80001c cr=0x3f80001b
+WORST: impl=pinned x=0x3663ffe7 result=0x3f80001c cr=0x3f80001d
+WORST: impl=pinned x=0x3673ffe3 result=0x3f80001e cr=0x3f80001f
+WORST: impl=pinned x=0x3685ffee result=0x3f800022 cr=0x3f800021
+WORST: impl=pinned x=0x368dffec result=0x3f800024 cr=0x3f800023
+WORST: impl=pinned x=0x3695ffea result=0x3f800026 cr=0x3f800025
+WORST: impl=pinned x=0x3699ffe9 result=0x3f800026 cr=0x3f800027
+WORST: impl=pinned x=0x36a5ffe5 result=0x3f80002a cr=0x3f800029
+--- range band regime 'default'
+VARIANT: glibc_expf_ptr=0x7f8dbf23f6f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=0
+RESULT: OK w6-partA impl=glibc range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=1 count_ulp_ge1=59 worst_x=0x42b00623 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=94684 d1=59 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=8879309 count_ulp_ge1=94743 worst_x=0x42b00001 glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=0 d1=0 d2=0 d3plus=94743 inf_where_cr_finite=94743
+WORST: impl=glibc x=0x42b00623 result=0x7efb81d3 cr=0x7efb81d2
+WORST: impl=glibc x=0x42b008c7 result=0x7efccec0 cr=0x7efccebf
+WORST: impl=glibc x=0x42b01efe result=0x7f04024d cr=0x7f04024c
+WORST: impl=glibc x=0x42b027a3 result=0x7f0641b9 cr=0x7f0641b8
+WORST: impl=glibc x=0x42b02be5 result=0x7f0760bc cr=0x7f0760bb
+WORST: impl=glibc x=0x42b02bf2 result=0x7f07642c cr=0x7f07642b
+WORST: impl=glibc x=0x42b03727 result=0x7f0a6334 cr=0x7f0a6333
+WORST: impl=glibc x=0x42b0381b result=0x7f0aa537 cr=0x7f0aa536
+WORST: impl=glibc x=0x42b04371 result=0x7f0dbfd1 cr=0x7f0dbfd0
+WORST: impl=glibc x=0x42b04df7 result=0x7f10b161 cr=0x7f10b160
+WORST: impl=glibc x=0x42b0588b result=0x7f13b6a1 cr=0x7f13b6a0
+WORST: impl=glibc x=0x42b060a2 result=0x7f1610dd cr=0x7f1610dc
+WORST: impl=glibc x=0x42b0756b result=0x7f1c4886 cr=0x7f1c4885
+WORST: impl=glibc x=0x42b076f2 result=0x7f1cc00d cr=0x7f1cc00c
+WORST: impl=glibc x=0x42b07bf5 result=0x7f1e4ac6 cr=0x7f1e4ac5
+WORST: impl=glibc x=0x42b081be result=0x7f20173e cr=0x7f20173d
+WORST: impl=pinned x=0x42b00001 result=0x7f800000 cr=0x7ef88333
+--- range neg regime '--ftz'
+VARIANT: glibc_expf_ptr=0x7ffbe01f76f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=1
+RESULT: OK w6-partA impl=glibc range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=96991 worst_x=0xc2aea8a3 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=1118733602 d1=96991 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=9432743 worst_x=0xc2aea93a glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=1109397850 d1=9432743 d2=0 d3plus=0 inf_where_cr_finite=0
+WORST: impl=glibc x=0xc2aea8a3 result=0x0080ebff cr=0x0080ebfe
+WORST: impl=glibc x=0xc2aea51a result=0x0081d0aa cr=0x0081d0a9
+WORST: impl=glibc x=0xc2ae9c6b result=0x0084091a cr=0x00840919
+WORST: impl=glibc x=0xc2ae9bce result=0x0084319c cr=0x0084319d
+WORST: impl=glibc x=0xc2ae94e3 result=0x0085fdf9 cr=0x0085fdf8
+WORST: impl=glibc x=0xc2ae9374 result=0x00865e27 cr=0x00865e26
+WORST: impl=glibc x=0xc2ae927a result=0x00869fd3 cr=0x00869fd2
+WORST: impl=glibc x=0xc2ae8d33 result=0x008804e4 cr=0x008804e3
+WORST: impl=glibc x=0xc2ae881e result=0x0089603d cr=0x0089603c
+WORST: impl=glibc x=0xc2ae7e2e result=0x008c117e cr=0x008c117d
+WORST: impl=glibc x=0xc2ae7d55 result=0x008c4ce8 cr=0x008c4ce7
+WORST: impl=glibc x=0xc2ae7a46 result=0x008d241b cr=0x008d241c
+WORST: impl=glibc x=0xc2ae7947 result=0x008d6a79 cr=0x008d6a78
+WORST: impl=glibc x=0xc2ae76d6 result=0x008e1783 cr=0x008e1782
+WORST: impl=glibc x=0xc2ae7135 result=0x008fa9a1 cr=0x008fa9a0
+WORST: impl=glibc x=0xc2ae619c result=0x00941b45 cr=0x00941b44
+WORST: impl=pinned x=0xc2aea93a result=0x0080c5fe cr=0x0080c5ff
+WORST: impl=pinned x=0xc2aea812 result=0x00811086 cr=0x00811087
+WORST: impl=pinned x=0xc2aea6dd result=0x00815e82 cr=0x00815e83
+WORST: impl=pinned x=0xc2aea628 result=0x00818c46 cr=0x00818c47
+WORST: impl=pinned x=0xc2aea51a result=0x0081d0aa cr=0x0081d0a9
+WORST: impl=pinned x=0xc2aea503 result=0x0081d67e cr=0x0081d67f
+WORST: impl=pinned x=0xc2aea42d result=0x00820cce cr=0x00820ccf
+WORST: impl=pinned x=0xc2aea3bc result=0x00822986 cr=0x00822985
+WORST: impl=pinned x=0xc2aea3b0 result=0x00822c92 cr=0x00822c93
+WORST: impl=pinned x=0xc2aea2c1 result=0x00826964 cr=0x00826965
+WORST: impl=pinned x=0xc2aea200 result=0x00829a96 cr=0x00829a97
+WORST: impl=pinned x=0xc2aea182 result=0x0082babe cr=0x0082babf
+WORST: impl=pinned x=0xc2aea0ef result=0x0082e04c cr=0x0082e04d
+WORST: impl=pinned x=0xc2aea0ad result=0x0082f12c cr=0x0082f12d
+WORST: impl=pinned x=0xc2ae9f06 result=0x00835d88 cr=0x00835d87
+WORST: impl=pinned x=0xc2ae9ee9 result=0x008364f8 cr=0x008364f9
+--- range pos regime '--ftz'
+VARIANT: glibc_expf_ptr=0x7f7d147376f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=1
+RESULT: OK w6-partA impl=glibc range=[0x0p+0,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=73536 worst_x=0x37ff7f01 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=1118757056 d1=73536 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[0x0p+0,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=8605654 worst_x=0x33800000 glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=1110224938 d1=8605654 d2=0 d3plus=0 inf_where_cr_finite=0
+WORST: impl=glibc x=0x37ff7f01 result=0x3f800100 cr=0x3f8000ff
+WORST: impl=glibc x=0x38ad9e29 result=0x3f8002b7 cr=0x3f8002b6
+WORST: impl=glibc x=0x38e69cc1 result=0x3f80039b cr=0x3f80039a
+WORST: impl=glibc x=0x38efdc7d result=0x3f8003c0 cr=0x3f8003bf
+WORST: impl=glibc x=0x38fddc11 result=0x3f8003f8 cr=0x3f8003f7
+WORST: impl=glibc x=0x39312c2b result=0x3f80058a cr=0x3f800589
+WORST: impl=glibc x=0x39438b55 result=0x3f80061d cr=0x3f80061c
+WORST: impl=glibc x=0x394b2af6 result=0x3f80065a cr=0x3f800659
+WORST: impl=glibc x=0x395baa1c result=0x3f8006de cr=0x3f8006dd
+WORST: impl=glibc x=0x3965e98c result=0x3f800730 cr=0x3f80072f
+WORST: impl=glibc x=0x3967297a result=0x3f80073a cr=0x3f800739
+WORST: impl=glibc x=0x39776887 result=0x3f8007bc cr=0x3f8007bb
+WORST: impl=glibc x=0x39798866 result=0x3f8007cd cr=0x3f8007cc
+WORST: impl=glibc x=0x397cc833 result=0x3f8007e7 cr=0x3f8007e6
+WORST: impl=glibc x=0x398343cb result=0x3f800835 cr=0x3f800834
+WORST: impl=glibc x=0x398c732f result=0x3f8008c8 cr=0x3f8008c7
+WORST: impl=pinned x=0x33800000 result=0x3f800000 cr=0x3f800001
+WORST: impl=pinned x=0x352ffffc result=0x3f800006 cr=0x3f800005
+WORST: impl=pinned x=0x354ffffb result=0x3f800006 cr=0x3f800007
+WORST: impl=pinned x=0x3597fffa result=0x3f80000a cr=0x3f800009
+WORST: impl=pinned x=0x35e7fff3 result=0x3f80000e cr=0x3f80000f
+WORST: impl=pinned x=0x360bfff6 result=0x3f800012 cr=0x3f800011
+WORST: impl=pinned x=0x361bfff4 result=0x3f800014 cr=0x3f800013
+WORST: impl=pinned x=0x3623fff3 result=0x3f800014 cr=0x3f800015
+WORST: impl=pinned x=0x365bffe8 result=0x3f80001c cr=0x3f80001b
+WORST: impl=pinned x=0x3663ffe7 result=0x3f80001c cr=0x3f80001d
+WORST: impl=pinned x=0x3673ffe3 result=0x3f80001e cr=0x3f80001f
+WORST: impl=pinned x=0x3685ffee result=0x3f800022 cr=0x3f800021
+WORST: impl=pinned x=0x368dffec result=0x3f800024 cr=0x3f800023
+WORST: impl=pinned x=0x3695ffea result=0x3f800026 cr=0x3f800025
+WORST: impl=pinned x=0x3699ffe9 result=0x3f800026 cr=0x3f800027
+WORST: impl=pinned x=0x36a5ffe5 result=0x3f80002a cr=0x3f800029
+--- range band regime '--ftz'
+VARIANT: glibc_expf_ptr=0x7fdd72ac16f0 chosen=__expf_sse2 fma=0 avx2=0 ftz=1
+RESULT: OK w6-partA impl=glibc range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=1 count_ulp_ge1=59 worst_x=0x42b00623 glibc_variant=__expf_sse2
+DETAIL: impl=glibc eq0=94684 d1=59 d2=0 d3plus=0 inf_where_cr_finite=0
+RESULT: OK w6-partA impl=pinned range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=8879309 count_ulp_ge1=94743 worst_x=0x42b00001 glibc_variant=__expf_sse2
+DETAIL: impl=pinned eq0=0 d1=0 d2=0 d3plus=94743 inf_where_cr_finite=94743
+WORST: impl=glibc x=0x42b00623 result=0x7efb81d3 cr=0x7efb81d2
+WORST: impl=glibc x=0x42b008c7 result=0x7efccec0 cr=0x7efccebf
+WORST: impl=glibc x=0x42b01efe result=0x7f04024d cr=0x7f04024c
+WORST: impl=glibc x=0x42b027a3 result=0x7f0641b9 cr=0x7f0641b8
+WORST: impl=glibc x=0x42b02be5 result=0x7f0760bc cr=0x7f0760bb
+WORST: impl=glibc x=0x42b02bf2 result=0x7f07642c cr=0x7f07642b
+WORST: impl=glibc x=0x42b03727 result=0x7f0a6334 cr=0x7f0a6333
+WORST: impl=glibc x=0x42b0381b result=0x7f0aa537 cr=0x7f0aa536
+WORST: impl=glibc x=0x42b04371 result=0x7f0dbfd1 cr=0x7f0dbfd0
+WORST: impl=glibc x=0x42b04df7 result=0x7f10b161 cr=0x7f10b160
+WORST: impl=glibc x=0x42b0588b result=0x7f13b6a1 cr=0x7f13b6a0
+WORST: impl=glibc x=0x42b060a2 result=0x7f1610dd cr=0x7f1610dc
+WORST: impl=glibc x=0x42b0756b result=0x7f1c4886 cr=0x7f1c4885
+WORST: impl=glibc x=0x42b076f2 result=0x7f1cc00d cr=0x7f1cc00c
+WORST: impl=glibc x=0x42b07bf5 result=0x7f1e4ac6 cr=0x7f1e4ac5
+WORST: impl=glibc x=0x42b081be result=0x7f20173e cr=0x7f20173d
+WORST: impl=pinned x=0x42b00001 result=0x7f800000 cr=0x7ef88333
+=== w6 partA done 2026-10-16T04:05:08Z

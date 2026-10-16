@@ -1,0 +1,18 @@
+=== cis2-sample-hq start 2026-10-16T10:37:59Z host=aefinity-box-2273 cpu=Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz flags=avx2,fma,sse4_2,
+sha256 model.safetensors = 
+  ^ FAILED: model.safetensors differs from pin
+sha256 ids16 = 
+  ^ FAILED: ids16 differs from pin
+sources sha256: 17588c815f572bfd
+g++ g++ (Debian 14.2.0-19) 14.2.0; nvcc Build cuda_12.4.r12.4/compiler.34097967_0
+build host-gcc: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o cis2_host_gcc_h gpu/cis2_host.cpp
+row host greedy16 digest=none expected=d82743059d1db929 MISMATCH
+row host sample16 digest=none ids16sha=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 CANDIDATE
+row host sample64 digest=none CANDIDATE
+build cuda: nvcc -x cu -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -DCIS2_CUDA_FTZ=1 -arch=sm_61 -I gpu -o cis2_cuda_h gpu/cis2_host.cpp
+row cuda greedy16 digest=none expected=d82743059d1db929 MISMATCH
+row cuda sample16 digest=none ids16sha=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 CANDIDATE
+row cuda sample64 digest=none CANDIDATE
+host-vs-cuda sampled: MISMATCH
+RESULT: FAIL cis2-sample-hq greedy16=none s16=none s64=none ids16=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 hostcuda=MISMATCH (bad=7)
+=== cis2-sample-hq done 2026-10-16T10:38:14Z

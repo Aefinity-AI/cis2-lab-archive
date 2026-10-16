@@ -1,0 +1,10 @@
+MEDIANS (in-process wall s, 7 reps)
+MED C_O2 median=0.266731 digests_equal_runs=7/7
+MED C_O3 median=0.241180 digests_equal_runs=7/7
+MED C_O2_LTO median=0.236955 digests_equal_runs=7/7
+MED R_shipped median=0.410996 digests_equal_runs=7/7
+MED R_A_base median=0.410583 digests_equal_runs=7/7
+MED R_B_unchecked median=0.289564 digests_equal_runs=7/7
+MED R_C_expcast median=0.419358 digests_equal_runs=7/7
+MED R_D_haswell median=0.354879 digests_equal_runs=7/7
+MED R_E_unchecked_haswell median=0.295059 digests_equal_runs=7/7

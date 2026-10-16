@@ -1,0 +1,77 @@
+name: e15k-divergence-localization
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - cm/e15k-localize-divergence
+
+jobs:
+  dump-diff:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc curl
+
+      - name: Fetch pinned weights (SmolLM2-135M)
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-all-errors \
+            -o weights/model.safetensors \
+            https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          curl -sSf -L --retry 6 --retry-all-errors \
+            -o weights/config.json \
+            https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-all-errors \
+            -o weights/tokenizer.json \
+            https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+
+      - name: Assert model.safetensors sha256
+        run: |
+          expected=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+          got=$(sha256sum weights/model.safetensors | awk '{print $1}')
+          echo "expected=$expected got=$got"
+          test "$got" = "$expected"
+
+      - name: Build Rust reference
+        run: cargo build --release
+
+      - name: Build verify3 (C, x86_64, gcc)
+        working-directory: verify3
+        run: make CC=gcc
+
+      - name: Run Rust reference with CIS2_DUMP_LAYERS
+        run: |
+          CIS2_DUMP_LAYERS=1 ./target/release/cis2_ref 2>&1 1>/tmp/rust_stdout.txt | tee /tmp/rust_stderr.txt
+          grep '^CIS2_DUMP ' /tmp/rust_stderr.txt | sort -u > /tmp/rust_dump.txt
+          wc -l /tmp/rust_dump.txt
+
+      - name: Run verify3 with CIS2_DUMP_LAYERS
+        working-directory: verify3
+        run: |
+          CIS2_DUMP_LAYERS=1 ./cis2_verify3 ../weights/model.safetensors ../weights/config.json ../weights/tokenizer.json 2>&1 1>/tmp/c_stdout.txt | tee /tmp/c_stderr.txt
+          grep '^CIS2_DUMP ' /tmp/c_stderr.txt | sort -u > /tmp/c_dump.txt
+          wc -l /tmp/c_dump.txt
+
+      - name: Diff dumps, find first divergence
+        run: |
+          echo "=== rust dump (sorted, deduped) ==="
+          cat /tmp/rust_dump.txt
+          echo "=== c dump (sorted, deduped) ==="
+          cat /tmp/c_dump.txt
+          echo "=== diff (rust vs c, sorted by full line -- any output means a digest differs for that layer/field/pos) ==="
+          diff /tmp/rust_dump.txt /tmp/c_dump.txt && echo "NO DIFFERENCES: all dumped tensors bit-identical" || true
+
+      - name: Upload dumps
+        uses: actions/upload-artifact@v4
+        with:
+          name: e15k-dumps
+          path: |
+            /tmp/rust_dump.txt
+            /tmp/c_dump.txt
+            /tmp/rust_stdout.txt
+            /tmp/c_stdout.txt

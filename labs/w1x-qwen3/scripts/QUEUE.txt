@@ -1,0 +1,3 @@
+# payload dest is <home>/cis2-qwen3 (as for qwen05). Run from ~/projects/claudius-maximus after `git pull`. Do not queue w3/w4 (peak RSS 3.63 GiB > 2.6 GB).
+bin/cm-feed add cm-hq cis2-qwen3-hq state/labs/w1x-qwen3/job-hq.sh --payload <home>/feed-payload/cis2-qwen3 --payload-dest <home>/cis2-qwen3
+bin/cm-feed add cm-w2 cis2-qwen3-w2 state/labs/w1x-qwen3/job-w2.sh --payload <home>/feed-payload/cis2-qwen3 --payload-dest <home>/cis2-qwen3 --memory-max 4500M --after w10-w2

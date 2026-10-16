@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:53:58Z",
+  "host": "cm-hq",
+  "name": "cis2-sample-hq-r2",
+  "pushed_at": "2026-10-16T10:49:01Z",
+  "result_line": "RESULT: OK cis2-sample-hq-r2 greedy16=MATCH s16=98ed8bf7997816f366b7434f3fb097944cefe569debc75033f28390478f2aa35 s64=6a760d9e4d7125517d8120c031327202ab1cffdb19edf24fc82b437884ccf55a ids16=f8e7a6b6a0a6f54848d36f7fbaa08d3fcd2c89f49f5cfd585b6187c32985cfb7 hostcuda=MATCH weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}

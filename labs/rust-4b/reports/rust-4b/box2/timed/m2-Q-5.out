@@ -1,0 +1,3 @@
+LOAD load_ns=1875299298 load=mmap
+ROW idx=0 n_prompt=39 n_gen=1 prefill_ns=1673718383 decode_ns=88104 mismatches=0
+DONE plain=time rows=1

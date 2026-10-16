@@ -1,0 +1,10 @@
+oracle tests: OK
+selftest: SELFTEST PASS 176 checks
+mutcheck: MUTCHECK PASS 66/66 mutants killed
+seed deterministic: 3a9f1cb3526313d9804be55ef0b6bf2f46ebc748b11a3177752be4d19d4a8eac model.safetensors 4ef20d5f88c8bba6690dc5380d534e92d9fcc8f9ae2e0b2eb8d579f9f0115ade model.gguf 143f4dcd126d7cb889e5271498699449bcc56782002efe24c0b2ff31ec83b98a model.pt c96a5b1d7ab60a06867c978b620ab53c0e3cdf794f781aa7cb03f43f26f12d42 config.json 
+mutants deterministic: files 2100 manifest sha256 d3e335873d0376e1f0f0a31fc89a193168effb4767a13814d64917d0d800e0a3
+mutants per operator per format: 100 each (21 cells, 2100 files)
+ALL TESTS PASS
+Ran 28 tests in 0.067s
+
+OK

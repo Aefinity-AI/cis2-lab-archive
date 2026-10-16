@@ -1,0 +1,5 @@
+CORE-MATH repo: https://gitlab.inria.fr/core-math/core-math.git  checkout ~/src/core-math
+commit dae5dd8c0d5bd2691b45de28c9edbe12f067c3d3 (2026-10-15, merge of as_rsqrt_v2 into master)
+expf source: src/binary32/exp/expf.c  sha256 598f2e509a1296fa0e4a239e2499e7bb1753fee29a056ce92d7a930b96279e90
+Licence: MIT (repo-root LICENSE, copied here as CORE-MATH-LICENSE.txt; the per-file header in expf.c carries the
+same MIT text, Copyright (c) 2023-2025 Alexei Sibidanov). Use, copy, modify and distribute are permitted; verdict: allowed.

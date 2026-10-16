@@ -1,0 +1,34 @@
+=== w6-partA-box1 start 2026-10-16T04:08:22Z host=aefinity-box cpu=Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz flags=avx2,fma,sse4_2, ldd (Debian GLIBC 2.41-12+deb13u4) 2.41
+payload expf.c sha256 598f2e509a1296fa (upstream core-math dae5dd8c0d5bd2691b45de28c9edbe12f067c3d3; local pinned-copy repo)
+  build: pin core-math commit 2179f8dd8ec2874e2929fde1c41511b616e4d035
+  build: pin glibc ldd (Debian GLIBC 2.41-12+deb13u4) 2.41
+  build: pin g++ g++ (Debian 14.2.0-19) 14.2.0; gcc gcc (Debian 14.2.0-19) 14.2.0
+  build: pin patch sha256 88beee2f30aac1702ce96133a28ddbe9ccebbdaa8bbb6bccb5e9c3a952170970
+  build: pin engine base sha256 (host.cpp math.h model.h fpenv.h sha256.h consts.inc cat) 10e08ea20584151f5c09b235d92fce0d4b5984d60c3afee1b108919dd5bc6acb
+  build: pin weights sha256 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1 (want 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1)
+  build: pin patched engine sha256 7bda7b4535d14bc8720a94e5627c9203c7e403d12add9fa7c19019507d194a13
+  build: pin expf.c sha256 598f2e509a1296fa0e4a239e2499e7bb1753fee29a056ce92d7a930b96279e90
+  build: built P G C: bd6dc9a1bb8e6b1f 86f33d3c75e84306 fb01921b8cee54eb 
+  build: control P gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df MATCH
+  build: RESULT: OK w6-build control digests reproduced (toks: 16)
+  partA: RESULT: OK w6-verify-cr n=1000000 seed=20261016 mismatches=0
+  partA: VARIANT: glibc_expf_ptr=0x7f911c6402a0 chosen=__expf_fma fma=1 avx2=1 ftz=0
+  partA: RESULT: OK w6-partA impl=glibc range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=97017 worst_x=0xc2aff063 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=8388582 count_ulp_ge1=9519704 worst_x=0xc2aeac50 glibc_variant=__expf_fma
+  partA: VARIANT: glibc_expf_ptr=0x7f383a1fa2a0 chosen=__expf_fma fma=1 avx2=1 ftz=0
+  partA: RESULT: OK w6-partA impl=glibc range=[0x1p-149,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=73537 worst_x=0x37ff7f01 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[0x1p-149,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=8605654 worst_x=0x33800000 glibc_variant=__expf_fma
+  partA: VARIANT: glibc_expf_ptr=0x7f32a8d432a0 chosen=__expf_fma fma=1 avx2=1 ftz=0
+  partA: RESULT: OK w6-partA impl=glibc range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=1 count_ulp_ge1=59 worst_x=0x42b00623 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=8879309 count_ulp_ge1=94743 worst_x=0x42b00001 glibc_variant=__expf_fma
+  partA: VARIANT: glibc_expf_ptr=0x7f2cf55e92a0 chosen=__expf_fma fma=1 avx2=1 ftz=1
+  partA: RESULT: OK w6-partA impl=glibc range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=96992 worst_x=0xc2aea8a3 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[-0x1.6p+6,0x0p+0] name=neg n=1118830593 max_ulp=1 count_ulp_ge1=9432743 worst_x=0xc2aea93a glibc_variant=__expf_fma
+  partA: VARIANT: glibc_expf_ptr=0x7ff3332c92a0 chosen=__expf_fma fma=1 avx2=1 ftz=1
+  partA: RESULT: OK w6-partA impl=glibc range=[0x0p+0,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=73537 worst_x=0x37ff7f01 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[0x0p+0,0x1.6p+6] name=pos n=1118830592 max_ulp=1 count_ulp_ge1=8605654 worst_x=0x33800000 glibc_variant=__expf_fma
+  partA: VARIANT: glibc_expf_ptr=0x7f13ea3262a0 chosen=__expf_fma fma=1 avx2=1 ftz=1
+  partA: RESULT: OK w6-partA impl=glibc range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=1 count_ulp_ge1=59 worst_x=0x42b00623 glibc_variant=__expf_fma
+  partA: RESULT: OK w6-partA impl=pinned range=[0x1.600002p+6,0x1.62e42ep+6] name=band n=94743 max_ulp=8879309 count_ulp_ge1=94743 worst_x=0x42b00001 glibc_variant=__expf_fma
+RESULT: OK w6-partA-box1 mode=partA host=aefinity-box (details in RESULT-partA.txt)
+=== w6-partA-box1 done 2026-10-16T04:14:34Z

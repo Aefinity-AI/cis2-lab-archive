@@ -1,0 +1,1 @@
+RESULT: OK w3 sanity=PASS flips_total=7 positions=1664964 frac_recheck=0.006856605 tau=0.01 cond_i=MET cond_ii=MET verdict=MET manifest_sha_ok=yes

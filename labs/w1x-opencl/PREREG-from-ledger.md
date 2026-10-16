@@ -1,0 +1,4 @@
+## registered (2026-10-16T10:18:58Z) bar_sha256=953b004fcbdbe3172b9a3650526ce9bc5c436245dd22d69345635ea5ea933d57
+
+Via the cm-feed leg cis2-opencl-hq on hq (SmolLM2-135M, section 13.1 prompt ids, greedy): the host g++ build, the pocl CPU OpenCL build, the NVIDIA OpenCL build (GTX 1050), the Intel HD 630 iGPU build with software div/sqrt (rusticl) and the pocl build with software div/sqrt each produce CIS2_REF d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df at 16 tokens and 22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 at 128 tokens, with weights sha256 80521b40 and prompt ids sha256 4b6618b6 confirmed by the leg; gpu/test_soft reports 0 mismatches for the software routines on every device used. The HD 630 hardware div/sqrt run is an informational negative control and is expected to diverge; it is not part of this bar. Met = every clause; any MATCH row that reads DIVERGE or NORUN = not met.
+

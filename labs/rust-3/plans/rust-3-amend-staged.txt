@@ -1,0 +1,18 @@
+STAGED AMENDMENT for rust-3 (2026-10-05, builder). NOT APPLIED. Nothing here has been run through `cm-exp amend-bar`; the operator decides, and the amend-bar call must come BEFORE `cm-exp start rust-3` (cmd_amend refuses once started).
+
+FILES (this folder)
+- rust-3.txt                  the registered bar. Text without the trailing newline: sha256 091dfb37863577a42e6ff6fd25bd5736d16389ee608579624664b7b070687724 (the registered bar_sha256).
+- rust-3-amended-bar.txt      the COMPLETE replacement text for `--bar` (cm-exp amend-bar takes the full text, not an insertion).
+- rust-3-amend.diff           unified diff registered -> amended: one added line, "ORACLE PIN: sha256 of ... = <sha>." (plus its blank line), 0 deleted lines. Shortened 2026-10-06 after read R2 (conformance S1) so that it carries the sha and nothing else; the first staged text (bar_sha256 0b40d7d2...) is void. No word of the registered bar is removed or changed.
+- Text of the amended bar as `--bar "$(cat rust-3-amended-bar.txt)"` (the shell drops the trailing newline): bar_sha256 4c3f9f51d172bf60d371d5fade2647300c8b7a4909b2b308aaff7384761cddd9. The ledger sha is taken over the `--bar` argument, so it must equal this value.
+
+THE PIN: oracle state/plans/rust-lab/oracle/k5_oracle.py sha256 e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739. The oracle file must not change after this (its tests are test_k5_oracle.py beside it: 28 tests, pass).
+
+COMMAND (run from <root> after registration, before start):
+  bin/cm-exp amend-bar rust-3 --bar "$(cat state/plans/rust-lab/bars/rust-3-amended-bar.txt)" --reason "<text between REASON-BEGIN and REASON-END>"
+
+REASON-BEGIN
+Writes the sha256 of the K5 differential oracle (state/plans/rust-lab/oracle/k5_oracle.py, e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739) into the bar, as the registered K5 paragraph says amend-bar will do before start. No other word of the bar changes. The oracle file was first written 2026-10-05 08:39 CDT, after registration (2026-10-04T00:34:55Z), contrary to the registered sentence 'committed before registration'; no loader had been run on any mutant.
+REASON-END
+
+NOTE (2026-10-06): the reason text above is NOT part of bar_sha256 (cm-exp hashes the --bar text only), so the disclosure of the late oracle file costs nothing in the pinned text. The oracle file must be in git (cm sync, BUILD step 1) BEFORE the amend-bar call.

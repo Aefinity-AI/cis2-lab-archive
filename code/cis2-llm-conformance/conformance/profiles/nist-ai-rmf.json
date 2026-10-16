@@ -1,0 +1,33 @@
+{
+  "name": "nist-ai-rmf",
+  "title": "NIST AI Risk Management Framework (AI RMF 1.0) — MEASURE slice",
+  "description": "CIS-2's genuine NIST AI RMF fit is narrow and inside MEASURE (documented TEVV, production monitoring of system behavior) -- see compliance/CROSSWALK.md rows 21-24 and its honest verdict. This is voluntary guidance, not a binding regulation, and the framework's center of gravity (bias, safety, fairness, most of MAP and GOVERN) is untouched by CIS-2.",
+  "vectors": [
+    {
+      "id": "receipt_schema",
+      "crosswalk_control": "CROSSWALK.md row 21 (Measure 2.1 -- test sets/metrics/tools documented)",
+      "rationale": "The pinned test vector + digest + verifier tool this vector exercises is exactly the documented TEVV detail Measure 2.1 asks for, for the inference-engine component."
+    },
+    {
+      "id": "chain_integrity",
+      "crosswalk_control": "CROSSWALK.md row 22 (Measure 2.4 -- monitored in production)",
+      "rationale": "A continuously re-verifiable chain is a concrete production-monitoring mechanism for the model-component slice of system behavior."
+    },
+    {
+      "id": "replay_tamper",
+      "crosswalk_control": "CROSSWALK.md row 24 (Manage 4.3 -- incidents/errors tracked)",
+      "rationale": "A digest mismatch or replay-DENY is a documented, trackable incident/error signal, though CIS-2 has no built notification/communication workflow (see not_covered)."
+    },
+    {
+      "id": "token_log_completeness",
+      "crosswalk_control": "CROSSWALK.md row 21 (Measure 2.1)",
+      "rationale": "Completeness of the TEVV record (no dropped tokens) is part of what makes the documented test set/tool trustworthy."
+    }
+  ],
+  "not_covered": [
+    "GOVERN and most of MAP -- organizational risk-management processes, bias/fairness/safety categorization -- CIS-2 does not touch these.",
+    "Manage 4.1 (post-deployment monitoring with user input capture) -- the receipt-gated gateway pattern exists as a working alice-aegis prototype but is NOT YET fully ported/production-integrated in cis2-llm per PROGRAMME.md LLM-5; this profile does not claim it.",
+    "Manage 4.3's communication half -- a verifier FAIL is a detection signal, not an incident-communication workflow; CIS-2 has none.",
+    "Any statistical/aggregate evaluation reproduction the RMF's MEASURE function typically expects for model quality/bias -- CIS-2 offers bit-exact compute reproducibility instead, a different and narrower thing."
+  ]
+}

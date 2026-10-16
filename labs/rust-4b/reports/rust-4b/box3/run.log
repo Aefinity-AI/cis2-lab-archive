@@ -1,0 +1,65 @@
+rust-4b run host=box3 job=20261005T102219Z-588469 start=2026-10-05T10:22:19Z smoke=False reps=5 cap_s=5400 budget_used_s=0
+HOSTCHECK open {"t": "2026-10-05T10:22:19Z", "load": [0.34, 0.6, 1.34], "run": "2/130", "mhz": [1691, 1690], "thr": 8365940, "other_units": [], "scaling_max_khz": "2800000"}
+host=box3 cpu=Intel(R) Celeron(R) N4020C CPU @ 1.10GHz ncpu=2 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.94+deb13-amd64
+payload ok: PAYLOAD_SHA256 sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 run.py sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 helper sha256=a08c989bf4855064b911b1bbf3e361900030d4bbc8d71700bf5ee7aca3876812
+pinned weights, config, tokenizer: sha256 ok
+DISK {"fs_type": "ext4", "mount_source": "/dev/sda4", "diskstats_name": "sda4", "disk": "sda", "model": "Storage Device", "rotational": "yes (1)", "size_gb": 500.1, "short": "sda/Storage Device/ext4/rot=yes (1)"}
+SNAP opening-gate {"t": "2026-10-05T10:23:39Z", "load": [0.26, 0.55, 1.27], "run": "1/127", "mhz": [795, 800], "thr": 8365940, "other_units": [], "scaling_max_khz": "2800000"}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.003 foreign_host=0.008
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.001 foreign_host=0.001
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.005 foreign_host=0.0115
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.0045 foreign_host=0.0095
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.0005
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.011 foreign_host=0.018
+BASELINE max_arm=0.011 max_host=0.018 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.031 limit_host=0.1
+TOOLS {"python": "Python 3.13.5", "kernel": "6.12.94+deb13-amd64", "cpu": "Intel(R) Celeron(R) N4020C CPU @ 1.10GHz", "avx2": false, "mem_total_kb": "3382324", "page_size": 4096, "q_binary": "llama-drv-sse42"}
+GATE {"R": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"], "C": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"]} expected ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9
+P install rc=0
+ARMS ["R", "C", "P", "Rv", "Cv", "Q"]
+CONTROL warm_open {"kind": "warm", "tag": "open", "resident_pages": 65689, "total_pages": 65689, "pct": 100.0, "ok": true, "min_pct": 90.0}
+CONTROL cold_open {"kind": "cold", "tag": "open", "ok": true, "tries": [{"try": 1, "resident_pages": 0, "total_pages": 65689, "cached_kb_before": 2524744, "cached_kb_after": 94316, "drop_ok": true, "ok": true}], "resident_pages": 0, "total_pages": 65689}
+m2 arm=C rep=1 status=KEPT rc=0
+m2 arm=Cv rep=1 status=DISCARD rc=0
+m2 arm=Cv rep=1 status=KEPT rc=0
+m2 arm=P rep=1 status=KEPT rc=0
+m2 arm=R rep=1 status=DISCARD rc=0
+m2 arm=R rep=1 status=KEPT rc=0
+m2 arm=Rv rep=1 status=VOID rc=0
+m2 arm=Rv rep=1 status=KEPT rc=0
+m2 arm=Q rep=1 status=KEPT rc=0
+m2 arm=Rv rep=2 status=KEPT rc=0
+m2 arm=C rep=2 status=KEPT rc=0
+m2 arm=Cv rep=2 status=VOID rc=0
+m2 arm=Cv rep=2 status=DISCARD rc=0
+m2 arm=Cv rep=2 status=KEPT rc=0
+m2 arm=Q rep=2 status=KEPT rc=0
+m2 arm=P rep=2 status=KEPT rc=0
+m2 arm=R rep=2 status=DISCARD rc=0
+m2 arm=R rep=2 status=KEPT rc=0
+m2 arm=P rep=3 status=KEPT rc=0
+m2 arm=Q rep=3 status=VOID rc=0
+m2 arm=Q rep=3 status=KEPT rc=0
+m2 arm=R rep=3 status=DISCARD rc=0
+m2 arm=R rep=3 status=KEPT rc=0
+m2 arm=C rep=3 status=KEPT rc=0
+m2 arm=Cv rep=3 status=KEPT rc=0
+m2 arm=Rv rep=3 status=KEPT rc=0
+m2 arm=R rep=4 status=KEPT rc=0
+m2 arm=P rep=4 status=KEPT rc=0
+m2 arm=Cv rep=4 status=VOID rc=0
+m2 arm=Cv rep=4 status=KEPT rc=0
+m2 arm=Rv rep=4 status=VOID rc=0
+m2 arm=Rv rep=4 status=KEPT rc=0
+m2 arm=Q rep=4 status=KEPT rc=0
+m2 arm=C rep=4 status=KEPT rc=0
+m2 arm=Q rep=5 status=KEPT rc=0
+m2 arm=Rv rep=5 status=VOID rc=0
+m2 arm=Rv rep=5 status=KEPT rc=0
+m2 arm=R rep=5 status=KEPT rc=0
+m2 arm=C rep=5 status=KEPT rc=0
+m2 arm=Cv rep=5 status=KEPT rc=0
+m2 arm=P rep=5 status=KEPT rc=0
+CONTROL warm_final {"kind": "warm", "tag": "final", "resident_pages": 65689, "total_pages": 65689, "pct": 100.0, "ok": true, "min_pct": 90.0}
+GATE after {"R": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"], "C": [0, "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9", "0"]}
+HOSTCHECK close {"t": "2026-10-05T10:48:52Z", "load": [1.82, 2.02, 1.77], "run": "2/127", "mhz": [1094, 800], "thr": 8365940, "other_units": [], "scaling_max_khz": "2800000"}
+RESULT: OK-PARTIAL host=box3 job=20261005T102219Z-588469 baseline={"base_arm":0.011,"base_host":0.018,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.031,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"masked":"no","max_arm":0.15,"max_host":0.3,"measured":"yes","window_s":20.0,"windows":[[0.003,0.008],[0.001,0.001],[0.005,0.0115],[0.0045,0.0095],[0.0005,0.0005],[0.011,0.018]]} payload_sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 frozen_payload_sha256=939a31be0078dff41e0202306fcbc943602b16b81a1798b624746e040205df61 run_py_sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 frozen_run_py_sha256=337a6e17b360991b2da0d2d7cc81538bc92e97d83a1cd6f1c2515a8f15a31373 helper_sha256=a08c989bf4855064b911b1bbf3e361900030d4bbc8d71700bf5ee7aca3876812 disk={"disk":"sda","diskstats_name":"sda4","fs_type":"ext4","model":"Storage Device","mount_source":"/dev/sda4","rotational":"yes (1)","short":"sda/Storage Device/ext4/rot=yes (1)","size_gb":500.1} weights_bytes=269060552 tools={"avx2":false,"cpu":"Intel(R) Celeron(R) N4020C CPU @ 1.10GHz","kernel":"6.12.94+deb13-amd64","mem_total_kb":"3382324","page_size":4096,"python":"Python 3.13.5","q_binary":"llama-drv-sse42"} gate_witness=ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9 p={"probe_ok":true,"probe_rc":0,"probe_tail":["ROW token=198 n_prompt=39"],"probe_token":"198","venv_files":29942,"venv_list_sha256":"32d560b025dc4660dcb8640be15628460a0dddbaa3a638f2b28cfbc45cb96069","venv_python_regular":true,"wheelhouse_sha256":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e","wheelhouse_sha256_here":"21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"} q={"binary":"llama-drv-sse42","info":"INFO system_info=CPU : SSE3 = 1 | SSSE3 = 1 | LLAMAFILE = 1 | REPACK = 1 |  n_vocab=49152 load_mode=mmap flash_attn_type=-1 threads=1","probe_mismatches":0,"probe_ok":true,"probe_rc":0,"probe_tail":["................................................................................","INFO system_info=CPU : SSE3 = 1 | SSSE3 = 1 | LLAMAFILE = 1 | REPACK = 1 |  n_vocab=49152 load_mode=mmap flash_attn_type=-1 threads=1"],"probe_witness":"6ce58d47a8bdbe029e69ae4ad823da36c7f761d405da248e96f12355b0668154"} m2={"arm_status":{"C":"OK","Cv":"OK","P":"OK","Q":"OK","R":"OK","Rv":"OK"},"arms":["R","C","P","Rv","Cv","Q"],"design_mean_positions":[2.4,2.4,2.4,2.6,2.6,2.6],"design_rows":[[1,4,2,0,3,5],[3,1,4,5,2,0],[2,5,0,1,4,3],[0,2,4,3,5,1],[5,3,0,1,4,2]],"load_ns":{"C":[7944741934,7860244776,8026889561,12569897520,8085956302],"Q":[20825176065,16364817719,21411752696,19785810286,21529157244],"R":[10454890349,8246688872,11733937389,8163589183,11915700187]},"majflt":{"C":[1,1,1,1,1],"Cv":[1,1,1,1,1],"P":[950,932,951,941,937],"Q":[44,47,44,47,44],"R":[14,14,14,14,14],"Rv":[14,14,14,14,14]},"mismatches":{"C":[0,0,0,0,0],"Cv":[0,0,0,0,0],"P":[null,null,null,null,null],"Q":[0,0,0,0,0],"R":[0,0,0,0,0],"Rv":[0,0,0,0,0]},"order_performed":[["C","Cv","P","R","Rv","Q"],["Rv","C","Cv","Q","P","R"],["P","Q","R","C","Cv","Rv"],["R","P","Cv","Rv","Q","C"],["Q","Rv","R","C","Cv","P"]],"positions":{"C":[0,1,3,5,3],"Cv":[1,2,4,2,4],"P":[2,4,0,1,5],"Q":[5,3,1,4,0],"R":[3,5,2,0,2],"Rv":[4,0,5,3,1]},"prefill_ns":{"C":[5638636668,5602038900,5617258230,5611475757,5600748971],"Q":[1768798391,1795859380,1791380437,1869944606,1833932528],"R":[7371997876,7398911312,7389305490,7374745147,7404018083]},"reps_done":{"C":5,"Cv":5,"P":5,"Q":5,"R":5,"Rv":5},"sectors_to_exit":{"C":[555824,525752,534232,562064,526840],"Cv":[559656,562808,543376,530128,545992],"P":[1001440,972160,1149896,1010552,985296],"Q":[1099752,1067040,1104168,1094496,1134296],"R":[549640,560744,565864,530696,569056],"Rv":[534808,564600,559768,564856,534816]},"sectors_to_open":{"C":[555824,525752,534160,562064,526840],"Cv":[559656,562808,543376,530128,545992],"P":[996536,967256,1136584,1005648,980392],"Q":[1099752,1066568,1104168,1094024,1134248],"R":[549640,560744,565864,530696,569056],"Rv":[534808,564600,559744,564856,534816]},"tokens":{"C":[null,null,null,null,null],"Cv":[null,null,null,null,null],"P":["198","198","198","198","198"],"Q":[null,null,null,null,null],"R":[null,null,null,null,null],"Rv":[null,null,null,null,null]},"values_exit_s":{"C":[13.623,13.5035,13.6852,18.2684,13.7275],"Cv":[13.6579,13.6622,15.28,13.7554,15.8843],"P":[59.5002,56.6345,71.2554,60.7265,58.1587],"Q":[23.0537,18.7006,23.6722,22.2202,23.8394],"R":[18.2691,15.817,19.6737,15.7049,19.4939],"Rv":[16.446,16.55,16.4932,16.6035,16.4014]},"values_open_s":{"C":[13.6013,13.4819,13.6634,18.247,13.7061],"Cv":[13.6366,13.6409,15.2586,13.7342,15.8629],"P":[57.8832,55.0348,69.3245,59.1292,56.551],"Q":[23.0199,18.5863,23.6377,22.1004,23.804],"R":[18.2456,15.7933,19.6499,15.6806,19.4705],"Rv":[16.4226,16.526,16.4694,16.58,16.378]},"weights_resident_after":{"C":[65689,65689,65689,65689,65689],"Cv":[65689,65689,65689,65689,65689],"P":[65689,65689,65689,65689,65689],"Q":[0,0,0,0,0],"R":[65689,65689,65689,65689,65689],"Rv":[65689,65689,65689,65689,65689]}} gate_after={"C":"ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9","R":"ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9"} timers_paused=NA notrun=[] discards=5 voids=6 notcold_attempts=0 reps=5 elapsed_job_s=1593 controls={"cold_open":{"kind":"cold","ok":true,"resident_pages":0,"tag":"open","total_pages":65689,"tries":[{"cached_kb_after":94316,"cached_kb_before":2524744,"drop_ok":true,"ok":true,"resident_pages":0,"total_pages":65689,"try":1}]},"warm_final":{"kind":"warm","min_pct":90.0,"ok":true,"pct":100.0,"resident_pages":65689,"tag":"final","total_pages":65689},"warm_open":{"kind":"warm","min_pct":90.0,"ok":true,"pct":100.0,"resident_pages":65689,"tag":"open","total_pages":65689}}

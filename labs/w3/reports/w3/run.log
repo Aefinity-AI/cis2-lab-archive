@@ -1,0 +1,87 @@
+w3 harness; prereg sha256 ebbb01ca8e4730adcc9331116b957d7c89e27a123f58a4475e17bf6c10b9cb92; mode FULL
+  manifest ok       box1/B1T1_0-8000/p0of2.npz
+  manifest ok       box1/B1T1_0-8000/p1of2.npz
+  manifest ok       box1/B1T2_0-2000/p0of1.npz
+  manifest ok       box1/B8T1_0-8000/p0of1.npz
+  manifest ok       box2/B1T1_0-4000/p0of2.npz
+  manifest ok       box2/B1T1_0-4000/p1of2.npz
+  manifest ok       box2/B1T2_0-4000/p0of1.npz
+  manifest ok       box2/B8T1_0-4000/p0of1.npz
+  manifest ok       box3/B1T1_4000-8000/p0of2.npz
+  manifest ok       box3/B1T1_4000-8000/p1of2.npz
+  manifest ok       box3/B1T2_4000-8000/p0of1.npz
+  manifest ok       box3/B8T1_4000-8000/p0of1.npz
+  manifest ok       penguin/B1T1_0-2000/p0of1.npz
+  manifest ok       penguin/B1T1_2000-8000/p0of1.npz
+  loaded R: 8000 windows, 1664964 positions
+  loaded B: 8000 windows, 1664964 positions
+  loaded X2: 4000 windows, 833394 positions
+  loaded X3: 4000 windows, 831570 positions
+  loaded T: 2000 windows, 416030 positions
+  loaded box3B8T1: 4000 windows, 831570 positions
+  loaded pengA: 2000 windows, 416030 positions
+  loaded pengB: 6000 windows, 1248934 positions
+  loaded box2B1T2: 4000 windows, 833394 positions
+  loaded box2B8T1: 4000 windows, 833394 positions
+  loaded box3B1T2: 4000 windows, 831570 positions
+  B: positions 1664964 flips 4 max shift 0.0001106262
+  X2: positions 833394 flips 2 max shift 9.727478e-05
+  X3: positions 831570 flips 1 max shift 0.0001373291
+  T: positions 416030 flips 1 max shift 6.67572e-05
+  box3B8T1: positions 831570 flips 2 max shift 0.0001392365
+  pengA: positions 416030 flips 0 max shift 0
+  pengB: positions 1248934 flips 0 max shift 0
+  box2B1T2: positions 833394 flips 2 max shift 9.727478e-05
+  box2B8T1: positions 833394 flips 4 max shift 9.727478e-05
+  box3B1T2: positions 831570 flips 1 max shift 0.0001373291
+  sanity PASS R positions == 1,664,964 
+  sanity PASS R covers windows 0..7999 
+  sanity PASS R margin==0 count == 1 
+  sanity PASS R margin<1e-5 count == 12 
+  sanity PASS R margin<1e-4 count == 123 
+  sanity PASS R margin<=5.722e-6 count == 10 
+  sanity PASS B positions == 1664964 
+  sanity PASS B flip table == report 
+  sanity PASS B flips are exact swaps of R top-2 
+  sanity PASS B ref margin is a multiple of 2^-20 
+  sanity PASS B max margin shift == report 
+  sanity PASS X2 positions == 833394 
+  sanity PASS X2 flip table == report 
+  sanity PASS X2 flips are exact swaps of R top-2 
+  sanity PASS X2 ref margin is a multiple of 2^-20 
+  sanity PASS X2 max margin shift == report 
+  sanity PASS X3 positions == 831570 
+  sanity PASS X3 flip table == report 
+  sanity PASS X3 flips are exact swaps of R top-2 
+  sanity PASS X3 ref margin is a multiple of 2^-20 
+  sanity PASS X3 max margin shift == report 
+  sanity PASS T positions == 416030 
+  sanity PASS T flip table == report 
+  sanity PASS T flips are exact swaps of R top-2 
+  sanity PASS T ref margin is a multiple of 2^-20 
+  sanity PASS T max margin shift == report 
+  sanity PASS box3B8T1 positions == 831570 
+  sanity PASS box3B8T1 flip table == report 
+  sanity PASS box3B8T1 flips are exact swaps of R top-2 
+  sanity PASS box3B8T1 ref margin is a multiple of 2^-20 
+  sanity PASS box3B8T1 max margin shift == report 
+  sanity PASS pengA positions == 416030 
+  sanity PASS pengA flip table == report 
+  sanity PASS pengA flips are exact swaps of R top-2 
+  sanity PASS pengA ref margin is a multiple of 2^-20 
+  sanity PASS pengA max margin shift == report 
+  sanity PASS pengB positions == 1248934 
+  sanity PASS pengB flip table == report 
+  sanity PASS pengB flips are exact swaps of R top-2 
+  sanity PASS pengB ref margin is a multiple of 2^-20 
+  sanity PASS pengB max margin shift == report 
+  sanity PASS X composite tiles windows 0..7999 
+  sanity PASS bar flips: B=4, X=3 
+  tau 1e-06  count        1 frac 6.00614e-07  CP95 upper 2.84923e-06
+  tau 1e-05  count       12 frac 7.20736e-06  CP95 upper 1.16774e-05
+  tau 0.0001 count      123 frac 7.38755e-05  CP95 upper 8.58073e-05
+  tau 0.0002 count      225 frac 0.000135138  CP95 upper 0.000150923
+  tau 0.001  count     1118 frac 0.000671486  CP95 upper 0.00070546
+  tau 0.01   count    11416 frac 0.0068566  CP95 upper 0.00696273
+  tau 0.1    count   110863 frac 0.0665858  CP95 upper 0.0669045
+RESULT: OK w3 sanity=PASS flips_total=7 positions=1664964 frac_recheck=0.006856605 tau=0.01 cond_i=MET cond_ii=MET verdict=MET manifest_sha_ok=yes

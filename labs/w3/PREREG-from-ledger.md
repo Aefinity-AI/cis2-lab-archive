@@ -1,0 +1,4 @@
+## registered (2026-10-16T03:24:17Z) bar_sha256=af8c226351e7cf827adb5192116db4e7183a019c4304acde4d4fb76ddeb7c082
+
+MET if, after the sanity gate passes, (i) (reproduction of the sv-5d report line 135; it cannot fail unless the sanity gate is wrong) every argmax flip in every counted registered cell has reference margin <= 1e-2, AND (ii) the fraction of the 1,664,964 positions with reference margin <= 1e-2 is strictly under 1 % (count at most 16,649; 1 % of 1,664,964 is 16,649.64). NOT MET if any counted flip has reference margin above 1e-2, or if (i) holds but the fraction at 1e-2 is 1 % or more (the covering rule exists but is not cheap at that threshold; the smaller tau2 = 2e-4 figures are then reported as the separate observation they are). INCONCLUSIVE if registered cells are missing; INVALID if the sanity gate fails.
+

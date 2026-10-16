@@ -1,0 +1,1 @@
+RESULT: OK host=box5 mode=timing rows=25 expected_rows=25 valid_NO_rows=0 rows_equal_ref_no=0 see <home>/rust2a/out/box5/timing_rows.txt

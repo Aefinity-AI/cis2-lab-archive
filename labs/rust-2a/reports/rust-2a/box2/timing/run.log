@@ -1,0 +1,109 @@
+host=box2 uname=x86_64 cpu=Intel(R) Celeron(R) N4020 CPU @ 1.10GHz gcc=gcc (Debian 14.2.0-19) 14.2.0 mode=timing date=2026-10-04T04:55:00Z
+init_sha256=3a1b88b2cb90bb0f81cfca4221986f5a6ba28ef267fa01a662881653a16aeb7b batch_sha256=f5e254381cc9c6db7f5f71f04ef93b772441e7fad926a65b70db76cc1c96b21e
+C build orig-O0: gcc -O0 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma bin_sha256=f19cfa3e17345cdf87c4225cbaf3e2871b0e57ffd144fb0ce9a0fc6307dc2444
+C build orig-O2: gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma bin_sha256=61207f190992ce7eff5690c95c0dffc51fcb4f21d007623bcbc59a575a915953
+C build patched-O2: gcc -O2 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma bin_sha256=247588a522323e7c7d450c69cd433ea98626b551e303474c6cbed2f677d4d68f
+C build patched-O0: gcc -O0 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma bin_sha256=17de4924a056e392748fffdc3d39ac44fd8229ac3ff4f0b72100bb9a6123ca46
+TIMING reps=5 arms=c-patched-O2 c-patched-O0 rust-gnu-O3 rust-gnu-O0 rust-musl-O3 cpuinfo_max_mhz=2800 quota_note=run with no CPUQuota on an idle host (Rule A: only box1 counts)
+SNAP start-gate load=0.09 0.46 0.95 mhz=2727 2774  thr=0 0 0 0 
+SNAP rep0 c-patched-O2 before load=0.09 0.46 0.95 mhz=2686 2697  thr=0 0 0 0 
+RUN c-patched-O2 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.3249 in_process_wall_s=0.320382 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep0 c-patched-O2 after load=0.09 0.46 0.95 mhz=2709 2736  thr=0 0 0 0 
+ROW rep=0 arm=c-patched-O2 whole_wall_s=0.3249 in_process_wall_s=0.320382 equal_ref=yes valid=yes tries=1
+SNAP rep0 c-patched-O0 before load=0.09 0.46 0.95 mhz=2726 2706  thr=0 0 0 0 
+RUN c-patched-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=2.1638 in_process_wall_s=2.159018 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep0 c-patched-O0 after load=0.09 0.46 0.95 mhz=2730 2697  thr=0 0 0 0 
+ROW rep=0 arm=c-patched-O0 whole_wall_s=2.1638 in_process_wall_s=2.159018 equal_ref=yes valid=yes tries=1
+SNAP rep0 rust-gnu-O3 before load=0.09 0.46 0.95 mhz=2687 2728  thr=0 0 0 0 
+RUN rust-gnu-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4595 in_process_wall_s=0.455961 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep0 rust-gnu-O3 after load=0.09 0.46 0.95 mhz=2734 2717  thr=0 0 0 0 
+ROW rep=0 arm=rust-gnu-O3 whole_wall_s=0.4595 in_process_wall_s=0.455961 equal_ref=yes valid=yes tries=1
+SNAP rep0 rust-gnu-O0 before load=0.09 0.46 0.95 mhz=2702 2734  thr=0 0 0 0 
+RUN rust-gnu-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=8.7750 in_process_wall_s=8.765383 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep0 rust-gnu-O0 after load=0.23 0.48 0.95 mhz=2705 2734  thr=0 0 0 0 
+ROW rep=0 arm=rust-gnu-O0 whole_wall_s=8.7750 in_process_wall_s=8.765383 equal_ref=yes valid=yes tries=1
+SNAP rep0 rust-musl-O3 before load=0.23 0.48 0.95 mhz=2715 2697  thr=0 0 0 0 
+RUN rust-musl-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4650 in_process_wall_s=0.462015 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep0 rust-musl-O3 after load=0.23 0.48 0.95 mhz=2739 2698  thr=0 0 0 0 
+ROW rep=0 arm=rust-musl-O3 whole_wall_s=0.4650 in_process_wall_s=0.462015 equal_ref=yes valid=yes tries=1
+SNAP rep1 c-patched-O0 before load=0.23 0.48 0.95 mhz=2705 2700  thr=0 0 0 0 
+RUN c-patched-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=2.2639 in_process_wall_s=2.244904 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep1 c-patched-O0 after load=0.29 0.49 0.95 mhz=2701 2749  thr=0 0 0 0 
+ROW rep=1 arm=c-patched-O0 whole_wall_s=2.2639 in_process_wall_s=2.244904 equal_ref=yes valid=yes tries=1
+SNAP rep1 rust-gnu-O3 before load=0.29 0.49 0.95 mhz=2695 2727  thr=0 0 0 0 
+RUN rust-gnu-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5634 in_process_wall_s=0.559564 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep1 rust-gnu-O3 after load=0.29 0.49 0.95 mhz=2734 2757  thr=0 0 0 0 
+ROW rep=1 arm=rust-gnu-O3 whole_wall_s=0.5634 in_process_wall_s=0.559564 equal_ref=yes valid=yes tries=1
+SNAP rep1 rust-gnu-O0 before load=0.29 0.49 0.95 mhz=2733 2707  thr=0 0 0 0 
+RUN rust-gnu-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=8.8709 in_process_wall_s=8.860947 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep1 rust-gnu-O0 after load=0.40 0.50 0.95 mhz=2686 2723  thr=0 0 0 0 
+ROW rep=1 arm=rust-gnu-O0 whole_wall_s=8.8709 in_process_wall_s=8.860947 equal_ref=yes valid=yes tries=1
+SNAP rep1 rust-musl-O3 before load=0.40 0.50 0.95 mhz=2701 2703  thr=0 0 0 0 
+RUN rust-musl-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5623 in_process_wall_s=0.559125 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep1 rust-musl-O3 after load=0.40 0.50 0.95 mhz=2744 2764  thr=0 0 0 0 
+ROW rep=1 arm=rust-musl-O3 whole_wall_s=0.5623 in_process_wall_s=0.559125 equal_ref=yes valid=yes tries=1
+SNAP rep1 c-patched-O2 before load=0.40 0.50 0.95 mhz=2729 2707  thr=0 0 0 0 
+RUN c-patched-O2 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4839 in_process_wall_s=0.479075 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep1 c-patched-O2 after load=0.40 0.50 0.95 mhz=2705 2755  thr=0 0 0 0 
+ROW rep=1 arm=c-patched-O2 whole_wall_s=0.4839 in_process_wall_s=0.479075 equal_ref=yes valid=yes tries=1
+SNAP rep2 rust-gnu-O3 before load=0.40 0.50 0.95 mhz=2703 2691  thr=0 0 0 0 
+RUN rust-gnu-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5634 in_process_wall_s=0.559813 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep2 rust-gnu-O3 after load=0.40 0.50 0.95 mhz=2733 2722  thr=0 0 0 0 
+ROW rep=2 arm=rust-gnu-O3 whole_wall_s=0.5634 in_process_wall_s=0.559813 equal_ref=yes valid=yes tries=1
+SNAP rep2 rust-gnu-O0 before load=0.40 0.50 0.95 mhz=2733 2699  thr=0 0 0 0 
+RUN rust-gnu-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=8.8637 in_process_wall_s=8.853698 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep2 rust-gnu-O0 after load=0.49 0.52 0.95 mhz=2706 2735  thr=0 0 0 0 
+ROW rep=2 arm=rust-gnu-O0 whole_wall_s=8.8637 in_process_wall_s=8.853698 equal_ref=yes valid=yes tries=1
+SNAP rep2 rust-musl-O3 before load=0.49 0.52 0.95 mhz=2718 2707  thr=0 0 0 0 
+RUN rust-musl-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5663 in_process_wall_s=0.563079 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep2 rust-musl-O3 after load=0.49 0.52 0.95 mhz=2755 2700  thr=0 0 0 0 
+ROW rep=2 arm=rust-musl-O3 whole_wall_s=0.5663 in_process_wall_s=0.563079 equal_ref=yes valid=yes tries=1
+SNAP rep2 c-patched-O2 before load=0.49 0.52 0.95 mhz=2736 2702  thr=0 0 0 0 
+RUN c-patched-O2 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4836 in_process_wall_s=0.478911 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep2 c-patched-O2 after load=0.49 0.52 0.95 mhz=2710 2743  thr=0 0 0 0 
+ROW rep=2 arm=c-patched-O2 whole_wall_s=0.4836 in_process_wall_s=0.478911 equal_ref=yes valid=yes tries=1
+SNAP rep2 c-patched-O0 before load=0.49 0.52 0.95 mhz=2694 2734  thr=0 0 0 0 
+RUN c-patched-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=2.2644 in_process_wall_s=2.259385 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep2 c-patched-O0 after load=0.49 0.52 0.95 mhz=2734 2709  thr=0 0 0 0 
+ROW rep=2 arm=c-patched-O0 whole_wall_s=2.2644 in_process_wall_s=2.259385 equal_ref=yes valid=yes tries=1
+SNAP rep3 rust-gnu-O0 before load=0.49 0.52 0.95 mhz=2733 2699  thr=0 0 0 0 
+RUN rust-gnu-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=8.8672 in_process_wall_s=8.857185 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep3 rust-gnu-O0 after load=0.57 0.54 0.95 mhz=2725 2703  thr=0 0 0 0 
+ROW rep=3 arm=rust-gnu-O0 whole_wall_s=8.8672 in_process_wall_s=8.857185 equal_ref=yes valid=yes tries=1
+SNAP rep3 rust-musl-O3 before load=0.57 0.54 0.95 mhz=2702 2736  thr=0 0 0 0 
+RUN rust-musl-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5636 in_process_wall_s=0.560456 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep3 rust-musl-O3 after load=0.57 0.54 0.95 mhz=2722 2715  thr=0 0 0 0 
+ROW rep=3 arm=rust-musl-O3 whole_wall_s=0.5636 in_process_wall_s=0.560456 equal_ref=yes valid=yes tries=1
+SNAP rep3 c-patched-O2 before load=0.57 0.54 0.95 mhz=2733 2687  thr=0 0 0 0 
+RUN c-patched-O2 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4804 in_process_wall_s=0.475653 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep3 c-patched-O2 after load=0.57 0.54 0.95 mhz=2746 2711  thr=0 0 0 0 
+ROW rep=3 arm=c-patched-O2 whole_wall_s=0.4804 in_process_wall_s=0.475653 equal_ref=yes valid=yes tries=1
+SNAP rep3 c-patched-O0 before load=0.57 0.54 0.95 mhz=2699 2731  thr=0 0 0 0 
+RUN c-patched-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=2.2611 in_process_wall_s=2.256184 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep3 c-patched-O0 after load=0.60 0.54 0.95 mhz=2745 2744  thr=0 0 0 0 
+ROW rep=3 arm=c-patched-O0 whole_wall_s=2.2611 in_process_wall_s=2.256184 equal_ref=yes valid=yes tries=1
+SNAP rep3 rust-gnu-O3 before load=0.60 0.54 0.95 mhz=2725 2693  thr=0 0 0 0 
+RUN rust-gnu-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5642 in_process_wall_s=0.560501 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep3 rust-gnu-O3 after load=0.60 0.54 0.95 mhz=2758 2734  thr=0 0 0 0 
+ROW rep=3 arm=rust-gnu-O3 whole_wall_s=0.5642 in_process_wall_s=0.560501 equal_ref=yes valid=yes tries=1
+SNAP rep4 rust-musl-O3 before load=0.60 0.54 0.95 mhz=2696 2716  thr=0 0 0 0 
+RUN rust-musl-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5677 in_process_wall_s=0.564286 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep4 rust-musl-O3 after load=0.60 0.54 0.95 mhz=2750 2733  thr=0 0 0 0 
+ROW rep=4 arm=rust-musl-O3 whole_wall_s=0.5677 in_process_wall_s=0.564286 equal_ref=yes valid=yes tries=1
+SNAP rep4 c-patched-O2 before load=0.60 0.54 0.95 mhz=2698 2694  thr=0 0 0 0 
+RUN c-patched-O2 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.4799 in_process_wall_s=0.475123 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep4 c-patched-O2 after load=0.60 0.54 0.95 mhz=2745 2763  thr=0 0 0 0 
+ROW rep=4 arm=c-patched-O2 whole_wall_s=0.4799 in_process_wall_s=0.475123 equal_ref=yes valid=yes tries=1
+SNAP rep4 c-patched-O0 before load=0.60 0.54 0.95 mhz=2690 2714  thr=0 0 0 0 
+RUN c-patched-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=2.2642 in_process_wall_s=2.259599 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep4 c-patched-O0 after load=0.64 0.55 0.95 mhz=2756 2705  thr=0 0 0 0 
+ROW rep=4 arm=c-patched-O0 whole_wall_s=2.2642 in_process_wall_s=2.259599 equal_ref=yes valid=yes tries=1
+SNAP rep4 rust-gnu-O3 before load=0.64 0.55 0.95 mhz=2689 2702  thr=0 0 0 0 
+RUN rust-gnu-O3 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=0.5634 in_process_wall_s=0.559728 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep4 rust-gnu-O3 after load=0.64 0.55 0.95 mhz=2756 2719  thr=0 0 0 0 
+ROW rep=4 arm=rust-gnu-O3 whole_wall_s=0.5634 in_process_wall_s=0.559728 equal_ref=yes valid=yes tries=1
+SNAP rep4 rust-gnu-O0 before load=0.64 0.55 0.95 mhz=2711 2703  thr=0 0 0 0 
+RUN rust-gnu-O0 rc=0 equal_ref=yes ckpt_files_match_ref=yes whole_wall_s=8.8825 in_process_wall_s=8.872540 digests=fd64cf9e032ee182e2623aaada3e71918d4b8d31c25d8dfc876fed74a85e3e12,d36bd7fd164ba77481a9d8f25f2fbd1acd83561f68cb8ceca9b3ba99be57705c,3887f7b3f512a6a2ed4bb72572966f46b90366f6a546aafe758ae7587db76ccd,f665ffecfabba7a4a6c0248c73107ecf8953efd9ef20b861a50fbc3ce818fd3e
+SNAP rep4 rust-gnu-O0 after load=0.69 0.57 0.95 mhz=2749 2701  thr=0 0 0 0 
+ROW rep=4 arm=rust-gnu-O0 whole_wall_s=8.8825 in_process_wall_s=8.872540 equal_ref=yes valid=yes tries=1
+RESULT: OK host=box2 mode=timing rows=25 expected_rows=25 valid_NO_rows=0 rows_equal_ref_no=0 see <home>/rust2a/out/box2/timing_rows.txt

@@ -1,0 +1,998 @@
+
+==============================================================================
+environment
+==============================================================================
+$ bash -c free -h; nproc; uname -a; df -h /kaggle/working; lscpu | grep -i flags | tr " " "\n" | grep -Ei "^(avx2|avx512|fma)" | sort -u; echo ENGINE_COMMIT=c0a2c346430c34dd54c9c0adc78829beb8755d32
+               total        used        free      shared  buff/cache   available
+Mem:            31Gi       428Mi        28Gi       1.0Mi       2.3Gi        30Gi
+Swap:             0B          0B          0B
+4
+Linux 18eacaf1e38e 6.12.90+ #1 SMP Sat May 30 15:40:53 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G  156K   20G   1% /kaggle/working
+avx2
+fma
+ENGINE_COMMIT=c0a2c346430c34dd54c9c0adc78829beb8755d32
+
+  (exit=0, 0.1s)
+
+==============================================================================
+installing rust toolchain (rustup, matches rust-toolchain.toml)
+==============================================================================
+$ bash -c curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none --profile minimal
+
+
+Rust is installed now. Great!
+
+To get started you may need to restart your current shell.
+This would reload your PATH environment variable to include
+Cargo's bin directory ($HOME/.cargo/bin).
+
+To configure your current shell, you need to source the
+corresponding env file under $HOME/.cargo.
+
+Consider running the right command for your shell (note the leading DOT):
+. "$HOME/.cargo/env" # For sh/ash/dash/pdksh/bash
+cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu
+CC_x86_64-unknown-linux-gnu = None
+info: downloading installer
+info: profile set to minimal
+info: default host tuple is x86_64-unknown-linux-gnu
+info: skipping toolchain installation
+
+cargo:rerun-if-env-changed=CC_x86_64_unknown_linux_gnu
+CC_x86_64_unknown_linux_gnu = None
+cargo:rerun-if-env-changed=HOST_CC
+HOST_CC = None
+cargo:rerun-if-env-changed=CC
+CC = None
+cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+CRATE_CC_NO_DEFAULTS = None
+cargo:rerun-if-env-changed=CFLAGS
+CFLAGS = None
+cargo:rerun-if-env-changed=HOST_CFLAGS
+HOST_CFLAGS = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu
+CFLAGS_x86_64_unknown_linux_gnu = None
+cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu
+CFLAGS_x86_64-unknown-linux-gnu = None
+
+  (exit=0, 1.0s)
+
+==============================================================================
+building cis2_ref (release) from /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-cis3-0k
+==============================================================================
+$ bash -c rm -rf /kaggle/working/engine && cp -r /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-cis3-0k /kaggle/working/engine
+  (exit=0, 0.0s)
+$ cargo build --release
+  (exit=0, 103.5s)
+built /kaggle/working/engine/target/release/cis2_ref in 103.5s
+
+==============================================================================
+PHASE 1: Qwen/Qwen2-7B attempt
+==============================================================================
+info: syncing channel updates for 1.98.0-x86_64-unknown-linux-gnu
+info: latest update on 2026-08-20 for version 1.98.0 (88d9e12ae 2026-08-18)
+info: downloading 4 components
+warn: the missing active toolchain `1.98.0-x86_64-unknown-linux-gnu` has been auto-installed
+warn: this might cause rustup commands to take longer time to finish than expected
+info: you may opt out with `RUSTUP_AUTO_INSTALL=0` or `rustup set auto-install disable`
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded ahash v0.8.12
+  Downloaded base64 v0.13.1
+  Downloaded allocator-api2 v0.2.21
+  Downloaded bitflags v2.13.1
+  Downloaded cpufeatures v0.3.1
+  Downloaded crypto-common v0.2.2
+  Downloaded equivalent v1.0.2
+  Downloaded ident_case v1.0.1
+  Downloaded itoa v1.0.18
+  Downloaded aho-corasick v1.1.5
+  Downloaded block-buffer v0.12.1
+  Downloaded castaway v0.2.4
+  Downloaded derive_builder_macro v0.20.2
+  Downloaded digest v0.11.3
+  Downloaded errno v0.3.14
+  Downloaded monostate-impl v0.1.18
+  Downloaded rayon-cond v0.4.0
+  Downloaded cfg-if v1.0.4
+  Downloaded crossbeam-deque v0.8.7
+  Downloaded fnv v1.0.7
+  Downloaded macro_rules_attribute-proc_macro v0.2.3
+  Downloaded darling_macro v0.20.11
+  Downloaded macro_rules_attribute v0.2.3
+  Downloaded monostate v0.1.18
+  Downloaded pkg-config v0.3.34
+  Downloaded ppv-lite86 v0.2.21
+  Downloaded rand_core v0.9.5
+  Downloaded static_assertions v1.1.0
+  Downloaded strsim v0.11.1
+  Downloaded thiserror-impl v2.0.20
+  Downloaded version_check v0.9.5
+  Downloaded zmij v1.0.23
+  Downloaded crossbeam-epoch v0.9.20
+  Downloaded darling v0.20.11
+  Downloaded dary_heap v0.3.9
+  Downloaded derive_builder_core v0.20.2
+  Downloaded either v1.18.0
+  Downloaded fastrand v2.5.0
+  Downloaded find-msvc-tools v0.1.11
+  Downloaded foldhash v0.2.0
+  Downloaded onig v6.5.3
+  Downloaded paste v1.0.15
+  Downloaded pastey v0.2.3
+  Downloaded quote v1.0.47
+  Downloaded rustversion v1.0.23
+  Downloaded safetensors v0.8.0
+  Downloaded sha2 v0.11.0
+  Downloaded shlex v2.0.1
+  Downloaded smallvec v1.15.2
+  Downloaded thiserror v2.0.20
+  Downloaded crossbeam-utils v0.8.22
+  Downloaded daachorse v1.0.1
+  Downloaded derive_builder v0.20.2
+  Downloaded getrandom v0.4.3
+  Downloaded hybrid-array v0.4.14
+  Downloaded log v0.4.34
+  Downloaded once_cell v1.21.4
+  Downloaded proc-macro2 v1.0.107
+  Downloaded rand_chacha v0.9.0
+  Downloaded serde_derive v1.0.229
+  Downloaded tempfile v3.27.0
+  Downloaded unicode-ident v1.0.24
+  Downloaded const-oid v0.10.2
+  Downloaded darling_core v0.20.11
+  Downloaded getrandom v0.3.4
+  Downloaded rayon-core v1.13.0
+  Downloaded ryu v1.0.23
+  Downloaded compact_str v0.9.1
+  Downloaded memchr v2.8.3
+  Downloaded minimal-lexical v0.2.1
+  Downloaded serde v1.0.229
+  Downloaded serde_core v1.0.229
+  Downloaded typenum v1.20.1
+  Downloaded unicode-normalization-alignments v0.1.12
+  Downloaded unicode-segmentation v1.13.3
+  Downloaded unicode_categories v0.1.1
+  Downloaded cc v1.4.4
+  Downloaded rand v0.9.5
+  Downloaded nom v7.1.3
+  Downloaded hashbrown v0.16.1
+  Downloaded itertools v0.14.0
+  Downloaded rayon v1.12.0
+  Downloaded serde_json v1.0.151
+  Downloaded esaxx-rs v0.1.10
+  Downloaded regex v1.13.1
+  Downloaded tokenizers v0.23.1
+  Downloaded zerocopy v0.8.56
+  Downloaded syn v2.0.119
+  Downloaded syn v3.0.4
+  Downloaded regex-syntax v0.8.11
+  Downloaded rustix v1.1.4
+  Downloaded spm_precompiled v0.1.4
+  Downloaded regex-automata v0.4.18
+  Downloaded onig_sys v69.9.3
+  Downloaded libc v0.2.189
+  Downloaded linux-raw-sys v0.12.1
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.229
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.189
+   Compiling crossbeam-utils v0.8.22
+   Compiling serde v1.0.229
+   Compiling memchr v2.8.3
+   Compiling syn v3.0.4
+   Compiling syn v2.0.119
+   Compiling ident_case v1.0.1
+   Compiling getrandom v0.3.4
+   Compiling strsim v0.11.1
+   Compiling fnv v1.0.7
+   Compiling zerocopy v0.8.56
+   Compiling crossbeam-epoch v0.9.20
+   Compiling crossbeam-deque v0.8.7
+   Compiling find-msvc-tools v0.1.11
+   Compiling shlex v2.0.1
+   Compiling cc v1.4.4
+   Compiling serde_derive v1.0.229
+   Compiling darling_core v0.20.11
+   Compiling zmij v1.0.23
+   Compiling once_cell v1.21.4
+   Compiling rustversion v1.0.23
+   Compiling typenum v1.20.1
+   Compiling pkg-config v0.3.34
+   Compiling darling_macro v0.20.11
+   Compiling bitflags v2.13.1
+   Compiling rayon-core v1.13.0
+   Compiling darling v0.20.11
+   Compiling hybrid-array v0.4.14
+   Compiling onig_sys v69.9.3
+   Compiling version_check v0.9.5
+   Compiling getrandom v0.4.3
+   Compiling itoa v1.0.18
+   Compiling either v1.18.0
+   Compiling serde_json v1.0.151
+   Compiling rustix v1.1.4
+   Compiling ahash v0.8.12
+   Compiling ppv-lite86 v0.2.21
+   Compiling derive_builder_core v0.20.2
+   Compiling rand_core v0.9.5
+   Compiling aho-corasick v1.1.5
+   Compiling linux-raw-sys v0.12.1
+   Compiling esaxx-rs v0.1.10
+   Compiling minimal-lexical v0.2.1
+   Compiling regex-syntax v0.8.11
+   Compiling thiserror v2.0.20
+   Compiling paste v1.0.15
+   Compiling nom v7.1.3
+   Compiling regex-automata v0.4.18
+   Compiling derive_builder_macro v0.20.2
+   Compiling rand_chacha v0.9.0
+   Compiling castaway v0.2.4
+   Compiling rayon v1.12.0
+   Compiling itertools v0.14.0
+   Compiling crypto-common v0.2.2
+   Compiling block-buffer v0.12.1
+   Compiling monostate-impl v0.1.18
+   Compiling thiserror-impl v2.0.20
+   Compiling foldhash v0.2.0
+   Compiling smallvec v1.15.2
+   Compiling allocator-api2 v0.2.21
+   Compiling equivalent v1.0.2
+   Compiling static_assertions v1.1.0
+   Compiling pastey v0.2.3
+   Compiling const-oid v0.10.2
+   Compiling unicode-segmentation v1.13.3
+   Compiling macro_rules_attribute-proc_macro v0.2.3
+   Compiling fastrand v2.5.0
+   Compiling base64 v0.13.1
+   Compiling ryu v1.0.23
+   Compiling spm_precompiled v0.1.4
+   Compiling compact_str v0.9.1
+   Compiling macro_rules_attribute v0.2.3
+   Compiling tempfile v3.27.0
+   Compiling digest v0.11.3
+   Compiling hashbrown v0.16.1
+   Compiling unicode-normalization-alignments v0.1.12
+   Compiling monostate v0.1.18
+   Compiling rayon-cond v0.4.0
+   Compiling rand v0.9.5
+   Compiling derive_builder v0.20.2
+   Compiling onig v6.5.3
+   Compiling regex v1.13.1
+   Compiling dary_heap v0.3.9
+   Compiling daachorse v1.0.1
+   Compiling unicode_categories v0.1.1
+   Compiling log v0.4.34
+   Compiling cpufeatures v0.3.1
+   Compiling sha2 v0.11.0
+   Compiling tokenizers v0.23.1
+   Compiling safetensors v0.8.0
+   Compiling cis2_ref v0.1.0 (/kaggle/working/engine)
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:31:19
+   |
+31 |         let csr = _mm_getcsr();
+   |                   ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:32:9
+   |
+32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);
+   |         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:27:29
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                             ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:27:41
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                                         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:71:24
+   |
+71 |     let csr = unsafe { _mm_getcsr() };
+   |                        ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/bin/../denormal.rs:70:28
+   |
+70 |     use std::arch::x86_64::_mm_getcsr;
+   |                            ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:31:19
+   |
+31 |         let csr = _mm_getcsr();
+   |                   ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:32:9
+   |
+32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);
+   |         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:29
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                             ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:41
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                                         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:71:24
+   |
+71 |     let csr = unsafe { _mm_getcsr() };
+   |                        ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:70:28
+   |
+70 |     use std::arch::x86_64::_mm_getcsr;
+   |                            ^^^^^^^^^^
+
+warning: function `widen_bf16` is never used
+  --> src/bin/../math.rs:33:8
+   |
+33 | pub fn widen_bf16(bits: u16) -> f32 {
+   |        ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `dot_seq` is never used
+  --> src/bin/../math.rs:40:8
+   |
+40 | pub fn dot_seq(a: &[f32], b: &[f32]) -> f32 {
+   |        ^^^^^^^
+
+warning: function `sum_seq` is never used
+  --> src/bin/../math.rs:52:8
+   |
+52 | pub fn sum_seq(a: &[f32]) -> f32 {
+   |        ^^^^^^^
+
+warning: constant `TREE_BLOCK` is never used
+  --> src/bin/../math.rs:66:11
+   |
+66 | pub const TREE_BLOCK: usize = 32;
+   |           ^^^^^^^^^^
+
+warning: function `tree_block_reduce` is never used
+  --> src/bin/../math.rs:74:4
+   |
+74 | fn tree_block_reduce(leaf: &mut [f32; TREE_BLOCK]) -> f32 {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `tree_reduce_indexed` is never used
+  --> src/bin/../math.rs:95:4
+   |
+95 | fn tree_reduce_indexed<F: Fn(usize) -> f32>(n: usize, leaf_at: F) -> f32 {
+   |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `tree_sum` is never used
+   --> src/bin/../math.rs:116:8
+    |
+116 | pub fn tree_sum(a: &[f32]) -> f32 {
+    |        ^^^^^^^^
+
+warning: function `tree_dot` is never used
+   --> src/bin/../math.rs:122:8
+    |
+122 | pub fn tree_dot(a: &[f32], b: &[f32]) -> f32 {
+    |        ^^^^^^^^
+
+warning: function `softmax_seq` is never used
+   --> src/bin/../math.rs:425:8
+    |
+425 | pub fn softmax_seq(logits: &mut [f32]) {
+    |        ^^^^^^^^^^^
+
+warning: function `softmax_tree` is never used
+   --> src/bin/../math.rs:448:8
+    |
+448 | pub fn softmax_tree(logits: &mut [f32]) {
+    |        ^^^^^^^^^^^^
+
+warning: function `pin_ftz_daz` is never used
+  --> src/bin/../denormal.rs:22:8
+   |
+22 | pub fn pin_ftz_daz() {
+   |        ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `mxcsr_ftz_daz_on` is never used
+  --> src/bin/../denormal.rs:69:8
+   |
+69 | pub fn mxcsr_ftz_daz_on() -> bool {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `ftz_daz_on` is never used
+  --> src/bin/../denormal.rs:92:8
+   |
+92 | pub fn ftz_daz_on() -> bool {
+   |        ^^^^^^^^^^
+
+warning: function `rsqrt_cr` is never used
+   --> src/bin/../math.rs:133:8
+    |
+133 | pub fn rsqrt_cr(x: f32) -> f32 {
+    |        ^^^^^^^^
+
+warning: constant `EXP_LOG2E` is never used
+   --> src/bin/../math.rs:153:7
+    |
+153 | const EXP_LOG2E: f32 = 1.442_695_04_f32; // 1/ln2
+    |       ^^^^^^^^^
+
+warning: constant `EXP_C1` is never used
+   --> src/bin/../math.rs:154:7
+    |
+154 | const EXP_C1: f32 = 0.693_359_375_f32; // ln2 hi (Cephes split)
+    |       ^^^^^^
+
+warning: constant `EXP_C2` is never used
+   --> src/bin/../math.rs:155:7
+    |
+155 | const EXP_C2: f32 = -2.121_944_4e-4_f32; // ln2 lo (Cephes split)
+    |       ^^^^^^
+
+warning: constant `EXP_P` is never used
+   --> src/bin/../math.rs:157:7
+    |
+157 | const EXP_P: [f32; 6] = [
+    |       ^^^^^
+
+warning: function `exp_pinned` is never used
+   --> src/bin/../math.rs:167:8
+    |
+167 | pub fn exp_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^
+
+warning: function `ldexp_exact` is never used
+   --> src/bin/../math.rs:206:4
+    |
+206 | fn ldexp_exact(x: f32, k: i32) -> f32 {
+    |    ^^^^^^^^^^^
+
+warning: constant `PI_2_F64` is never used
+   --> src/bin/../math.rs:248:7
+    |
+248 | const PI_2_F64: f64 = 1.570_796_326_794_896_619_231_321_691_639_8_f64; // pi/2
+    |       ^^^^^^^^
+
+warning: function `reduce_pi_2` is never used
+   --> src/bin/../math.rs:253:4
+    |
+253 | fn reduce_pi_2(x: f32) -> (f32, i64) {
+    |    ^^^^^^^^^^^
+
+warning: constant `SIN_C0` is never used
+   --> src/bin/../math.rs:266:7
+    |
+266 | const SIN_C0: f32 = -1.666_665_461_1e-1; // r^3 coefficient
+    |       ^^^^^^
+
+warning: constant `SIN_C1` is never used
+   --> src/bin/../math.rs:267:7
+    |
+267 | const SIN_C1: f32 = 8.332_160_873_6e-3; // r^5 coefficient
+    |       ^^^^^^
+
+warning: constant `SIN_C2` is never used
+   --> src/bin/../math.rs:268:7
+    |
+268 | const SIN_C2: f32 = -1.951_529_589_1e-4; // r^7 coefficient
+    |       ^^^^^^
+
+warning: constant `COS_C0` is never used
+   --> src/bin/../math.rs:270:7
+    |
+270 | const COS_C0: f32 = 4.166_664_568_298_827e-2; // r^4 coefficient
+    |       ^^^^^^
+
+warning: constant `COS_C1` is never used
+   --> src/bin/../math.rs:271:7
+    |
+271 | const COS_C1: f32 = -1.388_731_625_493_765e-3; // r^6 coefficient
+    |       ^^^^^^
+
+warning: constant `COS_C2` is never used
+   --> src/bin/../math.rs:272:7
+    |
+272 | const COS_C2: f32 = 2.443_315_711_809_948e-5; // r^8 coefficient
+    |       ^^^^^^
+
+warning: function `sin_poly` is never used
+   --> src/bin/../math.rs:275:4
+    |
+275 | fn sin_poly(r: f32) -> f32 {
+    |    ^^^^^^^^
+
+warning: function `cos_poly` is never used
+   --> src/bin/../math.rs:288:4
+    |
+288 | fn cos_poly(r: f32) -> f32 {
+    |    ^^^^^^^^
+
+warning: function `quadrant` is never used
+   --> src/bin/../math.rs:304:4
+    |
+304 | fn quadrant(k: i64) -> i64 {
+    |    ^^^^^^^^
+
+warning: function `sin_pinned` is never used
+   --> src/bin/../math.rs:310:8
+    |
+310 | pub fn sin_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^
+
+warning: function `cos_pinned` is never used
+   --> src/bin/../math.rs:324:8
+    |
+324 | pub fn cos_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^
+
+warning: constant `LOG_SQRTHF` is never used
+   --> src/bin/../math.rs:347:7
+    |
+347 | const LOG_SQRTHF: f32 = 0.707_106_78_f32; // sqrt(0.5)
+    |       ^^^^^^^^^^
+
+warning: constant `LOG_Q1` is never used
+   --> src/bin/../math.rs:348:7
+    |
+348 | const LOG_Q1: f32 = -2.121_944_4e-4_f32; // ln2 lo (same split as EXP_C2)
+    |       ^^^^^^
+
+warning: constant `LOG_Q2` is never used
+   --> src/bin/../math.rs:349:7
+    |
+349 | const LOG_Q2: f32 = 0.693_359_375_f32; // ln2 hi (same split as EXP_C1)
+    |       ^^^^^^
+
+warning: constant `LOG_P` is never used
+   --> src/bin/../math.rs:351:7
+    |
+351 | const LOG_P: [f32; 9] = [
+    |       ^^^^^
+
+warning: function `frexp_exact` is never used
+   --> src/bin/../math.rs:366:4
+    |
+366 | fn frexp_exact(x: f32) -> (f32, i32) {
+    |    ^^^^^^^^^^^
+
+warning: function `ln_pinned` is never used
+   --> src/bin/../math.rs:379:8
+    |
+379 | pub fn ln_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^
+
+warning: function `silu_pinned` is never used
+   --> src/bin/../math.rs:414:8
+    |
+414 | pub fn silu_pinned(x: f32) -> f32 {
+    |        ^^^^^^^^^^^
+
+warning: function `table_digest` is never used
+   --> src/bin/../math.rs:472:8
+    |
+472 | pub fn table_digest() -> [u8; 32] {
+    |        ^^^^^^^^^^^^
+
+warning: function `exported_f32_consts` is never used
+   --> src/bin/../math.rs:507:8
+    |
+507 | pub fn exported_f32_consts() -> Vec<(&'static str, f32)> {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `exported_f64_consts` is never used
+   --> src/bin/../math.rs:542:8
+    |
+542 | pub fn exported_f64_consts() -> Vec<(&'static str, f64)> {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `load_f32_tensor_whole_buffer` is never used
+  --> src/bin/../whole_buffer_widen.rs:16:8
+   |
+16 | pub fn load_f32_tensor_whole_buffer(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `exported_f32_consts` is never used
+   --> src/math.rs:507:8
+    |
+507 | pub fn exported_f32_consts() -> Vec<(&'static str, f32)> {
+    |        ^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `exported_f64_consts` is never used
+   --> src/math.rs:542:8
+    |
+542 | pub fn exported_f64_consts() -> Vec<(&'static str, f64)> {
+    |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `load_f32_tensor_whole_buffer` is never used
+  --> src/whole_buffer_widen.rs:16:8
+   |
+16 | pub fn load_f32_tensor_whole_buffer(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `cis2_ref` (bin "math_dump") generated 16 warnings
+warning: `cis2_ref` (bin "h1_lm_head_check") generated 49 warnings (15 duplicates)
+warning: `cis2_ref` (bin "mem_probe") generated 48 warnings (48 duplicates)
+warning: `cis2_ref` (bin "cis2_ref") generated 9 warnings
+    Finished `release` profile [optimized] target(s) in 1m 24s
+
+
+==============================================================================
+downloading metadata for Qwen/Qwen2-7B -> /kaggle/working/hf/qwen2-7b
+==============================================================================
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  fetched /kaggle/working/hf/qwen2-7b/config.json
+  fetched /kaggle/working/hf/qwen2-7b/tokenizer.json
+  fetched /kaggle/working/hf/qwen2-7b/model.safetensors.index.json
+
+==============================================================================
+reading headers for 4 shards via HTTP range GET (sorted shard order, no full download)
+==============================================================================
+  model-00001-of-00004.safetensors: header read via range GET (9144 bytes fetched, 80 tensors)
+  model-00002-of-00004.safetensors: header read via range GET (11088 bytes fetched, 97 tensors)
+  model-00003-of-00004.safetensors: header read via range GET (11144 bytes fetched, 97 tensors)
+  model-00004-of-00004.safetensors: header read via range GET (7472 bytes fetched, 65 tensors)
+merged header: 339 tensors, header_json_len=39056 bytes
+merged header first 200 bytes: b'{"__metadata__":{"format":"pt"},"model.embed_tokens.weight":{"dtype":"BF16","shape":[152064,3584],"data_offsets":[0,1089994752]},"model.layers.0.input_layernorm.weight":{"dtype":"BF16","shape":[3584],'
+
+==============================================================================
+streaming 339 tensors -> /kaggle/working/hf/qwen2-7b-merged.safetensors (merge_shards.py byte order)
+==============================================================================
+shard model-00001-of-00004.safetensors: downloaded in 12.9s -> /kaggle/working/hf/qwen2-7b/model-00001-of-00004.safetensors; streaming
+shard model-00001-of-00004.safetensors: streamed + deleted
+$ bash -c df -h /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G  4.0G   16G  21% /kaggle/working
+
+  (exit=0, 0.0s)
+shard model-00002-of-00004.safetensors: downloaded in 40.0s -> /kaggle/working/hf/qwen2-7b/model-00002-of-00004.safetensors; streaming
+shard model-00002-of-00004.safetensors: streamed + deleted
+$ bash -c df -h /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G  7.6G   12G  39% /kaggle/working
+
+  (exit=0, 0.0s)
+shard model-00003-of-00004.safetensors: downloaded in 17.0s -> /kaggle/working/hf/qwen2-7b/model-00003-of-00004.safetensors; streaming
+shard model-00003-of-00004.safetensors: streamed + deleted
+$ bash -c df -h /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G   12G  8.4G  58% /kaggle/working
+
+  (exit=0, 0.0s)
+shard model-00004-of-00004.safetensors: downloaded in 17.0s -> /kaggle/working/hf/qwen2-7b/model-00004-of-00004.safetensors; streaming
+shard model-00004-of-00004.safetensors: streamed + deleted
+$ bash -c df -h /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G   15G  5.1G  75% /kaggle/working
+
+  (exit=0, 0.0s)
+merged 339 tensors -> /kaggle/working/hf/qwen2-7b-merged.safetensors size=15231272088 bytes in 187.1s
+MERGED_SHA256=13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3
+merge peak RSS so far: 2137 MB
+merged header self-check OK: 339 tensors contiguous in entries order
+MERGE_BYTES_MATCH: merged_sha256 == box1 weights_sha256 == 13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3
+$ cp -L /kaggle/working/hf/qwen2-7b/config.json /kaggle/working/weights_qwen2_7b/config.json
+  (exit=0, 0.0s)
+$ cp -L /kaggle/working/hf/qwen2-7b/tokenizer.json /kaggle/working/weights_qwen2_7b/tokenizer.json
+  (exit=0, 0.1s)
+$ ln -sf /kaggle/working/hf/qwen2-7b-merged.safetensors /kaggle/working/weights_qwen2_7b/model.safetensors
+  (exit=0, 0.0s)
+
+==============================================================================
+7B: running cis2_ref (time -v=False)
+==============================================================================
+$ bash -c free -g
+               total        used        free      shared  buff/cache   available
+Mem:              31           0           3           0          26          30
+Swap:              0           0           0
+
+  (exit=0, 0.0s)
+$ bash -c free -g
+               total        used        free      shared  buff/cache   available
+Mem:              31           0          29           0           0          30
+Swap:              0           0           0
+
+  (exit=0, 0.1s)
+LAYER_DIGEST embed 20d1c3114f5af59661f1d30c60e45d3d220cd9cceff7c7cb19fc4924b69cd416
+LAYER_DIGEST block_0 b62ef72537abbda08442ec68b8349a8d52c3eb7cb452447358a43cfe2dc23aa5
+LAYER_DIGEST block_1 a2cc20831a8dc837a570d10a67cc6608f6eefcca8e9248474eeed7c5c80f1909
+LAYER_DIGEST block_2 4e6dcc65d55d3efd21a04438081a4063efae3cad215fd718e4c31a9522d1344f
+LAYER_DIGEST block_3 443ad0746320603624af67330fedcf74c2a25272bbe0439f3fdf0b71c7faa278
+LAYER_DIGEST block_4 a98a54d7c4532916ff04f4570482d1e3e247c0d5d0b3e5c4882cb39f7ba3e3a7
+LAYER_DIGEST block_5 3c5dc16e6503405e63a29dce215154991acb8fc29f1a6e67cc27ff6a52618d1d
+LAYER_DIGEST block_6 73108bd54eeb56315441b375ed5b596796f6c8acdc138114c97c87518f5843b1
+LAYER_DIGEST block_7 fedc90c2fd17bb45f4fa2c0d415658ecb716f037d763884ea61c2d8c75c06b16
+LAYER_DIGEST block_8 d12a46e22296606f0274f9f7a80c7f98c8b0c6fb90306f57092845697075567f
+LAYER_DIGEST block_9 31461e2b932b2bb75b881a3f9156b02a6e89244831b2405e348066f303c92d5d
+LAYER_DIGEST block_10 0ef7caac10b4661d5519713378a9bc2fa2f699aa95da036cc44953f257355f28
+LAYER_DIGEST block_11 cb8827a5da643087a64e193b63a570aa56340555b98bd48253878de5daa9caeb
+LAYER_DIGEST block_12 3687ab01ba2e8f5224e8aae417b87228ca1d76b477676e133e1702708fd9003e
+LAYER_DIGEST block_13 a791fa976435ef6c6523c1f54d103059b8f7ee589d6c2bd001c3c15d2586c9e5
+LAYER_DIGEST block_14 84f2885eec84f38b4cf4e641217588c4a2b0e391eabbb3a395499fcba0e983a2
+LAYER_DIGEST block_15 e80116e25956b323b95f4f10fcb452e6a19e90ce340d2c5c45b69389afa5035c
+LAYER_DIGEST block_16 8b2ebdd363e41b713b563f904ad068ef90652465a0ec442a12375947ef28dcb1
+LAYER_DIGEST block_17 d3ecfa6c24ca82c911279f838dc6d14a0501de891b9cd780f427ab2f01e03c34
+LAYER_DIGEST block_18 4bd660746cffa6641629702549d25e35fbb1536d0d0fad1fa1227cc25c9da6a8
+LAYER_DIGEST block_19 a3dd6400e6ca62bfb42ae4824b1b1e03ea8f6dfea9a7bddbc676c78395e626e0
+LAYER_DIGEST block_20 7b171eec2c0355f118a36922dc809569486c5cc73b527d03fd7e27f21851770c
+LAYER_DIGEST block_21 71a618e7fc4d4518988e090f33931a302521c664d0a7c21a9e41625885881908
+LAYER_DIGEST block_22 68abc10432f83af0b600db15061607d71b7bc659c17a6a9b62778df1e3d2207d
+LAYER_DIGEST block_23 53b24c6deaebb1762cbbc82ceaf7ce8fa37c760214eed9e8a81100ad3b825124
+LAYER_DIGEST block_24 afbb187dedc45ca9a5c62a3a0aa6ac07d8e2bf67e60a3c4698de966432e15343
+LAYER_DIGEST block_25 35fbd3afbf78d3530b15eb07568478049f40a8daa5b95b512810223d3072cb0a
+LAYER_DIGEST block_26 5ffad7dd3d795659642cdc1479bf058c25e610f3b2291fe7481d895844a56ad7
+LAYER_DIGEST block_27 e3117c5b404be9e1cd17b7759b6983f1e26bd7e2cda4c7c3b914dc753ed06a44
+LAYER_DIGEST final_norm c56066fa9594801fbf6fee2ca925a39977ad8041335a323989c1808521b477d2
+LAYER_DIGEST logits e24e704bfdd04f10fdec91307e013f238d0d207b421f6e441ac2a6fa65780073
+weights_sha256=13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3
+tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8
+config_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]
+prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]
+prompt_idx=0 run1_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3
+prompt_idx=0 run2_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3
+prompt_idx=0 run1_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265
+prompt_idx=0 run2_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265
+prompt_idx=0 runs_identical=true
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3 prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential
+
+---- 7B: exit=0 elapsed=455.9s
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+[run1] step 1: token_id=1052
+[run1] step 2: token_id=572
+[run1] step 3: token_id=264
+[run2] step 0: token_id=11
+[run2] step 1: token_id=1052
+[run2] step 2: token_id=572
+[run2] step 3: token_id=264
+
+---- 7B: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30845844 KB = 29.42 GB (includes prior children, not just this one)
+---- 7B: dmesg (rc=1):
+(no output)
+---- 7B: cat /sys/fs/cgroup/memory.events (rc=0):
+low 0
+high 0
+max 140274
+oom 0
+oom_kill 0
+oom_group_kill 0
+---- 7B: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):
+(no output)
+$ bash -c rm -rf /kaggle/working/hf/qwen2-7b /kaggle/working/hf/qwen2-7b-merged.safetensors; df -h /kaggle/working
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/loop1       20G  279M   20G   2% /kaggle/working
+
+  (exit=0, 0.4s)
+
+==============================================================================
+PHASE 2: Qwen/Qwen2-1.5B, run twice
+==============================================================================
+
+==============================================================================
+downloading Qwen/Qwen2-1.5B -> /kaggle/working/hf/qwen2-1.5b
+==============================================================================
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:00<00:00,  6.26it/s]Fetching 3 files:  67%|██████▋   | 2/3 [00:13<00:07,  7.63s/it]Fetching 3 files: 100%|██████████| 3/3 [00:13<00:00,  4.34s/it]
+downloaded to /kaggle/working/hf/qwen2-1.5b in 13.2s
+$ bash -c du -sh /kaggle/working/hf/qwen2-1.5b; ls -la /kaggle/working/hf/qwen2-1.5b
+2.9G	/kaggle/working/hf/qwen2-1.5b
+total 3021992
+drwxr-xr-x 3 root root       4096 Sep 19 09:24 .
+drwxr-xr-x 3 root root       4096 Sep 19 09:24 ..
+drwxr-xr-x 3 root root       4096 Sep 19 09:24 .cache
+-rw-r--r-- 1 root root        662 Sep 19 09:24 config.json
+-rw-r--r-- 1 root root 3087467144 Sep 19 09:24 model.safetensors
+-rw-r--r-- 1 root root    7028015 Sep 19 09:24 tokenizer.json
+
+  (exit=0, 0.0s)
+$ cp -L /kaggle/working/hf/qwen2-1.5b/config.json /kaggle/working/weights_qwen2_1_5b/config.json
+  (exit=0, 0.0s)
+$ cp -L /kaggle/working/hf/qwen2-1.5b/tokenizer.json /kaggle/working/weights_qwen2_1_5b/tokenizer.json
+  (exit=0, 0.0s)
+$ cp -L /kaggle/working/hf/qwen2-1.5b/model.safetensors /kaggle/working/weights_qwen2_1_5b/model.safetensors
+  (exit=0, 20.4s)
+
+==============================================================================
+1.5B run1: running cis2_ref (time -v=False)
+==============================================================================
+$ bash -c free -g
+               total        used        free      shared  buff/cache   available
+Mem:              31           0          18           0          11          30
+Swap:              0           0           0
+
+  (exit=0, 0.0s)
+$ bash -c free -g
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+[run1] step 1: token_id=1052
+[run1] step 2: token_id=572
+[run1] step 3: token_id=264
+               total        used        free      shared  buff/cache   available
+Mem:              31           0          18           0          12          30
+Swap:              0           0           0
+
+  (exit=0, 0.0s)
+weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb
+tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8
+config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+prompt_idx=0 runs_identical=true
+prompt_idx=0 reduction_mode=sequential
+CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential
+
+---- 1.5B run1: exit=0 elapsed=110.1s
+---- 1.5B run1: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30845844 KB = 29.42 GB (includes prior children, not just this one)
+[run1] step 4: token_id=2632
+[run1] step 5: token_id=3743
+[run1] step 6: token_id=879
+[run1] step 7: token_id=10245
+[run2] step 0: token_id=11
+[run2] step 1: token_id=1052
+[run2] step 2: token_id=572
+[run2] step 3: token_id=264
+[run2] step 4: token_id=2632
+[run2] step 5: token_id=3743
+[run2] step 6: token_id=879
+[run2] step 7: token_id=10245
+
+---- 1.5B run1: dmesg (rc=1):
+(no output)
+---- 1.5B run1: cat /sys/fs/cgroup/memory.events (rc=0):
+low 0
+high 0
+max 140274
+oom 0
+oom_kill 0
+oom_group_kill 0
+---- 1.5B run1: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):
+(no output)
+
+==============================================================================
+1.5B run2: running cis2_ref (time -v=False)
+==============================================================================
+$ bash -c free -g
+               total        used        free      shared  buff/cache   available
+Mem:              31           0          18           0          12          30
+Swap:              0           0           0
+
+  (exit=0, 0.0s)
+$ bash -c free -g
+               total        used        free      shared  buff/cache   available
+Mem:              31           0          18           0          12          30
+Swap:              0           0           0
+
+  (exit=0, 0.0s)
+weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb
+tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8
+config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36
+table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d
+inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44
+prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]
+prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+loading + widening weights (bf16 -> fp32, exact bit-shift, §3.5)...
+weights loaded.
+[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]
+[run1] step 0: token_id=11
+prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]
+[run1] step 1: token_id=1052
+prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+[run1] step 2: token_id=572
+prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+[run1] step 3: token_id=264
+prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+[run1] step 4: token_id=2632
+prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4
+[run1] step 5: token_id=3743
+prompt_idx=0 runs_identical=true
+[run1] step 6: token_id=879
+prompt_idx=0 reduction_mode=sequential
+[run1] step 7: token_id=10245
+CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential
+[run2] step 0: token_id=11
+
+[run2] step 1: token_id=1052
+---- 1.5B run2: exit=0 elapsed=112.8s
+[run2] step 2: token_id=572
+[run2] step 3: token_id=264
+[run2] step 4: token_id=2632
+[run2] step 5: token_id=3743
+[run2] step 6: token_id=879
+[run2] step 7: token_id=10245
+
+---- 1.5B run2: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30845844 KB = 29.42 GB (includes prior children, not just this one)
+---- 1.5B run2: dmesg (rc=1):
+(no output)
+---- 1.5B run2: cat /sys/fs/cgroup/memory.events (rc=0):
+low 0
+high 0
+max 140274
+oom 0
+oom_kill 0
+oom_group_kill 0
+---- 1.5B run2: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):
+(no output)
+
+==============================================================================
+SUMMARY
+==============================================================================
+{
+  "7b": {
+    "returncode": 0,
+    "elapsed_s": 455.90236163139343,
+    "digest": "a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3",
+    "killed_by_signal": null,
+    "peak_rss_kb": null,
+    "peak_rss_gb": null,
+    "stdout_tail": "LAYER_DIGEST block_5 3c5dc16e6503405e63a29dce215154991acb8fc29f1a6e67cc27ff6a52618d1d\nLAYER_DIGEST block_6 73108bd54eeb56315441b375ed5b596796f6c8acdc138114c97c87518f5843b1\nLAYER_DIGEST block_7 fedc90c2fd17bb45f4fa2c0d415658ecb716f037d763884ea61c2d8c75c06b16\nLAYER_DIGEST block_8 d12a46e22296606f0274f9f7a80c7f98c8b0c6fb90306f57092845697075567f\nLAYER_DIGEST block_9 31461e2b932b2bb75b881a3f9156b02a6e89244831b2405e348066f303c92d5d\nLAYER_DIGEST block_10 0ef7caac10b4661d5519713378a9bc2fa2f699aa95da036cc44953f257355f28\nLAYER_DIGEST block_11 cb8827a5da643087a64e193b63a570aa56340555b98bd48253878de5daa9caeb\nLAYER_DIGEST block_12 3687ab01ba2e8f5224e8aae417b87228ca1d76b477676e133e1702708fd9003e\nLAYER_DIGEST block_13 a791fa976435ef6c6523c1f54d103059b8f7ee589d6c2bd001c3c15d2586c9e5\nLAYER_DIGEST block_14 84f2885eec84f38b4cf4e641217588c4a2b0e391eabbb3a395499fcba0e983a2\nLAYER_DIGEST block_15 e80116e25956b323b95f4f10fcb452e6a19e90ce340d2c5c45b69389afa5035c\nLAYER_DIGEST block_16 8b2ebdd363e41b713b563f904ad068ef90652465a0ec442a12375947ef28dcb1\nLAYER_DIGEST block_17 d3ecfa6c24ca82c911279f838dc6d14a0501de891b9cd780f427ab2f01e03c34\nLAYER_DIGEST block_18 4bd660746cffa6641629702549d25e35fbb1536d0d0fad1fa1227cc25c9da6a8\nLAYER_DIGEST block_19 a3dd6400e6ca62bfb42ae4824b1b1e03ea8f6dfea9a7bddbc676c78395e626e0\nLAYER_DIGEST block_20 7b171eec2c0355f118a36922dc809569486c5cc73b527d03fd7e27f21851770c\nLAYER_DIGEST block_21 71a618e7fc4d4518988e090f33931a302521c664d0a7c21a9e41625885881908\nLAYER_DIGEST block_22 68abc10432f83af0b600db15061607d71b7bc659c17a6a9b62778df1e3d2207d\nLAYER_DIGEST block_23 53b24c6deaebb1762cbbc82ceaf7ce8fa37c760214eed9e8a81100ad3b825124\nLAYER_DIGEST block_24 afbb187dedc45ca9a5c62a3a0aa6ac07d8e2bf67e60a3c4698de966432e15343\nLAYER_DIGEST block_25 35fbd3afbf78d3530b15eb07568478049f40a8daa5b95b512810223d3072cb0a\nLAYER_DIGEST block_26 5ffad7dd3d795659642cdc1479bf058c25e610f3b2291fe7481d895844a56ad7\nLAYER_DIGEST block_27 e3117c5b404be9e1cd17b7759b6983f1e26bd7e2cda4c7c3b914dc753ed06a44\nLAYER_DIGEST final_norm c56066fa9594801fbf6fee2ca925a39977ad8041335a323989c1808521b477d2\nLAYER_DIGEST logits e24e704bfdd04f10fdec91307e013f238d0d207b421f6e441ac2a6fa65780073\nweights_sha256=13200c88e7482d83ed9a2bb23a01b515e46663ab57dba853389587d4173dcfa3\ntokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\nconfig_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810\ntable_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\ninv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\nprompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\nprompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\nprompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264]\nprompt_idx=0 run1_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3\nprompt_idx=0 run2_witness_digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3\nprompt_idx=0 run1_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\nprompt_idx=0 run2_argmax_digest=a8ed47fb9cca7b6ac1830fc12a18ebb9615b77e29b012f8c036ce7cb0183c265\nprompt_idx=0 runs_identical=true\nprompt_idx=0 reduction_mode=sequential\nCIS2_REF digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3 prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential",
+    "stderr_tail": "loading + widening weights (bf16 -> fp32, exact bit-shift, \u00a73.5)...\nweights loaded.\n[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n[run1] step 0: token_id=11\n[run1] step 1: token_id=1052\n[run1] step 2: token_id=572\n[run1] step 3: token_id=264\n[run2] step 0: token_id=11\n[run2] step 1: token_id=1052\n[run2] step 2: token_id=572\n[run2] step 3: token_id=264"
+  },
+  "1_5b_run1": {
+    "returncode": 0,
+    "elapsed_s": 110.14059042930603,
+    "digest": "9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8",
+    "peak_rss_kb": null
+  },
+  "1_5b_run2": {
+    "returncode": 0,
+    "elapsed_s": 112.83768963813782,
+    "digest": "9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8",
+    "peak_rss_kb": null
+  },
+  "1_5b_match": true,
+  "1_5b_matches_llm4_known_digest": true,
+  "1_5b_known_digest_llm4": "9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8"
+}
+
+7B outcome: returncode=0 killed_by_signal=None digest=a4a6770e5f049a92335bc6fe92bac87f17627b89adc4f28636cd4ab511acbfb3 peak_rss_gb=None
+1.5B run1 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+1.5B run2 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8
+1.5B digests match (run1 vs run2): True
+1.5B digest matches LLM-4 known digest (9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8): True
+/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+  cells[i][c] = re.sub('\\\\\|', '|', cell)
+/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[NbConvertApp] Converting notebook __script__.ipynb to html
+[NbConvertApp] Writing 366718 bytes to __results__.html

@@ -1,0 +1,25 @@
+=== cis2-opencl-w4-r2 start 2026-10-16T10:44:48Z host=aefinity-box-2a7e cpu=Intel(R) Celeron(R) N4020C CPU @ 1.10GHz
+sha256 model.safetensors = 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+sha256 ids16 = 4b6618b64fe0fd9c261dd30789ec69a4f84c05114820df9e45c4d2c8fac40faf
+g++ g++ (Debian 14.2.0-19) 14.2.0
+build host-gcc: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o cis2_host_gcc_o gpu/cis2_host.cpp
+row host-gcc gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row host-gcc gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row host-gcc gen_toks=128 digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 expected=22f69ad87a615d66 MATCH rc=0
+build opencl: make -C gpu opencl opencl-soft test_soft
+clinfo: WARNING: OpenCL support via iris driver is incomplete.|For a complete and conformant OpenCL implementation, use|https://github.com/intel/compute-runtime instead|(--cl-list)|available OpenCL platforms/devices (pass --cl-platform/--cl-device substrings):|  platform="rusticl" device="Mesa Intel(R) UHD Graphics 600 (GLK 2)"|  platform="Portable Computing Language" device="cpu-penryn-Intel(R) Celeron(R) N4020C CPU @ 1.10GHz"|
+row pocl gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row pocl gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row pocl gen_toks=128 digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 expected=22f69ad87a615d66 MATCH rc=0
+row pocl_soft gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row pocl_soft gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row pocl_soft gen_toks=128 digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 expected=22f69ad87a615d66 MATCH rc=0
+test_soft pocl rc=0 result=PASS
+row igpu_soft gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row igpu_soft gen_toks=16 digest=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df expected=d82743059d1db929 MATCH rc=0
+row igpu_soft gen_toks=128 digest=22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6 expected=22f69ad87a615d66 MATCH rc=0
+test_soft igpu rc=0 result=PASS
+row igpu_hw gen_toks=16 digest=8322617cc9f3ba3355eab391d066329b3d0cb8d0a9020c5765ffae60fc750acc expected=d82743059d1db929 DIVERGE rc=0
+control igpu_hw16=DIVERGE (DIVERGE expected)
+RESULT: OK cis2-opencl-w4-r2 host16=MATCH host16=MATCH host128=MATCH pocl16=MATCH pocl16=MATCH pocl128=MATCH pocl_soft16=MATCH pocl_soft16=MATCH pocl_soft128=MATCH pocl_test=PASS igpu_soft16=MATCH igpu_soft16=MATCH igpu_soft128=MATCH igpu_test=PASS weights=80521b40 ids=4b6618b6
+=== cis2-opencl-w4-r2 done 2026-10-16T10:48:31Z

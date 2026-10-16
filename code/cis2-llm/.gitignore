@@ -1,0 +1,11 @@
+target/
+node_modules/
+*.bundle
+weights/
+.env
+server/data/
+__pycache__/
+*.pyc
+server/.venv/
+.venv/
+.kaggle-push/

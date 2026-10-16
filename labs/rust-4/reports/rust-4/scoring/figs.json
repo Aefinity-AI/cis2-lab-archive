@@ -1,0 +1,1845 @@
+{
+ "amended_bar_sha256_recomputed": "5ac441b761af7756e861ee8e77cf97c18526cedea2454975138456ed33d4acbd",
+ "registered_bar_file_sha256_stripped": "e353091f3cd68da10187f24330af44a1a594e1e201b4510aab294caca08b29a3",
+ "payload_list_sha_full": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+ "payload_list_sha_lite": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+ "run_py_sha_full": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+ "run_py_sha_lite": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+ "payload_files_checked": {
+  "full": [
+   5456,
+   0
+  ],
+  "lite": [
+   43,
+   0
+  ]
+ },
+ "bin_local": {
+  "R": {
+   "bytes": 3826304,
+   "sha256": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+  },
+  "C": {
+   "bytes": 108144,
+   "sha256": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+  }
+ },
+ "m1_ratio_s": 35.381565320313655,
+ "hosts": {
+  "box1": {
+   "result_word": "OK-PARTIAL",
+   "rj_keys": [
+    "baseline",
+    "discards",
+    "elapsed_job_s",
+    "frozen_payload_sha256",
+    "gate_witness",
+    "host",
+    "job",
+    "m1_bytes_shipped",
+    "m1_sha256_shipped",
+    "m2",
+    "m3",
+    "notrun",
+    "p",
+    "payload_sha256",
+    "phases",
+    "reps",
+    "run_py_sha256",
+    "timers_paused",
+    "tools",
+    "voids",
+    "word"
+   ],
+   "feed_status": "ok",
+   "feed_result_equals_RESULT_txt": true,
+   "job": {
+    "added_at": "2026-10-04T10:28:37Z",
+    "cpu_quota": "400%",
+    "memory_max": "4500M",
+    "name": "rust4-box1",
+    "payload": "<home>/feed-payload/rust4",
+    "payload_dest": "<home>/rust4",
+    "pushed_at": "2026-10-04T11:24:20Z"
+   },
+   "rj_word": "OK-PARTIAL",
+   "elapsed_job_s_recorded": 1771,
+   "start": "2026-10-04T11:24:21Z",
+   "end_last_stamp": "2026-10-04T11:53:52Z",
+   "elapsed_from_log_s": 1771.0,
+   "baseline": {
+    "base_arm": 0.0115,
+    "base_host": 0.019,
+    "limit_arm": 0.0315,
+    "limit_host": 0.1,
+    "rj_limit_arm": 0.0315,
+    "rj_limit_host": 0.1,
+    "ok_vs_max": true,
+    "match": true
+   },
+   "row_counts": {
+    "('install', 'P', 'KEPT', '')": 3,
+    "('m2', 'R', 'KEPT', '')": 1,
+    "('m2', 'C', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'P', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Rv', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m3', 'R', 'KEPT', '')": 3,
+    "('m3', 'C', 'KEPT', '')": 3
+   },
+   "n_rows": 13,
+   "discards_rows": 3,
+   "voids_rows": 0,
+   "discards_recorded": 3,
+   "voids_recorded": 0,
+   "install": [
+    {
+     "rep": 1,
+     "status": "KEPT",
+     "wall_to_exit_s": 73.66114137601107,
+     "mhz_ref": 2095.15,
+     "mhz_low": 2095.124,
+     "drop_pct": 0.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0052,
+      "foreign_host": 0.0226
+     },
+     "limit_arm": 0.0315,
+     "rc": 0,
+     "maxrss_kb": 165220
+    },
+    {
+     "rep": 2,
+     "status": "KEPT",
+     "wall_to_exit_s": 63.461101296008565,
+     "mhz_ref": 2095.151,
+     "mhz_low": 2095.126,
+     "drop_pct": 0.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0154,
+      "foreign_host": 0.0542
+     },
+     "limit_arm": 0.0315,
+     "rc": 0,
+     "maxrss_kb": 165080
+    },
+    {
+     "rep": 3,
+     "status": "KEPT",
+     "wall_to_exit_s": 65.64943529199809,
+     "mhz_ref": 2095.151,
+     "mhz_low": 2095.142,
+     "drop_pct": 0.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0078,
+      "foreign_host": 0.0256
+     },
+     "limit_arm": 0.0315,
+     "rc": 0,
+     "maxrss_kb": 163348
+    }
+   ],
+   "install_kept_s_from_rows": [
+    73.66,
+    63.46,
+    65.65
+   ],
+   "m2_cache": [
+    {
+     "arm": "R",
+     "status": "KEPT",
+     "before_kb": 3995332,
+     "after_kb": 94572,
+     "fall_pct": 97.6
+    },
+    {
+     "arm": "C",
+     "status": "DISCARD",
+     "before_kb": 370200,
+     "after_kb": 94544,
+     "fall_pct": 74.5
+    },
+    {
+     "arm": "P",
+     "status": "DISCARD",
+     "before_kb": 97764,
+     "after_kb": 94656,
+     "fall_pct": 3.2
+    },
+    {
+     "arm": "Rv",
+     "status": "DISCARD",
+     "before_kb": 97816,
+     "after_kb": 94724,
+     "fall_pct": 3.2
+    }
+   ],
+   "kept_rows_over_limit": [],
+   "rows_over_limit_any": [],
+   "load_before_max": 0.34,
+   "load_after_max": 1.16,
+   "load_before_rows": [
+    [
+     "install",
+     "P",
+     1,
+     0.26
+    ],
+    [
+     "install",
+     "P",
+     2,
+     0.29
+    ],
+    [
+     "install",
+     "P",
+     3,
+     0.26
+    ],
+    [
+     "m2",
+     "R",
+     1,
+     0.34
+    ],
+    [
+     "m3",
+     "R",
+     1,
+     0.26
+    ],
+    [
+     "m3",
+     "C",
+     1,
+     0.29
+    ],
+    [
+     "m3",
+     "C",
+     2,
+     0.29
+    ],
+    [
+     "m3",
+     "R",
+     2,
+     0.29
+    ],
+    [
+     "m3",
+     "R",
+     3,
+     0.26
+    ],
+    [
+     "m3",
+     "C",
+     3,
+     0.29
+    ]
+   ],
+   "thr_values": [
+    "0"
+   ],
+   "scaling_changed_any": false,
+   "m3_rows": [
+    {
+     "arm": "R",
+     "rep": 1,
+     "status": "KEPT",
+     "wall_to_exit_s": 219.63435418100562,
+     "rc": 0,
+     "maxrss_kb": 727196,
+     "mhz_n": 176,
+     "foreign": {
+      "foreign_arm": 0.0047,
+      "foreign_host": 0.0195
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 1.14,
+     "before_load": 0.26,
+     "thr": 0
+    },
+    {
+     "arm": "C",
+     "rep": 1,
+     "status": "KEPT",
+     "wall_to_exit_s": 2.6041478870029096,
+     "rc": 0,
+     "maxrss_kb": 42852,
+     "mhz_n": 1,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 0.35,
+     "before_load": 0.29,
+     "thr": 0
+    },
+    {
+     "arm": "C",
+     "rep": 2,
+     "status": "KEPT",
+     "wall_to_exit_s": 2.203735737974057,
+     "rc": 0,
+     "maxrss_kb": 42932,
+     "mhz_n": 2,
+     "foreign": {
+      "foreign_arm": 0.0021,
+      "foreign_host": 0.0004
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 0.35,
+     "before_load": 0.29,
+     "thr": 0
+    },
+    {
+     "arm": "R",
+     "rep": 2,
+     "status": "KEPT",
+     "wall_to_exit_s": 189.73938432399882,
+     "rc": 0,
+     "maxrss_kb": 724980,
+     "mhz_n": 187,
+     "foreign": {
+      "foreign_arm": 0.0028,
+      "foreign_host": 0.0124
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 1.16,
+     "before_load": 0.29,
+     "thr": 0
+    },
+    {
+     "arm": "R",
+     "rep": 3,
+     "status": "KEPT",
+     "wall_to_exit_s": 190.5562544449931,
+     "rc": 0,
+     "maxrss_kb": 721548,
+     "mhz_n": 188,
+     "foreign": {
+      "foreign_arm": 0.0038,
+      "foreign_host": 0.0191
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 1.1,
+     "before_load": 0.26,
+     "thr": 0
+    },
+    {
+     "arm": "C",
+     "rep": 3,
+     "status": "KEPT",
+     "wall_to_exit_s": 2.203734484995948,
+     "rc": 0,
+     "maxrss_kb": 42988,
+     "mhz_n": 2,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0012
+     },
+     "limit_arm": 0.0315,
+     "limit_host": 0.1,
+     "after_load": 0.29,
+     "before_load": 0.29,
+     "thr": 0
+    }
+   ],
+   "m3_json": {
+    "C_bytes": [
+     108144,
+     108144,
+     108144
+    ],
+    "C_s": [
+     2.6,
+     2.2,
+     2.2
+    ],
+    "C_sha256": [
+     "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+    ],
+    "R_bytes": [
+     3826304,
+     3826304,
+     3826304
+    ],
+    "R_s": [
+     219.63,
+     189.74,
+     190.56
+    ],
+    "R_sha256": [
+     "8426457553e6033544430a58767a6feae8ea7d161b10d7829b73a33343bb9bdf",
+     "b82b21b7b81893a3e9368fdaee0857ccab016f6b5e9aba137e30a6ed48fe6156",
+     "fa5008ce65239c58e25f3f490ce55633f53a8df87ad66533cc1f5cb5e6587682"
+    ],
+    "jobs": 1,
+    "netns": true
+   },
+   "p_json": {
+    "install_s": [
+     73.66,
+     63.46,
+     65.65
+    ],
+    "native_so_bytes": 550024256,
+    "packages": 35,
+    "probe_ok": true,
+    "probe_rc": 0,
+    "probe_tail": [
+     "ROW token=198 n_prompt=39"
+    ],
+    "probe_token": "198",
+    "site_packages_py_lines": 4314098,
+    "venv_bytes": 1111854868,
+    "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+    "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+   },
+   "m2_json": {
+    "load_ns": {
+     "R": [
+      7851908467
+     ]
+    },
+    "prefill_ns": {
+     "R": [
+      7658190133
+     ]
+    },
+    "reps_done": {
+     "C": 0,
+     "Cv": 0,
+     "P": 0,
+     "R": 1,
+     "Rv": 0
+    },
+    "values_exit_s": {
+     "R": [
+      15.8065
+     ]
+    },
+    "values_row_s": {
+     "R": [
+      15.7838
+     ]
+    }
+   },
+   "tools": {
+    "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+    "audit_cargo": "error: no such command: `audit`",
+    "audit_pip": "absent",
+    "cargo": "cargo 1.98.0 (797e8a9bc 2026-08-05)",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+    "kernel": "6.12.111+deb13-amd64",
+    "make": "GNU Make 4.4.1",
+    "musl_gcc": "x86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0",
+    "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-linux-musl x86_64-unknown-uefi",
+    "musl_tools_pkg": "1.2.5-3.1~deb13u1",
+    "python": "Python 3.13.5",
+    "rustc": "rustc 1.98.0 (88d9e12ae 2026-08-18);binary: rustc;commit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea;"
+   },
+   "m1_json": {
+    "bytes": {
+     "C": 108144,
+     "R": 3826304
+    },
+    "sha256": {
+     "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+    }
+   },
+   "payload_sha": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+   "frozen_sha": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+   "run_py": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+   "notrun": [
+    "M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times"
+   ],
+   "timers_paused": "cm-tick.timer,cm-rc-watch.timer",
+   "timers_restored": null,
+   "phases": "install,m2,m3",
+   "reason": null,
+   "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "cpu_line": "host=box1 cpu=Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz ncpu=4 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.111+deb13-amd64",
+   "rj_top": {
+    "host": "box1",
+    "job": "20261004T112421Z-717005"
+   },
+   "timed_files": [
+    "gate-C.err",
+    "gate-C.out",
+    "gate-R.err",
+    "gate-R.out",
+    "install-rep1.err",
+    "install-rep1.out",
+    "install-rep2.err",
+    "install-rep2.out",
+    "install-rep3.err",
+    "install-rep3.out",
+    "m2-R-1.err",
+    "m2-R-1.out",
+    "m3-C-rep1.err",
+    "m3-C-rep1.out",
+    "m3-C-rep2.err",
+    "m3-C-rep2.out",
+    "m3-C-rep3.err",
+    "m3-C-rep3.out",
+    "m3-R-rep1.err",
+    "m3-R-rep1.out",
+    "m3-R-rep2.err",
+    "m3-R-rep2.out",
+    "m3-R-rep3.err",
+    "m3-R-rep3.out"
+   ],
+   "builds_files": [
+    "C-FLAGS.txt",
+    "C-rep1.err",
+    "C-rep2.err",
+    "C-rep3.err",
+    "R-FLAGS.txt",
+    "R-rep1.err",
+    "R-rep2.err",
+    "R-rep3.err"
+   ]
+  },
+  "box2": {
+   "result_word": "INVALID",
+   "rj_keys": [
+    "baseline",
+    "discards",
+    "elapsed_job_s",
+    "frozen_payload_sha256",
+    "gate_witness",
+    "host",
+    "job",
+    "m1_bytes_shipped",
+    "m1_sha256_shipped",
+    "notrun",
+    "p",
+    "payload_sha256",
+    "phases",
+    "reason",
+    "reps",
+    "run_py_sha256",
+    "timers_paused",
+    "tools",
+    "voids",
+    "word"
+   ],
+   "feed_status": "fail",
+   "feed_result_equals_RESULT_txt": true,
+   "job": {
+    "added_at": "2026-10-04T10:28:37Z",
+    "cpu_quota": "200%",
+    "memory_max": "2800M",
+    "name": "rust4-box2",
+    "payload": "<home>/feed-payload/rust4",
+    "payload_dest": "<home>/rust4",
+    "pushed_at": "2026-10-04T17:06:24Z"
+   },
+   "rj_word": "INVALID",
+   "elapsed_job_s_recorded": 1241,
+   "start": "2026-10-04T17:06:25Z",
+   "end_last_stamp": "2026-10-04T17:27:06Z",
+   "elapsed_from_log_s": 1241.0,
+   "baseline": {
+    "base_arm": 0.0265,
+    "base_host": 0.0505,
+    "limit_arm": 0.0465,
+    "limit_host": 0.1005,
+    "rj_limit_arm": 0.0465,
+    "rj_limit_host": 0.1005,
+    "ok_vs_max": true,
+    "match": true
+   },
+   "row_counts": {
+    "('install', 'P', 'DISCARD', '')": 7
+   },
+   "n_rows": 7,
+   "discards_rows": 7,
+   "voids_rows": 0,
+   "discards_recorded": 7,
+   "voids_recorded": 0,
+   "install": [
+    {
+     "rep": 1,
+     "status": "DISCARD",
+     "wall_to_exit_s": 64.86810580699239,
+     "mhz_ref": 2784.2619999999997,
+     "mhz_low": 831.387,
+     "drop_pct": 70.1,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0032,
+      "foreign_host": 0.0468
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 163772
+    },
+    {
+     "rep": 2,
+     "status": "DISCARD",
+     "wall_to_exit_s": 66.27037765999557,
+     "mhz_ref": 2783.991,
+     "mhz_low": 1177.883,
+     "drop_pct": 57.7,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0026,
+      "foreign_host": 0.0396
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 163948
+    },
+    {
+     "rep": 3,
+     "status": "DISCARD",
+     "wall_to_exit_s": 66.06793156696949,
+     "mhz_ref": 2784.172,
+     "mhz_low": 800.0,
+     "drop_pct": 71.3,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0002,
+      "foreign_host": 0.0433
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 165256
+    },
+    {
+     "rep": 4,
+     "status": "DISCARD",
+     "wall_to_exit_s": 65.26765358401462,
+     "mhz_ref": 2784.219,
+     "mhz_low": 1094.496,
+     "drop_pct": 60.7,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0308
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 165000
+    },
+    {
+     "rep": 5,
+     "status": "DISCARD",
+     "wall_to_exit_s": 66.68072642094921,
+     "mhz_ref": 2784.212,
+     "mhz_low": 1319.699,
+     "drop_pct": 52.6,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0002,
+      "foreign_host": 0.0409
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 163172
+    },
+    {
+     "rep": 6,
+     "status": "DISCARD",
+     "wall_to_exit_s": 66.07454774196958,
+     "mhz_ref": 2784.003,
+     "mhz_low": 1352.125,
+     "drop_pct": 51.4,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0339
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 163736
+    },
+    {
+     "rep": 7,
+     "status": "DISCARD",
+     "wall_to_exit_s": 68.06815847096732,
+     "mhz_ref": 2784.4880000000003,
+     "mhz_low": 909.134,
+     "drop_pct": 67.4,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0352
+     },
+     "limit_arm": 0.0465,
+     "rc": 0,
+     "maxrss_kb": 164604
+    }
+   ],
+   "install_kept_s_from_rows": [],
+   "m2_cache": [],
+   "kept_rows_over_limit": [],
+   "rows_over_limit_any": [],
+   "load_before_max": 0.29,
+   "load_after_max": 1.4,
+   "load_before_rows": [
+    [
+     "install",
+     "P",
+     1,
+     0.2
+    ],
+    [
+     "install",
+     "P",
+     2,
+     0.27
+    ],
+    [
+     "install",
+     "P",
+     3,
+     0.28
+    ],
+    [
+     "install",
+     "P",
+     4,
+     0.27
+    ],
+    [
+     "install",
+     "P",
+     5,
+     0.26
+    ],
+    [
+     "install",
+     "P",
+     6,
+     0.29
+    ],
+    [
+     "install",
+     "P",
+     7,
+     0.25
+    ]
+   ],
+   "thr_values": [
+    "0"
+   ],
+   "scaling_changed_any": false,
+   "m3_rows": [],
+   "m3_json": null,
+   "p_json": {
+    "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+    "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+   },
+   "m2_json": null,
+   "tools": {
+    "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+    "audit_cargo": "error: no such command: `audit`",
+    "audit_pip": "absent",
+    "cargo": "cargo 1.98.0 (797e8a9bc 2026-08-05)",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+    "kernel": "6.12.111+deb13-amd64",
+    "make": "GNU Make 4.4.1",
+    "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found",
+    "musl_target": "aarch64-unknown-linux-gnu x86_64-unknown-linux-gnu x86_64-unknown-linux-musl x86_64-unknown-uefi",
+    "musl_tools_pkg": "",
+    "python": "Python 3.13.5",
+    "rustc": "rustc 1.98.0 (88d9e12ae 2026-08-18);binary: rustc;commit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea;"
+   },
+   "m1_json": {
+    "bytes": {
+     "C": 108144,
+     "R": 3826304
+    },
+    "sha256": {
+     "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+    }
+   },
+   "payload_sha": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+   "frozen_sha": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+   "run_py": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+   "notrun": [],
+   "timers_paused": "NA",
+   "timers_restored": null,
+   "phases": "install,m2,m3",
+   "reason": "more than 6 clamp or throttle discards in this job (nothing further timed)",
+   "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "cpu_line": "host=box2 cpu=Intel(R) Celeron(R) N4020 CPU @ 1.10GHz ncpu=2 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.111+deb13-amd64",
+   "rj_top": {
+    "host": "box2",
+    "job": "20261004T170625Z-573700"
+   },
+   "timed_files": [
+    "gate-C.err",
+    "gate-C.out",
+    "gate-R.err",
+    "gate-R.out",
+    "install-rep1.err",
+    "install-rep1.out",
+    "install-rep2.err",
+    "install-rep2.out",
+    "install-rep3.err",
+    "install-rep3.out",
+    "install-rep4.err",
+    "install-rep4.out",
+    "install-rep5.err",
+    "install-rep5.out",
+    "install-rep6.err",
+    "install-rep6.out",
+    "install-rep7.err",
+    "install-rep7.out"
+   ],
+   "builds_files": []
+  },
+  "box3": {
+   "result_word": "OK-PARTIAL",
+   "rj_keys": [
+    "baseline",
+    "discards",
+    "elapsed_job_s",
+    "frozen_payload_sha256",
+    "gate_witness",
+    "host",
+    "job",
+    "m1_bytes_shipped",
+    "m1_sha256_shipped",
+    "m2",
+    "m3",
+    "notrun",
+    "p",
+    "payload_sha256",
+    "phases",
+    "reps",
+    "run_py_sha256",
+    "timers_paused",
+    "tools",
+    "voids",
+    "word"
+   ],
+   "feed_status": "ok",
+   "feed_result_equals_RESULT_txt": true,
+   "job": {
+    "added_at": "2026-10-04T10:28:37Z",
+    "attempts": 1,
+    "cpu_quota": "200%",
+    "memory_max": "2800M",
+    "name": "rust4-box3",
+    "payload": "<home>/feed-payload/rust4-run",
+    "payload_dest": "<home>/rust4",
+    "pushed_at": "2026-10-04T20:32:42Z"
+   },
+   "rj_word": "OK-PARTIAL",
+   "elapsed_job_s_recorded": 1133,
+   "start": "2026-10-04T20:32:42Z",
+   "end_last_stamp": "2026-10-04T20:51:36Z",
+   "elapsed_from_log_s": 1134.0,
+   "baseline": {
+    "base_arm": 0.0095,
+    "base_host": 0.016,
+    "limit_arm": 0.0295,
+    "limit_host": 0.1,
+    "rj_limit_arm": 0.0295,
+    "rj_limit_host": 0.1,
+    "ok_vs_max": true,
+    "match": true
+   },
+   "row_counts": {
+    "('install', 'P', 'DISCARD', '')": 3,
+    "('install', 'P', 'KEPT', '')": 1,
+    "('m2', 'R', 'KEPT', '')": 1,
+    "('m2', 'C', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'P', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Rv', 'DISCARD', 'cold cache not dropped')": 1
+   },
+   "n_rows": 8,
+   "discards_rows": 6,
+   "voids_rows": 0,
+   "discards_recorded": 6,
+   "voids_recorded": 0,
+   "install": [
+    {
+     "rep": 1,
+     "status": "DISCARD",
+     "wall_to_exit_s": 80.89191727002617,
+     "mhz_ref": 2784.036,
+     "mhz_low": 795.963,
+     "drop_pct": 71.4,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0064,
+      "foreign_host": 0.049
+     },
+     "limit_arm": 0.0295,
+     "rc": 0,
+     "maxrss_kb": 163112
+    },
+    {
+     "rep": 2,
+     "status": "DISCARD",
+     "wall_to_exit_s": 77.6867236449616,
+     "mhz_ref": 2783.883,
+     "mhz_low": 995.02,
+     "drop_pct": 64.3,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0374
+     },
+     "limit_arm": 0.0295,
+     "rc": 0,
+     "maxrss_kb": 164576
+    },
+    {
+     "rep": 3,
+     "status": "DISCARD",
+     "wall_to_exit_s": 76.28292268305086,
+     "mhz_ref": 2784.085,
+     "mhz_low": 800.0,
+     "drop_pct": 71.3,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0461
+     },
+     "limit_arm": 0.0295,
+     "rc": 0,
+     "maxrss_kb": 164224
+    },
+    {
+     "rep": 4,
+     "status": "KEPT",
+     "wall_to_exit_s": 73.68100965599297,
+     "mhz_ref": 2784.199,
+     "mhz_low": 2765.69,
+     "drop_pct": 0.7,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0,
+      "foreign_host": 0.0396
+     },
+     "limit_arm": 0.0295,
+     "rc": 0,
+     "maxrss_kb": 164356
+    }
+   ],
+   "install_kept_s_from_rows": [
+    73.68
+   ],
+   "m2_cache": [
+    {
+     "arm": "R",
+     "status": "KEPT",
+     "before_kb": 1908316,
+     "after_kb": 94332,
+     "fall_pct": 95.1
+    },
+    {
+     "arm": "C",
+     "status": "DISCARD",
+     "before_kb": 368876,
+     "after_kb": 94340,
+     "fall_pct": 74.4
+    },
+    {
+     "arm": "P",
+     "status": "DISCARD",
+     "before_kb": 97036,
+     "after_kb": 94288,
+     "fall_pct": 2.8
+    },
+    {
+     "arm": "Rv",
+     "status": "DISCARD",
+     "before_kb": 96984,
+     "after_kb": 94288,
+     "fall_pct": 2.8
+    }
+   ],
+   "kept_rows_over_limit": [],
+   "rows_over_limit_any": [],
+   "load_before_max": 0.28,
+   "load_after_max": 1.97,
+   "load_before_rows": [
+    [
+     "install",
+     "P",
+     1,
+     0.26
+    ],
+    [
+     "install",
+     "P",
+     2,
+     0.26
+    ],
+    [
+     "install",
+     "P",
+     3,
+     0.28
+    ],
+    [
+     "install",
+     "P",
+     4,
+     0.25
+    ],
+    [
+     "m2",
+     "R",
+     1,
+     0.23
+    ]
+   ],
+   "thr_values": [
+    "7451432"
+   ],
+   "scaling_changed_any": false,
+   "m3_rows": [],
+   "m3_json": {
+    "C_bytes": [],
+    "C_s": [],
+    "C_sha256": [],
+    "R_bytes": [],
+    "R_s": [],
+    "R_sha256": []
+   },
+   "p_json": {
+    "install_s": [
+     73.68
+    ],
+    "native_so_bytes": 550024256,
+    "packages": 35,
+    "probe_ok": true,
+    "probe_rc": 0,
+    "probe_tail": [
+     "ROW token=198 n_prompt=39"
+    ],
+    "probe_token": "198",
+    "site_packages_py_lines": 4314098,
+    "venv_bytes": 1111854868,
+    "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+    "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+   },
+   "m2_json": {
+    "load_ns": {
+     "R": [
+      11006158649
+     ]
+    },
+    "prefill_ns": {
+     "R": [
+      7374036599
+     ]
+    },
+    "reps_done": {
+     "C": 0,
+     "Cv": 0,
+     "P": 0,
+     "R": 1,
+     "Rv": 0
+    },
+    "values_exit_s": {
+     "R": [
+      18.5628
+     ]
+    },
+    "values_row_s": {
+     "R": [
+      18.536
+     ]
+    }
+   },
+   "tools": {
+    "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+    "audit_cargo": "error: no such command: `audit`",
+    "audit_pip": "absent",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+    "kernel": "6.12.94+deb13-amd64",
+    "make": "GNU Make 4.4.1",
+    "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found",
+    "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-uefi",
+    "musl_tools_pkg": "",
+    "python": "Python 3.13.5",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01);binary: rustc;commit-hash: 48a229ceaefd4985c50990b14116b6d856af0985;"
+   },
+   "m1_json": {
+    "bytes": {
+     "C": 108144,
+     "R": 3826304
+    },
+    "sha256": {
+     "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+    }
+   },
+   "payload_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "frozen_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "run_py": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+   "notrun": [
+    "M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times",
+    "M3 and M4 builds: no source payload on this host (lite payload)"
+   ],
+   "timers_paused": "NA",
+   "timers_restored": null,
+   "phases": "install,m2,m3",
+   "reason": null,
+   "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "cpu_line": "host=box3 cpu=Intel(R) Celeron(R) N4020C CPU @ 1.10GHz ncpu=2 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.94+deb13-amd64",
+   "rj_top": {
+    "host": "box3",
+    "job": "20261004T203242Z-480720"
+   },
+   "timed_files": [
+    "gate-C.err",
+    "gate-C.out",
+    "gate-R.err",
+    "gate-R.out",
+    "install-rep1.err",
+    "install-rep1.out",
+    "install-rep2.err",
+    "install-rep2.out",
+    "install-rep3.err",
+    "install-rep3.out",
+    "install-rep4.err",
+    "install-rep4.out",
+    "m2-R-1.err",
+    "m2-R-1.out"
+   ],
+   "builds_files": []
+  },
+  "box4": {
+   "result_word": "OK-PARTIAL",
+   "rj_keys": [
+    "baseline",
+    "discards",
+    "elapsed_job_s",
+    "frozen_payload_sha256",
+    "gate_witness",
+    "host",
+    "job",
+    "m1_bytes_shipped",
+    "m1_sha256_shipped",
+    "m2",
+    "m3",
+    "notrun",
+    "p",
+    "payload_sha256",
+    "phases",
+    "reps",
+    "run_py_sha256",
+    "timers_paused",
+    "tools",
+    "voids",
+    "word"
+   ],
+   "feed_status": "ok",
+   "feed_result_equals_RESULT_txt": true,
+   "job": {
+    "added_at": "2026-10-04T10:28:37Z",
+    "cpu_quota": "100%",
+    "memory_max": "2900M",
+    "name": "rust4-box4",
+    "payload": "<home>/feed-payload/rust4-run",
+    "payload_dest": "<home>/rust4",
+    "pushed_at": "2026-10-04T12:25:19Z"
+   },
+   "rj_word": "OK-PARTIAL",
+   "elapsed_job_s_recorded": 950,
+   "start": "2026-10-04T12:25:19Z",
+   "end_last_stamp": "2026-10-04T12:41:09Z",
+   "elapsed_from_log_s": 950.0,
+   "baseline": {
+    "base_arm": 0.05,
+    "base_host": 0.05,
+    "limit_arm": 0.07,
+    "limit_host": 0.1,
+    "rj_limit_arm": 0.07,
+    "rj_limit_host": 0.1,
+    "ok_vs_max": true,
+    "match": true
+   },
+   "row_counts": {
+    "('install', 'P', 'DISCARD', '')": 2,
+    "('install', 'P', 'KEPT', '')": 1,
+    "('m2', 'R', 'KEPT', '')": 1,
+    "('m2', 'C', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Rv', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Cv', 'DISCARD', 'cold cache not dropped')": 1
+   },
+   "n_rows": 7,
+   "discards_rows": 5,
+   "voids_rows": 0,
+   "discards_recorded": 5,
+   "voids_recorded": 0,
+   "install": [
+    {
+     "rep": 1,
+     "status": "DISCARD",
+     "wall_to_exit_s": 135.03155411299667,
+     "mhz_ref": 2100.0,
+     "mhz_low": 1050.0,
+     "drop_pct": 50.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0252,
+      "foreign_host": 0.0252
+     },
+     "limit_arm": 0.07,
+     "rc": 0,
+     "maxrss_kb": 163328
+    },
+    {
+     "rep": 2,
+     "status": "DISCARD",
+     "wall_to_exit_s": 142.78118192299735,
+     "mhz_ref": 2100.0,
+     "mhz_low": 1050.0,
+     "drop_pct": 50.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0807,
+      "foreign_host": 0.0807
+     },
+     "limit_arm": 0.07,
+     "rc": 0,
+     "maxrss_kb": 163148
+    },
+    {
+     "rep": 3,
+     "status": "KEPT",
+     "wall_to_exit_s": 132.43141272000503,
+     "mhz_ref": 2100.0,
+     "mhz_low": 2100.0,
+     "drop_pct": 0.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0196,
+      "foreign_host": 0.0196
+     },
+     "limit_arm": 0.07,
+     "rc": 0,
+     "maxrss_kb": 162960
+    }
+   ],
+   "install_kept_s_from_rows": [
+    132.43
+   ],
+   "m2_cache": [
+    {
+     "arm": "R",
+     "status": "KEPT",
+     "before_kb": 3002392,
+     "after_kb": 92016,
+     "fall_pct": 96.9
+    },
+    {
+     "arm": "C",
+     "status": "DISCARD",
+     "before_kb": 359096,
+     "after_kb": 91952,
+     "fall_pct": 74.4
+    },
+    {
+     "arm": "Rv",
+     "status": "DISCARD",
+     "before_kb": 93684,
+     "after_kb": 92032,
+     "fall_pct": 1.8
+    },
+    {
+     "arm": "Cv",
+     "status": "DISCARD",
+     "before_kb": 93752,
+     "after_kb": 91964,
+     "fall_pct": 1.9
+    }
+   ],
+   "kept_rows_over_limit": [],
+   "rows_over_limit_any": [
+    [
+     "install",
+     "P",
+     2,
+     "DISCARD",
+     0.0807,
+     0.07,
+     0.0807,
+     0.1
+    ]
+   ],
+   "load_before_max": 0.31,
+   "load_after_max": 1.33,
+   "load_before_rows": [
+    [
+     "install",
+     "P",
+     1,
+     0.26
+    ],
+    [
+     "install",
+     "P",
+     2,
+     0.29
+    ],
+    [
+     "install",
+     "P",
+     3,
+     0.26
+    ],
+    [
+     "m2",
+     "R",
+     1,
+     0.31
+    ]
+   ],
+   "thr_values": [
+    "None"
+   ],
+   "scaling_changed_any": false,
+   "m3_rows": [],
+   "m3_json": {
+    "C_bytes": [],
+    "C_s": [],
+    "C_sha256": [],
+    "R_bytes": [],
+    "R_s": [],
+    "R_sha256": []
+   },
+   "p_json": {
+    "install_s": [
+     132.43
+    ],
+    "native_so_bytes": 550024256,
+    "packages": 35,
+    "probe_ok": false,
+    "probe_rc": -4,
+    "probe_tail": [],
+    "probe_token": null,
+    "site_packages_py_lines": 4314098,
+    "venv_bytes": 1111854868,
+    "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+    "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+   },
+   "m2_json": {
+    "load_ns": {
+     "R": [
+      3922766751
+     ]
+    },
+    "prefill_ns": {
+     "R": [
+      13094618312
+     ]
+    },
+    "reps_done": {
+     "C": 0,
+     "Cv": 0,
+     "R": 1,
+     "Rv": 0
+    },
+    "values_exit_s": {
+     "R": [
+      17.2297
+     ]
+    },
+    "values_row_s": {
+     "R": [
+      17.1742
+     ]
+    }
+   },
+   "tools": {
+    "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+    "audit_cargo": "error: no such command: `audit`",
+    "audit_pip": "absent",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+    "kernel": "6.12.94+deb13-amd64",
+    "make": "GNU Make 4.4.1",
+    "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found",
+    "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-uefi",
+    "musl_tools_pkg": "",
+    "python": "Python 3.13.5",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28);binary: rustc;commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4;"
+   },
+   "m1_json": {
+    "bytes": {
+     "C": 108144,
+     "R": 3826304
+    },
+    "sha256": {
+     "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+    }
+   },
+   "payload_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "frozen_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "run_py": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+   "notrun": [
+    "P start: stack did not start: rc=-4 (Illegal instruction) ()",
+    "M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times",
+    "M3 and M4 builds: no source payload on this host (lite payload)"
+   ],
+   "timers_paused": "NA",
+   "timers_restored": null,
+   "phases": "install,m2,m3",
+   "reason": null,
+   "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "cpu_line": "host=box4 cpu=AMD Sempron(tm) SI-42 ncpu=1 arm_cpu=0 runner_cpu=0 pin=shared_single_cpu kernel=6.12.94+deb13-amd64",
+   "rj_top": {
+    "host": "box4",
+    "job": "20261004T122519Z-83764"
+   },
+   "timed_files": [
+    "gate-C.err",
+    "gate-C.out",
+    "gate-R.err",
+    "gate-R.out",
+    "install-rep1.err",
+    "install-rep1.out",
+    "install-rep2.err",
+    "install-rep2.out",
+    "install-rep3.err",
+    "install-rep3.out",
+    "m2-R-1.err",
+    "m2-R-1.out"
+   ],
+   "builds_files": []
+  },
+  "box5": {
+   "result_word": "OK-PARTIAL",
+   "rj_keys": [
+    "baseline",
+    "discards",
+    "elapsed_job_s",
+    "frozen_payload_sha256",
+    "gate_witness",
+    "host",
+    "job",
+    "m1_bytes_shipped",
+    "m1_sha256_shipped",
+    "m2",
+    "m3",
+    "notrun",
+    "p",
+    "payload_sha256",
+    "phases",
+    "reps",
+    "run_py_sha256",
+    "timers_paused",
+    "tools",
+    "voids",
+    "word"
+   ],
+   "feed_status": "ok",
+   "feed_result_equals_RESULT_txt": true,
+   "job": {
+    "added_at": "2026-10-04T10:28:37Z",
+    "cpu_quota": "200%",
+    "memory_max": "1500M",
+    "name": "rust4-box5",
+    "payload": "<home>/feed-payload/rust4-run",
+    "payload_dest": "<home>/rust4",
+    "pushed_at": "2026-10-04T12:20:23Z"
+   },
+   "rj_word": "OK-PARTIAL",
+   "elapsed_job_s_recorded": 530,
+   "start": "2026-10-04T12:20:24Z",
+   "end_last_stamp": "2026-10-04T12:29:14Z",
+   "elapsed_from_log_s": 530.0,
+   "baseline": {
+    "base_arm": 0.0015,
+    "base_host": 0.0135,
+    "limit_arm": 0.0215,
+    "limit_host": 0.1,
+    "rj_limit_arm": 0.0215,
+    "rj_limit_host": 0.1,
+    "ok_vs_max": true,
+    "match": true
+   },
+   "row_counts": {
+    "('install', 'P', 'KEPT', '')": 1,
+    "('m2', 'R', 'KEPT', '')": 1,
+    "('m2', 'C', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Rv', 'DISCARD', 'cold cache not dropped')": 1,
+    "('m2', 'Cv', 'DISCARD', 'cold cache not dropped')": 1
+   },
+   "n_rows": 5,
+   "discards_rows": 3,
+   "voids_rows": 0,
+   "discards_recorded": 3,
+   "voids_recorded": 0,
+   "install": [
+    {
+     "rep": 1,
+     "status": "KEPT",
+     "wall_to_exit_s": 161.4336327899946,
+     "mhz_ref": 1463.075,
+     "mhz_low": 1463.072,
+     "drop_pct": 0.0,
+     "thr_changed": false,
+     "foreign": {
+      "foreign_arm": 0.0026,
+      "foreign_host": 0.0466
+     },
+     "limit_arm": 0.0215,
+     "rc": 0,
+     "maxrss_kb": 164296
+    }
+   ],
+   "install_kept_s_from_rows": [
+    161.43
+   ],
+   "m2_cache": [
+    {
+     "arm": "R",
+     "status": "KEPT",
+     "before_kb": 1506524,
+     "after_kb": 80964,
+     "fall_pct": 94.6
+    },
+    {
+     "arm": "C",
+     "status": "DISCARD",
+     "before_kb": 348776,
+     "after_kb": 80972,
+     "fall_pct": 76.8
+    },
+    {
+     "arm": "Rv",
+     "status": "DISCARD",
+     "before_kb": 83396,
+     "after_kb": 80912,
+     "fall_pct": 3.0
+    },
+    {
+     "arm": "Cv",
+     "status": "DISCARD",
+     "before_kb": 83368,
+     "after_kb": 81036,
+     "fall_pct": 2.8
+    }
+   ],
+   "kept_rows_over_limit": [],
+   "rows_over_limit_any": [],
+   "load_before_max": 0.26,
+   "load_after_max": 1.48,
+   "load_before_rows": [
+    [
+     "install",
+     "P",
+     1,
+     0.26
+    ],
+    [
+     "m2",
+     "R",
+     1,
+     0.25
+    ]
+   ],
+   "thr_values": [
+    "None"
+   ],
+   "scaling_changed_any": false,
+   "m3_rows": [],
+   "m3_json": {
+    "C_bytes": [],
+    "C_s": [],
+    "C_sha256": [],
+    "R_bytes": [],
+    "R_s": [],
+    "R_sha256": []
+   },
+   "p_json": {
+    "install_s": [
+     161.43
+    ],
+    "native_so_bytes": 550024256,
+    "packages": 35,
+    "probe_ok": false,
+    "probe_rc": -4,
+    "probe_tail": [],
+    "probe_token": null,
+    "site_packages_py_lines": 4314098,
+    "venv_bytes": 1111854868,
+    "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+    "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+   },
+   "m2_json": {
+    "load_ns": {
+     "R": [
+      7490118615
+     ]
+    },
+    "prefill_ns": {
+     "R": [
+      12688691573
+     ]
+    },
+    "reps_done": {
+     "C": 0,
+     "Cv": 0,
+     "R": 1,
+     "Rv": 0
+    },
+    "values_exit_s": {
+     "R": [
+      20.4523
+     ]
+    },
+    "values_row_s": {
+     "R": [
+      20.3998
+     ]
+    }
+   },
+   "tools": {
+    "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+    "audit_cargo": "error: no such command: `audit`",
+    "audit_pip": "absent",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+    "kernel": "6.12.94+deb13-amd64",
+    "make": "GNU Make 4.4.1",
+    "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found",
+    "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-uefi",
+    "musl_tools_pkg": "",
+    "python": "Python 3.13.5",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28);binary: rustc;commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4;"
+   },
+   "m1_json": {
+    "bytes": {
+     "C": 108144,
+     "R": 3826304
+    },
+    "sha256": {
+     "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+     "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+    }
+   },
+   "payload_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "frozen_sha": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+   "run_py": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+   "notrun": [
+    "P start: stack did not start: rc=-4 (Illegal instruction) ()",
+    "M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times",
+    "M3 and M4 builds: no source payload on this host (lite payload)"
+   ],
+   "timers_paused": "NA",
+   "timers_restored": null,
+   "phases": "install,m2,m3",
+   "reason": null,
+   "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "cpu_line": "host=box5 cpu=Intel(R) Pentium(R) Dual  CPU  T2310  @ 1.46GHz ncpu=2 arm_cpu=1 runner_cpu=0 pin=separate_cores kernel=6.12.94+deb13-amd64",
+   "rj_top": {
+    "host": "box5",
+    "job": "20261004T122024Z-87953"
+   },
+   "timed_files": [
+    "gate-C.err",
+    "gate-C.out",
+    "gate-R.err",
+    "gate-R.out",
+    "install-rep1.err",
+    "install-rep1.out",
+    "m2-R-1.err",
+    "m2-R-1.out"
+   ],
+   "builds_files": []
+  }
+ },
+ "elapsed_sum_recorded_s": 5625,
+ "elapsed_sum_from_log_s": 5626.0,
+ "m3": {
+  "R_s_rows": [
+   219.63435418100562,
+   189.73938432399882,
+   190.5562544449931
+  ],
+  "C_s_rows": [
+   2.6041478870029096,
+   2.203735737974057,
+   2.203734484995948
+  ],
+  "R_med": 190.5562544449931,
+  "C_med": 2.203735737974057,
+  "t": 86.46964840719772,
+  "t_rounded_figs": 86.61818181818181,
+  "t_per_rep_min": 72.86044900559322,
+  "t_per_rep_max": 99.66461734677145,
+  "R_hashes": [
+   "8426457553e6033544430a58767a6feae8ea7d161b10d7829b73a33343bb9bdf",
+   "b82b21b7b81893a3e9368fdaee0857ccab016f6b5e9aba137e30a6ed48fe6156",
+   "fa5008ce65239c58e25f3f490ce55633f53a8df87ad66533cc1f5cb5e6587682"
+  ],
+  "C_hashes": [
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+  ],
+  "R_bytes": [
+   3826304,
+   3826304,
+   3826304
+  ],
+  "C_bytes": [
+   108144,
+   108144,
+   108144
+  ],
+  "netns": true,
+  "jobs": 1,
+  "rows_kept_all": true,
+  "flags": {
+   "R-FLAGS.txt": "rustc 1.98.0 (88d9e12ae 2026-08-18)\nbinary: rustc\ncommit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea\ncommit-date: 2026-08-18\nhost: x86_64-unknown-linux-gnu\nrelease: 1.98.0\nLLVM version: 22.1.8\ncargo 1.98.0 (797e8a9bc 2026-08-05)\nRUSTFLAGS=--remap-path-prefix=<src>=/src\ntarget=x86_64-unknown-linux-musl cc=musl-gcc 1.2.5-3.1~deb13u1 x86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0\nprofile.release env: opt-level=3 lto=fat codegen-units=1 panic=abort strip=symbols; jobs=1; SOURCE_DATE_EPOCH=1759536000; vendored, --locked --offline; netns=1\n",
+   "C-FLAGS.txt": "x86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0\nmusl-tools 1.2.5-3.1~deb13u1\nmake GNU Make 4.4.1\nCFLAGS=-O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<src>=/src\nLDFLAGS=-static -s -Wl,--build-id=none -lm; jobs=1; netns=1\n"
+  },
+  "err_sizes": {
+   "C-rep1.err": 0,
+   "C-rep2.err": 0,
+   "C-rep3.err": 0,
+   "R-rep1.err": 1566,
+   "R-rep2.err": 1566,
+   "R-rep3.err": 1566
+  },
+  "err_has_network_text": {
+   "C-rep1.err": false,
+   "C-rep2.err": false,
+   "C-rep3.err": false,
+   "R-rep1.err": false,
+   "R-rep2.err": false,
+   "R-rep3.err": false
+  },
+  "out_C_sizes": {
+   "m3-C-rep1.out": 1533,
+   "m3-C-rep2.out": 1533,
+   "m3-C-rep3.out": 1533
+  },
+  "out_R_empty": true,
+  "C_out_dirs": [
+   "<home>/rust4-build/rep1/outC/src",
+   "<home>/rust4-build/rep2/outC/src",
+   "<home>/rust4-build/rep3/outC/src"
+  ],
+  "musl_install_line": [
+   "musl-tools install: Setting up musl-tools (1.2.5-3.1~deb13u1) ..."
+  ],
+  "tools_at_start": [
+   "TOOLS {\"rustc\": \"rustc 1.98.0 (88d9e12ae 2026-08-18);binary: rustc;commit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea;\", \"cargo\": \"cargo 1.98.0 (797e8a9bc 2026-08-05)\", \"musl_target\": \"x86_64-unknown-linux-gnu x86_64-unknown-linux-musl x86_64-unknown-uefi\", \"gcc\": \"gcc (Debian 14.2.0-19) 14.2.0\", \"musl_gcc\": \"/bin/bash: line 1: musl-gcc: command not found\", \"musl_tools_pkg\": \"\", \"make\": \"GNU Ma"
+  ]
+ },
+ "m4": {
+  "penguin_txt": {
+   "R 1": "2e3c89345bc8961c99c9999c3407eb276b760dc307100b0add2318634da7b16e",
+   "C 1": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "R 2": "c5d09b9ccf4c2a7708d3b61e4c2637e5f96f293021be5d97bc240315b6b011a1",
+   "C 2": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "shipped R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503",
+   "shipped C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+  },
+  "penguin_recomputed": {
+   "R1": "2e3c89345bc8961c99c9999c3407eb276b760dc307100b0add2318634da7b16e",
+   "R2": "c5d09b9ccf4c2a7708d3b61e4c2637e5f96f293021be5d97bc240315b6b011a1",
+   "C1": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "C2": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+  },
+  "penguin_sizes": {
+   "R1": 3826304,
+   "R2": 3826304,
+   "C1": 108144,
+   "C2": 108144
+  },
+  "box1_R": [
+   "8426457553e6033544430a58767a6feae8ea7d161b10d7829b73a33343bb9bdf",
+   "b82b21b7b81893a3e9368fdaee0857ccab016f6b5e9aba137e30a6ed48fe6156",
+   "fa5008ce65239c58e25f3f490ce55633f53a8df87ad66533cc1f5cb5e6587682"
+  ],
+  "box1_C": [
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8"
+  ],
+  "shipped": {
+   "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503",
+   "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+   "witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+   "wheelhouse": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+   "run_py": "b71fb02c613d2b16",
+   "frozen_full": "697610dd05e120a3cffceef1cc483aa4cb384676a06294201dfe763b63d67e94",
+   "frozen_lite": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85"
+  },
+  "R_identical": false,
+  "C_identical": true,
+  "R_distinct_all": 6,
+  "C_distinct_all": 1,
+  "label": "C ONLY",
+  "toolchain_penguin": "rustc 1.98.0 (88d9e12ae 2026-08-18)\nbinary: rustc\ncommit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea\ncommit-date: 2026-08-18\nhost: x86_64-unknown-linux-gnu\nrelease: 1.98.0\nLLVM version: 22.1.8\ngcc (Debian 14.2.0-19) 14.2.0\nx86_64-linux-gnu-gcc (Debian 14.2.0-19) 14.2.0\nVersion: 1.2.5-3.1~deb13u1\nGNU Make 4.4.1\n2026-10-04T10:29:02Z\n",
+  "tool_equal": {
+   "rustc_commit": true,
+   "gcc": true,
+   "musl_tools": true,
+   "penguin_gcc_line": "gcc (Debian 14.2.0-19) 14.2.0",
+   "box1_gcc": "gcc (Debian 14.2.0-19) 14.2.0"
+  },
+  "diag_R_diff_bytes": 21,
+  "diag_R_diff_ranges": [
+   640,
+   659,
+   2618916
+  ],
+  "diag_path_offset_p1": [
+   2618893
+  ],
+  "diag_equal_length": true
+ },
+ "m5": {
+  "cargo_lock_packages": 104,
+  "onig_in_lock": [
+   true,
+   true
+  ],
+  "vendor_dirs": 103,
+  "vendor_rs_files": 3808,
+  "vendor_rs_lines": 1919375,
+  "program_rs_lines": 1868,
+  "R_total_rs_lines": 1921243,
+  "C_src_files": 11,
+  "C_src_lines": 2415
+ },
+ "p_local": {
+  "requirements_lines": 34,
+  "wheels": 34,
+  "wheel_bytes": 249362583,
+  "wheelhouse_hash_recomputed": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+  "wheelhouse_file_hash": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+ }
+}

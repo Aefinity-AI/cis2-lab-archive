@@ -1,0 +1,27 @@
+=== cis2-qwen3-hq start 2026-10-16T15:45:56Z host=aefinity-box-2273 cpu=Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz flags=avx2,fma,sse4_2,
+sha256 model.safetensors = f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b
+sha256 config.json = 660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd
+sha256 tokenizer.json = aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4
+sha256 ids16 = 53ea8e67a213a84677328896d6dea41ef3841b65028cfb85b3ba844e275f5cd7
+source: Qwen/Qwen3-0.6B revision c1899de289a04d12100db370d81485cdf75e47ca licence apache-2.0 (card + LICENSE read at download)
+sources sha256: 3e45a85dd1a0da3b (cat of host.cpp math.h model.h fpenv.h sha256.h consts.inc)
+g++ g++ (Debian 14.2.0-19) 14.2.0; nvcc Build cuda_12.4.r12.4/compiler.34097967_0; nvidia-smi: NVIDIA GeForce GTX 1050, 550.163.01
+mem: MemTotal: 16225900 kB MemAvailable: 11892108 kB 
+build host-gcc: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o cis2_host_gcc gpu/cis2_host.cpp
+row host-gcc gen_toks=16 run=1 digest=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461 CANDIDATE rc=0 wall_s=21 maxrss_kb=3801552
+row host-gcc gen_toks=16 run=2 digest=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461 CANDIDATE rc=0 wall_s=24 maxrss_kb=3801528
+repeat host-gcc gen_toks=16 SAME
+row host-gcc gen_toks=128 run=1 digest=aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713 CANDIDATE rc=0 wall_s=99 maxrss_kb=3801736
+row host-gcc gen_toks=128 run=2 digest=aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713 CANDIDATE rc=0 wall_s=94 maxrss_kb=3801780
+repeat host-gcc gen_toks=128 SAME
+build cuda: nvcc -x cu -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -DCIS2_CUDA_FTZ=1 -arch=sm_61 -I gpu -o cis2_cuda gpu/cis2_host.cpp
+row cuda-sm_61 gen_toks=16 run=1 digest=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461 CANDIDATE rc=0 wall_s=16 maxrss_kb=2203592
+row cuda-sm_61 gen_toks=16 run=2 digest=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461 CANDIDATE rc=0 wall_s=16 maxrss_kb=2203676
+repeat cuda-sm_61 gen_toks=16 SAME
+row cuda-sm_61 gen_toks=128 run=1 digest=aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713 CANDIDATE rc=0 wall_s=60 maxrss_kb=2203504
+row cuda-sm_61 gen_toks=128 run=2 digest=aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713 CANDIDATE rc=0 wall_s=61 maxrss_kb=2203492
+repeat cuda-sm_61 gen_toks=128 SAME
+cuda==host gen_toks=16 SAME
+cuda==host gen_toks=128 SAME
+RESULT: OK cis2-qwen3-hq d16=a81dd7e42ead0d16f885d18e8e3ffe1560844c1047a34d6f5f023edf98524461 d128=aab47b277573d563f4db34e92370674992276de5e1a2cb37fb1c91501bab1713 repeat=SAME maxrss_kb=3801780 weights=f47f7117 ids=53ea8e67
+=== cis2-qwen3-hq done 2026-10-16T15:52:36Z

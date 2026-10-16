@@ -1,0 +1,2 @@
+=== cis2-sample-hq start 2026-10-16T10:21:02Z host=aefinity-box-2273 cpu=Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz flags=avx2,fma,sse4_2,
+RESULT: FAIL cis2-sample-hq no payload

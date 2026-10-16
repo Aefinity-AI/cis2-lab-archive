@@ -1,0 +1,1 @@
+RESULT: OK rust3 arm=TOYH K1=1 K2=0 K3=1 K4=1 K5=1 harness_crashes=1 unclassified=0 execs=5160+1373 oracle_sha256=e81d09b65cbee3ca8917d5f0fc9c2db8536580be7dab1729ccddaccbc01f2739

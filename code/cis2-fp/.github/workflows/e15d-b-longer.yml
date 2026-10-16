@@ -1,0 +1,102 @@
+name: E15d(b) longer-horizon cross-ISA CIS-2 fp32 reference (prompt set, 128 tok)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [cm/e15d-longer-and-second-model]
+
+env:
+  # rustc pinned explicitly per the E15d compiler-invariance track (do not
+  # rely on the runner's default toolchain).
+  RUST_TOOLCHAIN: "1.98.0"
+
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          echo "uname -m = $U"
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: rustc version
+        run: rustc -V
+
+      - name: Fetch SmolLM2-135M weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/config.json     https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/tokenizer.json  https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights/model.safetensors https://huggingface.co/HuggingFaceTB/SmolLM2-135M/resolve/main/model.safetensors
+          sha256sum weights/model.safetensors weights/config.json weights/tokenizer.json
+          echo "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1  weights/model.safetensors" | sha256sum -c - || { echo "weights download corrupt/empty"; exit 1; }
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: no_fma_gate.sh
+        run: ./scripts/no_fma_gate.sh
+
+      - name: Build release
+        run: cargo build --release
+
+      - name: Run reference over the E15d prompt set, gen_toks=128
+        run: |
+          nice -n 10 ./target/release/cis2_ref \
+            --prompt-set prompts/e15d_prompt_set.json \
+            --gen-toks 128 \
+            | tee run_output_${{ matrix.arch_label }}.txt
+
+      - name: Extract per-prompt CIS2_REF digests
+        run: |
+          grep -E '^CIS2_REF digest=' run_output_${{ matrix.arch_label }}.txt \
+            | sed -E 's/^CIS2_REF digest=([0-9a-f]+) prompt_idx=([0-9]+).*/\2 \1/' \
+            | sort -n > digests_${{ matrix.arch_label }}.txt
+          echo "== per-prompt digests (${{ matrix.arch_label }}) =="
+          cat digests_${{ matrix.arch_label }}.txt
+
+      - name: Upload digests artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: e15d-b-digests-${{ matrix.arch_label }}
+          path: digests_${{ matrix.arch_label }}.txt
+
+  aggregate:
+    needs: run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: e15d-b-digests-*
+          path: artifacts
+
+      - name: Compare x86_64 vs aarch64 per-prompt digests
+        run: |
+          set -euo pipefail
+          X86=artifacts/e15d-b-digests-x86_64/digests_x86_64.txt
+          ARM=artifacts/e15d-b-digests-aarch64/digests_aarch64.txt
+          echo "== x86_64 =="; cat "$X86"
+          echo "== aarch64 =="; cat "$ARM"
+          if ! diff -u "$X86" "$ARM"; then
+            echo "MISMATCH: x86_64 vs aarch64 per-prompt digests differ (gen_toks=128 prompt-set run)"
+            exit 1
+          fi
+          echo "PASS: all prompt digests match bit-identically between x86_64 and aarch64"

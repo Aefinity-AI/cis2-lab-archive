@@ -1,0 +1,1 @@
+RESULT: OK diag2 rows=63 digest_mismatch_rows=0 (diagnostic, no label) see <home>/legs/rust2a-diag-box1/medians2.txt

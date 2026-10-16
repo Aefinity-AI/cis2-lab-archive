@@ -1,0 +1,4 @@
+total 2992
+-rw-rw-r-- 1 cm cm   60404 Oct  4 03:47 libggml.a
+-rw-rw-r-- 1 cm cm 1324554 Oct  4 03:47 libggml-base.a
+-rw-rw-r-- 1 cm cm 1675118 Oct  4 03:47 libggml-cpu.a

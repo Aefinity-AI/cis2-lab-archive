@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:09:56Z",
+  "host": "cm-hq",
+  "name": "cis2-batch-hq",
+  "pushed_at": "2026-10-16T09:59:24Z",
+  "result_line": "RESULT: OK cis2-batch-hq host_b1=MATCH host_b2=SAME host_b4=SAME host_b8=SAME host_pset=4/4 cuda_b1=MATCH cuda_b2=SAME cuda_b4=SAME cuda_b8=SAME cuda_pset=4/4 weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}

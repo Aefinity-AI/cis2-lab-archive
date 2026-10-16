@@ -1,0 +1,711 @@
+diff --git a/gpu/README.md b/gpu/README.md
+index a1f3390..bc588e0 100644
+--- a/gpu/README.md
++++ b/gpu/README.md
+@@ -426,54 +426,77 @@ Full digest table across both model families: `gpu/EXPECTED_DIGESTS.md`.
+ 
+ ## 11. Kaggle leg
+ 
+-**Status: staged, not run.** This box has no GPU, so the `cuda` Makefile
+-target has still never been compiled — everything in this section is
+-prepared for the first Kaggle GPU run, not a report of one.
++**Status: staged (both kernels), guarded auto-push armed for the next
++GPU-quota reset.** This box has no GPU, so `cuda`/`cuda-tree` have still
++never been *linked or run* here — everything in this section is prepared
++for the first Kaggle GPU run, not a report of one. As of E18c, the staged
++kernel tests **both** the spec-normative v0.3b sequential reduction order
++and the v0.4 CANDIDATE pinned tree order (SS12) in one script, one push,
++one Kaggle run.
+ 
+ Files, under `gpu/kaggle/`:
+ 
+ | file | role |
+ |---|---|
+-| `make_dataset.sh` | Packs `gpu/`'s sources (the same `Makefile` this box gates with — no flag transcription, no drift), `weights/`, the 16- and 128-token prompt-id files, the host C++ build's own 16-token trace, and the expected digests into a dataset directory, writes `dataset-metadata.json`, and pushes it as the private dataset `aefinityaiinc/cis2-e18b-gpu` (`kaggle datasets create`/`version`, chosen automatically). Needs no GPU. |
+-| `e18b_gpu.py` | The kernel code file (`kernel_type: script`). Installs nothing. Prints `nvcc --version` and the GPU name, `make -C gpu cuda`s with the Makefile's own flags, runs the 16- and 128-token forward pass on the device, and separately builds+runs the **host** target on the Kaggle CPU as a control. |
++| `make_dataset.sh` | Packs `gpu/`'s sources (the same `Makefile` this box gates with — no flag transcription, no drift; the tree reduction lives entirely behind `-DCIS2_REDUCTION_TREE` inside the files already copied, verified by `grep -n CIS2_REDUCTION_TREE gpu/*.h gpu/*.cpp`, so no new source file was needed), `weights/`, the 16- and 128-token prompt-id files for **both** modes (`gate`/`gate-128` and `gate-tree`/`gate-tree-128`), the host C++ build's own 16-token traces for **both** modes, and `gate/expected_digests.json` (now keyed `sequential`/`tree`) into a dataset directory, writes `dataset-metadata.json`, and pushes it as the private dataset `aefinityaiinc/cis2-e18b-gpu` (`kaggle datasets create`/`version`, chosen automatically). Needs no GPU. |
++| `e18b_gpu.py` | The kernel code file (`kernel_type: script`). Installs nothing. Prints `nvcc --version`, the GPU name, and runs `make -C gpu nofma-cuda` (SASS FMA gate — needs no physical GPU, see SS12b). Links two genuinely runnable executables directly via `nvcc` (the Makefile's `cuda`/`cuda-tree` targets pass `-c`, object-only, deliberately never linked on this GPU-less dev box — see the script's module docstring for why it reproduces `NVCCFLAGS` by hand for the link step instead): `cis2_cuda` (sequential) and `cis2_cuda_tree` (`-DCIS2_REDUCTION_TREE`). Runs 16- and 128-token forward passes for **both** binaries, and separately builds+runs the **host** target (sequential only) on the Kaggle CPU as a control. Prints a final `mode \| tokens \| expected \| got \| verdict` table and writes `/kaggle/working/e18_results.json`. Exit status is governed by the **sequential** checks only — a tree/CANDIDATE FAIL is reported (`CANDIDATE FAIL`) but never flips the kernel's exit code, so an infra failure in the exploratory tree path can never be mistaken for or mask a failure of the load-bearing spec-normative path. |
+ | `kernel-metadata.json` | `enable_gpu: true`, private, `enable_internet: false`, dataset `aefinityaiinc/cis2-e18b-gpu` attached. |
+-| `push.sh` | The `kaggle kernels push` command. **Not run by staging** — see below. |
++| `push.sh` | The `kaggle kernels push` command, now guarded by `~/bin/kaggle-e18-gpu-push.sh` and `kaggle-e18-gpu-push.timer` (see below) rather than run by hand. |
+ 
+ ### Expected outputs
+ 
+-Six checks, each independently PASS/FAIL:
++Eight checks, each independently PASS/FAIL (four sequential, which govern
++exit status; four tree/CANDIDATE, reported only):
+ 
+-| check | compares | expects |
+-|---|---|---|
+-| `host_16tok` (control) | Kaggle-CPU host-build digest + trace | digest `d827…cc9df`; trace byte-identical to this box's host C++ trace |
+-| `host_128tok` (control) | Kaggle-CPU host-build digest | digest `22f6…050f6` |
+-| `gpu_16tok` | `cis2_cuda` digest + trace | digest `d827…cc9df`; trace byte-identical to this box's host C++ trace |
+-| `gpu_128tok` | `cis2_cuda` digest | digest `22f6…050f6` |
++| check | mode | compares | expects |
++|---|---|---|---|
++| `host_16tok` (control) | sequential | Kaggle-CPU host-build digest + trace | digest `d827…cc9df`; trace byte-identical to this box's host C++ trace |
++| `host_128tok` (control) | sequential | Kaggle-CPU host-build digest | digest `22f6…050f6` |
++| `gpu_16tok` | sequential | `cis2_cuda` digest + trace | digest `d827…cc9df`; trace byte-identical to this box's host C++ trace |
++| `gpu_128tok` | sequential | `cis2_cuda` digest | digest `22f6…050f6` |
++| `gpu_16tok_tree` (CANDIDATE) | tree | `cis2_cuda_tree` digest + trace | digest `3f3b…78e1b3`; trace byte-identical to this box's host C++ tree-mode trace |
++| `gpu_128tok_tree` (CANDIDATE) | tree | `cis2_cuda_tree` digest | digest `1126…96a0fdf` |
+ 
+ **PASS/FAIL definition**: a run PASSES only if its `CIS2_REF` digest is
+-bit-identical to the pinned expected digest **and**, where a trace is
+-compared (the 16-token runs), the trace file is byte-identical to the
+-expected trace. Anything else is FAIL, and the kernel prints the first
+-divergent trace line — `pos=<p> layer=<L> op=<name> sha256=<hex>` on both
+-sides — rather than just "mismatch". The host control failing while the
+-GPU also fails points at the Kaggle image's toolchain, not at the device
+-arithmetic; the host control passing while the GPU fails localises the
+-problem to CUDA specifically.
++bit-identical to the pinned expected digest for its mode **and**, where a
++trace is compared (the 16-token runs, both modes), the trace file is
++byte-identical to the expected trace for that mode. Anything else is
++FAIL, and the kernel prints the first divergent trace line —
++`pos=<p> layer=<L> op=<name> sha256=<hex>` on both sides — rather than
++just "mismatch". The host control failing while the sequential GPU run
++also fails points at the Kaggle image's toolchain, not at the device
++arithmetic; the host control passing while the sequential GPU run fails
++localises the problem to CUDA specifically. The tree checks have no CPU
++"control" of their own beyond the dataset's pre-recorded host C++
++tree-mode trace/digest (SS12a), since tree mode is CANDIDATE, not
++normative — a tree FAIL is a genuine open question about this leg's GPU
++kernel, not a leg failure.
+ 
+ ### What is staged vs. what still needs to run
+ 
+ ```
+-gpu/kaggle/make_dataset.sh       # dataset upload — no GPU needed
+-gpu/kaggle/push.sh                # kernel push — NEEDS FREE GPU QUOTA
++gpu/kaggle/make_dataset.sh       # dataset upload — no GPU needed — RUN, see evidence below
++gpu/kaggle/push.sh                # kernel push — NEEDS FREE GPU QUOTA — guarded, not run by hand
+ ```
+ 
+-Weekly Kaggle GPU quota is exhausted as of 2026-09-02. `push.sh` is
+-deliberately not wired to a retry timer (compare
+-`~/bin/kaggle-ternary-retry.sh`, which does retry): the ALICE ternary
+-kernel has priority for the first GPU slot that frees up. Run `push.sh`
+-manually once that has gone through and quota allows another run, then:
++Weekly Kaggle GPU quota resets 2026-09-05 00:00 UTC; the ALICE ternary
++kernel (`aefinityaiinc/alice-30m-ternary`) has priority for the first GPU
++slot that frees up. `push.sh` is no longer a purely manual step: it is
++now invoked by `~/bin/kaggle-e18-gpu-push.sh`, fired once by the systemd
++`--user` timer `kaggle-e18-gpu-push.timer` (`OnCalendar=2026-09-05
++01:30:00 UTC`, `Persistent=true`, 90 minutes after the quota reset so the
++ternary retry timer has had a full cycle to clear first). That guard
++script refuses to push while `kaggle-ternary-retry.timer` is still
++active, or while `kaggle kernels status aefinityaiinc/alice-30m-ternary`
++does not report a completed run — re-arming a 1-hour transient retry
++(capped at 12 attempts) instead of pushing in either case — and otherwise
++pushes exactly once, logs to `~/kaggle-e18-gpu-push.log`, notifies via
++`cm push`, and disables its own timer. Do NOT run `push.sh` by hand
++unless deliberately bypassing this guard; instead:
+ 
+ ```
++systemctl --user list-timers kaggle-e18-gpu-push.timer
++tail ~/kaggle-e18-gpu-push.log
+ kaggle kernels status aefinityaiinc/e18b-gpu
+ kaggle kernels output aefinityaiinc/e18b-gpu -p ./e18b-gpu-output
+ ```
+diff --git a/gpu/kaggle/e18b_gpu.py b/gpu/kaggle/e18b_gpu.py
+index 3e5eff8..70828fc 100644
+--- a/gpu/kaggle/e18b_gpu.py
++++ b/gpu/kaggle/e18b_gpu.py
+@@ -1,24 +1,61 @@
+-"""E18b GPU leg: build the single-source CUDA-portable C++ port with nvcc
+-and run it on a Kaggle GPU, then compare its CIS2_REF digest and its
+-per-(position, layer, op) trace against the values the host build already
+-produced (bit-identical to the Rust reference — see docs/E15m_RESULT.md and
+-gpu/README.md §8 in the main repo).
+-
+-Installs nothing. Everything this needs — the gpu/ sources, the exact
+-Makefile, the model weights, the prompt token-id files, and the expected
+-CPU-side digests/trace — is pulled from the attached
+-aefinityaiinc/cis2-e18b-gpu dataset (see ../make_dataset.sh).
+-
+-Also builds and runs the HOST target here on the Kaggle CPU, as a control:
+-if the host build mismatches on Kaggle, the problem is this box's
+-toolchain, not GPU arithmetic, and the GPU result below should not be
+-trusted until that is resolved.
+-
+-PASS/FAIL definition (see ../README.md "Kaggle leg"): a run PASSES only if
+-its CIS2_REF digest is bit-identical to the pinned expected digest AND (at
+-16 tokens, where a trace is compared) its trace file is byte-identical to
+-the expected host CPU trace. Anything else is FAIL, reported with the
+-first divergent trace line named.
++"""E18/E18c GPU leg: build the single-source CUDA-portable C++ port with
++nvcc and run it on a Kaggle GPU, in BOTH modes in one kernel run:
++
++  1. sequential  — the spec-NORMATIVE v0.3b reduction order (`dot_seq`/
++     `sum_seq`/`softmax_seq`). This is the load-bearing result. Exit
++     status is governed by this mode alone (see "Exit status" below).
++  2. tree        — the v0.4 CANDIDATE pinned blocked-tree reduction order
++     (`-DCIS2_REDUCTION_TREE`; docs/design/CIS2_V04_TREE_REDUCTION.md).
++     Reported as CANDIDATE PASS/FAIL. It is expected to disagree with the
++     sequential digests (non-associative fp32 addition, different
++     rounding, different bits, by design — see the design doc's
++     "plan-wording bug" note) and never masks or overrides the sequential
++     verdict.
++
++Everything this needs — the gpu/ sources (which already contain BOTH
++reduction orders, selected at compile time by -DCIS2_REDUCTION_TREE; see
++cis2_math.h/cis2_host.cpp), the exact Makefile (read for its flags, not
++invoked for the link step — see "Why not `make -C gpu cuda`" below), the
++model weights, the prompt token-id files (sequential AND tree), and the
++expected digests/traces (sequential AND tree) — is pulled from the
++attached aefinityaiinc/cis2-e18b-gpu dataset (see ../make_dataset.sh).
++
++Also builds and runs the HOST target here on the Kaggle CPU, as a control,
++sequential mode only: if the host build mismatches on Kaggle, the problem
++is this box's toolchain, not GPU arithmetic, and neither GPU result below
++should be trusted until that is resolved.
++
++Why not `make -C gpu cuda` / `cuda-tree` directly: those Makefile targets
++pass `-c` (compile a relocatable device OBJECT only, never linked) — that
++is deliberate on the dev box, which has nvcc but no physical GPU, so
++nothing there could ever be run anyway (gpu/README.md SS12b). On a real
++Kaggle GPU box we need a genuinely LINKED, RUNNABLE executable, so this
++script invokes nvcc itself with the Makefile's own NVCCFLAGS (transcribed
++below, kept in sync with gpu/Makefile's NVCCFLAGS by inspection) but
++without `-c`, producing a real `cis2_cuda` / `cis2_cuda_tree` binary that
++this script then actually executes on the device. This is the one place
++this leg's flags are not mechanically read from the Makefile file itself
++(only reproduced by hand) — everything else (source files, weights,
++token ids, expected digests) is dataset-supplied with no transcription.
++
++Also runs `make -C gpu nofma-cuda` here (needs no physical GPU — it
++compiles a device object and greps its SASS with cuobjdump, exactly as
++verified host-side; see gpu/README.md SS12b) so the FMA-free SASS claim is
++independently re-checked on Kaggle's own CUDA toolchain/driver image, not
++just on the dev box's.
++
++PASS/FAIL definition (see ../README.md "Kaggle leg" / SS12): a run PASSES
++only if its CIS2_REF digest is bit-identical to the pinned expected digest
++AND (at 16 tokens, where a trace is compared) its trace file is
++byte-identical to the expected trace. Anything else is FAIL, reported
++with the first divergent trace line named.
++
++Exit status: 0 ONLY IF both sequential checks (host_16tok, host_128tok,
++gpu_16tok, gpu_128tok — i.e. host control AND GPU, both lengths) pass.
++The tree/CANDIDATE checks are always reported in the results table and
++JSON but NEVER affect the exit code — a tree FAIL is news, not a leg
++failure, exactly because SS12 of the README establishes the tree digests
++are new values with no claim to equal the sequential ones.
+ """
+ import json
+ import shutil
+@@ -31,8 +68,20 @@ WORK = Path("/kaggle/working/e18b")
+ GPU = WORK / "gpu"
+ WEIGHTS = WORK / "weights"
+ GATE = WORK / "gate"
++RESULTS_JSON = Path("/kaggle/working/e18_results.json")
+ 
+-RESULTS = {}  # name -> {"digest_pass": bool, "trace_pass": bool|None, ...}
++# Transcribed from gpu/Makefile's NVCCFLAGS (README SS12b / SS7 "Build and
++# gates"). Kept flag-for-flag identical, minus `-c` (this script links a
++# real executable) and `-arch=$(NVCC_ARCH)` (substituted at call time,
++# default sm_75 for Kaggle's T4, see below).
++NVCC_ARCH = "sm_75"  # Kaggle free-tier GPU is a T4 (Turing). Override in
++                      # code below if nvidia-smi reports a P100 (sm_60).
++NVCCFLAGS_BASE = [
++    "-std=c++17", "-O2", "-fmad=false", "-ftz=true",
++    "-prec-div=true", "-prec-sqrt=true", "--extended-lambda",
++]
++
++RESULTS = {}  # label -> {"digest_pass":..., "trace_pass":..., "mode":...}
+ 
+ 
+ def hr(title):
+@@ -65,10 +114,10 @@ def first_trace_divergence(expected_path: Path, got_path: Path):
+     """Line-by-line compare. Returns None if identical, else a dict
+     describing the first differing (layer, op)."""
+     with open(expected_path) as fe, open(got_path) as fg:
++        i = 0
+         for i, (le, lg) in enumerate(zip(fe, fg), start=1):
+             if le != lg:
+                 return {"line": i, "expected": le.rstrip("\n"), "got": lg.rstrip("\n")}
+-        # length mismatch — one file has extra lines
+         rest_e = fe.readline()
+         rest_g = fg.readline()
+         if rest_e or rest_g:
+@@ -80,10 +129,12 @@ def first_trace_divergence(expected_path: Path, got_path: Path):
+     return None
+ 
+ 
+-def check(label, binary, gen_toks, ids_file, expected, trace_expected=None):
++def check(label, mode, binary, gen_toks, ids_file, expected, extra_args=None,
++          trace_expected=None):
+     """Run `binary --weights-dir WEIGHTS --ids ids_file --gen-toks N
+-    [--trace out]`, compare digest (+ trace, if trace_expected given)
+-    against `expected`. Prints and returns a result dict."""
++    [--reduction tree] [--trace out]`, compare digest (+ trace, if given)
++    against `expected`. Prints and returns a result dict; also records it
++    into RESULTS[label]."""
+     trace_out = GATE / f"{label}.trace" if trace_expected else None
+     cmd = [
+         str(binary),
+@@ -91,6 +142,8 @@ def check(label, binary, gen_toks, ids_file, expected, trace_expected=None):
+         "--ids", str(ids_file),
+         "--gen-toks", str(gen_toks),
+     ]
++    if extra_args:
++        cmd += extra_args
+     if trace_out:
+         cmd += ["--trace", str(trace_out)]
+     p = run(cmd)
+@@ -118,8 +171,11 @@ def check(label, binary, gen_toks, ids_file, expected, trace_expected=None):
+ 
+     overall = digest_pass and (trace_pass is not False)
+     RESULTS[label] = {
++        "mode": mode,
+         "digest_pass": digest_pass,
+         "trace_pass": trace_pass,
++        "expected_digest": expected,
++        "got_digest": digest,
+         "returncode": p.returncode,
+         "divergence": divergence,
+     }
+@@ -127,12 +183,36 @@ def check(label, binary, gen_toks, ids_file, expected, trace_expected=None):
+     return overall
+ 
+ 
++def nvcc_link(src, out, tree, arch):
++    """Link a genuinely runnable CUDA executable directly with nvcc (the
++    Makefile's `cuda`/`cuda-tree` targets pass -c: object-only, never
++    linked — see module docstring). Same flags as gpu/Makefile's
++    NVCCFLAGS, minus -c, plus -DCIS2_REDUCTION_TREE for the tree binary."""
++    flags = list(NVCCFLAGS_BASE) + [f"-arch={arch}", "-I", str(GPU)]
++    if tree:
++        flags = flags + ["-DCIS2_REDUCTION_TREE"]
++    cmd = ["nvcc"] + flags + ["-o", str(out), str(src)]
++    p = run(cmd)
++    return p.returncode == 0 and out.exists()
++
++
++def gpu_name_and_arch():
++    """Return (name, suggested_arch). Defaults to sm_75 (T4) unless
++    nvidia-smi clearly reports a P100 (sm_60)."""
++    p = run(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"])
++    name = p.stdout.strip() if p.returncode == 0 else "UNKNOWN"
++    arch = NVCC_ARCH
++    if "P100" in name:
++        arch = "sm_60"
++    return name, arch
++
++
+ def main():
+     hr("0. Environment")
+-    run(["nvcc", "--version"])
+-    gpu_name = run(["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"])
+-    if gpu_name.returncode != 0:
+-        run(["nvidia-smi", "-L"])
++    nvcc_ver = run(["nvcc", "--version"])
++    gpu_name, arch = gpu_name_and_arch()
++    print(f"GPU name (nvidia-smi): {gpu_name}")
++    print(f"Selected NVCC_ARCH: {arch}")
+ 
+     hr("1. Stage dataset -> writable working dir")
+     if WORK.exists():
+@@ -142,15 +222,27 @@ def main():
+     shutil.copytree(DATASET / "gate", GATE)
+ 
+     expected = json.loads((GATE / "expected_digests.json").read_text())
+-    host_trace_16 = GATE / expected["16"]["trace_file"]
++    host_trace_16_seq = GATE / expected["sequential"]["16"]["trace_file"]
++    host_trace_16_tree = GATE / expected["tree"]["16"]["trace_file"]
++
++    hr("2. SASS FMA gate (no GPU execution needed): make -C gpu nofma-cuda")
++    p_nofma = run(["make", "-C", str(GPU), "nofma-cuda", f"NVCC_ARCH={arch}"])
++    nofma_pass = p_nofma.returncode == 0
++    print(f"---- nofma-cuda (SASS, {arch}): {'PASS' if nofma_pass else 'FAIL'}")
+ 
+-    hr("2. Build: make -C gpu cuda  (exact flags from gpu/Makefile — see NVCCFLAGS there)")
+-    p = run(["make", "-C", str(GPU), "cuda"])
+-    cuda_built = p.returncode == 0 and (GPU / "cis2_cuda").exists()
+-    if not cuda_built:
+-        print("FATAL: nvcc build failed or produced no binary. See output above.")
++    hr("3. Build: nvcc link, sequential  (cis2_cuda)")
++    seq_bin = GPU / "cis2_cuda"
++    cuda_seq_built = nvcc_link(GPU / "cis2_host.cpp", seq_bin, tree=False, arch=arch)
++    if not cuda_seq_built:
++        print("FATAL: nvcc link (sequential) failed or produced no binary.")
+ 
+-    hr("3. Control: build the HOST target here, on the Kaggle CPU")
++    hr("4. Build: nvcc link, tree CANDIDATE  (cis2_cuda_tree, -DCIS2_REDUCTION_TREE)")
++    tree_bin = GPU / "cis2_cuda_tree"
++    cuda_tree_built = nvcc_link(GPU / "cis2_host.cpp", tree_bin, tree=True, arch=arch)
++    if not cuda_tree_built:
++        print("FATAL: nvcc link (tree) failed or produced no binary.")
++
++    hr("5. Control: build the HOST target here, on the Kaggle CPU (sequential only)")
+     have_clang = shutil.which("clang++") is not None
+     if have_clang:
+         p = run(["make", "-C", str(GPU), "host"])
+@@ -158,9 +250,9 @@ def main():
+         host_label_build = "host (clang++)"
+     else:
+         print("clang++ not found on this image — falling back to host-gcc "
+-              "(gpu/README.md §8 already shows host-gcc reproduces the same "
+-              "digest and a byte-identical trace, so this is still a valid "
+-              "control build, just via a different compiler).")
++              "(gpu/README.md SS8 already shows host-gcc reproduces the "
++              "same digest and a byte-identical trace, so this is still a "
++              "valid control build, just via a different compiler).")
+         p = run(["make", "-C", str(GPU), "host-gcc"])
+         host_bin = GPU / "cis2_host_gcc"
+         host_label_build = "host-gcc (g++)"
+@@ -168,50 +260,113 @@ def main():
+     if not host_built:
+         print(f"FATAL: {host_label_build} build failed or produced no binary.")
+ 
+-    hr(f"4. Host control run ({host_label_build}) — 16 tokens, digest + trace")
++    hr(f"6. Host control run ({host_label_build}) — sequential, 16 tokens, digest + trace")
+     if host_built:
+-        check("host_16tok", host_bin, 16, GATE / "ids_16tok.txt",
+-              expected["16"]["digest"], trace_expected=host_trace_16)
++        check("host_16tok", "sequential", host_bin, 16, GATE / "ids_16tok.txt",
++              expected["sequential"]["16"]["digest"], trace_expected=host_trace_16_seq)
+     else:
+-        RESULTS["host_16tok"] = {"digest_pass": False, "trace_pass": False, "skipped": "build failed"}
++        RESULTS["host_16tok"] = {"mode": "sequential", "digest_pass": False,
++                                  "trace_pass": False, "skipped": "build failed"}
+ 
+-    hr(f"5. Host control run ({host_label_build}) — 128 tokens, digest only")
++    hr(f"7. Host control run ({host_label_build}) — sequential, 128 tokens, digest only")
+     if host_built:
+-        check("host_128tok", host_bin, 128, GATE / "ids_128tok.txt",
+-              expected["128"]["digest"])
++        check("host_128tok", "sequential", host_bin, 128, GATE / "ids_128tok.txt",
++              expected["sequential"]["128"]["digest"])
++    else:
++        RESULTS["host_128tok"] = {"mode": "sequential", "digest_pass": False,
++                                   "trace_pass": None, "skipped": "build failed"}
++
++    hr("8. GPU run (cis2_cuda) — SEQUENTIAL (spec-normative), 16 tokens, digest + trace")
++    if cuda_seq_built:
++        check("gpu_16tok", "sequential", seq_bin, 16, GATE / "ids_16tok.txt",
++              expected["sequential"]["16"]["digest"], trace_expected=host_trace_16_seq)
+     else:
+-        RESULTS["host_128tok"] = {"digest_pass": False, "trace_pass": None, "skipped": "build failed"}
++        RESULTS["gpu_16tok"] = {"mode": "sequential", "digest_pass": False,
++                                 "trace_pass": False, "skipped": "build failed"}
+ 
+-    hr("6. GPU run (cis2_cuda) — 16 tokens, digest + trace")
+-    if cuda_built:
+-        check("gpu_16tok", GPU / "cis2_cuda", 16, GATE / "ids_16tok.txt",
+-              expected["16"]["digest"], trace_expected=host_trace_16)
++    hr("9. GPU run (cis2_cuda) — SEQUENTIAL, 128 tokens, digest only")
++    if cuda_seq_built:
++        check("gpu_128tok", "sequential", seq_bin, 128, GATE / "ids_128tok.txt",
++              expected["sequential"]["128"]["digest"])
+     else:
+-        RESULTS["gpu_16tok"] = {"digest_pass": False, "trace_pass": False, "skipped": "build failed"}
++        RESULTS["gpu_128tok"] = {"mode": "sequential", "digest_pass": False,
++                                  "trace_pass": None, "skipped": "build failed"}
+ 
+-    hr("7. GPU run (cis2_cuda) — 128 tokens, digest only")
+-    if cuda_built:
+-        check("gpu_128tok", GPU / "cis2_cuda", 128, GATE / "ids_128tok.txt",
+-              expected["128"]["digest"])
++    hr("10. GPU run (cis2_cuda_tree) — v0.4 CANDIDATE tree, 16 tokens, digest + trace")
++    if cuda_tree_built:
++        check("gpu_16tok_tree", "tree", tree_bin, 16, GATE / "ids_16tok_tree.txt",
++              expected["tree"]["16"]["digest"], extra_args=["--reduction", "tree"],
++              trace_expected=host_trace_16_tree)
+     else:
+-        RESULTS["gpu_128tok"] = {"digest_pass": False, "trace_pass": None, "skipped": "build failed"}
++        RESULTS["gpu_16tok_tree"] = {"mode": "tree", "digest_pass": False,
++                                      "trace_pass": False, "skipped": "build failed"}
+ 
+-    hr("SUMMARY")
+-    all_pass = True
+-    for label, r in RESULTS.items():
++    hr("11. GPU run (cis2_cuda_tree) — v0.4 CANDIDATE tree, 128 tokens, digest only")
++    if cuda_tree_built:
++        check("gpu_128tok_tree", "tree", tree_bin, 128, GATE / "ids_128tok_tree.txt",
++              expected["tree"]["128"]["digest"], extra_args=["--reduction", "tree"])
++    else:
++        RESULTS["gpu_128tok_tree"] = {"mode": "tree", "digest_pass": False,
++                                       "trace_pass": None, "skipped": "build failed"}
++
++    hr("FINAL TABLE")
++    header = f"{'mode':<11} {'tokens':<7} {'expected':<18} {'got':<18} {'verdict'}"
++    print(header)
++    print("-" * len(header))
++    row_order = ["host_16tok", "host_128tok", "gpu_16tok", "gpu_128tok",
++                 "gpu_16tok_tree", "gpu_128tok_tree"]
++    toks_of = {"host_16tok": 16, "host_128tok": 128, "gpu_16tok": 16,
++               "gpu_128tok": 128, "gpu_16tok_tree": 16, "gpu_128tok_tree": 128}
++    for label in row_order:
++        r = RESULTS.get(label, {})
++        mode = r.get("mode", "?")
++        toks = toks_of[label]
++        exp = (r.get("expected_digest") or "")[:16] + "…"
++        got = (r.get("got_digest") or "<none>")[:16] + ("…" if r.get("got_digest") else "")
+         if r.get("skipped"):
+-            status = f"SKIPPED ({r['skipped']})"
+-            all_pass = False
++            verdict = f"SKIPPED({r['skipped']})"
+         else:
+             ok = r["digest_pass"] and (r["trace_pass"] is not False)
+-            status = "PASS" if ok else "FAIL"
+-            all_pass = all_pass and ok
+-        print(f"  {label:14s} {status}")
++            is_candidate = mode == "tree"
++            verdict = ("CANDIDATE " if is_candidate else "") + ("PASS" if ok else "FAIL")
++        print(f"{mode:<11} {toks:<7} {exp:<18} {got:<18} {verdict}")
++
+     print()
+-    print("RESULT: " + ("ALL GATES PASS" if all_pass else "AT LEAST ONE GATE FAILED — see above"))
+-    print(json.dumps(RESULTS, indent=2, default=str))
++    print(f"nvidia-smi GPU name : {gpu_name}")
++    print(f"nvcc version        : {nvcc_ver.stdout.strip().splitlines()[-1] if nvcc_ver.returncode == 0 else 'FAILED'}")
++    print(f"nofma-cuda SASS gate: {'PASS' if nofma_pass else 'FAIL'} (arch={arch})")
++
++    # Sequential verdict governs exit status. Tree is reported, never gates.
++    sequential_labels = ["host_16tok", "host_128tok", "gpu_16tok", "gpu_128tok"]
++    tree_labels = ["gpu_16tok_tree", "gpu_128tok_tree"]
++
++    def label_ok(label):
++        r = RESULTS.get(label, {})
++        if r.get("skipped"):
++            return False
++        return r["digest_pass"] and (r["trace_pass"] is not False)
++
++    sequential_pass = all(label_ok(l) for l in sequential_labels)
++    tree_pass = all(label_ok(l) for l in tree_labels)
++
++    hr("SEQUENTIAL VERDICT (spec-normative v0.3b — governs exit status)")
++    print("SEQUENTIAL: " + ("ALL PASS" if sequential_pass else "AT LEAST ONE FAILED"))
++    hr("TREE VERDICT (v0.4 CANDIDATE — reported only, never gates exit status)")
++    print("TREE: " + ("CANDIDATE ALL PASS" if tree_pass else "CANDIDATE AT LEAST ONE FAILED"))
++
++    out = {
++        "gpu_name": gpu_name,
++        "nvcc_arch": arch,
++        "nvcc_version": nvcc_ver.stdout.strip() if nvcc_ver.returncode == 0 else None,
++        "nofma_cuda_pass": nofma_pass,
++        "results": RESULTS,
++        "sequential_pass": sequential_pass,
++        "tree_candidate_pass": tree_pass,
++    }
++    RESULTS_JSON.write_text(json.dumps(out, indent=2, default=str))
++    print(f"\nWrote {RESULTS_JSON}")
+ 
+-    sys.exit(0 if all_pass else 1)
++    sys.exit(0 if sequential_pass else 1)
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/gpu/kaggle/make_dataset.sh b/gpu/kaggle/make_dataset.sh
+index 3d7fe11..eecf764 100755
+--- a/gpu/kaggle/make_dataset.sh
++++ b/gpu/kaggle/make_dataset.sh
+@@ -1,8 +1,9 @@
+ #!/bin/bash
+-# gpu/kaggle/make_dataset.sh — pack the E18b CUDA-portable port + weights +
+-# pre-computed CPU-side expected values into a Kaggle dataset directory, and
+-# push it with `kaggle datasets create` (first time) or `kaggle datasets
+-# version` (dataset already exists).
++# gpu/kaggle/make_dataset.sh — pack the E18b/E18c CUDA-portable port +
++# weights + pre-computed CPU-side expected values (BOTH the spec-normative
++# sequential v0.3b path AND the v0.4 CANDIDATE tree path) into a Kaggle
++# dataset directory, and push it with `kaggle datasets create` (first
++# time) or `kaggle datasets version` (dataset already exists).
+ #
+ # This step needs no GPU and no CUDA toolchain — it is plain file staging
+ # plus an upload, safe to run on this box. It does NOT push the GPU kernel
+@@ -27,57 +28,93 @@ echo "== staging into $STAGE =="
+ rm -rf "$STAGE"
+ mkdir -p "$STAGE/gpu" "$STAGE/weights" "$STAGE/gate"
+ 
+-# ---- 1. gpu/ sources: everything the host/host-gcc/cuda Makefile targets
+-# need to build cis2_host.cpp. Copying the Makefile itself (not just its
+-# flags) means the kernel builds with the SAME recipe this box verified —
+-# no flag drift between what was gated here and what runs on Kaggle.
++# ---- 1. gpu/ sources: everything the host/host-gcc/host-tree/cuda/
++# cuda-tree Makefile targets need to build cis2_host.cpp. The tree
++# reduction (v0.4 CANDIDATE) lives behind -DCIS2_REDUCTION_TREE entirely
++# inside cis2_math.h and cis2_host.cpp (verified: `grep -n
++# CIS2_REDUCTION_TREE gpu/*.h gpu/*.cpp` — no other file references the
++# macro), so no new source file is needed for the tree build; the same
++# six files this loop already copied for E18b cover both modes.
++# Copying the Makefile itself (not just its flags) means the kernel
++# builds with the SAME recipe this box verified — no flag transcription,
++# no drift between what was gated here and what runs on Kaggle.
+ for f in Makefile cis2_host.cpp cis2_model.h cis2_math.h cis2_fpenv.h \
+          cis2_sha256.h cis2_consts.inc; do
+   cp -L "$GPU/$f" "$STAGE/gpu/$f"
+ done
+ 
+ # ---- 2. weights/: config.json, model.safetensors, tokenizer.json.
+-# -L dereferences the symlinks this worktree's weights/ holds (they point
+-# at ~/projects/cis2-fp/weights/) so the dataset carries real files, not
+-# broken links.
++# -L dereferences the symlinks this worktree's weights/ holds so the
++# dataset carries real files, not broken links.
+ for f in config.json model.safetensors tokenizer.json; do
+   cp -L "$ROOT/weights/$f" "$STAGE/weights/$f"
+ done
+ 
+-# ---- 3. token id file(s), from the host gates already run in this
+-# worktree (gpu/.gate/, gitignored — generated, not source-controlled).
++# ---- 3. token id files, both modes, from the host gates already run in
++# this worktree (gpu/.gate/, gitignored — generated, not source-controlled).
++# Sequential ids come from `make -C gpu gate`/`gate-128`; tree ids from
++# `make -C gpu gate-tree`/`gate-tree-128`. The prompt and token counts are
++# identical across modes (same --dump-ids flag, same weights, same
++# prompt) — --reduction only changes the reduction ORDER used to compute
++# logits from a given prefix, never which token id is fed in — but the
++# tree run's ids file is staged separately anyway so nothing here assumes
++# that invariant rather than just shipping what each gate produced.
+ GATE_SRC="$GPU/.gate"
+-if [ ! -f "$GATE_SRC/ids.txt" ] || [ ! -f "$GATE_SRC/ids128.txt" ]; then
+-  echo "FATAL: $GATE_SRC is missing ids.txt or ids128.txt." >&2
+-  echo "Run 'make -C gpu gate' and 'make -C gpu gate-128' first." >&2
+-  exit 1
+-fi
+-cp -L "$GATE_SRC/ids.txt"    "$STAGE/gate/ids_16tok.txt"
+-cp -L "$GATE_SRC/ids128.txt" "$STAGE/gate/ids_128tok.txt"
++for f in ids.txt ids128.txt cpp.trace ids_tree.txt ids128_tree.txt cpp_tree.trace; do
++  if [ ! -f "$GATE_SRC/$f" ]; then
++    echo "FATAL: $GATE_SRC/$f missing." >&2
++    echo "Run 'make -C gpu gate gate-128 gate-tree gate-tree-128' first." >&2
++    exit 1
++  fi
++done
++cp -L "$GATE_SRC/ids.txt"        "$STAGE/gate/ids_16tok.txt"
++cp -L "$GATE_SRC/ids128.txt"     "$STAGE/gate/ids_128tok.txt"
++cp -L "$GATE_SRC/ids_tree.txt"   "$STAGE/gate/ids_16tok_tree.txt"
++cp -L "$GATE_SRC/ids128_tree.txt" "$STAGE/gate/ids_128tok_tree.txt"
+ 
+-# ---- 4. CPU trace + expected-digest files.
+-# The 16-token trace is the HOST C++ BUILD's own trace (gpu/.gate/cpp.trace),
+-# not the Rust one — gate already proved the two are byte-identical, so
+-# using the C++ trace as the GPU comparison target isolates host-vs-device
+-# execution differences from host-language (Rust-vs-C++) differences, which
+-# are already a closed question.
+-cp -L "$GATE_SRC/cpp.trace" "$STAGE/gate/host_cpu_trace_16tok.txt"
++# ---- 4. CPU trace + expected-digest files, both modes.
++# The 16-token traces are the HOST C++ BUILD's own traces
++# (gpu/.gate/cpp.trace, cpp_tree.trace), not the Rust ones — `gate`/
++# `gate-tree` already proved the two are byte-identical in each mode, so
++# using the C++ trace as the GPU comparison target isolates
++# host-vs-device execution differences from host-language (Rust-vs-C++)
++# differences, which are already a closed question in both modes.
++cp -L "$GATE_SRC/cpp.trace"      "$STAGE/gate/host_cpu_trace_16tok.txt"
++cp -L "$GATE_SRC/cpp_tree.trace" "$STAGE/gate/host_cpu_trace_16tok_tree.txt"
+ 
+ cat > "$STAGE/gate/expected_digests.json" <<'EOF'
+ {
+-  "16": {
+-    "digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
+-    "prompt_toks": 4,
+-    "gen_toks": 16,
+-    "trace_file": "host_cpu_trace_16tok.txt",
+-    "note": "value pinned by docs/E15m_RESULT.md for v0.3b; matches Rust reference, verify2 (Rust), verify3 (C11), and this repo's own host C++ build (clang++ and g++)."
++  "sequential": {
++    "16": {
++      "digest": "d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df",
++      "prompt_toks": 4,
++      "gen_toks": 16,
++      "trace_file": "host_cpu_trace_16tok.txt",
++      "note": "spec-NORMATIVE v0.3b sequential reduction order. Value pinned by docs/E15m_RESULT.md; matches Rust reference, verify2 (Rust), verify3 (C11), and this repo's own host C++ build (clang++ and g++). This is the digest that governs the leg's exit status."
++    },
++    "128": {
++      "digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
++      "prompt_toks": 4,
++      "gen_toks": 128,
++      "trace_file": null,
++      "note": "no trace comparison at 128 tokens (the 16-token trace already localises any divergence); digest equality only."
++    }
+   },
+-  "128": {
+-    "digest": "22f69ad87a615d66a77efaca8b1172d22bdfb4bd5092ceffd302e35669a050f6",
+-    "prompt_toks": 4,
+-    "gen_toks": 128,
+-    "trace_file": null,
+-    "note": "no trace comparison at 128 tokens (README §7: the 16-token trace already localises any divergence); digest equality only."
++  "tree": {
++    "16": {
++      "digest": "3f3b1ffceca02e8e0e78d5c653963480ea988ef41a378acc5393006ad378e1b3",
++      "prompt_toks": 4,
++      "gen_toks": 16,
++      "trace_file": "host_cpu_trace_16tok_tree.txt",
++      "note": "v0.4 CANDIDATE pinned blocked-tree reduction order (docs/design/CIS2_V04_TREE_REDUCTION.md), --reduction tree / -DCIS2_REDUCTION_TREE. Deliberately NOT equal to the sequential digest (non-associative fp32 addition, different rounding by design). Reported as CANDIDATE PASS/FAIL; never governs the leg's exit status."
++    },
++    "128": {
++      "digest": "112661fbfcb11440ae7d27c43e45135f8a6ff9f6bc01189d756c76dac96a0fdf",
++      "prompt_toks": 4,
++      "gen_toks": 128,
++      "trace_file": null,
++      "note": "tree mode, 128 tokens, digest equality only, CANDIDATE — see 16-token note."
++    }
+   }
+ }
+ EOF
+@@ -97,7 +134,7 @@ SIZE=$(du -sh "$STAGE" | cut -f1)
+ echo "== total staged size: $SIZE =="
+ 
+ if $KAGGLE_BIN datasets list --mine 2>/dev/null | grep -q "^$DATASET_SLUG "; then
+-  CMD=("$KAGGLE_BIN" datasets version -p "$STAGE" -m "E18b GPU leg: rebuild $(date -Is)" --dir-mode zip)
++  CMD=("$KAGGLE_BIN" datasets version -p "$STAGE" -m "E18c GPU leg: both kernels (sequential + tree), rebuild $(date -Is)" --dir-mode zip)
+ else
+   CMD=("$KAGGLE_BIN" datasets create -p "$STAGE" --dir-mode zip)
+ fi
+diff --git a/gpu/kaggle/push.sh b/gpu/kaggle/push.sh
+index 875c0dc..8dc8dcf 100755
+--- a/gpu/kaggle/push.sh
++++ b/gpu/kaggle/push.sh
+@@ -1,22 +1,36 @@
+ #!/bin/bash
+-# gpu/kaggle/push.sh — push the E18b GPU kernel (e18b_gpu.py +
++# gpu/kaggle/push.sh — push the E18/E18c GPU kernel (e18b_gpu.py +
+ # kernel-metadata.json) to Kaggle.
+ #
+-# DO NOT RUN THIS until GPU quota is available.
++# As of E18c this kernel tests BOTH reduction orders in one run: the
++# spec-NORMATIVE v0.3b sequential path (governs the kernel's exit status)
++# and the v0.4 CANDIDATE pinned tree path (reported as CANDIDATE PASS/
++# FAIL, never gates exit status) — see e18b_gpu.py's module docstring and
++# gpu/README.md SS12/SS11.
+ #
+-# The weekly Kaggle GPU quota is EXHAUSTED as of 2026-09-02. This kernel
+-# needs `enable_gpu: true` (kernel-metadata.json) to mean anything — pushed
+-# against exhausted quota it will queue or fail outright, and the run
+-# would not be a real GPU result.
++# DO NOT RUN THIS MANUALLY until GPU quota is available and the ALICE
++# ternary kernel has priority-cleared — see the GUARDED, AUTOMATED path
++# below, which is how this actually gets pushed.
+ #
+-# ~/bin/kaggle-ternary-retry.sh shows this lab's retry pattern (a systemd
+-# --user timer re-running `kaggle kernels push` until it succeeds, then
+-# disabling itself). Do NOT set up an equivalent timer for this kernel —
+-# the ALICE ternary push (alice30m-ternary) has priority for the first GPU
+-# slot that frees up. Push this manually, once:
+-#   (a) the ALICE ternary kernel has succeeded, and
+-#   (b) quota allows another GPU run,
+-# or when Justin says to go.
++# Guarded one-shot push: ~/bin/kaggle-e18-gpu-push.sh, fired by the
++# systemd --user timer kaggle-e18-gpu-push.timer (OnCalendar
++# 2026-09-05 01:30 UTC, i.e. the Kaggle weekly GPU quota reset,
++# Persistent=true). That script refuses to run this push while
++# kaggle-ternary-retry.timer is still active OR
++# `kaggle kernels status aefinityaiinc/alice-30m-ternary` is not complete
++# — the ALICE ternary push has priority for the first GPU slot that frees
++# up — and otherwise pushes exactly once, logs to
++# ~/kaggle-e18-gpu-push.log, notifies via `cm push`, and disables its own
++# timer. If refused, it re-arms a one-hour transient retry
++# (systemd-run --on-active=3600, capped at 12 attempts, counter in
++# ~/.kaggle-e18-gpu-push-retries). Check its state:
++#   systemctl --user list-timers kaggle-e18-gpu-push.timer
++#   tail ~/kaggle-e18-gpu-push.log
++#
++# This script (push.sh) itself is what that guard invokes — it is not, on
++# its own, gated on anything. Run it BY HAND only if Justin says to go
++# and you have independently confirmed both guard conditions above, or if
++# deliberately bypassing the guarded path.
+ #
+ # Prerequisite: the dataset must exist first — run make_dataset.sh (or
+ # confirm it already ran) before this.

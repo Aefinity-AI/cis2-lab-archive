@@ -1,0 +1,51 @@
+=== 1 box1 wrapper, both timers active, cm-legd.timer must stay
+timers_paused=cm-tick.timer,cm-rc-watch.timer
+waited_for_tick_services_s=0
+timers_restored=cm-tick.timer,cm-rc-watch.timer
+reason=memory_max_differs_from_bar
+timers_paused=cm-tick.timer,cm-rc-watch.timer
+timers_restored=cm-tick.timer,cm-rc-watch.timer
+-- calls
+systemctl --user is-active --quiet cm-tick.timer
+systemctl --user is-active --quiet cm-rc-watch.timer
+systemd-run --user --quiet --collect --unit=r1-restore-timers-471678 --on-active=30600s systemctl --user start cm-tick.timer cm-rc-watch.timer
+systemctl --user stop cm-tick.timer
+systemctl --user stop cm-rc-watch.timer
+systemctl --user show -p ActiveState --value cm-tick.service
+systemctl --user show -p ActiveState --value cm-rc-watch.service
+systemctl --user stop r1-restore-timers-471678.timer
+systemctl --user start cm-tick.timer
+systemctl --user is-active --quiet cm-tick.timer
+systemctl --user start cm-rc-watch.timer
+systemctl --user is-active --quiet cm-rc-watch.timer
+-- state after
+active.cm-legd.timer
+active.cm-rc-watch.timer
+active.cm-tick.timer
+calls.log
+=== 2 redo wrapper box1
+timers_paused=cm-tick.timer,cm-rc-watch.timer
+waited_for_tick_services_s=0
+timers_restored=cm-tick.timer,cm-rc-watch.timer
+active.cm-rc-watch.timer
+active.cm-tick.timer
+calls.log
+=== 3 failsafe cannot be armed: nothing paused
+timers not paused: the failsafe restore timer could not be created
+timers_paused=none
+timers_restored=none
+active.cm-rc-watch.timer
+active.cm-tick.timer
+calls.log
+fail.systemd-run
+=== 4 SIGTERM to the wrapper during the wait for a running cm-tick.service
+timers_paused=cm-tick.timer,cm-rc-watch.timer
+timers_restored=cm-tick.timer,cm-rc-watch.timer
+RESULT: INVALID host=box1 reason=runner_gone_without_result timers_paused=cm-tick.timer,cm-rc-watch.timer timers_restored=cm-tick.timer,cm-rc-watch.timer nothing_timed=unknown
+active.cm-rc-watch.timer
+active.cm-tick.timer
+busy.cm-tick.service
+calls.log
+=== 5 box2 wrapper leaves every timer alone
+RESULT: INVALID host=box2 reason=memory_max_differs_from_bar cgroup_mib=None expected_mib=2800 nothing_timed=y
+active.cm-tick.timer

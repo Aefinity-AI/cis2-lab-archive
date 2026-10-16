@@ -1,0 +1,9 @@
+make: Entering directory '<home>/rust4-build/rep1/outC/src'
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o sv5_driver.o sv5_driver.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o model.o model.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o mathpin.o mathpin.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o tokenizer.o tokenizer.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o json.o json.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -c -o sha256.o sha256.c
+musl-gcc -O3 -ffp-contract=off -fno-fast-math -fexcess-precision=standard -std=c11 -Wall -Wextra -mno-fma -ffile-prefix-map=<home>/rust4-build/rep1/outC/src=/src -o sv5_driver sv5_driver.o model.o mathpin.o tokenizer.o json.o sha256.o -static -s -Wl,--build-id=none -lm
+make: Leaving directory '<home>/rust4-build/rep1/outC/src'

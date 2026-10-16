@@ -1,0 +1,23 @@
+{
+ "b_cal": {
+  "exp": 1,
+  "mean": 0.0,
+  "median": 0.0
+ },
+ "b_cal_2x": {
+  "exp": 2,
+  "mean": 0.0,
+  "median": 0.0
+ },
+ "b_pub": {
+  "exp": 38.0,
+  "mean": 10.0,
+  "median": 8.0
+ },
+ "n_cal": 100,
+ "cal_rows_sha256": "bfef83b7c4f4f4e09e99e329f0e103f51c6777b061a98559c9a4209d0e2cf875",
+ "pair": "box1__box2",
+ "ledger_note": "SV5 calibration 2026-10-01 (sv5-cal clean runs, 100 cal prompts, Amendment 1 host map); ledger entry id to be recorded by owner session",
+ "prompts_sha256": "4b4e79241241cb19365b1ef141f157746e83a12806edc3f7e71fa3108b1bf9bc",
+ "hosts_sha256": "2f76c7329d784380d112f8ad57794b12d89f9ea5d1623611e47e148d70d30b51"
+}

@@ -1,0 +1,235 @@
+== c1 and toy (clang -fsanitize=fuzzer,address)
+== r1 and r2 (cargo +nightly fuzz build, -Zsanitizer=address)
+warning: binary `r1_fuzz` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r1/.../r1_fuzz
+   |                                           ^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r1-fuzz`, convert `bin.name`
+  --> Cargo.toml:17:8
+   |
+17 - name = "r1_fuzz"
+17 + name = "r1-fuzz"
+   |
+warning: `rust3_r1_fuzz` (manifest) generated 1 warning
+warning: binary `r1_accept` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r1/.../r1_accept
+   |                                           ^^^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r1-accept`, convert `bin.name`
+  --> <home>/rust3/pkg/r1/Cargo.toml:12:8
+   |
+12 - name = "r1_accept"
+12 + name = "r1-accept"
+   |
+warning: `rust3_r1` (manifest) generated 1 warning
+   Compiling proc-macro2 v1.0.107
+   Compiling serde_core v1.0.229
+   Compiling quote v1.0.47
+   Compiling libc v0.2.190
+   Compiling unicode-ident v1.0.26
+   Compiling rustix v1.1.5
+   Compiling zmij v1.0.23
+   Compiling getrandom v0.4.3
+   Compiling jobserver v0.1.35
+   Compiling syn v3.0.6
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling shlex v2.0.1
+   Compiling cfg-if v1.0.5
+   Compiling find-msvc-tools v0.1.14
+   Compiling bitflags v2.13.2
+   Compiling linux-raw-sys v0.12.1
+   Compiling cc v1.6.0
+   Compiling serde_derive v1.0.229
+   Compiling foldhash v0.2.0
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling equivalent v1.0.2
+   Compiling allocator-api2 v0.2.21
+   Compiling fastrand v2.5.0
+   Compiling once_cell v1.21.4
+   Compiling tempfile v3.27.0
+   Compiling hashbrown v0.16.1
+   Compiling libfuzzer-sys v0.4.13
+   Compiling safetensors v0.8.0 (<home>/rust3/pkg/r1/vendor/safetensors-0.8.0)
+   Compiling arbitrary v1.4.2
+   Compiling rust3_r1 v0.1.0 (<home>/rust3/pkg/r1)
+   Compiling rust3_r1_fuzz v0.0.0 (<home>/rust3/pkg/r1/fuzz)
+    Finished `release` profile [optimized + debuginfo] target(s) in 2m 36s
+warning: binary `r1_accept` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r1-acc/.../r1_accept
+   |                                               ^^^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r1-accept`, convert `bin.name`
+  --> Cargo.toml:12:8
+   |
+12 - name = "r1_accept"
+12 + name = "r1-accept"
+   |
+warning: `rust3_r1` (manifest) generated 1 warning
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.26
+   Compiling serde_core v1.0.229
+   Compiling quote v1.0.47
+   Compiling libc v0.2.190
+   Compiling getrandom v0.4.3
+   Compiling zmij v1.0.23
+   Compiling rustix v1.1.5
+   Compiling syn v3.0.6
+   Compiling linux-raw-sys v0.12.1
+   Compiling bitflags v2.13.2
+   Compiling serde_json v1.0.151
+   Compiling serde v1.0.229
+   Compiling cfg-if v1.0.5
+   Compiling serde_derive v1.0.229
+   Compiling foldhash v0.2.0
+   Compiling once_cell v1.21.4
+   Compiling equivalent v1.0.2
+   Compiling allocator-api2 v0.2.21
+   Compiling itoa v1.0.18
+   Compiling fastrand v2.5.0
+   Compiling memchr v2.8.3
+   Compiling tempfile v3.27.0
+   Compiling hashbrown v0.16.1
+   Compiling safetensors v0.8.0 (<home>/rust3/pkg/r1/vendor/safetensors-0.8.0)
+   Compiling rust3_r1 v0.1.0 (<home>/rust3/pkg/r1)
+    Finished `release` profile [optimized + debuginfo] target(s) in 41.75s
+warning: binary `r2_accept` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r2/.../r2_accept
+   |                                           ^^^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r2-accept`, convert `bin.name`
+  --> <home>/rust3/pkg/r2/Cargo.toml:12:8
+   |
+12 - name = "r2_accept"
+12 + name = "r2-accept"
+   |
+warning: `rust3_r2` (manifest) generated 1 warning
+warning: binary `r2_fuzz` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r2/.../r2_fuzz
+   |                                           ^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r2-fuzz`, convert `bin.name`
+  --> Cargo.toml:17:8
+   |
+17 - name = "r2_fuzz"
+17 + name = "r2-fuzz"
+   |
+warning: `rust3_r2_fuzz` (manifest) generated 1 warning
+   Compiling libc v0.2.190
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.26
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling jobserver v0.1.35
+   Compiling zmij v1.0.23
+   Compiling find-msvc-tools v0.1.14
+   Compiling shlex v2.0.1
+   Compiling cc v1.6.0
+   Compiling syn v3.0.6
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling serde_derive v1.0.229
+   Compiling libfuzzer-sys v0.4.13
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling memmap2 v0.9.11 (<home>/rust3/pkg/r2/vendor/memmap2-0.9.11)
+   Compiling arbitrary v1.4.2
+   Compiling rust3_r2 v0.1.0 (<home>/rust3/pkg/r2)
+   Compiling rust3_r2_fuzz v0.0.0 (<home>/rust3/pkg/r2/fuzz)
+    Finished `release` profile [optimized + debuginfo] target(s) in 1m 59s
+warning: binary `r2_accept` should have a kebab-case name
+   |
+ 1 | <home>/scratch-rust3/rust3-bin/t-r2-acc/.../r2_accept
+   |                                               ^^^^^^^^^
+   |
+   = note: `cargo::non_kebab_case_bins` is set to `warn` by default
+help: to change the binary name to `r2-accept`, convert `bin.name`
+  --> Cargo.toml:12:8
+   |
+12 - name = "r2_accept"
+12 + name = "r2-accept"
+   |
+warning: `rust3_r2` (manifest) generated 1 warning
+   Compiling proc-macro2 v1.0.107
+   Compiling unicode-ident v1.0.26
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling libc v0.2.189
+   Compiling syn v3.0.6
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.151
+   Compiling serde_derive v1.0.229
+   Compiling memchr v2.8.3
+   Compiling itoa v1.0.18
+   Compiling memmap2 v0.9.11 (<home>/rust3/pkg/r2/vendor/memmap2-0.9.11)
+   Compiling rust3_r2 v0.1.0 (<home>/rust3/pkg/r2)
+    Finished `release` profile [optimized + debuginfo] target(s) in 57.77s
+== l1 (llama.cpp b11381 ggml-base, ASan + UBSan)
+== python arms (Atheris wheel, torch and safetensors of the rust1b venv)
+== reads lists
+== one execution of each accept program on the valid seed
+r1 ACCEPT
+c1 ACCEPT
+r2 ACCEPT
+l1 ACCEPT
+r3 ACCEPT
+p1 ACCEPT
+== one libFuzzer -runs=1 execution of each fuzz binary on the valid seed (registered flags, no corpus, no fuzzing)
+r1_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 4 ms
+c1_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 2 ms
+r2_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 3 ms
+l1_fuzz rc=0 Executed <home>/rust3/seed/model.gguf in 2 ms
+r3_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 2 ms
+p1_fuzz rc=0 Executed <home>/rust3/seed/model.pt in 2912 ms
+== FREEZE
+10a9e840dcc1d52a543747c1f10d6217634e623997a3d7e49775130568a88512  r1_fuzz
+a1c53661015b398711a30a6fcb8de659c22e46e78b095144c3b8f4bb3a33cbfb  r1_accept
+37751d1b60e4bdf5d8403cde005497bee20fe5ed6bea5d3c5e0ac2e09d55579f  c1_fuzz
+8808742cf457dff06b7944f34402c5c032dbaa35fd388223b0289c85e06696e2  c1_accept
+c1540050a91ede0649d5d4dbbb6d51439e0feb1c558fc3f39d7bf1e87fd292ac  r2_fuzz
+c0fe63c732af799991006efca5a6cfe2423be7f01b80493740bf266bf71f037f  r2_accept
+b334da683d876b94ac4a1eeb93e610aa7b62111fd2d0fb92b2c7050d08f54242  l1_fuzz
+25db086170fa255d1ce7205aaa0b6d0e6aa8be36bb30c013cc76873571fa0d2a  l1_accept
+e91cc68d363c97c353ede93e1e3cb1bfe749a95a9912003910311e59185bcc70  toy_fuzz
+d064a29074f047973702ba22045e1e53682352278509a5fc99cd26c8309d311d  toy_accept
+3c79ad7b424e01c0ca09d6515b2d9e61ae1445a3d9bda46a7cd7d1d0d307a063  r3_fuzz
+da3917f06baf0e15d2fd72b5b0c93857e174828ed6d50d204761fa31dd96a018  r3_accept
+e78b23c387734fe98c8b73598b1e7b8bf725e320c761c87f68cb5a4213239655  p1_fuzz
+c52f305818b5841225ef4aa0c9ff41326c46b8075f7f93a1d9ee70d3494218da  p1_accept
+0a26a0e26b4c3af4859e326ca798153d090ab920aa1ac88246b6624937da89bf  r3/py_harness.py
+3662d55f8d3b3449a8dafb23947fd767e290040eb0422138373691148b9d5eb5  reads_R1.txt
+5ff835855f115eb4dab02a6b3f94f29eef75f7146ede77ecf8f9ee569595d440  reads_R1.sha256
+3662d55f8d3b3449a8dafb23947fd767e290040eb0422138373691148b9d5eb5  reads_C1.txt
+5ff835855f115eb4dab02a6b3f94f29eef75f7146ede77ecf8f9ee569595d440  reads_C1.sha256
+# date: 2026-10-12T20:36:46Z
+# host: aefinity-box 6.12.111+deb13-amd64
+# payload_sha256: 6cd45a34a0328ef1b2f25ae23a5f95aee49bd7f86749662b343b08e476a2bd3d
+# clang: Debian clang version 19.1.7 (3+b1)
+# clang resource dir copy (libclang-rt-19-dev 1:19.1.7-3+b1 from penguin): asan 655e54e7030965354bf55fe8ebf8d3f21957a8b6b80676b77e2e6c25b4507e4f fuzzer 30f5b89f9adec263d367668218bdd6ff0f033560d316be9b24c5b1bf226725cf
+# rustc nightly: rustc 1.100.0-nightly (2e2b193f8 2026-09-02) binary: rustc commit-hash: 2e2b193f8ada105f27608b7be81c293e0d7292cb commit-date: 2026-09-02 host: x86_64-unknown-linux-gnu release: 1.100.0-nightly LLVM version: 23.1.1 
+# cargo nightly: cargo 1.100.0-nightly (b2e9d5f9d 2026-09-02)
+# cargo-fuzz: cargo-fuzz 0.13.2
+# Cargo.lock r1: cb0872cc6856952de1c56a960c3d392733797facca93d266341d08a690a5130f fuzz: bb73d0d5a112a508e795ec4db4cdce0a432c06a9f76a9e83d4f0cb483e605da0
+# Cargo.lock r2: 56e526f3fdbe603b6e7f1cd017aeea828725e4b008da46ac7389508de98e8e86 fuzz: a5873b81813a0789e6d9afbd94ba5f7c5d9abdd0e9d4219fd607f2872995ff3e
+# python: Python 3.13.5
+# python packages: torch 2.14.0+cpu safetensors 0.8.0 atheris atheris-3.1.0.dist-info wheel f8a9f51ce8369026e8eb7b7174835e8c4c85a1a6db5d9add36c15100779d2a39
+# python dist-info RECORD sha256 (the Python environment is not otherwise hashed): torch 2.14.0+cpu e533a45f7ae8a88dcf0c9a516da712b0cb15e3d9ca9099541b66970c2eb12577; safetensors 0.8.0 774c505343f11e6f6adae9aae7b6069174ee2fb09c83901c78202538e3d3dd85; 
+# rust accept builds: RUSTFLAGS -Zsanitizer=address -Cdebug-assertions=on -Coverflow-checks=on (as the cargo-fuzz builds); C: clang -O2 -g -fsanitize=address, no overflow checks
+# fuzz seed runs: r1_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 4 ms;c1_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 2 ms;r2_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 3 ms;l1_fuzz rc=0 Executed <home>/rust3/seed/model.gguf in 2 ms;r3_fuzz rc=0 Executed <home>/rust3/seed/model.safetensors in 2 ms;p1_fuzz rc=0 Executed <home>/rust3/seed/model.pt in 2912 ms;
+# llama.cpp: tag b11381 commit 836d57176dc699a726c55418e4f96b8ca628e1bf (source tree in the payload)
+# cis2-spec commit for R1 and C1 sources: 093a7a9c4b7a353035d087dfce32afc548ce368b
+# alice-model commit for R2 source: 111e1ff6ca5e4324e313dc4135453c1445ab2277
+# seed runs: r1 ACCEPT;c1 ACCEPT;r2 ACCEPT;l1 ACCEPT;r3 ACCEPT;p1 ACCEPT;
+RESULT: OK rust3-build freeze=33a9726736d9244d binaries=14

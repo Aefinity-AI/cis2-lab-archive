@@ -1,0 +1,149 @@
+name: E15d(c) second model family (Qwen2.5-0.5B) — oracle + cross-ISA
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [cm/e15d-longer-and-second-model]
+
+jobs:
+  cross-isa:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch_label: x86_64
+          - os: ubuntu-24.04-arm
+            arch_label: aarch64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uname (assert matches expected arch)
+        run: |
+          U=$(uname -m)
+          if [ "${{ matrix.arch_label }}" = "x86_64" ]; then
+            [ "$U" = "x86_64" ] || { echo "expected x86_64, got $U"; exit 1; }
+          else
+            [ "$U" = "aarch64" ] || { echo "expected aarch64, got $U"; exit 1; }
+          fi
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: rustc version
+        run: rustc -V
+
+      - name: Fetch Qwen2.5-0.5B weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights_qwen
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/config.json     https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/model.safetensors https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/model.safetensors
+          sha256sum weights_qwen/model.safetensors weights_qwen/config.json weights_qwen/tokenizer.json
+
+      - name: cargo test --release (unit tests + FMA grep gate)
+        run: cargo test --release
+
+      - name: no_fma_gate.sh
+        run: ./scripts/no_fma_gate.sh
+
+      - name: Build release
+        run: cargo build --release
+
+      - name: Run reference, gen_toks=16 (dump step0 logits for oracle job)
+        run: |
+          CIS2_DUMP_STEP0_LOGITS=step0_logits_${{ matrix.arch_label }}.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen --gen-toks 16 \
+            | tee run_gen16_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen16_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest16_${{ matrix.arch_label }}.txt
+
+      - name: Run reference, gen_toks=128
+        run: |
+          nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen --gen-toks 128 \
+            | tee run_gen128_${{ matrix.arch_label }}.txt
+          grep -E '^CIS2_REF digest=' run_gen128_${{ matrix.arch_label }}.txt | sed -E 's/.*digest=([0-9a-f]+).*/\1/' > digest128_${{ matrix.arch_label }}.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: e15d-c-qwen-${{ matrix.arch_label }}
+          path: |
+            digest16_${{ matrix.arch_label }}.txt
+            digest128_${{ matrix.arch_label }}.txt
+            step0_logits_${{ matrix.arch_label }}.f32le
+            run_gen16_${{ matrix.arch_label }}.txt
+            run_gen128_${{ matrix.arch_label }}.txt
+
+  aggregate:
+    needs: cross-isa
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: e15d-c-qwen-*
+          path: artifacts
+
+      - name: Compare x86_64 vs aarch64 digests (gen_toks=16 and 128)
+        run: |
+          set -euo pipefail
+          for N in 16 128; do
+            X=artifacts/e15d-c-qwen-x86_64/digest${N}_x86_64.txt
+            A=artifacts/e15d-c-qwen-aarch64/digest${N}_aarch64.txt
+            echo "gen_toks=$N x86_64=$(cat $X) aarch64=$(cat $A)"
+            if [ "$(cat $X)" != "$(cat $A)" ]; then
+              echo "MISMATCH at gen_toks=$N"
+              exit 1
+            fi
+          done
+          echo "PASS: Qwen2.5-0.5B digests match bit-identically between x86_64 and aarch64 at gen_toks=16 and 128"
+
+  oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust (pinned)
+        uses: dtolnay/rust-toolchain@1.98.0
+
+      - name: Fetch Qwen2.5-0.5B weights (public HF resolve, no auth)
+        run: |
+          mkdir -p weights_qwen
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/config.json     https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/config.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/tokenizer.json  https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/tokenizer.json
+          curl -sSf -L --retry 6 --retry-delay 10 --retry-all-errors -o weights_qwen/model.safetensors https://huggingface.co/Qwen/Qwen2.5-0.5B/resolve/main/model.safetensors
+
+      - name: Build release and run Rust reference, dump step0 logits
+        run: |
+          cargo build --release
+          CIS2_DUMP_STEP0_LOGITS=/tmp/rust_step0.f32le \
+            nice -n 10 ./target/release/cis2_ref --weights-dir weights_qwen --gen-toks 16 | tee rust_run.txt
+
+      - name: Set up python + torch/transformers oracle
+        run: |
+          python3 -m venv .venv-oracle
+          .venv-oracle/bin/pip install --quiet --index-url https://download.pytorch.org/whl/cpu torch
+          .venv-oracle/bin/pip install --quiet transformers safetensors
+
+      - name: Run oracle and diff against Rust reference
+        run: |
+          .venv-oracle/bin/python scripts/oracle_compare_qwen.py /tmp/oracle_step0.f32le weights_qwen | tee oracle_run.txt
+          python3 scripts/diff_logits.py /tmp/rust_step0.f32le /tmp/oracle_step0.f32le | tee diff_output.txt
+          RUST_TOKENS=$(grep -E 'run1_tokens=' rust_run.txt | sed -E 's/.*run1_tokens=//')
+          ORACLE_TOKENS=$(grep -E '^oracle_all_tokens=' oracle_run.txt | sed -E 's/oracle_all_tokens=//')
+          echo "rust_tokens=$RUST_TOKENS"
+          echo "oracle_tokens=$ORACLE_TOKENS"
+          if [ "$RUST_TOKENS" != "$ORACLE_TOKENS" ]; then
+            echo "MISMATCH: Rust reference and torch/transformers oracle greedy-decoded different tokens"
+            exit 1
+          fi
+          echo "PASS: 16/16 token match, logit tolerance within bar (see diff_output.txt)"
+
+      - name: Upload oracle artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: e15d-c-qwen-oracle
+          path: |
+            rust_run.txt
+            oracle_run.txt
+            diff_output.txt

@@ -1,0 +1,28 @@
+=== cis2-batch-hq start 2026-10-16T09:59:24Z host=aefinity-box-2273 cpu=Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz flags=avx2,fma,sse4_2,
+sha256 model.safetensors = 80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1
+sha256 ids16 = 4b6618b64fe0fd9c261dd30789ec69a4f84c05114820df9e45c4d2c8fac40faf
+ids/pset4.txt sha256 = 4116b89e7b1b7831e1b6a22b2019bd2f4f42a333f189c7d3f245f93206f15049
+sources sha256: 6ba04bbfee8d018d (cat of host.cpp math.h model.h fpenv.h sha256.h consts.inc)
+g++ g++ (Debian 14.2.0-19) 14.2.0; nvcc Build cuda_12.4.r12.4/compiler.34097967_0; nvidia-smi: NVIDIA GeForce GTX 1050, 550.163.01
+build host-gcc: g++ -std=c++17 -O2 -ffp-contract=off -fexcess-precision=standard -fno-fast-math -I gpu -o cis2_batch_host gpu/cis2_host.cpp
+row host batch=1 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d] MATCH rc=0 wall_s=21
+row host batch=2 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d] SAME rc=0 wall_s=18
+row host batch=4 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d d82743059d1d d82743059d1d] SAME rc=0 wall_s=30
+row host batch=8 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d] SAME rc=0 wall_s=57
+pset host row=0 solo=d1b298a432f02b2659226a39ab4a56a215f7d836f47d155bc11b5714f0dec2ca batch4=d1b298a432f02b2659226a39ab4a56a215f7d836f47d155bc11b5714f0dec2ca
+pset host row=1 solo=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df batch4=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+pset host row=2 solo=bbdaf82da61e6a0db9c11826f144d9a092c36cb2e6cea2d1aea86be563c6ccd5 batch4=bbdaf82da61e6a0db9c11826f144d9a092c36cb2e6cea2d1aea86be563c6ccd5
+pset host row=3 solo=63e2ba3aed45b4ad24a2b0c83f8ac3d23567d5ab8198c70b1002228d0e6074eb batch4=63e2ba3aed45b4ad24a2b0c83f8ac3d23567d5ab8198c70b1002228d0e6074eb
+pset host ok=4/4 distinct_rows=4 rc=0 wall_s=66
+build cuda: nvcc -x cu -std=c++17 -O2 -fmad=false -ftz=true -prec-div=true -prec-sqrt=true --extended-lambda -DCIS2_CUDA_FTZ=1 -arch=sm_61 -I gpu -o cis2_batch_cuda gpu/cis2_host.cpp
+row cuda-sm_61 batch=1 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d] MATCH rc=0 wall_s=10
+row cuda-sm_61 batch=2 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d] SAME rc=0 wall_s=8
+row cuda-sm_61 batch=4 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d d82743059d1d d82743059d1d] SAME rc=0 wall_s=17
+row cuda-sm_61 batch=8 digest0=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df rows_equal=1 rows=[d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d d82743059d1d] SAME rc=0 wall_s=25
+pset cuda-sm_61 row=0 solo=d1b298a432f02b2659226a39ab4a56a215f7d836f47d155bc11b5714f0dec2ca batch4=d1b298a432f02b2659226a39ab4a56a215f7d836f47d155bc11b5714f0dec2ca
+pset cuda-sm_61 row=1 solo=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df batch4=d82743059d1db929e710236fe4ec37f89e6f932524801345a006980f7c3cc9df
+pset cuda-sm_61 row=2 solo=bbdaf82da61e6a0db9c11826f144d9a092c36cb2e6cea2d1aea86be563c6ccd5 batch4=bbdaf82da61e6a0db9c11826f144d9a092c36cb2e6cea2d1aea86be563c6ccd5
+pset cuda-sm_61 row=3 solo=63e2ba3aed45b4ad24a2b0c83f8ac3d23567d5ab8198c70b1002228d0e6074eb batch4=63e2ba3aed45b4ad24a2b0c83f8ac3d23567d5ab8198c70b1002228d0e6074eb
+pset cuda-sm_61 ok=4/4 distinct_rows=4 rc=0 wall_s=58
+RESULT: OK cis2-batch-hq host_b1=MATCH host_b2=SAME host_b4=SAME host_b8=SAME host_pset=4/4 cuda_b1=MATCH cuda_b2=SAME cuda_b4=SAME cuda_b8=SAME cuda_pset=4/4 weights=80521b40 ids=4b6618b6
+=== cis2-batch-hq done 2026-10-16T10:04:51Z

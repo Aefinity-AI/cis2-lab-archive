@@ -1,0 +1,9 @@
+gcc: gcc (Debian 14.2.0-19) 14.2.0 host=aefinity-box-1605
+GCC c_gcc_O2_t0: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O2_t1: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+GCC c_gcc_O3_t0: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O3_t1: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+FMA_CHECK c_gcc_O2_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 addps       1 mulps ]
+FMA_CHECK c_gcc_O2_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 vaddps       1 vmulps ]
+FMA_CHECK c_gcc_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      7 addps       9 mulps ]
+FMA_CHECK c_gcc_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[     15 vaddps      11 vmulps ]

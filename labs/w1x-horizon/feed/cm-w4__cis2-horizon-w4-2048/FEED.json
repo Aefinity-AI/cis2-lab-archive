@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:04:46Z",
+  "host": "cm-w4",
+  "name": "cis2-horizon-w4-2048",
+  "pushed_at": "2026-10-16T09:54:01Z",
+  "result_line": "RESULT: OK cis2-horizon-w4-2048 host16=MATCH host2048=CANDIDATE weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}

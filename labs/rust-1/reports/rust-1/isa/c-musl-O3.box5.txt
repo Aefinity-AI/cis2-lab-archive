@@ -1,0 +1,3 @@
+file=bins/c-musl-O3 cpu_class=box5 instructions=21457 functions_with_hits=0
+hit_totals=
+RESULT_CLEAN

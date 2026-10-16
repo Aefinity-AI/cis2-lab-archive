@@ -1,0 +1,10 @@
+{
+  "added_at": "2026-10-16T10:44:57Z",
+  "after": "cis2-opencl-hq-r2",
+  "cpu_quota": null,
+  "memory_max": "6400M",
+  "name": "cis2-sample-hq-r2",
+  "payload": "<home>/feed-payload/cis2-sample",
+  "payload_dest": "<home>/cis2-sample",
+  "pushed_at": "2026-10-16T10:49:01Z"
+}

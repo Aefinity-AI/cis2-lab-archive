@@ -1,0 +1,25 @@
+ROW rep=0 arm=c-patched-O2 whole_wall_s=0.3259 in_process_wall_s=0.321400 equal_ref=yes valid=yes tries=1
+ROW rep=0 arm=c-patched-O0 whole_wall_s=2.1478 in_process_wall_s=2.142863 equal_ref=yes valid=yes tries=1
+ROW rep=0 arm=rust-gnu-O3 whole_wall_s=0.4594 in_process_wall_s=0.455914 equal_ref=yes valid=yes tries=1
+ROW rep=0 arm=rust-gnu-O0 whole_wall_s=8.7923 in_process_wall_s=8.782496 equal_ref=yes valid=yes tries=1
+ROW rep=0 arm=rust-musl-O3 whole_wall_s=0.4631 in_process_wall_s=0.459994 equal_ref=yes valid=yes tries=1
+ROW rep=1 arm=c-patched-O0 whole_wall_s=2.1486 in_process_wall_s=2.143765 equal_ref=yes valid=yes tries=1
+ROW rep=1 arm=rust-gnu-O3 whole_wall_s=0.4606 in_process_wall_s=0.455071 equal_ref=yes valid=yes tries=1
+ROW rep=1 arm=rust-gnu-O0 whole_wall_s=8.7466 in_process_wall_s=8.732006 equal_ref=yes valid=yes tries=1
+ROW rep=1 arm=rust-musl-O3 whole_wall_s=0.4691 in_process_wall_s=0.464456 equal_ref=yes valid=yes tries=1
+ROW rep=1 arm=c-patched-O2 whole_wall_s=0.3259 in_process_wall_s=0.321280 equal_ref=yes valid=yes tries=1
+ROW rep=2 arm=rust-gnu-O3 whole_wall_s=0.4621 in_process_wall_s=0.456912 equal_ref=yes valid=yes tries=1
+ROW rep=2 arm=rust-gnu-O0 whole_wall_s=9.1380 in_process_wall_s=9.110984 equal_ref=yes valid=yes tries=1
+ROW rep=2 arm=rust-musl-O3 whole_wall_s=0.5637 in_process_wall_s=0.554244 equal_ref=yes valid=yes tries=1
+ROW rep=2 arm=c-patched-O2 whole_wall_s=0.3469 in_process_wall_s=0.328261 equal_ref=yes valid=yes tries=3
+ROW rep=2 arm=c-patched-O0 whole_wall_s=2.1949 in_process_wall_s=2.190070 equal_ref=yes valid=yes tries=1
+ROW rep=3 arm=rust-gnu-O0 whole_wall_s=9.4788 in_process_wall_s=9.463002 equal_ref=yes valid=yes tries=1
+ROW rep=3 arm=rust-musl-O3 whole_wall_s=0.4673 in_process_wall_s=0.462264 equal_ref=yes valid=NO: other_runnable_before=1 tries=4
+ROW rep=3 arm=c-patched-O2 whole_wall_s=0.3352 in_process_wall_s=0.330430 equal_ref=yes valid=yes tries=1
+ROW rep=3 arm=c-patched-O0 whole_wall_s=2.1462 in_process_wall_s=2.141451 equal_ref=yes valid=yes tries=1
+ROW rep=3 arm=rust-gnu-O3 whole_wall_s=0.4615 in_process_wall_s=0.456121 equal_ref=yes valid=yes tries=1
+ROW rep=4 arm=rust-musl-O3 whole_wall_s=0.4685 in_process_wall_s=0.464174 equal_ref=yes valid=yes tries=1
+ROW rep=4 arm=c-patched-O2 whole_wall_s=0.3237 in_process_wall_s=0.318981 equal_ref=yes valid=yes tries=1
+ROW rep=4 arm=c-patched-O0 whole_wall_s=2.1502 in_process_wall_s=2.142552 equal_ref=yes valid=yes tries=1
+ROW rep=4 arm=rust-gnu-O3 whole_wall_s=0.4611 in_process_wall_s=0.455754 equal_ref=yes valid=yes tries=1
+ROW rep=4 arm=rust-gnu-O0 whole_wall_s=8.7446 in_process_wall_s=8.730124 equal_ref=yes valid=yes tries=1

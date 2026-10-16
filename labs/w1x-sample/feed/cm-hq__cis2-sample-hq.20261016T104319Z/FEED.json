@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:43:19Z",
+  "host": "cm-hq",
+  "name": "cis2-sample-hq",
+  "pushed_at": "2026-10-16T10:37:59Z",
+  "result_line": "RESULT: FAIL cis2-sample-hq greedy16=none s16=none s64=none ids16=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 hostcuda=MISMATCH (bad=7)",
+  "status": "fail"
+}

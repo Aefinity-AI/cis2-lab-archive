@@ -1,0 +1,38 @@
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:31:19
+   |
+31 |         let csr = _mm_getcsr();
+   |                   ^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:32:9
+   |
+32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);
+   |         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:29
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                             ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:27:41
+   |
+27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};
+   |                                         ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:71:24
+   |
+71 |     let csr = unsafe { _mm_getcsr() };
+   |                        ^^^^^^^^^^
+
+warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead
+  --> src/denormal.rs:70:28
+   |
+70 |     use std::arch::x86_64::_mm_getcsr;
+   |                            ^^^^^^^^^^
+

@@ -1,0 +1,3 @@
+mkl_warm=1
+arm=T params=1841280 init_sha256=1157493146ec88dd320c87acec1c47b816fce8c378ba830df54302349416129b order_sha256=4b96f5af608af0b1aa90805085a74f584c4b17fc6d5bbceebef99e1ee448593f threads=1
+check loss_fwd=5.54213667 loss_after_step1=4.86082554 loss_step2=4.9291811 loss_step3=4.72942638

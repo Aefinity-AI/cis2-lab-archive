@@ -1,0 +1,66 @@
+HOSTCHECK open t=2026-10-04T06:23:13Z load=0.00 0.01 0.02 1/120 mhz=2701,2729, thr_total=0 other_leg_units=[] own_unit=leg-rust5-box2-redo1.service
+host=box2 cpu=Intel(R) Celeron(R) N4020 CPU @ 1.10GHz ncpu=2 pin_core=1 kernel=6.12.111+deb13-amd64 gcc=gcc (Debian 14.2.0-19) 14.2.0 tiers=T0 libs=K1,K3,K4 k2=1 date=2026-10-04T06:23:13Z
+payload_check: ok (151 files); PAYLOAD_SHA256 sha256=3951886ac36c46850ad7a7fa3ffa9b532f86626590cfcee3421cee1c9932fb67
+data: <home>/rust5/out/box2/r5data.bin size=127321664 sha256=3989ed8d068f09363964f41b412195b9b91867d4fc855cadfe335b25a8387505 expected=3989ed8d068f09363964f41b412195b9b91867d4fc855cadfe335b25a8387505
+gcc: gcc (Debian 14.2.0-19) 14.2.0 host=aefinity-box2
+GCC c_gcc_O2_t0: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O2_t1: gcc -O2 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+GCC c_gcc_O3_t0: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+GCC c_gcc_O3_t1: gcc -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+FMA_CHECK c_gcc_O2_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 addps       1 mulps ]
+FMA_CHECK c_gcc_O2_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 vaddps       1 vmulps ]
+FMA_CHECK c_gcc_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      7 addps       9 mulps ]
+FMA_CHECK c_gcc_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[     15 vaddps      11 vmulps ]
+rustc: rustc 1.98.0 (88d9e12ae 2026-08-18);binary: rustc;commit-hash: 88d9e12ae178fab0fb5cc050a94da85685d449ea;commit-date: 2026-08-18;host: x86_64-unknown-linux-gnu;release: 1.98.0;LLVM version: 22.1.8;
+clang: Debian clang version 19.1.7 (3+b1)
+RUSTC rs_O2_t0: rustc --edition 2021 --crate-type staticlib (--emit=obj) --target x86_64-unknown-linux-gnu -C opt-level=2 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=-fma 
+RUSTC rs_O2_t1: rustc --edition 2021 --crate-type staticlib (--emit=obj) --target x86_64-unknown-linux-gnu -C opt-level=2 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=+avx2,-fma 
+RUSTC rs_O3_t0: rustc --edition 2021 --crate-type staticlib (--emit=obj) --target x86_64-unknown-linux-gnu -C opt-level=3 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=-fma 
+RUSTC rs_O3_t1: rustc --edition 2021 --crate-type staticlib (--emit=obj) --target x86_64-unknown-linux-gnu -C opt-level=3 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=+avx2,-fma 
+RUSTC rssafe_O2_t0: rustc --edition 2021 --crate-type staticlib (staticlib+ld-r) --target x86_64-unknown-linux-gnu -C opt-level=2 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=-fma --cfg safe
+RUSTC rssafe_O2_t1: rustc --edition 2021 --crate-type staticlib (staticlib+ld-r) --target x86_64-unknown-linux-gnu -C opt-level=2 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=+avx2,-fma --cfg safe
+RUSTC rssafe_O3_t0: rustc --edition 2021 --crate-type staticlib (staticlib+ld-r) --target x86_64-unknown-linux-gnu -C opt-level=3 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=-fma --cfg safe
+RUSTC rssafe_O3_t1: rustc --edition 2021 --crate-type staticlib (staticlib+ld-r) --target x86_64-unknown-linux-gnu -C opt-level=3 -C lto=fat -C codegen-units=1 -C panic=abort -C force-unwind-tables=no -C target-feature=+avx2,-fma --cfg safe
+CLANG c_clang_O3_t0: clang -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto 
+CLANG c_clang_O3_t1: clang -O3 -std=c11 -mno-fma -ffp-contract=off -fno-fast-math -fno-lto -mavx2
+FMA_CHECK rs_O2_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      4 addss       4 mulss ]
+FMA_CHECK rs_O2_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      4 vaddss       4 vmulss ]
+FMA_CHECK rs_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 addps       1 mulps ]
+FMA_CHECK rs_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 vaddps       1 vmulps ]
+FMA_CHECK rssafe_O2_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[                 U memcpy                  U rust_eh_personality] mix=[      4 addss       4 mulss ]
+FMA_CHECK rssafe_O2_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[                 U memcpy                  U rust_eh_personality] mix=[      4 vaddss       4 vmulss ]
+FMA_CHECK rssafe_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[                 U memcpy                  U rust_eh_personality] mix=[      1 addps       1 mulps ]
+FMA_CHECK rssafe_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[                 U memcpy                  U rust_eh_personality] mix=[      1 vaddps       1 vmulps ]
+FMA_CHECK c_clang_O3_t0 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      1 addps       1 mulps ]
+FMA_CHECK c_clang_O3_t1 fma_instructions=0 panic_bounds_check_refs=0 undefined_syms=[] mix=[      3 vaddps       3 vmulps ]
+BUILD ggml (pinned 11fe02151f79c41d0d4af7da708755d73b9c0da6) with the host toolchain, jobs=2
+CMAKE_BUILD_TYPE:STRING=Release
+CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+GGML_AVX:BOOL=OFF
+GGML_AVX2:BOOL=OFF
+GGML_AVX512:BOOL=OFF
+GGML_AVX512_BF16:BOOL=OFF
+GGML_AVX512_VBMI:BOOL=OFF
+GGML_AVX512_VNNI:BOOL=OFF
+GGML_AVX_VNNI:BOOL=OFF
+GGML_FMA:BOOL=OFF
+GGML_LLAMAFILE:BOOL=OFF
+GGML_NATIVE:BOOL=ON
+TOOLS cmake=cmake version 3.31.6 openblas_pkg=0.3.29+ds-3 cmake_pkg=3.31.6-2
+K1 libopenblas.so.0 present: Version: 0.3.29+ds-3
+harness built: <home>/rust5/out/box2/r5harness sha256=329ad6378bca01d8051d65bef81a33c22a89c534c9aff4e176708be3e208fc7a ggml=yes
+K2 python: <home>/venvs/torch/bin/python torch=2.14.0+cpu
+K2 MKL dispatch (probe, times dropped):
+      1 MKL_VERBOSE DGEMM(T,N,256,1,256,PTR,PTR,256,PTR,256,PTR,PTR,256) <t> CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+      1 MKL_VERBOSE oneMKL 2024.0 Update 2 Product build 20240605 for Intel(R) 64 architecture Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled processors, Lnx 1.10GHz lp64 gnu_thread
+      4 MKL_VERBOSE SGEMM(T,N,256,1,256,PTR,PTR,256,PTR,256,PTR,PTR,256) <t> CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+HDR host=box2 mode=gate tiers=T0 libs=none reps=20 warm=5 pin=1 threads=1 ncpu=2 load=1.35,0.45,0.18 mhz=2726,2732 thr=0 no_ns=0
+RESULT: OK host=box2 mode=gate all kernels equal the reference on all 5 sets for tiers T0
+GATE_SUMMARY lines=175 equal_yes=175 equal_no=0
+HOSTCHECK pre-timing t=2026-10-04T06:26:05Z load=0.29 0.34 0.16 1/124 mhz=2759,2731, thr_total=0 other_leg_units=[] own_unit=leg-rust5-box2-redo1.service
+TIMING_PLAN reps=20 warm=5 shape=all harness_args=[--reps 20 --warm 5 ] k2A=[--reps 10 --warm 5 --rep-offset 0 ] k2B=[--reps 10 --warm 5 --rep-offset 10 ]
+<home>/rust5/run.sh: line 81: 495006 Illegal instruction     taskset -c "$CORE" "$PY" -W ignore "$W/harness/k2_torch.py" --data "$DATA" --host "$HOST" --core "$CORE" --max-discards "$(dleft)" $K2A > "$OUT/k2_passA.out" 2>&1
+RESULT: OK host=box2 mode=time discards=1 other_runnable_flags=76 lib_thread_violations=0
+<home>/rust5/run.sh: line 84: 496275 Illegal instruction     taskset -c "$CORE" "$PY" -W ignore "$W/harness/k2_torch.py" --data "$DATA" --host "$HOST" --core "$CORE" --max-discards "$(dleft "$OUT/k2_passA.out" "$OUT/harness_time.out")" $K2B > "$OUT/k2_passB.out" 2>&1
+HOSTCHECK close t=2026-10-04T06:38:40Z load=1.11 1.01 0.68 1/121 mhz=2710,2742, thr_total=0 other_leg_units=[] own_unit=leg-rust5-box2-redo1.service
+RESULT: FAIL host=box2 timing pass did not finish OK: k2_passA.out: k2_passB.out:

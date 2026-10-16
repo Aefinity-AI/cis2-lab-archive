@@ -1,0 +1,134 @@
+{
+ "baseline": {
+  "base_arm": 0.05,
+  "base_host": 0.05,
+  "floor_arm": 0.02,
+  "floor_host": 0.1,
+  "limit_arm": 0.07,
+  "limit_host": 0.1,
+  "margin_arm": 0.02,
+  "margin_host": 0.05,
+  "masked": "no",
+  "max_arm": 0.15,
+  "max_host": 0.3,
+  "measured": "yes",
+  "window_s": 20.0,
+  "windows": [
+   [
+    0.05,
+    0.05
+   ],
+   [
+    0.02,
+    0.02
+   ],
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0185,
+    0.0185
+   ],
+   [
+    0.0005,
+    0.0005
+   ],
+   [
+    0.001,
+    0.001
+   ]
+  ]
+ },
+ "discards": 5,
+ "elapsed_job_s": 950,
+ "frozen_payload_sha256": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+ "gate_witness": "ecafd089d17bb72e7ec9e7196dfbf7cb2f1539936ebeae71911379860c7e79e9",
+ "host": "box4",
+ "job": "20261004T122519Z-83764",
+ "m1_bytes_shipped": {
+  "C": 108144,
+  "R": 3826304
+ },
+ "m1_sha256_shipped": {
+  "C": "5a6ccc32ec04ca14d831f6b508bb69822ea51c6f16b7305f601dd87a056e1fd8",
+  "R": "d0f8ec89e4f63c6ed37fb6d5416662e3b56e740b202126d8f8637cb5cb6e6503"
+ },
+ "m2": {
+  "load_ns": {
+   "R": [
+    3922766751
+   ]
+  },
+  "prefill_ns": {
+   "R": [
+    13094618312
+   ]
+  },
+  "reps_done": {
+   "C": 0,
+   "Cv": 0,
+   "R": 1,
+   "Rv": 0
+  },
+  "values_exit_s": {
+   "R": [
+    17.2297
+   ]
+  },
+  "values_row_s": {
+   "R": [
+    17.1742
+   ]
+  }
+ },
+ "m3": {
+  "C_bytes": [],
+  "C_s": [],
+  "C_sha256": [],
+  "R_bytes": [],
+  "R_s": [],
+  "R_sha256": []
+ },
+ "notrun": [
+  "P start: stack did not start: rc=-4 (Illegal instruction) ()",
+  "M2: INVALID: cold cache not dropped (Cached did not fall by 80 percent) 3 times",
+  "M3 and M4 builds: no source payload on this host (lite payload)"
+ ],
+ "p": {
+  "install_s": [
+   132.43
+  ],
+  "native_so_bytes": 550024256,
+  "packages": 35,
+  "probe_ok": false,
+  "probe_rc": -4,
+  "probe_tail": [],
+  "probe_token": null,
+  "site_packages_py_lines": 4314098,
+  "venv_bytes": 1111854868,
+  "wheelhouse_sha256": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e",
+  "wheelhouse_sha256_here": "21360ef99c777608fc5e0b3e13bf8d898cbfad6970b11701c36f80ee390e738e"
+ },
+ "payload_sha256": "ea2b972e09cf0ab84f26e0ff0462c7aff2dc82c01a265a83caa1ac2132d14b85",
+ "phases": "install,m2,m3",
+ "reps": 5,
+ "run_py_sha256": "b71fb02c613d2b16e444a7a72abd9cf0cc3de53015d47f17f47d946730c289c8",
+ "timers_paused": "NA",
+ "tools": {
+  "audit_advisory_db": "ls: cannot access '<home>/.cargo/advisory-db': No such file or directory",
+  "audit_cargo": "error: no such command: `audit`",
+  "audit_pip": "absent",
+  "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+  "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+  "kernel": "6.12.94+deb13-amd64",
+  "make": "GNU Make 4.4.1",
+  "musl_gcc": "/bin/bash: line 1: musl-gcc: command not found",
+  "musl_target": "x86_64-unknown-linux-gnu x86_64-unknown-uefi",
+  "musl_tools_pkg": "",
+  "python": "Python 3.13.5",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28);binary: rustc;commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4;"
+ },
+ "voids": 0,
+ "word": "OK-PARTIAL"
+}

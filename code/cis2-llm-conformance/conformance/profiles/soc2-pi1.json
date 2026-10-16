@@ -1,0 +1,45 @@
+{
+  "name": "soc2-pi1",
+  "title": "SOC 2 Trust Services Criteria — Processing Integrity (PI1.3-PI1.5) slice",
+  "description": "Vectors evidencing the narrow, genuine SOC 2 fit CIS-2 has: complete/accurate records of input, processing, and output activity (PI1.3-PI1.5), plus a partial fit to CC7.1/CC7.3 anomaly detection. See compliance/CROSSWALK.md rows 10-19 and its 'SOC 2 honest verdict' for the full picture, including everything this profile does NOT touch (governance, vendor mgmt, vuln scanning, confidentiality, availability).",
+  "vectors": [
+    {
+      "id": "receipt_schema",
+      "crosswalk_control": "CROSSWALK.md row 16 (PI1.3 records of system inputs)",
+      "rationale": "The receipt's prompt field + digest is the recorded input activity PI1.3 asks for."
+    },
+    {
+      "id": "chain_integrity",
+      "crosswalk_control": "CROSSWALK.md row 17 (PI1.4 records of processing activity)",
+      "rationale": "The hash chain is the 'recorded completely and accurately' guarantee for processing activity across the whole log, not just one record."
+    },
+    {
+      "id": "token_log_completeness",
+      "crosswalk_control": "CROSSWALK.md row 18 (PI1.5 records of system output activity)",
+      "rationale": "Confirms the output record (logged token ids) is complete and matches what was actually emitted -- 'complete and accurate' per PI1.5's own language."
+    },
+    {
+      "id": "replay_tamper",
+      "crosswalk_control": "CROSSWALK.md row 13 (CC7.3 detection tools identifying anomalies) and row 17 (PI1.4 error detection half)",
+      "rationale": "A digest-mismatch-on-tamper / replay-on-duplicate detection is exactly the 'detection tool... to identify anomalies' language of CC7.3, for the compute slice only."
+    },
+    {
+      "id": "wrong_model_binding",
+      "crosswalk_control": "CROSSWALK.md row 16-18 (PI1.3-PI1.5) — records must bind to the real system component that ran",
+      "rationale": "NOT COVERED by the v0.1 scaffold today -- see vector detail. A record that doesn't bind to the actual model instance is not a trustworthy PI1 input/processing/output record."
+    },
+    {
+      "id": "wrong_prompt_binding",
+      "crosswalk_control": "CROSSWALK.md row 16 (PI1.3) — the input record must bind to the actual input",
+      "rationale": "NOT COVERED by the v0.1 scaffold today -- see vector detail."
+    }
+  ],
+  "not_covered": [
+    "CC1-CC6, CC8, CC9 (governance, access control, change management, risk assessment, vendor management) — organizational, not a product feature CIS-2 ships.",
+    "CC7.2 (vulnerability scanning) — CIS-2 is not a vulnerability scanner.",
+    "A1.1/A1.2 beyond the backup-artifact sliver — availability posture of the whole system.",
+    "C1.1/C1.2 (confidentiality) — receipts may themselves contain sensitive prompt/output content requiring a separate access-control policy this suite does not provide or check.",
+    "'Correction' half of PI1.4 (errors are detected AND corrected) — CIS-2 detects; correction is a procedural/ops action outside this suite.",
+    "A real SOC 2 Type II report — requires an independent licensed CPA-firm auditor and a 6-12 month operating-effectiveness observation period across ALL criteria the company puts in scope, not just PI1."
+  ]
+}

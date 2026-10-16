@@ -1,0 +1,10 @@
+{
+  "added_at": "2026-10-16T09:05:53Z",
+  "after": "cis2-horizon-w2",
+  "cpu_quota": "200%",
+  "memory_max": "2500M",
+  "name": "cis2-batch-w2",
+  "payload": "<home>/feed-payload/cis2-batch",
+  "payload_dest": "<home>/cis2-batch",
+  "pushed_at": "2026-10-16T11:05:21Z"
+}

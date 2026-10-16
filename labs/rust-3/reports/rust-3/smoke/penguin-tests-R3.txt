@@ -1,0 +1,6 @@
+oracle tests: OK
+SELFTEST PASS 190 checks
+MUTCHECK PASS 70/70 mutants killed
+mutants deterministic d3e33587...
+ALL TESTS PASS
+TOY CHECK PASS 87 (existing toy outputs)

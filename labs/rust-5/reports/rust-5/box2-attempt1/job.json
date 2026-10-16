@@ -1,0 +1,9 @@
+{
+  "added_at": "2026-10-04T02:34:32Z",
+  "cpu_quota": "200%",
+  "memory_max": "2800M",
+  "name": "rust5-box2",
+  "payload": "<home>/feed-payload/rust5",
+  "payload_dest": "<home>/rust5",
+  "pushed_at": "2026-10-04T05:00:30Z"
+}

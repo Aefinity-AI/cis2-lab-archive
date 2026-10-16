@@ -1,0 +1,56 @@
+HOST box1 word=OK labelled=True
+  disk: {"disk": "sda", "diskstats_name": "sda4", "fs_type": "ext4", "model": "ST4000LM024-2AN1", "mount_source": "/dev/sda4", "rotational": "yes (1)", "short": "sda/ST4000LM024-2AN1/ext4/rot=yes (1)", "size_gb": 4000.8}
+  controls: {"cold_open": {"ok": true, "resident_pages": 0, "total_pages": 65689}, "warm_final": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}, "warm_open": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}}
+  arm_status: {"C": "OK", "Cv": "OK", "P": "OK", "Q": "OK", "R": "OK", "Rv": "OK"}
+  pair R against C: label=RUST BEHIND r=0.8204
+  medians to opening line (s): {"C": 10.413, "Cv": 12.299, "P": 38.398, "Q": 8.532, "R": 12.693, "Rv": 14.552}
+  P: {"seconds_over_R": 3.0251953863607715, "seconds_over_C": 3.6876314500561818, "words": "stack, no-Python effect"}
+  Q (no label, not the same arithmetic: largest logit difference 0.072 in rust-1b): {"median_open_s": 8.5321, "probe_rc": 0, "info": "INFO system_info=CPU : SSE3 = 1 | SSSE3 = 1 | AVX = 1 | AVX2 = 1 | F16C = 1 | FMA = 1 | BMI2 = 1 | LLAMAFILE = 1 | REPACK = 1 |  n_vocab=49152 load_mode=mmap flash_attn_type=-1 threads=1", "no_label": true}
+  M2 SENTENCE: IMPLEMENTATION (cold start, SmolLM2-135M, box1): cis2_ref (Rust) is behind verify3 (C), r=0.820; different implementations, toolchains and dependencies included, not a language verdict.
+  LEDGER: met (label RUST BEHIND; met does not say who is ahead)
+  expectation M2 box1 TIE (about 60 percent, carried): SURPRISE (RUST BEHIND)
+  operator estimate 2026-10-05 (TIE 50, RUST BEHIND 25, RUST AHEAD 15, INVALID or INCONCLUSIVE 10): outcome class RUST BEHIND 25 percent: SURPRISE
+  expectation P slower by a factor above 3 on box1, against BOTH R and C (operator 85 percent): held
+  (FRAMEWORK sentence and Storage sentence otherwise: written by hand by the verifier)
+HOST box2 word=OK-PARTIAL labelled=False
+  disk: {"disk": "mmcblk0", "diskstats_name": "mmcblk0p4", "fs_type": "ext4", "model": "TA2964", "mount_source": "/dev/mmcblk0p4", "rotational": "no (0)", "short": "mmcblk0/TA2964/ext4/rot=no (0)", "size_gb": 62.6}
+  controls: {"cold_open": {"ok": true, "resident_pages": 0, "total_pages": 65689}, "warm_final": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}, "warm_open": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}}
+  arm_status: {"C": "OK", "Cv": "OK", "P": "OK", "Q": "OK", "R": "OK", "Rv": "OK"}
+  pair R against C: label=no label (Rule A) r=0.7755
+  medians to opening line (s): {"C": 6.672, "Cv": 6.686, "P": 13.109, "Q": 3.599, "R": 8.604, "Rv": 9.204}
+  P: {"seconds_over_R": 1.5236645125296386, "seconds_over_C": 1.9647487297852249, "words": "stack, no-Python effect"}
+  Q (no label, not the same arithmetic: largest logit difference 0.072 in rust-1b): {"median_open_s": 3.5986, "probe_rc": 0, "info": "INFO system_info=CPU : SSE3 = 1 | SSSE3 = 1 | LLAMAFILE = 1 | REPACK = 1 |  n_vocab=49152 load_mode=mmap flash_attn_type=-1 threads=1", "no_label": true}
+  BANNER: no label (Rule A): this host carries no label word; r and the medians are numbers only
+  STACK SENTENCE (P not slower by a factor above 3): FRAMEWORK (stack, no-Python effect): on box2 the Python stack started in 13.11 s against 8.60 s (R) and 6.67 s (C); not slower by the factor of the expectation; no label.
+  expectation Python slower by a factor above 3 on box2, against BOTH R and C (about 80 percent): SURPRISE (factor 1.52 over R, 1.96 over C)
+  (FRAMEWORK sentence and Storage sentence otherwise: written by hand by the verifier)
+HOST box3 word=OK-PARTIAL labelled=False
+  disk: {"disk": "sda", "diskstats_name": "sda4", "fs_type": "ext4", "model": "Storage Device", "mount_source": "/dev/sda4", "rotational": "yes (1)", "short": "sda/Storage Device/ext4/rot=yes (1)", "size_gb": 500.1}
+  controls: {"cold_open": {"ok": true, "resident_pages": 0, "total_pages": 65689}, "warm_final": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}, "warm_open": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}}
+  arm_status: {"C": "OK", "Cv": "OK", "P": "OK", "Q": "OK", "R": "OK", "Rv": "OK"}
+  pair R against C: label=no label (Rule A) r=0.7489
+  medians to opening line (s): {"C": 13.663, "Cv": 13.734, "P": 57.883, "Q": 23.02, "R": 18.246, "Rv": 16.469}
+  P: {"seconds_over_R": 3.1724470557285045, "seconds_over_C": 4.236368693004669, "words": "stack, no-Python effect"}
+  Q (no label, not the same arithmetic: largest logit difference 0.072 in rust-1b): {"median_open_s": 23.0199, "probe_rc": 0, "info": "INFO system_info=CPU : SSE3 = 1 | SSSE3 = 1 | LLAMAFILE = 1 | REPACK = 1 |  n_vocab=49152 load_mode=mmap flash_attn_type=-1 threads=1", "no_label": true}
+  BANNER: no label (Rule A): this host carries no label word; r and the medians are numbers only
+  (FRAMEWORK sentence and Storage sentence otherwise: written by hand by the verifier)
+HOST box4 word=OK-PARTIAL labelled=False
+  disk: {"disk": "sda", "diskstats_name": "sda4", "fs_type": "ext4", "model": "HGST HTS541075A9", "mount_source": "/dev/sda4", "rotational": "yes (1)", "short": "sda/HGST HTS541075A9/ext4/rot=yes (1)", "size_gb": 750.2}
+  controls: {"cold_open": {"ok": true, "resident_pages": 0, "total_pages": 65689}, "warm_final": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}, "warm_open": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}}
+  arm_status: {"C": "OK", "Cv": "OK", "R": "OK", "Rv": "OK"}
+  pair R against C: label=no label (Rule A) r=0.8346
+  medians to opening line (s): {"C": 14.237, "Cv": 14.291, "R": 17.057, "Rv": 20.169}
+  P: {"status": "NOT RUN", "probe_rc": -4}
+  Q (no label, not the same arithmetic: largest logit difference 0.072 in rust-1b): {"median_open_s": null, "probe_rc": -4, "info": null, "no_label": true}
+  BANNER: no label (Rule A): this host carries no label word; r and the medians are numbers only
+  (FRAMEWORK sentence and Storage sentence otherwise: written by hand by the verifier)
+HOST box5 word=OK-PARTIAL labelled=False
+  disk: {"disk": "sda", "diskstats_name": "sda4", "fs_type": "ext4", "model": "WDC WD1600BEVS-2", "mount_source": "/dev/sda4", "rotational": "yes (1)", "short": "sda/WDC WD1600BEVS-2/ext4/rot=yes (1)", "size_gb": 160.0}
+  controls: {"cold_open": {"ok": true, "resident_pages": 0, "total_pages": 65689}, "warm_final": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}, "warm_open": {"ok": true, "pct": 100.0, "resident_pages": 65689, "total_pages": 65689}}
+  arm_status: {"C": "OK", "Cv": "OK", "R": "OK", "Rv": "OK"}
+  pair R against C: label=no label (Rule A) r=0.9213
+  medians to opening line (s): {"C": 18.621, "Cv": 18.721, "R": 20.212, "Rv": 24.261}
+  P: {"status": "NOT RUN", "probe_rc": -4}
+  Q (no label, not the same arithmetic: largest logit difference 0.072 in rust-1b): {"median_open_s": null, "probe_rc": -4, "info": null, "no_label": true}
+  BANNER: no label (Rule A): this host carries no label word; r and the medians are numbers only
+  (FRAMEWORK sentence and Storage sentence otherwise: written by hand by the verifier)

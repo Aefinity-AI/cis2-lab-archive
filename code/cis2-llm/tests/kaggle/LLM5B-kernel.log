@@ -1,0 +1,937 @@
+[{"stream_name":"stdout","time":0.969433949,"data":"\n"}
+,{"stream_name":"stdout","time":0.969525294,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":0.969530676,"data":"environment\n"}
+,{"stream_name":"stdout","time":0.969533575,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":0.969536512,"data":"$ bash -c free -h; nproc; uname -a; df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":1.029762305,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":1.029802153,"data":"Mem:            31Gi       425Mi        28Gi       1.0Mi       2.3Gi        30Gi\n"}
+,{"stream_name":"stdout","time":1.029807428,"data":"Swap:             0B          0B          0B\n"}
+,{"stream_name":"stdout","time":1.029812278,"data":"4\n"}
+,{"stream_name":"stdout","time":1.029816113,"data":"Linux 9c9445a57ffd 6.12.90+ #1 SMP Sat May 30 15:40:53 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n"}
+,{"stream_name":"stdout","time":1.029820388,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":1.029824534,"data":"/dev/loop1       20G  144K   20G   1% /kaggle/working\n"}
+,{"stream_name":"stdout","time":1.029828612,"data":"\n"}
+,{"stream_name":"stdout","time":1.029832103,"data":"  (exit=0, 0.1s)\n"}
+,{"stream_name":"stdout","time":1.043492611,"data":"\n"}
+,{"stream_name":"stdout","time":1.043536577,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.043540668,"data":"installing rust toolchain (rustup, matches rust-toolchain.toml)\n"}
+,{"stream_name":"stdout","time":1.043543734,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.043546693,"data":"$ bash -c curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none --profile minimal\n"}
+,{"stream_name":"stderr","time":1.920133243,"data":"info: downloading installer\n"}
+,{"stream_name":"stderr","time":1.9201892200000001,"data":"info: profile set to minimal\n"}
+,{"stream_name":"stderr","time":1.9201942010000002,"data":"info: default host tuple is x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stderr","time":1.9201986309999999,"data":"info: skipping toolchain installation\n"}
+,{"stream_name":"stderr","time":1.9202027529999999,"data":"\n"}
+,{"stream_name":"stdout","time":1.920255013,"data":"\n"}
+,{"stream_name":"stdout","time":1.920260287,"data":"\n"}
+,{"stream_name":"stdout","time":1.9202641489999999,"data":"Rust is installed now. Great!\n"}
+,{"stream_name":"stdout","time":1.9202679520000001,"data":"\n"}
+,{"stream_name":"stdout","time":1.920271515,"data":"To get started you may need to restart your current shell.\n"}
+,{"stream_name":"stdout","time":1.9202755009999999,"data":"This would reload your PATH environment variable to include\n"}
+,{"stream_name":"stdout","time":1.9202800610000001,"data":"Cargo's bin directory ($HOME/.cargo/bin).\n"}
+,{"stream_name":"stdout","time":1.920284064,"data":"\n"}
+,{"stream_name":"stdout","time":1.920287436,"data":"To configure your current shell, you need to source the\n"}
+,{"stream_name":"stdout","time":1.920291363,"data":"corresponding env file under $HOME/.cargo.\n"}
+,{"stream_name":"stdout","time":1.9202955689999999,"data":"\n"}
+,{"stream_name":"stdout","time":1.920299521,"data":"Consider running the right command for your shell (note the leading DOT):\n"}
+,{"stream_name":"stdout","time":1.920303723,"data":". \"$HOME/.cargo/env\" # For sh/ash/dash/pdksh/bash\n"}
+,{"stream_name":"stdout","time":1.920357871,"data":"cargo:rerun-if-env-changed=CC_x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stdout","time":1.9203630710000001,"data":"CC_x86_64-unknown-linux-gnu = None\n"}
+,{"stream_name":"stdout","time":1.9203670879999999,"data":"cargo:rerun-if-env-changed=CC_x86_64_unknown_linux_gnu\n"}
+,{"stream_name":"stdout","time":1.9203708910000001,"data":"CC_x86_64_unknown_linux_gnu = None\n"}
+,{"stream_name":"stdout","time":1.920374733,"data":"cargo:rerun-if-env-changed=HOST_CC\n"}
+,{"stream_name":"stdout","time":1.920378511,"data":"HOST_CC = None\n"}
+,{"stream_name":"stdout","time":1.920382574,"data":"cargo:rerun-if-env-changed=CC\n"}
+,{"stream_name":"stdout","time":1.9203864309999998,"data":"CC = None\n"}
+,{"stream_name":"stdout","time":1.920390043,"data":"cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT\n"}
+,{"stream_name":"stdout","time":1.920393921,"data":"cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS\n"}
+,{"stream_name":"stdout","time":1.92039751,"data":"CRATE_CC_NO_DEFAULTS = None\n"}
+,{"stream_name":"stdout","time":1.9204009370000001,"data":"cargo:rerun-if-env-changed=CFLAGS\n"}
+,{"stream_name":"stdout","time":1.9204049319999998,"data":"CFLAGS = None\n"}
+,{"stream_name":"stdout","time":1.920408669,"data":"cargo:rerun-if-env-changed=HOST_CFLAGS\n"}
+,{"stream_name":"stdout","time":1.92041285,"data":"HOST_CFLAGS = None\n"}
+,{"stream_name":"stdout","time":1.920416557,"data":"cargo:rerun-if-env-changed=CFLAGS_x86_64_unknown_linux_gnu\n"}
+,{"stream_name":"stdout","time":1.920420405,"data":"CFLAGS_x86_64_unknown_linux_gnu = None\n"}
+,{"stream_name":"stdout","time":1.920424518,"data":"cargo:rerun-if-env-changed=CFLAGS_x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stdout","time":1.920428397,"data":"CFLAGS_x86_64-unknown-linux-gnu = None\n"}
+,{"stream_name":"stdout","time":1.9204321549999999,"data":"\n"}
+,{"stream_name":"stdout","time":1.920435689,"data":"  (exit=0, 0.9s)\n"}
+,{"stream_name":"stdout","time":1.9204393419999999,"data":"\n"}
+,{"stream_name":"stdout","time":1.920442881,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.9204467969999999,"data":"building cis2_ref (release) from /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-llm5b\n"}
+,{"stream_name":"stdout","time":1.92045091,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":1.920454861,"data":"$ bash -c rm -rf /kaggle/working/engine \u0026\u0026 cp -r /kaggle/input/datasets/aefinityaiinc/cis2-fp-engine-llm5b /kaggle/working/engine\n"}
+,{"stream_name":"stdout","time":1.9848101150000002,"data":"  (exit=0, 0.1s)\n"}
+,{"stream_name":"stdout","time":1.984879356,"data":"$ cargo build --release\n"}
+,{"stream_name":"stdout","time":106.271788254,"data":"  (exit=0, 104.3s)\n"}
+,{"stream_name":"stdout","time":106.271858424,"data":"built /kaggle/working/engine/target/release/cis2_ref in 104.3s\n"}
+,{"stream_name":"stdout","time":106.271866772,"data":"\n"}
+,{"stream_name":"stdout","time":106.271873323,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":106.271878183,"data":"PHASE 1: Qwen/Qwen2-7B attempt\n"}
+,{"stream_name":"stdout","time":106.27188274,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":106.271902026,"data":"info: syncing channel updates for 1.98.0-x86_64-unknown-linux-gnu\n"}
+,{"stream_name":"stderr","time":106.271937946,"data":"info: latest update on 2026-08-20 for version 1.98.0 (88d9e12ae 2026-08-18)\n"}
+,{"stream_name":"stderr","time":106.271962242,"data":"info: downloading 4 components\n"}
+,{"stream_name":"stderr","time":106.271966959,"data":"warn: the missing active toolchain `1.98.0-x86_64-unknown-linux-gnu` has been auto-installed\n"}
+,{"stream_name":"stderr","time":106.271971064,"data":"warn: this might cause rustup commands to take longer time to finish than expected\n"}
+,{"stream_name":"stderr","time":106.271975297,"data":"info: you may opt out with `RUSTUP_AUTO_INSTALL=0` or `rustup set auto-install disable`\n"}
+,{"stream_name":"stderr","time":106.271979586,"data":"    Updating crates.io index\n"}
+,{"stream_name":"stderr","time":106.271983625,"data":" Downloading crates ...\n"}
+,{"stream_name":"stderr","time":106.271987512,"data":"  Downloaded base64 v0.13.1\n"}
+,{"stream_name":"stderr","time":106.271991241,"data":"  Downloaded aho-corasick v1.1.5\n"}
+,{"stream_name":"stderr","time":106.271994788,"data":"  Downloaded ahash v0.8.12\n"}
+,{"stream_name":"stderr","time":106.271998275,"data":"  Downloaded bitflags v2.13.1\n"}
+,{"stream_name":"stderr","time":106.272021899,"data":"  Downloaded darling_macro v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272026039,"data":"  Downloaded macro_rules_attribute-proc_macro v0.2.3\n"}
+,{"stream_name":"stderr","time":106.272029995,"data":"  Downloaded block-buffer v0.12.1\n"}
+,{"stream_name":"stderr","time":106.272033751,"data":"  Downloaded derive_builder_macro v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272037634,"data":"  Downloaded monostate v0.1.18\n"}
+,{"stream_name":"stderr","time":106.272041718,"data":"  Downloaded equivalent v1.0.2\n"}
+,{"stream_name":"stderr","time":106.272045382,"data":"  Downloaded rayon-cond v0.4.0\n"}
+,{"stream_name":"stderr","time":106.272049301,"data":"  Downloaded crossbeam-deque v0.8.7\n"}
+,{"stream_name":"stderr","time":106.272053738,"data":"  Downloaded derive_builder_core v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272058124,"data":"  Downloaded paste v1.0.15\n"}
+,{"stream_name":"stderr","time":106.272062067,"data":"  Downloaded fnv v1.0.7\n"}
+,{"stream_name":"stderr","time":106.272065564,"data":"  Downloaded castaway v0.2.4\n"}
+,{"stream_name":"stderr","time":106.272069406,"data":"  Downloaded errno v0.3.14\n"}
+,{"stream_name":"stderr","time":106.272073327,"data":"  Downloaded ident_case v1.0.1\n"}
+,{"stream_name":"stderr","time":106.27207735,"data":"  Downloaded strsim v0.11.1\n"}
+,{"stream_name":"stderr","time":106.272081125,"data":"  Downloaded version_check v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272085343,"data":"  Downloaded itoa v1.0.18\n"}
+,{"stream_name":"stderr","time":106.272089235,"data":"  Downloaded cpufeatures v0.3.1\n"}
+,{"stream_name":"stderr","time":106.272092876,"data":"  Downloaded macro_rules_attribute v0.2.3\n"}
+,{"stream_name":"stderr","time":106.272096715,"data":"  Downloaded either v1.18.0\n"}
+,{"stream_name":"stderr","time":106.27210071,"data":"  Downloaded fastrand v2.5.0\n"}
+,{"stream_name":"stderr","time":106.27210473,"data":"  Downloaded crossbeam-utils v0.8.22\n"}
+,{"stream_name":"stderr","time":106.27210857,"data":"  Downloaded daachorse v1.0.1\n"}
+,{"stream_name":"stderr","time":106.27211229,"data":"  Downloaded dary_heap v0.3.9\n"}
+,{"stream_name":"stderr","time":106.272116151,"data":"  Downloaded derive_builder v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272119912,"data":"  Downloaded digest v0.11.3\n"}
+,{"stream_name":"stderr","time":106.272123597,"data":"  Downloaded rand_chacha v0.9.0\n"}
+,{"stream_name":"stderr","time":106.272127309,"data":"  Downloaded thiserror v2.0.20\n"}
+,{"stream_name":"stderr","time":106.272131095,"data":"  Downloaded allocator-api2 v0.2.21\n"}
+,{"stream_name":"stderr","time":106.272144257,"data":"  Downloaded monostate-impl v0.1.18\n"}
+,{"stream_name":"stderr","time":106.272147698,"data":"  Downloaded rustversion v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272150146,"data":"  Downloaded static_assertions v1.1.0\n"}
+,{"stream_name":"stderr","time":106.272152498,"data":"  Downloaded thiserror-impl v2.0.20\n"}
+,{"stream_name":"stderr","time":106.272156191,"data":"  Downloaded foldhash v0.2.0\n"}
+,{"stream_name":"stderr","time":106.272159728,"data":"  Downloaded find-msvc-tools v0.1.11\n"}
+,{"stream_name":"stderr","time":106.272163301,"data":"  Downloaded pkg-config v0.3.34\n"}
+,{"stream_name":"stderr","time":106.272166972,"data":"  Downloaded quote v1.0.47\n"}
+,{"stream_name":"stderr","time":106.27217091,"data":"  Downloaded shlex v2.0.1\n"}
+,{"stream_name":"stderr","time":106.272174775,"data":"  Downloaded zmij v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272178457,"data":"  Downloaded cfg-if v1.0.4\n"}
+,{"stream_name":"stderr","time":106.272182173,"data":"  Downloaded darling v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272185837,"data":"  Downloaded onig v6.5.3\n"}
+,{"stream_name":"stderr","time":106.272189469,"data":"  Downloaded rand_core v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272193231,"data":"  Downloaded crossbeam-epoch v0.9.20\n"}
+,{"stream_name":"stderr","time":106.272198714,"data":"  Downloaded hybrid-array v0.4.14\n"}
+,{"stream_name":"stderr","time":106.27220273,"data":"  Downloaded once_cell v1.21.4\n"}
+,{"stream_name":"stderr","time":106.27220636,"data":"  Downloaded pastey v0.2.3\n"}
+,{"stream_name":"stderr","time":106.27221,"data":"  Downloaded safetensors v0.8.0\n"}
+,{"stream_name":"stderr","time":106.272213761,"data":"  Downloaded smallvec v1.15.2\n"}
+,{"stream_name":"stderr","time":106.272217465,"data":"  Downloaded crypto-common v0.2.2\n"}
+,{"stream_name":"stderr","time":106.272221093,"data":"  Downloaded ppv-lite86 v0.2.21\n"}
+,{"stream_name":"stderr","time":106.272224704,"data":"  Downloaded getrandom v0.4.3\n"}
+,{"stream_name":"stderr","time":106.272228379,"data":"  Downloaded proc-macro2 v1.0.107\n"}
+,{"stream_name":"stderr","time":106.272232416,"data":"  Downloaded serde_derive v1.0.229\n"}
+,{"stream_name":"stderr","time":106.272236066,"data":"  Downloaded sha2 v0.11.0\n"}
+,{"stream_name":"stderr","time":106.272239728,"data":"  Downloaded log v0.4.34\n"}
+,{"stream_name":"stderr","time":106.272243454,"data":"  Downloaded ryu v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272247049,"data":"  Downloaded const-oid v0.10.2\n"}
+,{"stream_name":"stderr","time":106.272250565,"data":"  Downloaded getrandom v0.3.4\n"}
+,{"stream_name":"stderr","time":106.272254329,"data":"  Downloaded unicode-ident v1.0.24\n"}
+,{"stream_name":"stderr","time":106.272258529,"data":"  Downloaded serde_core v1.0.229\n"}
+,{"stream_name":"stderr","time":106.272262362,"data":"  Downloaded tempfile v3.27.0\n"}
+,{"stream_name":"stderr","time":106.272265722,"data":"  Downloaded rayon-core v1.13.0\n"}
+,{"stream_name":"stderr","time":106.272270138,"data":"  Downloaded minimal-lexical v0.2.1\n"}
+,{"stream_name":"stderr","time":106.272274125,"data":"  Downloaded unicode_categories v0.1.1\n"}
+,{"stream_name":"stderr","time":106.272277993,"data":"  Downloaded darling_core v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272281927,"data":"  Downloaded unicode-normalization-alignments v0.1.12\n"}
+,{"stream_name":"stderr","time":106.272285673,"data":"  Downloaded serde v1.0.229\n"}
+,{"stream_name":"stderr","time":106.272289358,"data":"  Downloaded memchr v2.8.3\n"}
+,{"stream_name":"stderr","time":106.272297712,"data":"  Downloaded rand v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272301751,"data":"  Downloaded cc v1.4.4\n"}
+,{"stream_name":"stderr","time":106.272305454,"data":"  Downloaded unicode-segmentation v1.13.3\n"}
+,{"stream_name":"stderr","time":106.272309268,"data":"  Downloaded compact_str v0.9.1\n"}
+,{"stream_name":"stderr","time":106.272313036,"data":"  Downloaded typenum v1.20.1\n"}
+,{"stream_name":"stderr","time":106.272316733,"data":"  Downloaded nom v7.1.3\n"}
+,{"stream_name":"stderr","time":106.272320313,"data":"  Downloaded hashbrown v0.16.1\n"}
+,{"stream_name":"stderr","time":106.272324106,"data":"  Downloaded serde_json v1.0.151\n"}
+,{"stream_name":"stderr","time":106.272328064,"data":"  Downloaded regex v1.13.1\n"}
+,{"stream_name":"stderr","time":106.272331728,"data":"  Downloaded itertools v0.14.0\n"}
+,{"stream_name":"stderr","time":106.272335546,"data":"  Downloaded esaxx-rs v0.1.10\n"}
+,{"stream_name":"stderr","time":106.272339246,"data":"  Downloaded rayon v1.12.0\n"}
+,{"stream_name":"stderr","time":106.272342117,"data":"  Downloaded tokenizers v0.23.1\n"}
+,{"stream_name":"stderr","time":106.272344416,"data":"  Downloaded syn v2.0.119\n"}
+,{"stream_name":"stderr","time":106.272347241,"data":"  Downloaded zerocopy v0.8.56\n"}
+,{"stream_name":"stderr","time":106.272350869,"data":"  Downloaded syn v3.0.4\n"}
+,{"stream_name":"stderr","time":106.272354952,"data":"  Downloaded regex-syntax v0.8.11\n"}
+,{"stream_name":"stderr","time":106.272358984,"data":"  Downloaded rustix v1.1.4\n"}
+,{"stream_name":"stderr","time":106.272362647,"data":"  Downloaded spm_precompiled v0.1.4\n"}
+,{"stream_name":"stderr","time":106.272366496,"data":"  Downloaded onig_sys v69.9.3\n"}
+,{"stream_name":"stderr","time":106.272370353,"data":"  Downloaded regex-automata v0.4.18\n"}
+,{"stream_name":"stderr","time":106.272374099,"data":"  Downloaded libc v0.2.189\n"}
+,{"stream_name":"stderr","time":106.27237768,"data":"  Downloaded linux-raw-sys v0.12.1\n"}
+,{"stream_name":"stderr","time":106.272381317,"data":"   Compiling proc-macro2 v1.0.107\n"}
+,{"stream_name":"stderr","time":106.272385279,"data":"   Compiling unicode-ident v1.0.24\n"}
+,{"stream_name":"stderr","time":106.272388973,"data":"   Compiling quote v1.0.47\n"}
+,{"stream_name":"stderr","time":106.272392758,"data":"   Compiling serde_core v1.0.229\n"}
+,{"stream_name":"stderr","time":106.272396469,"data":"   Compiling cfg-if v1.0.4\n"}
+,{"stream_name":"stderr","time":106.272400263,"data":"   Compiling libc v0.2.189\n"}
+,{"stream_name":"stderr","time":106.272403883,"data":"   Compiling serde v1.0.229\n"}
+,{"stream_name":"stderr","time":106.27240765,"data":"   Compiling crossbeam-utils v0.8.22\n"}
+,{"stream_name":"stderr","time":106.272411447,"data":"   Compiling memchr v2.8.3\n"}
+,{"stream_name":"stderr","time":106.272414963,"data":"   Compiling syn v3.0.4\n"}
+,{"stream_name":"stderr","time":106.272418536,"data":"   Compiling syn v2.0.119\n"}
+,{"stream_name":"stderr","time":106.272421825,"data":"   Compiling ident_case v1.0.1\n"}
+,{"stream_name":"stderr","time":106.272425524,"data":"   Compiling crossbeam-epoch v0.9.20\n"}
+,{"stream_name":"stderr","time":106.27242938,"data":"   Compiling zerocopy v0.8.56\n"}
+,{"stream_name":"stderr","time":106.272432898,"data":"   Compiling getrandom v0.3.4\n"}
+,{"stream_name":"stderr","time":106.272436514,"data":"   Compiling fnv v1.0.7\n"}
+,{"stream_name":"stderr","time":106.272440094,"data":"   Compiling strsim v0.11.1\n"}
+,{"stream_name":"stderr","time":106.272444002,"data":"   Compiling crossbeam-deque v0.8.7\n"}
+,{"stream_name":"stderr","time":106.272452848,"data":"   Compiling find-msvc-tools v0.1.11\n"}
+,{"stream_name":"stderr","time":106.272457079,"data":"   Compiling shlex v2.0.1\n"}
+,{"stream_name":"stderr","time":106.272460848,"data":"   Compiling cc v1.4.4\n"}
+,{"stream_name":"stderr","time":106.272464565,"data":"   Compiling serde_derive v1.0.229\n"}
+,{"stream_name":"stderr","time":106.272468201,"data":"   Compiling darling_core v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272471831,"data":"   Compiling rustversion v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272475584,"data":"   Compiling bitflags v2.13.1\n"}
+,{"stream_name":"stderr","time":106.272479804,"data":"   Compiling typenum v1.20.1\n"}
+,{"stream_name":"stderr","time":106.27248375,"data":"   Compiling darling_macro v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272487543,"data":"   Compiling once_cell v1.21.4\n"}
+,{"stream_name":"stderr","time":106.272491325,"data":"   Compiling rayon-core v1.13.0\n"}
+,{"stream_name":"stderr","time":106.272495177,"data":"   Compiling pkg-config v0.3.34\n"}
+,{"stream_name":"stderr","time":106.272498784,"data":"   Compiling zmij v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272502394,"data":"   Compiling darling v0.20.11\n"}
+,{"stream_name":"stderr","time":106.272506056,"data":"   Compiling itoa v1.0.18\n"}
+,{"stream_name":"stderr","time":106.272509911,"data":"   Compiling hybrid-array v0.4.14\n"}
+,{"stream_name":"stderr","time":106.272513688,"data":"   Compiling getrandom v0.4.3\n"}
+,{"stream_name":"stderr","time":106.272517213,"data":"   Compiling version_check v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272520611,"data":"   Compiling onig_sys v69.9.3\n"}
+,{"stream_name":"stderr","time":106.272522987,"data":"   Compiling serde_json v1.0.151\n"}
+,{"stream_name":"stderr","time":106.272525318,"data":"   Compiling rustix v1.1.4\n"}
+,{"stream_name":"stderr","time":106.2725276,"data":"   Compiling either v1.18.0\n"}
+,{"stream_name":"stderr","time":106.272529919,"data":"   Compiling ahash v0.8.12\n"}
+,{"stream_name":"stderr","time":106.272532421,"data":"   Compiling derive_builder_core v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272534948,"data":"   Compiling ppv-lite86 v0.2.21\n"}
+,{"stream_name":"stderr","time":106.272537262,"data":"   Compiling rand_core v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272539612,"data":"   Compiling aho-corasick v1.1.5\n"}
+,{"stream_name":"stderr","time":106.272542004,"data":"   Compiling linux-raw-sys v0.12.1\n"}
+,{"stream_name":"stderr","time":106.272544309,"data":"   Compiling regex-syntax v0.8.11\n"}
+,{"stream_name":"stderr","time":106.272546601,"data":"   Compiling esaxx-rs v0.1.10\n"}
+,{"stream_name":"stderr","time":106.272549051,"data":"   Compiling minimal-lexical v0.2.1\n"}
+,{"stream_name":"stderr","time":106.272551614,"data":"   Compiling paste v1.0.15\n"}
+,{"stream_name":"stderr","time":106.272554086,"data":"   Compiling thiserror v2.0.20\n"}
+,{"stream_name":"stderr","time":106.272556426,"data":"   Compiling nom v7.1.3\n"}
+,{"stream_name":"stderr","time":106.272558786,"data":"   Compiling regex-automata v0.4.18\n"}
+,{"stream_name":"stderr","time":106.27256115,"data":"   Compiling rand_chacha v0.9.0\n"}
+,{"stream_name":"stderr","time":106.272563441,"data":"   Compiling derive_builder_macro v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272565762,"data":"   Compiling rayon v1.12.0\n"}
+,{"stream_name":"stderr","time":106.272568067,"data":"   Compiling castaway v0.2.4\n"}
+,{"stream_name":"stderr","time":106.272570582,"data":"   Compiling crypto-common v0.2.2\n"}
+,{"stream_name":"stderr","time":106.272575803,"data":"   Compiling block-buffer v0.12.1\n"}
+,{"stream_name":"stderr","time":106.272578341,"data":"   Compiling itertools v0.14.0\n"}
+,{"stream_name":"stderr","time":106.272580746,"data":"   Compiling monostate-impl v0.1.18\n"}
+,{"stream_name":"stderr","time":106.272583256,"data":"   Compiling thiserror-impl v2.0.20\n"}
+,{"stream_name":"stderr","time":106.27258556,"data":"   Compiling equivalent v1.0.2\n"}
+,{"stream_name":"stderr","time":106.272587834,"data":"   Compiling base64 v0.13.1\n"}
+,{"stream_name":"stderr","time":106.272590129,"data":"   Compiling smallvec v1.15.2\n"}
+,{"stream_name":"stderr","time":106.272592636,"data":"   Compiling macro_rules_attribute-proc_macro v0.2.3\n"}
+,{"stream_name":"stderr","time":106.272595042,"data":"   Compiling unicode-segmentation v1.13.3\n"}
+,{"stream_name":"stderr","time":106.272597384,"data":"   Compiling allocator-api2 v0.2.21\n"}
+,{"stream_name":"stderr","time":106.272599708,"data":"   Compiling const-oid v0.10.2\n"}
+,{"stream_name":"stderr","time":106.272602059,"data":"   Compiling static_assertions v1.1.0\n"}
+,{"stream_name":"stderr","time":106.272604386,"data":"   Compiling ryu v1.0.23\n"}
+,{"stream_name":"stderr","time":106.272606666,"data":"   Compiling fastrand v2.5.0\n"}
+,{"stream_name":"stderr","time":106.27260896,"data":"   Compiling foldhash v0.2.0\n"}
+,{"stream_name":"stderr","time":106.272611446,"data":"   Compiling pastey v0.2.3\n"}
+,{"stream_name":"stderr","time":106.272613782,"data":"   Compiling tempfile v3.27.0\n"}
+,{"stream_name":"stderr","time":106.272616109,"data":"   Compiling hashbrown v0.16.1\n"}
+,{"stream_name":"stderr","time":106.272618464,"data":"   Compiling macro_rules_attribute v0.2.3\n"}
+,{"stream_name":"stderr","time":106.272620819,"data":"   Compiling compact_str v0.9.1\n"}
+,{"stream_name":"stderr","time":106.272623151,"data":"   Compiling spm_precompiled v0.1.4\n"}
+,{"stream_name":"stderr","time":106.272625631,"data":"   Compiling digest v0.11.3\n"}
+,{"stream_name":"stderr","time":106.272627935,"data":"   Compiling rayon-cond v0.4.0\n"}
+,{"stream_name":"stderr","time":106.272630456,"data":"   Compiling unicode-normalization-alignments v0.1.12\n"}
+,{"stream_name":"stderr","time":106.272633529,"data":"   Compiling monostate v0.1.18\n"}
+,{"stream_name":"stderr","time":106.272635891,"data":"   Compiling derive_builder v0.20.2\n"}
+,{"stream_name":"stderr","time":106.272638243,"data":"   Compiling rand v0.9.5\n"}
+,{"stream_name":"stderr","time":106.272640568,"data":"   Compiling onig v6.5.3\n"}
+,{"stream_name":"stderr","time":106.27264289,"data":"   Compiling regex v1.13.1\n"}
+,{"stream_name":"stderr","time":106.272645181,"data":"   Compiling dary_heap v0.3.9\n"}
+,{"stream_name":"stderr","time":106.272647505,"data":"   Compiling unicode_categories v0.1.1\n"}
+,{"stream_name":"stderr","time":106.272650035,"data":"   Compiling daachorse v1.0.1\n"}
+,{"stream_name":"stderr","time":106.272652417,"data":"   Compiling log v0.4.34\n"}
+,{"stream_name":"stderr","time":106.272654738,"data":"   Compiling cpufeatures v0.3.1\n"}
+,{"stream_name":"stderr","time":106.272657069,"data":"   Compiling sha2 v0.11.0\n"}
+,{"stream_name":"stderr","time":106.272659451,"data":"   Compiling safetensors v0.8.0\n"}
+,{"stream_name":"stderr","time":106.272666032,"data":"   Compiling tokenizers v0.23.1\n"}
+,{"stream_name":"stderr","time":106.272668541,"data":"   Compiling cis2_ref v0.1.0 (/kaggle/working/engine)\n"}
+,{"stream_name":"stderr","time":106.272671165,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272676434,"data":"  --\u003e src/bin/../denormal.rs:31:19\n"}
+,{"stream_name":"stderr","time":106.272679826,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272682235,"data":"31 |         let csr = _mm_getcsr();\n"}
+,{"stream_name":"stderr","time":106.272684717,"data":"   |                   ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272687107,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272689347,"data":"   = note: `#[warn(deprecated)]` on by default\n"}
+,{"stream_name":"stderr","time":106.272691876,"data":"\n"}
+,{"stream_name":"stderr","time":106.272694538,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272697315,"data":"  --\u003e src/bin/../denormal.rs:32:9\n"}
+,{"stream_name":"stderr","time":106.27269979,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272702172,"data":"32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);\n"}
+,{"stream_name":"stderr","time":106.272704635,"data":"   |         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272707118,"data":"\n"}
+,{"stream_name":"stderr","time":106.272709344,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272711854,"data":"  --\u003e src/bin/../denormal.rs:27:29\n"}
+,{"stream_name":"stderr","time":106.272714315,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272717027,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":106.272719516,"data":"   |                             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272721904,"data":"\n"}
+,{"stream_name":"stderr","time":106.272724456,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.27272704,"data":"  --\u003e src/bin/../denormal.rs:27:41\n"}
+,{"stream_name":"stderr","time":106.272729475,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272751802,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":106.272761932,"data":"   |                                         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272765852,"data":"\n"}
+,{"stream_name":"stderr","time":106.272769514,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.2727736,"data":"  --\u003e src/bin/../denormal.rs:71:24\n"}
+,{"stream_name":"stderr","time":106.272777332,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272781137,"data":"71 |     let csr = unsafe { _mm_getcsr() };\n"}
+,{"stream_name":"stderr","time":106.272784983,"data":"   |                        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.2727891,"data":"\n"}
+,{"stream_name":"stderr","time":106.272792871,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272797169,"data":"  --\u003e src/bin/../denormal.rs:70:28\n"}
+,{"stream_name":"stderr","time":106.272800958,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272804572,"data":"70 |     use std::arch::x86_64::_mm_getcsr;\n"}
+,{"stream_name":"stderr","time":106.272807615,"data":"   |                            ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272810156,"data":"\n"}
+,{"stream_name":"stderr","time":106.272816198,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272819178,"data":"  --\u003e src/denormal.rs:31:19\n"}
+,{"stream_name":"stderr","time":106.27282159,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272823855,"data":"31 |         let csr = _mm_getcsr();\n"}
+,{"stream_name":"stderr","time":106.272826312,"data":"   |                   ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272828629,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.27283088,"data":"   = note: `#[warn(deprecated)]` on by default\n"}
+,{"stream_name":"stderr","time":106.272835224,"data":"\n"}
+,{"stream_name":"stderr","time":106.272837443,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.27284027,"data":"  --\u003e src/denormal.rs:32:9\n"}
+,{"stream_name":"stderr","time":106.272842659,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272845038,"data":"32 |         _mm_setcsr(csr | FTZ_BIT | DAZ_BIT);\n"}
+,{"stream_name":"stderr","time":106.2728476,"data":"   |         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272850059,"data":"\n"}
+,{"stream_name":"stderr","time":106.272852273,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272854948,"data":"  --\u003e src/denormal.rs:27:29\n"}
+,{"stream_name":"stderr","time":106.272857278,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.27285973,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":106.272862122,"data":"   |                             ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272864505,"data":"\n"}
+,{"stream_name":"stderr","time":106.272866759,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_setcsr`: see `_mm_setcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272869258,"data":"  --\u003e src/denormal.rs:27:41\n"}
+,{"stream_name":"stderr","time":106.272871588,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272873866,"data":"27 |     use std::arch::x86_64::{_mm_getcsr, _mm_setcsr};\n"}
+,{"stream_name":"stderr","time":106.272876213,"data":"   |                                         ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272878782,"data":"\n"}
+,{"stream_name":"stderr","time":106.272881038,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272883577,"data":"  --\u003e src/denormal.rs:71:24\n"}
+,{"stream_name":"stderr","time":106.272885947,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.27288818,"data":"71 |     let csr = unsafe { _mm_getcsr() };\n"}
+,{"stream_name":"stderr","time":106.272890509,"data":"   |                        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272893008,"data":"\n"}
+,{"stream_name":"stderr","time":106.272895224,"data":"warning: use of deprecated function `std::arch::x86_64::_mm_getcsr`: see `_mm_getcsr` documentation - use inline assembly instead\n"}
+,{"stream_name":"stderr","time":106.272897936,"data":"  --\u003e src/denormal.rs:70:28\n"}
+,{"stream_name":"stderr","time":106.272900402,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272902785,"data":"70 |     use std::arch::x86_64::_mm_getcsr;\n"}
+,{"stream_name":"stderr","time":106.272907603,"data":"   |                            ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272910138,"data":"\n"}
+,{"stream_name":"stderr","time":106.272912328,"data":"warning: function `widen_bf16` is never used\n"}
+,{"stream_name":"stderr","time":106.27291472900001,"data":"  --\u003e src/bin/../math.rs:33:8\n"}
+,{"stream_name":"stderr","time":106.272917148,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272919717,"data":"33 | pub fn widen_bf16(bits: u16) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.272922202,"data":"   |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272924543,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272926883,"data":"   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":106.272929283,"data":"\n"}
+,{"stream_name":"stderr","time":106.272931487,"data":"warning: function `dot_seq` is never used\n"}
+,{"stream_name":"stderr","time":106.272933874,"data":"  --\u003e src/bin/../math.rs:40:8\n"}
+,{"stream_name":"stderr","time":106.272936196,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272938643,"data":"40 | pub fn dot_seq(a: \u0026[f32], b: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.27294122,"data":"   |        ^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272943554,"data":"\n"}
+,{"stream_name":"stderr","time":106.272945818,"data":"warning: function `sum_seq` is never used\n"}
+,{"stream_name":"stderr","time":106.27294815,"data":"  --\u003e src/bin/../math.rs:52:8\n"}
+,{"stream_name":"stderr","time":106.272950643,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272953318,"data":"52 | pub fn sum_seq(a: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.27295574,"data":"   |        ^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272958237,"data":"\n"}
+,{"stream_name":"stderr","time":106.27296052,"data":"warning: constant `TREE_BLOCK` is never used\n"}
+,{"stream_name":"stderr","time":106.27296302,"data":"  --\u003e src/bin/../math.rs:66:11\n"}
+,{"stream_name":"stderr","time":106.272965409,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272967623,"data":"66 | pub const TREE_BLOCK: usize = 32;\n"}
+,{"stream_name":"stderr","time":106.272970025,"data":"   |           ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.27297245,"data":"\n"}
+,{"stream_name":"stderr","time":106.272974659,"data":"warning: function `tree_block_reduce` is never used\n"}
+,{"stream_name":"stderr","time":106.272977208,"data":"  --\u003e src/bin/../math.rs:74:4\n"}
+,{"stream_name":"stderr","time":106.272979578,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272981872,"data":"74 | fn tree_block_reduce(leaf: \u0026mut [f32; TREE_BLOCK]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.272984431,"data":"   |    ^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.272986742,"data":"\n"}
+,{"stream_name":"stderr","time":106.272988958,"data":"warning: function `tree_reduce_indexed` is never used\n"}
+,{"stream_name":"stderr","time":106.272991348,"data":"  --\u003e src/bin/../math.rs:95:4\n"}
+,{"stream_name":"stderr","time":106.272993703,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.272996182,"data":"95 | fn tree_reduce_indexed\u003cF: Fn(usize) -\u003e f32\u003e(n: usize, leaf_at: F) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.272998827,"data":"   |    ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273001231,"data":"\n"}
+,{"stream_name":"stderr","time":106.273003504,"data":"warning: function `tree_sum` is never used\n"}
+,{"stream_name":"stderr","time":106.273008336,"data":"   --\u003e src/bin/../math.rs:116:8\n"}
+,{"stream_name":"stderr","time":106.27305179,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273054366,"data":"116 | pub fn tree_sum(a: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273057171,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273059508,"data":"\n"}
+,{"stream_name":"stderr","time":106.27306185,"data":"warning: function `tree_dot` is never used\n"}
+,{"stream_name":"stderr","time":106.273064597,"data":"   --\u003e src/bin/../math.rs:122:8\n"}
+,{"stream_name":"stderr","time":106.273066991,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273069248,"data":"122 | pub fn tree_dot(a: \u0026[f32], b: \u0026[f32]) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273071837,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273074398,"data":"\n"}
+,{"stream_name":"stderr","time":106.273076828,"data":"warning: function `softmax_seq` is never used\n"}
+,{"stream_name":"stderr","time":106.273079219,"data":"   --\u003e src/bin/../math.rs:425:8\n"}
+,{"stream_name":"stderr","time":106.273081611,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273084049,"data":"425 | pub fn softmax_seq(logits: \u0026mut [f32]) {\n"}
+,{"stream_name":"stderr","time":106.273086451,"data":"    |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273088914,"data":"\n"}
+,{"stream_name":"stderr","time":106.273091264,"data":"warning: function `softmax_tree` is never used\n"}
+,{"stream_name":"stderr","time":106.273093616,"data":"   --\u003e src/bin/../math.rs:448:8\n"}
+,{"stream_name":"stderr","time":106.273096165,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273098453,"data":"448 | pub fn softmax_tree(logits: \u0026mut [f32]) {\n"}
+,{"stream_name":"stderr","time":106.273101042,"data":"    |        ^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273103372,"data":"\n"}
+,{"stream_name":"stderr","time":106.273105575,"data":"warning: function `pin_ftz_daz` is never used\n"}
+,{"stream_name":"stderr","time":106.27310793,"data":"  --\u003e src/bin/../denormal.rs:22:8\n"}
+,{"stream_name":"stderr","time":106.27311029,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.273112531,"data":"22 | pub fn pin_ftz_daz() {\n"}
+,{"stream_name":"stderr","time":106.273115031,"data":"   |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273117372,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.273119684,"data":"   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":106.273122143,"data":"\n"}
+,{"stream_name":"stderr","time":106.273124343,"data":"warning: function `mxcsr_ftz_daz_on` is never used\n"}
+,{"stream_name":"stderr","time":106.273126709,"data":"  --\u003e src/bin/../denormal.rs:69:8\n"}
+,{"stream_name":"stderr","time":106.273129061,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.27313148,"data":"69 | pub fn mxcsr_ftz_daz_on() -\u003e bool {\n"}
+,{"stream_name":"stderr","time":106.273134125,"data":"   |        ^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273137109,"data":"\n"}
+,{"stream_name":"stderr","time":106.273140963,"data":"warning: function `ftz_daz_on` is never used\n"}
+,{"stream_name":"stderr","time":106.273143915,"data":"  --\u003e src/bin/../denormal.rs:92:8\n"}
+,{"stream_name":"stderr","time":106.273146242,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.273148434,"data":"92 | pub fn ftz_daz_on() -\u003e bool {\n"}
+,{"stream_name":"stderr","time":106.273150793,"data":"   |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273156921,"data":"\n"}
+,{"stream_name":"stderr","time":106.273159651,"data":"warning: function `rsqrt_cr` is never used\n"}
+,{"stream_name":"stderr","time":106.273162163,"data":"   --\u003e src/bin/../math.rs:133:8\n"}
+,{"stream_name":"stderr","time":106.273164541,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273166831,"data":"133 | pub fn rsqrt_cr(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273169198,"data":"    |        ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273171494,"data":"\n"}
+,{"stream_name":"stderr","time":106.273174019,"data":"warning: constant `EXP_LOG2E` is never used\n"}
+,{"stream_name":"stderr","time":106.273176381,"data":"   --\u003e src/bin/../math.rs:153:7\n"}
+,{"stream_name":"stderr","time":106.273179244,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273181528,"data":"153 | const EXP_LOG2E: f32 = 1.442_695_04_f32; // 1/ln2\n"}
+,{"stream_name":"stderr","time":106.273183926,"data":"    |       ^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273186268,"data":"\n"}
+,{"stream_name":"stderr","time":106.273188494,"data":"warning: constant `EXP_C1` is never used\n"}
+,{"stream_name":"stderr","time":106.273191326,"data":"   --\u003e src/bin/../math.rs:154:7\n"}
+,{"stream_name":"stderr","time":106.273193683,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273196075,"data":"154 | const EXP_C1: f32 = 0.693_359_375_f32; // ln2 hi (Cephes split)\n"}
+,{"stream_name":"stderr","time":106.273198692,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273201007,"data":"\n"}
+,{"stream_name":"stderr","time":106.273203276,"data":"warning: constant `EXP_C2` is never used\n"}
+,{"stream_name":"stderr","time":106.273205646,"data":"   --\u003e src/bin/../math.rs:155:7\n"}
+,{"stream_name":"stderr","time":106.273207967,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273210233,"data":"155 | const EXP_C2: f32 = -2.121_944_4e-4_f32; // ln2 lo (Cephes split)\n"}
+,{"stream_name":"stderr","time":106.273212751,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273215081,"data":"\n"}
+,{"stream_name":"stderr","time":106.273217509,"data":"warning: constant `EXP_P` is never used\n"}
+,{"stream_name":"stderr","time":106.273219928,"data":"   --\u003e src/bin/../math.rs:157:7\n"}
+,{"stream_name":"stderr","time":106.273222408,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273224663,"data":"157 | const EXP_P: [f32; 6] = [\n"}
+,{"stream_name":"stderr","time":106.273226962,"data":"    |       ^^^^^\n"}
+,{"stream_name":"stderr","time":106.273229232,"data":"\n"}
+,{"stream_name":"stderr","time":106.273231569,"data":"warning: function `exp_pinned` is never used\n"}
+,{"stream_name":"stderr","time":106.273233922,"data":"   --\u003e src/bin/../math.rs:167:8\n"}
+,{"stream_name":"stderr","time":106.273236924,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.27324026,"data":"167 | pub fn exp_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273244122,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273247514,"data":"\n"}
+,{"stream_name":"stderr","time":106.273250737,"data":"warning: function `ldexp_exact` is never used\n"}
+,{"stream_name":"stderr","time":106.273254385,"data":"   --\u003e src/bin/../math.rs:206:4\n"}
+,{"stream_name":"stderr","time":106.273257506,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273260529,"data":"206 | fn ldexp_exact(x: f32, k: i32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273264396,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273267836,"data":"\n"}
+,{"stream_name":"stderr","time":106.27327502,"data":"warning: constant `PI_2_F64` is never used\n"}
+,{"stream_name":"stderr","time":106.273278879,"data":"   --\u003e src/bin/../math.rs:248:7\n"}
+,{"stream_name":"stderr","time":106.273282767,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273286112,"data":"248 | const PI_2_F64: f64 = 1.570_796_326_794_896_619_231_321_691_639_8_f64; // pi/2\n"}
+,{"stream_name":"stderr","time":106.273289844,"data":"    |       ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273293574,"data":"\n"}
+,{"stream_name":"stderr","time":106.273297331,"data":"warning: function `reduce_pi_2` is never used\n"}
+,{"stream_name":"stderr","time":106.273301011,"data":"   --\u003e src/bin/../math.rs:253:4\n"}
+,{"stream_name":"stderr","time":106.273304832,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273308398,"data":"253 | fn reduce_pi_2(x: f32) -\u003e (f32, i64) {\n"}
+,{"stream_name":"stderr","time":106.273312236,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273315973,"data":"\n"}
+,{"stream_name":"stderr","time":106.273319427,"data":"warning: constant `SIN_C0` is never used\n"}
+,{"stream_name":"stderr","time":106.273323092,"data":"   --\u003e src/bin/../math.rs:266:7\n"}
+,{"stream_name":"stderr","time":106.273326188,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273328486,"data":"266 | const SIN_C0: f32 = -1.666_665_461_1e-1; // r^3 coefficient\n"}
+,{"stream_name":"stderr","time":106.273330917,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273333203,"data":"\n"}
+,{"stream_name":"stderr","time":106.273335544,"data":"warning: constant `SIN_C1` is never used\n"}
+,{"stream_name":"stderr","time":106.273337802,"data":"   --\u003e src/bin/../math.rs:267:7\n"}
+,{"stream_name":"stderr","time":106.273340141,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273342435,"data":"267 | const SIN_C1: f32 = 8.332_160_873_6e-3; // r^5 coefficient\n"}
+,{"stream_name":"stderr","time":106.273345141,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273348381,"data":"\n"}
+,{"stream_name":"stderr","time":106.273352163,"data":"warning: constant `SIN_C2` is never used\n"}
+,{"stream_name":"stderr","time":106.273356159,"data":"   --\u003e src/bin/../math.rs:268:7\n"}
+,{"stream_name":"stderr","time":106.273359459,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273362787,"data":"268 | const SIN_C2: f32 = -1.951_529_589_1e-4; // r^7 coefficient\n"}
+,{"stream_name":"stderr","time":106.27336616,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273369537,"data":"\n"}
+,{"stream_name":"stderr","time":106.273373404,"data":"warning: constant `COS_C0` is never used\n"}
+,{"stream_name":"stderr","time":106.273377231,"data":"   --\u003e src/bin/../math.rs:270:7\n"}
+,{"stream_name":"stderr","time":106.273381033,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273384657,"data":"270 | const COS_C0: f32 = 4.166_664_568_298_827e-2; // r^4 coefficient\n"}
+,{"stream_name":"stderr","time":106.273388431,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.27339202,"data":"\n"}
+,{"stream_name":"stderr","time":106.273395452,"data":"warning: constant `COS_C1` is never used\n"}
+,{"stream_name":"stderr","time":106.273399155,"data":"   --\u003e src/bin/../math.rs:271:7\n"}
+,{"stream_name":"stderr","time":106.273403075,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273406698,"data":"271 | const COS_C1: f32 = -1.388_731_625_493_765e-3; // r^6 coefficient\n"}
+,{"stream_name":"stderr","time":106.273410659,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.27341819,"data":"\n"}
+,{"stream_name":"stderr","time":106.273422064,"data":"warning: constant `COS_C2` is never used\n"}
+,{"stream_name":"stderr","time":106.2734255,"data":"   --\u003e src/bin/../math.rs:272:7\n"}
+,{"stream_name":"stderr","time":106.273428831,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273434038,"data":"272 | const COS_C2: f32 = 2.443_315_711_809_948e-5; // r^8 coefficient\n"}
+,{"stream_name":"stderr","time":106.273439988,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273443754,"data":"\n"}
+,{"stream_name":"stderr","time":106.273447182,"data":"warning: function `sin_poly` is never used\n"}
+,{"stream_name":"stderr","time":106.273451005,"data":"   --\u003e src/bin/../math.rs:275:4\n"}
+,{"stream_name":"stderr","time":106.273454469,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273457905,"data":"275 | fn sin_poly(r: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273461245,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273464796,"data":"\n"}
+,{"stream_name":"stderr","time":106.273468537,"data":"warning: function `cos_poly` is never used\n"}
+,{"stream_name":"stderr","time":106.273472734,"data":"   --\u003e src/bin/../math.rs:288:4\n"}
+,{"stream_name":"stderr","time":106.273476571,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273480263,"data":"288 | fn cos_poly(r: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273483954,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273487602,"data":"\n"}
+,{"stream_name":"stderr","time":106.273491176,"data":"warning: function `quadrant` is never used\n"}
+,{"stream_name":"stderr","time":106.273494914,"data":"   --\u003e src/bin/../math.rs:304:4\n"}
+,{"stream_name":"stderr","time":106.273498957,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273502687,"data":"304 | fn quadrant(k: i64) -\u003e i64 {\n"}
+,{"stream_name":"stderr","time":106.273506454,"data":"    |    ^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273510008,"data":"\n"}
+,{"stream_name":"stderr","time":106.273513282,"data":"warning: function `sin_pinned` is never used\n"}
+,{"stream_name":"stderr","time":106.27351703,"data":"   --\u003e src/bin/../math.rs:310:8\n"}
+,{"stream_name":"stderr","time":106.273520776,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273523828,"data":"310 | pub fn sin_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273526551,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273528938,"data":"\n"}
+,{"stream_name":"stderr","time":106.273531292,"data":"warning: function `cos_pinned` is never used\n"}
+,{"stream_name":"stderr","time":106.273533588,"data":"   --\u003e src/bin/../math.rs:324:8\n"}
+,{"stream_name":"stderr","time":106.273536042,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273538383,"data":"324 | pub fn cos_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273542278,"data":"    |        ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273546138,"data":"\n"}
+,{"stream_name":"stderr","time":106.273550145,"data":"warning: constant `LOG_SQRTHF` is never used\n"}
+,{"stream_name":"stderr","time":106.273553866,"data":"   --\u003e src/bin/../math.rs:347:7\n"}
+,{"stream_name":"stderr","time":106.273557822,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273561745,"data":"347 | const LOG_SQRTHF: f32 = 0.707_106_78_f32; // sqrt(0.5)\n"}
+,{"stream_name":"stderr","time":106.273565551,"data":"    |       ^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273568994,"data":"\n"}
+,{"stream_name":"stderr","time":106.273577019,"data":"warning: constant `LOG_Q1` is never used\n"}
+,{"stream_name":"stderr","time":106.273580928,"data":"   --\u003e src/bin/../math.rs:348:7\n"}
+,{"stream_name":"stderr","time":106.273585127,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273588992,"data":"348 | const LOG_Q1: f32 = -2.121_944_4e-4_f32; // ln2 lo (same split as EXP_C2)\n"}
+,{"stream_name":"stderr","time":106.27359288,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273596406,"data":"\n"}
+,{"stream_name":"stderr","time":106.273599987,"data":"warning: constant `LOG_Q2` is never used\n"}
+,{"stream_name":"stderr","time":106.273603771,"data":"   --\u003e src/bin/../math.rs:349:7\n"}
+,{"stream_name":"stderr","time":106.273607923,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273611559,"data":"349 | const LOG_Q2: f32 = 0.693_359_375_f32; // ln2 hi (same split as EXP_C1)\n"}
+,{"stream_name":"stderr","time":106.273615847,"data":"    |       ^^^^^^\n"}
+,{"stream_name":"stderr","time":106.2736194,"data":"\n"}
+,{"stream_name":"stderr","time":106.27362304,"data":"warning: constant `LOG_P` is never used\n"}
+,{"stream_name":"stderr","time":106.273626808,"data":"   --\u003e src/bin/../math.rs:351:7\n"}
+,{"stream_name":"stderr","time":106.273629466,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273632671,"data":"351 | const LOG_P: [f32; 9] = [\n"}
+,{"stream_name":"stderr","time":106.273636132,"data":"    |       ^^^^^\n"}
+,{"stream_name":"stderr","time":106.273639748,"data":"\n"}
+,{"stream_name":"stderr","time":106.273643737,"data":"warning: function `frexp_exact` is never used\n"}
+,{"stream_name":"stderr","time":106.273647873,"data":"   --\u003e src/bin/../math.rs:366:4\n"}
+,{"stream_name":"stderr","time":106.273651713,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273655538,"data":"366 | fn frexp_exact(x: f32) -\u003e (f32, i32) {\n"}
+,{"stream_name":"stderr","time":106.273659397,"data":"    |    ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273663008,"data":"\n"}
+,{"stream_name":"stderr","time":106.273666508,"data":"warning: function `ln_pinned` is never used\n"}
+,{"stream_name":"stderr","time":106.273670241,"data":"   --\u003e src/bin/../math.rs:379:8\n"}
+,{"stream_name":"stderr","time":106.273674215,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273677839,"data":"379 | pub fn ln_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273681666,"data":"    |        ^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273685355,"data":"\n"}
+,{"stream_name":"stderr","time":106.273688828,"data":"warning: function `silu_pinned` is never used\n"}
+,{"stream_name":"stderr","time":106.273692542,"data":"   --\u003e src/bin/../math.rs:414:8\n"}
+,{"stream_name":"stderr","time":106.27369621,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273699721,"data":"414 | pub fn silu_pinned(x: f32) -\u003e f32 {\n"}
+,{"stream_name":"stderr","time":106.273703788,"data":"    |        ^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.2737075,"data":"\n"}
+,{"stream_name":"stderr","time":106.27371101,"data":"warning: function `table_digest` is never used\n"}
+,{"stream_name":"stderr","time":106.273714764,"data":"   --\u003e src/bin/../math.rs:472:8\n"}
+,{"stream_name":"stderr","time":106.273718143,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273720379,"data":"472 | pub fn table_digest() -\u003e [u8; 32] {\n"}
+,{"stream_name":"stderr","time":106.273723415,"data":"    |        ^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273727161,"data":"\n"}
+,{"stream_name":"stderr","time":106.273750698,"data":"warning: function `exported_f32_consts` is never used\n"}
+,{"stream_name":"stderr","time":106.273761005,"data":"   --\u003e src/bin/../math.rs:507:8\n"}
+,{"stream_name":"stderr","time":106.273765225,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.27376902,"data":"507 | pub fn exported_f32_consts() -\u003e Vec\u003c(\u0026'static str, f32)\u003e {\n"}
+,{"stream_name":"stderr","time":106.273773114,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273776892,"data":"\n"}
+,{"stream_name":"stderr","time":106.273780378,"data":"warning: function `exported_f64_consts` is never used\n"}
+,{"stream_name":"stderr","time":106.273784469,"data":"   --\u003e src/bin/../math.rs:542:8\n"}
+,{"stream_name":"stderr","time":106.273788272,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273791917,"data":"542 | pub fn exported_f64_consts() -\u003e Vec\u003c(\u0026'static str, f64)\u003e {\n"}
+,{"stream_name":"stderr","time":106.27379786,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273801526,"data":"\n"}
+,{"stream_name":"stderr","time":106.273804972,"data":"warning: function `exported_f32_consts` is never used\n"}
+,{"stream_name":"stderr","time":106.2738087,"data":"   --\u003e src/math.rs:507:8\n"}
+,{"stream_name":"stderr","time":106.273812185,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.27381503,"data":"507 | pub fn exported_f32_consts() -\u003e Vec\u003c(\u0026'static str, f32)\u003e {\n"}
+,{"stream_name":"stderr","time":106.273819158,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273822906,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.27382679,"data":"    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n"}
+,{"stream_name":"stderr","time":106.27383097,"data":"\n"}
+,{"stream_name":"stderr","time":106.273834728,"data":"warning: function `exported_f64_consts` is never used\n"}
+,{"stream_name":"stderr","time":106.273838491,"data":"   --\u003e src/math.rs:542:8\n"}
+,{"stream_name":"stderr","time":106.273842241,"data":"    |\n"}
+,{"stream_name":"stderr","time":106.273846031,"data":"542 | pub fn exported_f64_consts() -\u003e Vec\u003c(\u0026'static str, f64)\u003e {\n"}
+,{"stream_name":"stderr","time":106.273850153,"data":"    |        ^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273853854,"data":"\n"}
+,{"stream_name":"stderr","time":106.273857376,"data":"warning: function `load_f32_tensor_whole_buffer` is never used\n"}
+,{"stream_name":"stderr","time":106.273861135,"data":"  --\u003e src/whole_buffer_widen.rs:16:8\n"}
+,{"stream_name":"stderr","time":106.273864932,"data":"   |\n"}
+,{"stream_name":"stderr","time":106.273868493,"data":"16 | pub fn load_f32_tensor_whole_buffer(\n"}
+,{"stream_name":"stderr","time":106.27387219,"data":"   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":106.273876276,"data":"\n"}
+,{"stream_name":"stderr","time":106.273879772,"data":"warning: `cis2_ref` (bin \"math_dump\") generated 16 warnings\n"}
+,{"stream_name":"stderr","time":106.273883733,"data":"warning: `cis2_ref` (bin \"mem_probe\") generated 48 warnings (15 duplicates)\n"}
+,{"stream_name":"stderr","time":106.273887704,"data":"warning: `cis2_ref` (bin \"cis2_ref\") generated 9 warnings\n"}
+,{"stream_name":"stderr","time":106.27389152,"data":"    Finished `release` profile [optimized] target(s) in 1m 26s\n"}
+,{"stream_name":"stderr","time":106.27389542,"data":"\n"}
+,{"stream_name":"stdout","time":107.089438218,"data":"\n"}
+,{"stream_name":"stdout","time":107.089476725,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":107.089503887,"data":"downloading metadata for Qwen/Qwen2-7B -\u003e /kaggle/working/hf/qwen2-7b\n"}
+,{"stream_name":"stdout","time":107.08950912,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":107.706678363,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":107.750897968,"data":"  fetched /kaggle/working/hf/qwen2-7b/config.json\n"}
+,{"stream_name":"stdout","time":107.96313394,"data":"  fetched /kaggle/working/hf/qwen2-7b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":108.174912131,"data":"  fetched /kaggle/working/hf/qwen2-7b/model.safetensors.index.json\n"}
+,{"stream_name":"stdout","time":108.17531106,"data":"\n"}
+,{"stream_name":"stdout","time":108.175328833,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":108.175333968,"data":"merging 4 shards one at a time -\u003e /kaggle/working/hf/qwen2-7b-merged.safetensors\n"}
+,{"stream_name":"stdout","time":108.175339615,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":175.527115918,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":175.535476632,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":175.535521302,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":175.535526866,"data":"\n"}
+,{"stream_name":"stdout","time":175.535530164,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":196.450159104,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":196.455318857,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":196.455365551,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":196.455371527,"data":"\n"}
+,{"stream_name":"stdout","time":196.455376616,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":212.828893709,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":212.832483695,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":212.832533397,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":212.832539452,"data":"\n"}
+,{"stream_name":"stdout","time":212.832542787,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":227.197965416,"data":"$ bash -c df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":227.202844915,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":227.202890789,"data":"/dev/loop1       20G   15G  5.1G  75% /kaggle/working\n"}
+,{"stream_name":"stdout","time":227.202897664,"data":"\n"}
+,{"stream_name":"stdout","time":227.202901302,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":227.202904647,"data":"merged 339 tensors, 15231233024 bytes, in 119.0s\n"}
+,{"stream_name":"stdout","time":227.203872615,"data":"merge peak RSS so far: 1630 MB\n"}
+,{"stream_name":"stdout","time":237.433187793,"data":"$ cp -L /kaggle/working/hf/qwen2-7b/config.json /kaggle/working/weights_qwen2_7b/config.json\n"}
+,{"stream_name":"stdout","time":237.443881158,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":237.444276056,"data":"$ cp -L /kaggle/working/hf/qwen2-7b/tokenizer.json /kaggle/working/weights_qwen2_7b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":237.489508109,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":237.489561575,"data":"$ ln -sf /kaggle/working/hf/qwen2-7b-merged.safetensors /kaggle/working/weights_qwen2_7b/model.safetensors\n"}
+,{"stream_name":"stdout","time":237.500954726,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":237.504786654,"data":"\n"}
+,{"stream_name":"stdout","time":237.504819011,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":237.5048248,"data":"7B: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":237.504828678,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":237.50483254,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":237.527187434,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":237.527216989,"data":"Mem:              31           0           3           0          26          30\n"}
+,{"stream_name":"stdout","time":237.527220555,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":237.52722354,"data":"\n"}
+,{"stream_name":"stdout","time":237.527226176,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":673.878036392,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":674.233354762,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":674.23339761,"data":"Mem:              31           0          29           0           0          30\n"}
+,{"stream_name":"stdout","time":674.233402018,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":674.23436291,"data":"\n"}
+,{"stream_name":"stdout","time":674.235607178,"data":"  (exit=0, 0.4s)\n"}
+,{"stream_name":"stdout","time":674.235636144,"data":"weights_sha256=0e218d281ea2c86c281db9cc6491f4a37ef7b931e57cd63b70cde999bce265ee\n"}
+,{"stream_name":"stdout","time":674.235642069,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":674.235646788,"data":"config_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810\n"}
+,{"stream_name":"stdout","time":674.235650997,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":674.235655642,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":674.23566015,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":674.235664307,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 1305, 1305, 3811, 3811]\n"}
+,{"stream_name":"stdout","time":674.235668353,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 1305, 1305, 3811, 3811]\n"}
+,{"stream_name":"stdout","time":674.235672502,"data":"prompt_idx=0 run1_witness_digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a\n"}
+,{"stream_name":"stdout","time":674.235676536,"data":"prompt_idx=0 run2_witness_digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a\n"}
+,{"stream_name":"stdout","time":674.235680556,"data":"prompt_idx=0 run1_argmax_digest=67f771c526de272cdf8bf22b6804edfca820cee2df9d6d9b68712e27cb43d284\n"}
+,{"stream_name":"stdout","time":674.235684566,"data":"prompt_idx=0 run2_argmax_digest=67f771c526de272cdf8bf22b6804edfca820cee2df9d6d9b68712e27cb43d284\n"}
+,{"stream_name":"stdout","time":674.235688941,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":674.235716868,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":674.235720614,"data":"CIS2_REF digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":674.236582305,"data":"\n"}
+,{"stream_name":"stdout","time":674.23675899,"data":"---- 7B: exit=0 elapsed=436.4s\n"}
+,{"stream_name":"stderr","time":674.236775215,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":674.236792815,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":674.236796998,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":674.236801138,"data":"[run1] step 0: token_id=1305\n"}
+,{"stream_name":"stderr","time":674.236805058,"data":"[run1] step 1: token_id=1305\n"}
+,{"stream_name":"stderr","time":674.23680884,"data":"[run1] step 2: token_id=3811\n"}
+,{"stream_name":"stderr","time":674.236812655,"data":"[run1] step 3: token_id=3811\n"}
+,{"stream_name":"stderr","time":674.236816726,"data":"[run2] step 0: token_id=1305\n"}
+,{"stream_name":"stderr","time":674.236819862,"data":"[run2] step 1: token_id=1305\n"}
+,{"stream_name":"stderr","time":674.236822282,"data":"[run2] step 2: token_id=3811\n"}
+,{"stream_name":"stderr","time":674.236824773,"data":"[run2] step 3: token_id=3811\n"}
+,{"stream_name":"stderr","time":674.236827301,"data":"\n"}
+,{"stream_name":"stdout","time":674.242344027,"data":"---- 7B: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847376 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stdout","time":674.250067308,"data":"---- 7B: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":674.250108196,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":674.257918446,"data":"---- 7B: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":674.257962246,"data":"low 0\n"}
+,{"stream_name":"stdout","time":674.257967543,"data":"high 0\n"}
+,{"stream_name":"stdout","time":674.257971944,"data":"max 7161\n"}
+,{"stream_name":"stdout","time":674.2579756,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":674.257978989,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":674.257983122,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":674.259627853,"data":"---- 7B: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":674.259661422,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":674.260401426,"data":"$ bash -c rm -rf /kaggle/working/hf/qwen2-7b /kaggle/working/hf/qwen2-7b-merged.safetensors; df -h /kaggle/working\n"}
+,{"stream_name":"stdout","time":674.679200919,"data":"Filesystem      Size  Used Avail Use% Mounted on\n"}
+,{"stream_name":"stdout","time":674.679249218,"data":"/dev/loop1       20G  278M   20G   2% /kaggle/working\n"}
+,{"stream_name":"stdout","time":674.679255592,"data":"\n"}
+,{"stream_name":"stdout","time":674.679259335,"data":"  (exit=0, 0.4s)\n"}
+,{"stream_name":"stdout","time":674.679262878,"data":"\n"}
+,{"stream_name":"stdout","time":674.679266417,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":674.679270853,"data":"PHASE 2: Qwen/Qwen2-1.5B, run twice\n"}
+,{"stream_name":"stdout","time":674.679274282,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":675.069997045,"data":"\n"}
+,{"stream_name":"stdout","time":675.070114594,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":675.070133183,"data":"downloading Qwen/Qwen2-1.5B -\u003e /kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":675.070141656,"data":"==============================================================================\n"}
+,{"stream_name":"stderr","time":687.640410575,"data":"\rFetching 3 files:   0%|          | 0/3 [00:00\u003c?, ?it/s]\rFetching 3 files:  33%|███▎      | 1/3 [00:00\u003c00:00,  4.22it/s]\rFetching 3 files:  67%|██████▋   | 2/3 [00:12\u003c00:07,  7.19s/it]\rFetching 3 files: 100%|██████████| 3/3 [00:12\u003c00:00,  4.10s/it]\n"}
+,{"stream_name":"stdout","time":687.641273675,"data":"downloaded to /kaggle/working/hf/qwen2-1.5b in 12.6s\n"}
+,{"stream_name":"stdout","time":687.641304453,"data":"$ bash -c du -sh /kaggle/working/hf/qwen2-1.5b; ls -la /kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":687.700793577,"data":"2.9G\t/kaggle/working/hf/qwen2-1.5b\n"}
+,{"stream_name":"stdout","time":687.700839075,"data":"total 3021992\n"}
+,{"stream_name":"stdout","time":687.700843555,"data":"drwxr-xr-x 3 root root       4096 Sep 17 23:36 .\n"}
+,{"stream_name":"stdout","time":687.700847377,"data":"drwxr-xr-x 3 root root       4096 Sep 17 23:36 ..\n"}
+,{"stream_name":"stdout","time":687.700850674,"data":"drwxr-xr-x 3 root root       4096 Sep 17 23:35 .cache\n"}
+,{"stream_name":"stdout","time":687.700854235,"data":"-rw-r--r-- 1 root root        662 Sep 17 23:35 config.json\n"}
+,{"stream_name":"stdout","time":687.700857457,"data":"-rw-r--r-- 1 root root 3087467144 Sep 17 23:36 model.safetensors\n"}
+,{"stream_name":"stdout","time":687.700860612,"data":"-rw-r--r-- 1 root root    7028015 Sep 17 23:35 tokenizer.json\n"}
+,{"stream_name":"stdout","time":687.70086364,"data":"\n"}
+,{"stream_name":"stdout","time":687.70086654,"data":"  (exit=0, 0.1s)\n"}
+,{"stream_name":"stdout","time":687.701264769,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/config.json /kaggle/working/weights_qwen2_1_5b/config.json\n"}
+,{"stream_name":"stdout","time":687.711635015,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":687.712042565,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/tokenizer.json /kaggle/working/weights_qwen2_1_5b/tokenizer.json\n"}
+,{"stream_name":"stdout","time":687.721533337,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":687.721576502,"data":"$ cp -L /kaggle/working/hf/qwen2-1.5b/model.safetensors /kaggle/working/weights_qwen2_1_5b/model.safetensors\n"}
+,{"stream_name":"stdout","time":691.221587608,"data":"  (exit=0, 3.5s)\n"}
+,{"stream_name":"stdout","time":691.224712614,"data":"\n"}
+,{"stream_name":"stdout","time":691.224774247,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":691.22478137,"data":"1.5B run1: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":691.224786562,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":691.224791864,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":691.229481782,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":691.22953067,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":691.229538488,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":691.229542893,"data":"\n"}
+,{"stream_name":"stdout","time":691.229546245,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":779.891602505,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":779.896672434,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":779.89671881,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":779.896725339,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":779.896730199,"data":"\n"}
+,{"stream_name":"stdout","time":779.896751391,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":779.896756477,"data":"weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb\n"}
+,{"stream_name":"stdout","time":779.896761424,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":779.896765942,"data":"config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36\n"}
+,{"stream_name":"stdout","time":779.89677115,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":779.896775724,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":779.896780467,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":779.896785049,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":779.896790334,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":779.896795707,"data":"prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":779.896800278,"data":"prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":779.896804647,"data":"prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":779.896810021,"data":"prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":779.896815438,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":779.89681972,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":779.896824205,"data":"CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":779.89683067,"data":"\n"}
+,{"stream_name":"stdout","time":779.896835352,"data":"---- 1.5B run1: exit=0 elapsed=88.7s\n"}
+,{"stream_name":"stderr","time":779.896666186,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":779.896850135,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":779.89685479,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":779.896859331,"data":"[run1] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":779.896864333,"data":"[run1] step 1: token_id=1052\n"}
+,{"stream_name":"stdout","time":779.896861966,"data":"---- 1.5B run1: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847376 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stderr","time":779.896868718,"data":"[run1] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":779.896890847,"data":"[run1] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":779.896916965,"data":"[run1] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":779.896921403,"data":"[run1] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":779.89692379,"data":"[run1] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":779.896927383,"data":"[run1] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":779.896931215,"data":"[run2] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":779.896934736,"data":"[run2] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":779.896938465,"data":"[run2] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":779.896942038,"data":"[run2] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":779.896945836,"data":"[run2] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":779.896949417,"data":"[run2] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":779.896953182,"data":"[run2] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":779.896956992,"data":"[run2] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":779.896961073,"data":"\n"}
+,{"stream_name":"stdout","time":779.898861619,"data":"---- 1.5B run1: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":779.898900581,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":779.900368589,"data":"---- 1.5B run1: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":779.900393424,"data":"low 0\n"}
+,{"stream_name":"stdout","time":779.90039753,"data":"high 0\n"}
+,{"stream_name":"stdout","time":779.900401966,"data":"max 7161\n"}
+,{"stream_name":"stdout","time":779.90040661,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":779.900410448,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":779.900414214,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":779.901820292,"data":"---- 1.5B run1: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":779.901851989,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":779.904120758,"data":"\n"}
+,{"stream_name":"stdout","time":779.904150332,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":779.904156001,"data":"1.5B run2: running cis2_ref (time -v=False)\n"}
+,{"stream_name":"stdout","time":779.904160292,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":779.904164826,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stdout","time":779.908348521,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":779.90838182,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":779.908387578,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":779.908391896,"data":"\n"}
+,{"stream_name":"stdout","time":779.908396542,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":867.733782218,"data":"$ bash -c free -g\n"}
+,{"stream_name":"stderr","time":867.738839788,"data":"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, §3.5)...\n"}
+,{"stream_name":"stderr","time":867.738888373,"data":"weights loaded.\n"}
+,{"stream_name":"stderr","time":867.738894851,"data":"[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\n"}
+,{"stream_name":"stderr","time":867.738899712,"data":"[run1] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":867.738904429,"data":"[run1] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":867.73892989,"data":"[run1] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":867.738934317,"data":"[run1] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":867.738937897,"data":"[run1] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":867.738941162,"data":"[run1] step 5: token_id=3743\n"}
+,{"stream_name":"stderr","time":867.73894451,"data":"[run1] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":867.738947744,"data":"[run1] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":867.738951142,"data":"[run2] step 0: token_id=11\n"}
+,{"stream_name":"stderr","time":867.738954744,"data":"[run2] step 1: token_id=1052\n"}
+,{"stream_name":"stderr","time":867.738958466,"data":"[run2] step 2: token_id=572\n"}
+,{"stream_name":"stderr","time":867.738962175,"data":"[run2] step 3: token_id=264\n"}
+,{"stream_name":"stderr","time":867.738965931,"data":"[run2] step 4: token_id=2632\n"}
+,{"stream_name":"stderr","time":867.738969468,"data":"[run2] step 5: token_id=3743\n"}
+,{"stream_name":"stdout","time":867.738855753,"data":"               total        used        free      shared  buff/cache   available\n"}
+,{"stream_name":"stdout","time":867.738990597,"data":"Mem:              31           0          18           0          12          30\n"}
+,{"stream_name":"stdout","time":867.738998202,"data":"Swap:              0           0           0\n"}
+,{"stream_name":"stdout","time":867.739002724,"data":"\n"}
+,{"stream_name":"stdout","time":867.739006361,"data":"  (exit=0, 0.0s)\n"}
+,{"stream_name":"stdout","time":867.739010124,"data":"weights_sha256=6f3a62caedc5c5278275bf5eed428806eeac8df927a3d333c3c850402c24cdeb\n"}
+,{"stream_name":"stdout","time":867.739014495,"data":"tokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\n"}
+,{"stream_name":"stdout","time":867.739017223,"data":"config_sha256=f8c6c681f7c28386e333775bb78de28f9de3ce6a676059dc35792022adcb7e36\n"}
+,{"stream_name":"stdout","time":867.7390197,"data":"table_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\n"}
+,{"stream_name":"stdout","time":867.739022282,"data":"inv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\n"}
+,{"stream_name":"stdout","time":867.739024802,"data":"prompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\n"}
+,{"stream_name":"stdout","time":867.739027343,"data":"prompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":867.739029833,"data":"prompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 11, 1052, 572, 264, 2632, 3743, 879, 10245]\n"}
+,{"stream_name":"stdout","time":867.739032308,"data":"prompt_idx=0 run1_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":867.739035323,"data":"prompt_idx=0 run2_witness_digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":867.739037923,"data":"prompt_idx=0 run1_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":867.73904055,"data":"prompt_idx=0 run2_argmax_digest=bbc7a8447acb5ee40cc1e9660d77c34e52dcf5f635f41cd54a934c64a717cbd4\n"}
+,{"stream_name":"stdout","time":867.73904307,"data":"prompt_idx=0 runs_identical=true\n"}
+,{"stream_name":"stdout","time":867.739045471,"data":"prompt_idx=0 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":867.739047915,"data":"CIS2_REF digest=9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8 prompt_idx=0 prompt_toks=4 gen_toks=8 dtype=fp32 reduction_mode=sequential\n"}
+,{"stream_name":"stdout","time":867.739064107,"data":"\n"}
+,{"stream_name":"stdout","time":867.73906886,"data":"---- 1.5B run2: exit=0 elapsed=87.8s\n"}
+,{"stream_name":"stdout","time":867.739073162,"data":"---- 1.5B run2: peak RSS (time -v) unavailable; RUSAGE_CHILDREN running max so far = 30847376 KB = 29.42 GB (includes prior children, not just this one)\n"}
+,{"stream_name":"stderr","time":867.738972774,"data":"[run2] step 6: token_id=879\n"}
+,{"stream_name":"stderr","time":867.739087283,"data":"[run2] step 7: token_id=10245\n"}
+,{"stream_name":"stderr","time":867.739091336,"data":"\n"}
+,{"stream_name":"stdout","time":867.740802512,"data":"---- 1.5B run2: dmesg (rc=1):\n"}
+,{"stream_name":"stdout","time":867.740831754,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":867.742265634,"data":"---- 1.5B run2: cat /sys/fs/cgroup/memory.events (rc=0):\n"}
+,{"stream_name":"stdout","time":867.742293519,"data":"low 0\n"}
+,{"stream_name":"stdout","time":867.742298751,"data":"high 0\n"}
+,{"stream_name":"stdout","time":867.742302759,"data":"max 7161\n"}
+,{"stream_name":"stdout","time":867.742306625,"data":"oom 0\n"}
+,{"stream_name":"stdout","time":867.742310099,"data":"oom_kill 0\n"}
+,{"stream_name":"stdout","time":867.742313885,"data":"oom_group_kill 0\n"}
+,{"stream_name":"stdout","time":867.743521429,"data":"---- 1.5B run2: cat /sys/fs/cgroup/memory/memory.oom_control (rc=1):\n"}
+,{"stream_name":"stdout","time":867.743545408,"data":"(no output)\n"}
+,{"stream_name":"stdout","time":867.743549666,"data":"\n"}
+,{"stream_name":"stdout","time":867.743553662,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":867.743557302,"data":"SUMMARY\n"}
+,{"stream_name":"stdout","time":867.743560484,"data":"==============================================================================\n"}
+,{"stream_name":"stdout","time":867.743902924,"data":"{\n"}
+,{"stream_name":"stdout","time":867.743919674,"data":"  \"7b\": {\n"}
+,{"stream_name":"stdout","time":867.743923528,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":867.743927027,"data":"    \"elapsed_s\": 436.3503224849701,\n"}
+,{"stream_name":"stdout","time":867.743931019,"data":"    \"digest\": \"1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a\",\n"}
+,{"stream_name":"stdout","time":867.743935284,"data":"    \"killed_by_signal\": null,\n"}
+,{"stream_name":"stdout","time":867.743939384,"data":"    \"peak_rss_kb\": null,\n"}
+,{"stream_name":"stdout","time":867.743943315,"data":"    \"peak_rss_gb\": null,\n"}
+,{"stream_name":"stdout","time":867.743948241,"data":"    \"stdout_tail\": \"weights_sha256=0e218d281ea2c86c281db9cc6491f4a37ef7b931e57cd63b70cde999bce265ee\\ntokenizer_sha256=f7c9b2dba4a296b1aa76c16a34b8225c0c118978400d4bb66bff0902d702f5b8\\nconfig_sha256=d318b49c4a29771e259d93053084eb752f5bfe69c20c4f2e041bd1017884f810\\ntable_digest=23c7bfaf5cef0095fd021af2eb1808abb4928bae4219756d86bdac670a06b35d\\ninv_freq_table_digest=02908dae2c15329014dd986fec8033e03427fba0935b04b864ab2bc75fe3bc44\\nprompt_idx=0 prompt_tokens=[12522, 5193, 264, 882]\\nprompt_idx=0 run1_tokens=[12522, 5193, 264, 882, 1305, 1305, 3811, 3811]\\nprompt_idx=0 run2_tokens=[12522, 5193, 264, 882, 1305, 1305, 3811, 3811]\\nprompt_idx=0 run1_witness_digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a\\nprompt_idx=0 run2_witness_digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a\\nprompt_idx=0 run1_argmax_digest=67f771c526de272cdf8bf22b6804edfca820cee2df9d6d9b68712e27cb43d284\\nprompt_idx=0 run2_argmax_digest=67f771c526de272cdf8bf22b6804edfca820cee2df9d6d9b68712e27cb43d284\\nprompt_idx=0 runs_identical=true\\nprompt_idx=0 reduction_mode=sequential\\nCIS2_REF digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a prompt_idx=0 prompt_toks=4 gen_toks=4 dtype=fp32 reduction_mode=sequential\",\n"}
+,{"stream_name":"stdout","time":867.743981043,"data":"    \"stderr_tail\": \"loading + widening weights (bf16 -\u003e fp32, exact bit-shift, \\u00a73.5)...\\nweights loaded.\\n[prompt 0] token ids (4 toks): [12522, 5193, 264, 882]\\n[run1] step 0: token_id=1305\\n[run1] step 1: token_id=1305\\n[run1] step 2: token_id=3811\\n[run1] step 3: token_id=3811\\n[run2] step 0: token_id=1305\\n[run2] step 1: token_id=1305\\n[run2] step 2: token_id=3811\\n[run2] step 3: token_id=3811\"\n"}
+,{"stream_name":"stdout","time":867.743987268,"data":"  },\n"}
+,{"stream_name":"stdout","time":867.74399057,"data":"  \"1_5b_run1\": {\n"}
+,{"stream_name":"stdout","time":867.743994533,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":867.743997952,"data":"    \"elapsed_s\": 88.66204833984375,\n"}
+,{"stream_name":"stdout","time":867.744003113,"data":"    \"digest\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\",\n"}
+,{"stream_name":"stdout","time":867.744006777,"data":"    \"peak_rss_kb\": null\n"}
+,{"stream_name":"stdout","time":867.744010065,"data":"  },\n"}
+,{"stream_name":"stdout","time":867.744013931,"data":"  \"1_5b_run2\": {\n"}
+,{"stream_name":"stdout","time":867.744017146,"data":"    \"returncode\": 0,\n"}
+,{"stream_name":"stdout","time":867.744020405,"data":"    \"elapsed_s\": 87.82526969909668,\n"}
+,{"stream_name":"stdout","time":867.744024061,"data":"    \"digest\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\",\n"}
+,{"stream_name":"stdout","time":867.744027676,"data":"    \"peak_rss_kb\": null\n"}
+,{"stream_name":"stdout","time":867.744031437,"data":"  },\n"}
+,{"stream_name":"stdout","time":867.744034683,"data":"  \"1_5b_match\": true,\n"}
+,{"stream_name":"stdout","time":867.744038233,"data":"  \"1_5b_matches_llm4_known_digest\": true,\n"}
+,{"stream_name":"stdout","time":867.744041923,"data":"  \"1_5b_known_digest_llm4\": \"9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\"\n"}
+,{"stream_name":"stdout","time":867.74404559,"data":"}\n"}
+,{"stream_name":"stdout","time":867.744247992,"data":"\n"}
+,{"stream_name":"stdout","time":867.744257695,"data":"7B outcome: returncode=0 killed_by_signal=None digest=1501ed4797a55081c38c7d12073a8acf522cc962d8c6d95aaf874fe0108f319a peak_rss_gb=None\n"}
+,{"stream_name":"stdout","time":867.744261438,"data":"1.5B run1 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":867.744265299,"data":"1.5B run2 digest: 9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8\n"}
+,{"stream_name":"stdout","time":867.744268865,"data":"1.5B digests match (run1 vs run2): True\n"}
+,{"stream_name":"stdout","time":867.744272222,"data":"1.5B digest matches LLM-4 known digest (9a463f443223b46c29f0d0ca3dfbcbc6bfb8e2b6c2dd1514967f460dba9d4bf8): True\n"}
+,{"stream_name":"stderr","time":871.54122846,"data":"/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":871.541289342,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":872.077942384,"data":"/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":872.077989344,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":874.225604473,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":876.184348106,"data":"[NbConvertApp] Writing 342575 bytes to __results__.html\n"}
+]

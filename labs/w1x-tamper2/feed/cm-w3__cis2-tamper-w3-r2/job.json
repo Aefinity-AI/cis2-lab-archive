@@ -1,0 +1,7 @@
+{
+  "added_at": "2026-10-16T09:25:07Z",
+  "cpu_quota": "200%",
+  "memory_max": "2500M",
+  "name": "cis2-tamper-w3-r2",
+  "pushed_at": "2026-10-16T09:26:51Z"
+}

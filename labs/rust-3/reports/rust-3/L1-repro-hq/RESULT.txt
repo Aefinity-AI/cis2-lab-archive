@@ -1,0 +1,5 @@
+repro trial1_crash-40b9e5cbe8e6864467524e5ee9bc3695f9f5aee0 class=K2 reproduced=yes first_line=<home>/feed-payload/rust3/llama.cpp-src/ggml/src/ggml.c:1787: GGML_ASSERT(INT64_MAX / ne[i] > current_nelements) failed
+repro trial1_crash-ea2adb442b243daa24c1d3f36ca83b896f2f7a20 class=K4 reproduced=yes first_line===623608==ERROR: AddressSanitizer: requested allocation size 0x24000000000002e0 (0x2400000000001340 after adjustments for alignment, red zones etc.) exceeds max
+repro trial2_crash-02b5b71faa323fe15fc76d606f65eec5c2f24f17 class=K2 reproduced=yes first_line=<home>/feed-payload/rust3/llama.cpp-src/ggml/src/ggml.c:1787: GGML_ASSERT(INT64_MAX / ne[i] > current_nelements) failed
+repro trial2_crash-cdd77cebfc1442fb82f2c4772567adf65fcc5de6 class=K4 reproduced=yes first_line===623613==ERROR: AddressSanitizer: requested allocation size 0x4000000000002e0 (0x400000000001340 after adjustments for alignment, red zones etc.) exceeds maxim
+RESULT: OK rust3-L1-repro host=hq files=4 reproduced=4 K2=2 K4=2 other=0 harness_sha256=c515d9ac907e5249

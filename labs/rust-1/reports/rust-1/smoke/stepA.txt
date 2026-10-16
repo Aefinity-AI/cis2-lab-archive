@@ -1,0 +1,7 @@
+SMOKE arm=rs-gnu-O3 work=work1.jsonl rc=0
+  rs-gnu-O3 CHECK idx=0 witness=145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc mismatches=0
+  rs-gnu-O3 DONE plain=check rows=1
+SMOKE arm=c-gnu-O2 work=work1.jsonl rc=0
+  c-gnu-O2 CHECK idx=0 witness=145e875abf13b3c8a3a76970f86f4b32bea7491c6cc4573d6d2ac176d1fffcbc mismatches=0
+  c-gnu-O2 DONE plain=check rows=1
+STEPA_DONE

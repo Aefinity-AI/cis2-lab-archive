@@ -1,0 +1,36 @@
+# rust-2b pre-start read, lens CONFORMANCE, round 2 (2026-10-05, reader subagent)
+Verdict: FIX FIRST (2 MUSTs, both small). Nothing timed. No registered-configuration run for 200 steps; one 3-step check run of the registered config on box1 (twice) sampled only how many threads were running (a fraction, no time).
+
+## MUST
+1. A1 conflicts with the registered arm sentence. Registered: "Burn 0.21.0 with features flex and autodiff is the arm". A1 adds a direct burn-flex line with features std, simd, rayon and default-features=false on burn, and the amend header says "where the text above fixes a thing it wins over these lines". So as written the registered text wins and the built arm (Cargo.toml bd7e6e9a...) is not the registered arm. The facts behind A1 are right (I re-ran cargo tree -e features offline on box1: without the burn-flex line burn-flex shows no features; with it, rayon, simd, std). Fix: before amend-bar, get a written Fable ruling (date, author) that the registered sentence names the burn-level features and that burn-flex's own default features are part of "Burn Flex as shipped"; put the ruling date in the --reason and add one sentence to A1 saying A1 is the registered features sentence read that way and is not an exception to the "wins" clause (change the header clause to name A1 as the one reading). Without it a reader can say the arm was changed after registration.
+2. Run job CPU quota. BOXES.md ruling 2026-10-04 00:40Z: a timing job runs "with no CPUQuota". BUILD step 7 queues rust2b-run-box1 with --cpu-quota 400% (and the redo and box2/3 lines). cm-feed supports "--cpu-quota none" (bin/cm-feed line 327). Fix: use --cpu-quota none for rust2b-run-box1, rust2b-redo10-box1, rust2b-run-box2, rust2b-run-box3 and delete the "400 percent is effectively none" argument in BUILD 4a item 9 / step 7. Build jobs may keep 200%.
+
+## Sentence-by-sentence conformance (what was checked, all OK unless listed)
+- Arms: B = Burn 0.21.0 flex+autodiff (see MUST 1); T = torch 2.14.0+cpu, set_num_threads(N), interop 1, OMP/MKL env, no compile, sdpa is_causal, config recorded in facts (runner subprocess). OK.
+- Model, numeric options: exact gelu (burn activation::gelu, F.gelu default), LN eps 1e-5 (explicit in both), biases, scale 1/sqrt(32), mask before softmax, tied head no bias, mean CE over 1024 positions, AdamW eps 1e-8 wd 0.01 betas, lr 3e-4, no clipping. Burn adamw.rs: p*(1-lr*wd) before step, bias correction, eps outside the root (read on box1 registry). Parameter count 1,841,280 recomputed by hand: matches. OK.
+- Init/data/order: hashes in amend equal the files on penguin (sha256sum run); payload rebuilt on penguin gives SHA256SUMS 62dbf382... and PAYLOAD_SHA256 87b40101... as pinned. Repo HEAD ab68f1a, rust2b folder clean (other labs' edits are only under rust3).
+- Steps and warm-up: 5 warm-up (batches 0-4) then 200 timed (5-204), loss at 200 = mean of the last 10, timed region in process with batch building and loss read inside, in both arms. Reading of "do not change the data order" is pinned in A3 (fine).
+- Threads: N=1 labels; N=2 on box1 and box2 unlabelled; box3 N=1 only. I sampled thread states of the registered Burn build at N=1 (3-step check, 10 ms samples, two runs): exactly one thread running in 98.2 and 96.1 percent of samples, two in 1.3 and 3 percent. So Burn at N=1 is effectively one thread at a time.
+- Reps/rotation/statistic: 5 reps, odd reps T then B, even B then T, medians, 10 on redo. OK.
+- Loss condition, bands, rep-range rule, INCONCLUSIVE to TIE (NOT SEPARABLE), overall rule, memory label: summ.py implements them (selftest 70 PASS, mutcheck 58 of 58 PASS, rerun on penguin). Loss sentence prints B first, as the speed sentence does. OK.
+- INVALID causes: all registered ones are implemented (load, clock drop, counts, hashes, threads, DID NOT RUN, harness). Extra causes beyond the pass mark (work below 0.8 cores at N=1, steps/warm-up/smoke/data-hash) are disclosed in BUILD 4a item 7 and 8.
+- Trust column 1,2,4 implemented; trust 3 lacks Burn installed bytes (see SHOULD).
+- Hosts/Rule A: only box1 labelled (runner labelled = host=="box1"); box2/box3 numbers print "no label (Rule A)". Amend text byte-checked: registered 9,967 chars are an exact prefix of the staged file; only the AMENDMENT block (A1-A5) is added. A2-A5 are pins and the warm-up sentence; A4 matches arm_t.py (erf, exp, cos on torch.full((8,),0.5), prints mkl_warm=1).
+- Memory limits: 4500M / 2800M set at queue time, runner records cgroup memory.max; verifier step 10 reads it. Kill recorded as KILLED/OOM.
+- Operator order (steps 0-11): safe: amend before ledger, build job before start, start before any timing job, freeze sha in --ref. No missing step except the SHOULDs below.
+- Seen before the run: honest. I looked in <home>/scratch-rust2b (all dirs), <home>/legs (no rust2b leg), json/log files with wall_s or steps_per_s: only smoke files (smoke=True, 10 steps). No timed run of the registered configuration exists. Smoke wall times (T 3.8 s, B 0.5 s) are disclosed. My own R2 sampling is new exposure (thread-state fraction only, no time) and should be added to section 5.
+
+## SHOULD
+1. BUILD 4a item 8 and doubt 5 say Burn N=1 "can show about 2 cores". My sampling shows one running thread almost all the time; correct the sentence (the 345 ticks across two threads are total CPU over a whole check run, not concurrency) so the result does not repeat a wrong fact.
+2. Add my R2 exposure line to section 5.
+3. After amend-bar run `bin/cm-exp show rust-2b` and compare to the staged file byte for byte (sha), and confirm the first 9,967 characters still hash to 745d9933...; add as step 3b.
+4. Trust (3): add the Burn binary size (FREEZE has it) next to Cargo.lock packages, since the pass mark says "installed bytes" for both sides; scorer line prints only the torch venv.
+5. Wrappers carry reps, threads, caps, memory and are unpinned; record their sha256 (step 5 already says so) and quote them in the result.
+6. The N=1 hard cap 14,400 s is above the registered cost cap "about 2 box-hours"; the result should say whether it was used.
+7. Candle extra is not built: say so in the result with the reason (optional in the pass mark).
+8. Load gate uses busy cores over 5 s, not loadavg; state that in the result as the reading of "host load 0.3".
+9. Clock drop or load INVALID voids the whole label (redo job), while the BOXES ruling says discard and repeat that repetition; the pass mark says redo, so keep, but write the redo plan down once before start.
+10. rust-3 builder is active on box1 (load 4.2 at 17:30Z, 0.28 by 17:35Z); box1 must be quiet at queue time (step 7 already says).
+
+## Commands run (all read-only except my scratch)
+sha256sum of package files; python prefix compare of amend vs registered; ssh cm-box1 listing and json scan of <home>/scratch-rust2b; cargo tree --offline -e features -i burn-flex in <home>/scratch-rust2b/verify-conformance-r2/{tstrip,tfull} (box1, MemoryMax 1500M, no build); samp.py (3-step check, registered config, N=1, twice, prints thread-state fractions only) in the same folder; make_payload.sh into <home>/scratch-rust2b/verify-conformance-r2/pay (penguin); selftest.py and mutcheck.py (penguin, MemoryMax 500M).

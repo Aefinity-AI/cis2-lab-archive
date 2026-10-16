@@ -1,0 +1,1 @@
+RESULT: PARTIAL host=box3 mode=timing rows=25 expected_rows=25 valid_NO_rows=1 rows_equal_ref_no=0 see <home>/rust2a/out/box3/timing_rows.txt

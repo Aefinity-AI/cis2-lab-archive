@@ -1,0 +1,83 @@
+{
+ "box1 B8T1": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 45487,
+  "max_abs_margin_diff": 9.1552734375e-05,
+  "mean_abs_margin_diff": 5.7162193115800616e-06,
+  "token_rows_differ": 0
+ },
+ "box1 B1T2": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 11724,
+  "max_abs_margin_diff": 4.00543212890625e-05,
+  "mean_abs_margin_diff": 9.39476303756237e-07,
+  "token_rows_differ": 0
+ },
+ "box1 B8T2": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 45642,
+  "max_abs_margin_diff": 9.1552734375e-05,
+  "mean_abs_margin_diff": 5.720909684896469e-06,
+  "token_rows_differ": 0
+ },
+ "box1 CTRL": {
+  "rows": 20,
+  "steps": 5120,
+  "steps_margin_differs": 0,
+  "max_abs_margin_diff": 0,
+  "mean_abs_margin_diff": 0.0,
+  "token_rows_differ": 0
+ },
+ "box2 CTRL": {
+  "rows": 20,
+  "steps": 5120,
+  "steps_margin_differs": 4491,
+  "max_abs_margin_diff": 3.0517578125e-05,
+  "mean_abs_margin_diff": 5.030492320656776e-06,
+  "token_rows_differ": 0
+ },
+ "box2 B8T1": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 46467,
+  "max_abs_margin_diff": 8.20159912109375e-05,
+  "mean_abs_margin_diff": 6.551287369802594e-06,
+  "token_rows_differ": 0
+ },
+ "box2 B1T1 (sv-5b)": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 45060,
+  "max_abs_margin_diff": 7.62939453125e-05,
+  "mean_abs_margin_diff": 5.112524377182126e-06,
+  "token_rows_differ": 0
+ },
+ "box3 B1T1 (sv-5b)": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 45060,
+  "max_abs_margin_diff": 7.62939453125e-05,
+  "mean_abs_margin_diff": 5.112524377182126e-06,
+  "token_rows_differ": 0
+ },
+ "penguin B1T1 (sv-5b)": {
+  "rows": 200,
+  "steps": 51200,
+  "steps_margin_differs": 0,
+  "max_abs_margin_diff": 0,
+  "mean_abs_margin_diff": 0.0,
+  "token_rows_differ": 0
+ },
+ "reference_margins": {
+  "steps": 51200,
+  "min": 1.1444091796875e-05,
+  "second": 3.337860107421875e-05,
+  "third": 0.0002288818359375,
+  "below_1e-4": 2,
+  "below_1e-3": 12,
+  "below_1e-2": 102
+ }
+}

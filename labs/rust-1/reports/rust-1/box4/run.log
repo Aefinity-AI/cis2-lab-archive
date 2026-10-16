@@ -1,0 +1,51 @@
+RUN host=box4 date=2026-10-04T09:26:50Z mode=timing stub=False reps=5 cap_s=43200 arms=['rs-musl-O2', 'rs-musl-O3', 'c-musl-O2', 'c-musl-O3']
+host_info cpu=AMD Sempron(tm) SI-42 ncpu=1 kernel=6.12.94+deb13-amd64 flags=fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 syscall nx mmxext fxsr_opt rdtscp lm 3dnowext 3dnow constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid pni cx16 lahf_lm extapic cr8_legacy 3dnowprefetch osvw skinit hw_pstate vmmcall
+host_cpufreq governor=schedutil max_khz=2100000
+overrides {}
+job_id=20261004T092650Z-p81041 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c
+cpu_max cgroups=leg-rust1-box4.service=100000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 allowed_cpus=1 binding=no (a quota of 100 percent x the number of logical CPUs does not bind)
+pin arm_cpu=0 runner_cpu=0 mode=shared_single_cpu
+cap registered_s=43200 used_before_s=0 remaining_s=43200 cap_s=43200
+payload_check ok; PAYLOAD_SHA256 sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9
+pinned_file <home>/sv5/arma/weights/model.safetensors sha256=80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1 ok
+pinned_file <home>/sv5/arma/weights/config.json sha256=1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843 ok
+pinned_file <home>/sv5/arma/weights/tokenizer.json sha256=9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c ok
+memory_limit cgroup_memory_max_mib=2935 expected_mib=2935 (free -m total 3669 MiB)
+SNAP start-gate {"t": "2026-10-04T09:27:02Z", "load": [0.25, 0.09, 0.02], "run": "1/94", "mhz": [2100.0], "thr": null, "other_units": []}
+BASELINE window 1/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.0005
+BASELINE window 2/6 wall_s=20.0 foreign_arm=0.0005 foreign_host=0.0005
+BASELINE window 3/6 wall_s=20.0 foreign_arm=0.028 foreign_host=0.028
+BASELINE window 4/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE window 5/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE window 6/6 wall_s=20.0 foreign_arm=0.0 foreign_host=0.0
+BASELINE max_arm=0.028 max_host=0.028 margin_arm=0.02 margin_host=0.05 floor_arm=0.02 floor_host=0.1 limit_arm=0.048 limit_host=0.1
+CHECK before arm=rs-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=rs-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK before arm=c-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+ROW rep=0 arm=rs-musl-O2 value_tps=2.712670 peak_pss_kb=770844 peak_anon_kb=769408 vmhwm_kb=790812 threads=1 tries=1
+ROW rep=0 arm=c-musl-O2 value_tps=2.890709 peak_pss_kb=778780 peak_anon_kb=778688 vmhwm_kb=789416 threads=1 tries=1
+ROW rep=0 arm=c-musl-O3 value_tps=2.742156 peak_pss_kb=763140 peak_anon_kb=763036 vmhwm_kb=789348 threads=1 tries=1
+ROW rep=0 arm=rs-musl-O3 value_tps=2.690123 peak_pss_kb=772912 peak_anon_kb=771460 vmhwm_kb=790832 threads=1 tries=1
+ROW rep=1 arm=c-musl-O3 value_tps=2.787028 peak_pss_kb=766448 peak_anon_kb=766344 vmhwm_kb=789344 threads=1 tries=1
+ROW rep=1 arm=rs-musl-O3 value_tps=2.709051 peak_pss_kb=790564 peak_anon_kb=789112 vmhwm_kb=790816 threads=1 tries=1
+ROW rep=1 arm=rs-musl-O2 value_tps=2.785492 peak_pss_kb=773328 peak_anon_kb=771892 vmhwm_kb=790864 threads=1 tries=1
+ROW rep=1 arm=c-musl-O2 value_tps=2.885606 peak_pss_kb=788964 peak_anon_kb=788872 vmhwm_kb=789352 threads=1 tries=1
+ROW rep=2 arm=rs-musl-O3 value_tps=2.714383 peak_pss_kb=767988 peak_anon_kb=766536 vmhwm_kb=790880 threads=1 tries=1
+ROW rep=2 arm=c-musl-O3 value_tps=2.770985 peak_pss_kb=764112 peak_anon_kb=764008 vmhwm_kb=789372 threads=1 tries=1
+ROW rep=2 arm=c-musl-O2 value_tps=2.873537 peak_pss_kb=786484 peak_anon_kb=786392 vmhwm_kb=789324 threads=1 tries=1
+ROW rep=2 arm=rs-musl-O2 value_tps=2.764208 peak_pss_kb=774704 peak_anon_kb=773268 vmhwm_kb=790856 threads=1 tries=1
+ROW rep=3 arm=c-musl-O2 value_tps=2.851791 peak_pss_kb=781424 peak_anon_kb=781332 vmhwm_kb=789412 threads=1 tries=1
+ROW rep=3 arm=rs-musl-O2 value_tps=2.672343 peak_pss_kb=770088 peak_anon_kb=768652 vmhwm_kb=790812 threads=1 tries=1
+ROW rep=3 arm=rs-musl-O3 value_tps=2.675386 peak_pss_kb=787640 peak_anon_kb=786188 vmhwm_kb=790824 threads=1 tries=1
+ROW rep=3 arm=c-musl-O3 value_tps=2.778634 peak_pss_kb=778808 peak_anon_kb=778704 vmhwm_kb=789360 threads=1 tries=1
+ROW rep=4 arm=rs-musl-O2 value_tps=2.717553 peak_pss_kb=788624 peak_anon_kb=787188 vmhwm_kb=790808 threads=1 tries=1
+ROW rep=4 arm=c-musl-O2 value_tps=2.843251 peak_pss_kb=784164 peak_anon_kb=784072 vmhwm_kb=789336 threads=1 tries=1
+ROW rep=4 arm=c-musl-O3 value_tps=2.772780 peak_pss_kb=788380 peak_anon_kb=788276 vmhwm_kb=789528 threads=1 tries=1
+ROW rep=4 arm=rs-musl-O3 value_tps=2.655513 peak_pss_kb=776852 peak_anon_kb=775400 vmhwm_kb=790828 threads=1 tries=1
+CHECK after arm=rs-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=rs-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-musl-O2 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+CHECK after arm=c-musl-O3 rc=0 equal_ref=yes mismatches=0 digests=0:145e875abf13b3c8,1:51dc2146f447d4a9,2:e638f4f8abe82bf7,3:f381c1fdfe15ff87,4:bb4efbbedf9d1d5a,5:f18c223cd9fc0bd0,6:b0550db36366f5e7,7:d1d5be05f4b31064,8:05ea246362068c6b
+SNAP end {"t": "2026-10-04T12:16:47Z", "load": [1.28, 1.22, 1.12], "run": "1/91", "mhz": [1050.0], "thr": null, "other_units": []}
+RESULT: OK host=box4 reason=none reps={"c-musl-O2":5,"c-musl-O3":5,"rs-musl-O2":5,"rs-musl-O3":5} reps_requested=5 values_tps={"c-musl-O2":[2.890709,2.885606,2.873537,2.851791,2.843251],"c-musl-O3":[2.742156,2.787028,2.770985,2.778634,2.77278],"rs-musl-O2":[2.71267,2.785492,2.764208,2.672343,2.717553],"rs-musl-O3":[2.690123,2.709051,2.714383,2.675386,2.655513]} medians_tps={"c-musl-O2":2.873537,"c-musl-O3":2.77278,"rs-musl-O2":2.717553,"rs-musl-O3":2.690123} peak_pss_kb_median={"c-musl-O2":784164,"c-musl-O3":766448,"rs-musl-O2":773328,"rs-musl-O3":776852} peak_anon_kb_median={"c-musl-O2":784072,"c-musl-O3":766344,"rs-musl-O2":771892,"rs-musl-O3":775400} vmhwm_kb_median={"c-musl-O2":789352,"c-musl-O3":789360,"rs-musl-O2":790812,"rs-musl-O3":790828} digests_before=equal digests_after=equal ref_witness_sha256=1a0ff035daf2124dba11b958b2ae8187438b430dc07675a3453314f935d7453c digest_witness_prompt0={"c-musl-O2":"145e875abf13b3c8","c-musl-O3":"145e875abf13b3c8","rs-musl-O2":"145e875abf13b3c8","rs-musl-O3":"145e875abf13b3c8"} discards=0 voids=0 oom=[] elapsed_s=10196 cap_s=43200 order_cycle=[["rs-musl-O2","c-musl-O2","c-musl-O3","rs-musl-O3"],["c-musl-O3","rs-musl-O3","rs-musl-O2","c-musl-O2"],["rs-musl-O3","c-musl-O3","c-musl-O2","rs-musl-O2"],["c-musl-O2","rs-musl-O2","rs-musl-O3","c-musl-O3"]] mean_position_per_arm={"c-musl-O2":1.4,"c-musl-O3":1.6,"rs-musl-O2":1.2,"rs-musl-O3":1.8} mean_position_per_language={"c":1.5,"rs":1.5} job=20261004T092650Z-p81041 payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c frozen_payload_sha256=dc446d789027f1a61edf399d68f4601644890d896ca9c2919924a2dc7cce8ac9 frozen_run_py_sha256=300a10b736c99342129d06afb3a3f9e465f4d5af1f8b1ff162f016a94cdcd13c payload_match=yes foreign_max_arm_cpu=0.048 foreign_max_host=0.1 baseline={"base_arm":0.028,"base_host":0.028,"floor_arm":0.02,"floor_host":0.1,"limit_arm":0.048,"limit_host":0.1,"margin_arm":0.02,"margin_host":0.05,"measured":"yes","window_s":20.0,"windows":[[0.0005,0.0005],[0.0005,0.0005],[0.028,0.028],[0.0,0.0],[0.0,0.0],[0.0,0.0]]} timers_paused=NA overrides={} cpu_max=leg-rust1-box4.service=100000/100000;app.slice=max/100000;user@1000.service=max/100000;user-1000.slice=max/100000;user.slice=max/100000 cpu_quota_binding=no arm_cpu=0 runner_cpu=0 pin=shared_single_cpu used_before_s=0 cap_registered_s=43200 elapsed_job_s=10196

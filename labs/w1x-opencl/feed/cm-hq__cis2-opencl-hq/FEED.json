@@ -1,0 +1,8 @@
+{
+  "harvested_at": "2026-10-16T10:37:57Z",
+  "host": "cm-hq",
+  "name": "cis2-opencl-hq",
+  "pushed_at": "2026-10-16T10:31:58Z",
+  "result_line": "RESULT: OK cis2-opencl-hq host16=MATCH host16=MATCH host128=MATCH pocl16=MATCH pocl16=MATCH pocl128=MATCH pocl_soft16=MATCH pocl_soft16=MATCH pocl_soft128=MATCH pocl_test=PASS nvcl16=MATCH nvcl16=MATCH nvcl128=MATCH nvcl_test=PASS weights=80521b40 ids=4b6618b6",
+  "status": "ok"
+}
