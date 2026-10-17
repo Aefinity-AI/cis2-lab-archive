@@ -7,7 +7,7 @@ points are folded in below and listed in §10.
 
 Source of the question: `state/reports/2026-10-01-AI-SAFETY-LANDSCAPE-AND-CIS2.md` §5 E1.
 Facts about the rival methods: `state/reports/2026-10-01-SV5-RESEARCH.md` (TOPLOC arXiv 2501.16007, DiFR arXiv
-2511.20621, Cankaya arXiv 2606.00279).
+2511.20621).
 
 ## 1. Question and scope
 

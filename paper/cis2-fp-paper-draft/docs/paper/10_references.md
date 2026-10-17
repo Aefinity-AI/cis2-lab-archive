@@ -1,8 +1,6 @@
 # 10. References
 
-- N. Cankaya. "Bit-Exact AI Inference Verification Without Performance Tradeoffs." arXiv:2606.00279
-  (v1 29 May 2026, v2 5 Jun 2026). [venue] 2026 workshop best paper.
-  https://arxiv.org/abs/2606.00279 — code: https://github.com/NaciCankaya/hardware_rounding_error_predictor
+- [removed 2026-10-17: unverified prior-art characterization]
 
 - Thinking Machines Lab. "Defeating Nondeterminism in LLM Inference." Blog post, Sep 2025.
   https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/ — code:
