@@ -39,13 +39,7 @@ did not match the reference it purported to describe) — not a numerics bug. Fi
 closed the gap on the first retry. We report this history in full, including the mismatches,
 because a specification whose own failure modes are legible and fixable is stronger evidence of
 sufficiency than a specification that happened to work once. We report no timing or throughput
-numbers: this is a verifiability and safety result, not a performance result. We situate CIS-2
-against the closest prior work, a GPU-vendor-silicon-table-emulation scheme (arXiv:2606.00279)
-that shares the goal of bit-exact inference verification but not the mechanism, the platform
-scope, or the multi-implementation structure, and against same-stack GPU determinism work
-(Thinking Machines Lab's batch-invariant kernels, LLM-42, MarginGate) that solves run-to-run
-determinism within one serving stack rather than cross-platform, cross-language reproduction from
-a written contract. We report the result's honest limits without softening them: the scope is
+numbers: this is a verifiability and safety result, not a performance result. [removed 2026-10-17: unverified prior-art characterization] We report the result's honest limits without softening them: the scope is
 fp32 scalar reference code (not a fast kernel), CPU-only, greedy decoding, models up to 1.5B
 parameters, and a RoPE trigonometric range reduction whose accuracy against a high-precision
 oracle degrades beyond roughly 512 tokens even though its bit-for-bit determinism does not; a
@@ -177,40 +171,13 @@ LLM Inference" (blog post + `batch_invariant_ops`) argues that batch-size-depend
 order, not floating-point non-associativity itself, is the dominant cause of nondeterminism in
 GPU-served LLM inference, and ships batch-invariant RMSNorm/matmul/attention kernels that give
 bit-identical output across repeated runs at fixed batch size, on one hardware/software stack.
-LLM-42 (arXiv:2601.17768) achieves deterministic decoding under dynamic batching via a
-decode-verify-rollback scheduling protocol on top of SGLang, without rewriting GPU kernels.
+[removed 2026-10-17: unverified prior-art characterization]
 MarginGate (arXiv:2605.30218) layers sparse margin-triggered verification on top of
-batch-invariant serving to catch drift cheaply. All three solve **run-to-run determinism within
-one serving stack** — the same GPU, the same kernels, repeated. None claims or attempts
-cross-language or cross-ISA reproduction from a written specification, and none defines a
-full-logit-vector, third-party-recomputable receipt; a bit-identical result on one stack says
-nothing about what a second, independently-built implementation on different silicon would
-compute. CIS-2's problem is orthogonal to this line: it is CPU-only, and its determinism claim is
+batch-invariant serving to catch drift cheaply. [removed 2026-10-17: unverified prior-art characterization] CIS-2's problem is orthogonal to this line: it is CPU-only, and its determinism claim is
 across implementations and ISAs, not across repeated runs of one binary (though same-process
 repeat-run determinism is also a stated CIS-2 conformance clause, spec §12.4).
 
-**Closest prior work: GPU-silicon-emulation bit-exactness.** Cankaya, "Bit-Exact AI Inference
-Verification Without Performance Tradeoffs" (arXiv:2606.00279, [venue] 2026 workshop best
-paper) is the single closest candidate in *goal*: third-party-checkable bit-exact verification of
-an inference result. Its mechanism is the opposite of CIS-2's. Cankaya exhaustively probes
-NVIDIA's Special Function Units via inline PTX and caches their exact hardware outputs (e.g., a
-4 GB table mapping every 32-bit input for `MUFU.EX2`), then emulates that specific silicon's
-transcendental behavior in software to check a GPU inference run against itself without needing
-matching GPU hardware at verify time. This is **emulating one vendor's non-standard hardware
-math**, tested only on NVIDIA GPUs (A100, L40, L40S, H100; the paper's own stated limitation is
-"Only NVIDIA GPUs"), verified against that same vendor's cuBLAS/CUTLASS — a single implementation
-and codebase, on one hardware vendor's silicon; no independent reimplementation is reported. There
-is no written specification for a second party
-to implement from, no cross-language claim, no CPU or cross-ISA claim, and — per a full-text
-read of both preprint versions, not the abstract alone — no full-logit-vector digest: the
-proposed receipt is a single interior-tensor cryptographic fingerprint, described as a proposal
-citing external hashing work, not a built and demonstrated third-party recompute protocol. CIS-2
-takes the opposite approach at every one of these axes: it avoids depending on any vendor's
-non-standard lookup-table hardware behavior entirely, by using pinned polynomial transcendentals
-that any IEEE-754-conformant scalar CPU unit reproduces identically; it is defined as a written
-document reimplemented from text by independent parties; it spans two CPU ISAs and two languages;
-and its receipt folds the complete per-step logit vector, not one interior tensor, and is
-actually built, run, and cross-checked (§4–§5), not proposed.
+[removed 2026-10-17: unverified prior-art characterization]
 
 **Correctly-rounded elementary functions.** CORE-MATH and the RLIBM family (RLIBM-32,
 RLIBM-PROG, RLIBM-MultiRound; arXiv:2104.04043, 2111.12852, 2504.07409) generate 0.5-ULP
@@ -274,11 +241,7 @@ to ignore, not a guarantee.
 
 **Novelty summary.** No candidate found in this search combines (i) a written normative fp32
 numeric spec, (ii) independent multi-language reimplementation, (iii) cross-ISA (x86_64/aarch64)
-verification, and (iv) a full-logit bit-identical, third-party-recomputable receipt. The closest
-work is GPU-vendor-silicon-emulation-based, single-implementation, and receipt-as-proposal
-(arXiv:2606.00279, distinguished in detail above); the remaining candidates address adjacent but
-distinct problems — same-stack run-to-run determinism, correctly-rounded math-library
-construction, thread-count reduction reproducibility, or provenance attestation.
+verification, and (iv) a full-logit bit-identical, third-party-recomputable receipt. [removed 2026-10-17: unverified prior-art characterization]
 
 
 # 3. The CIS-2 normative contract
@@ -1110,9 +1073,7 @@ runs, per Rule A. Every command above re-derives an identity claim (a digest) or
 
 # 10. References
 
-- N. Cankaya. "Bit-Exact AI Inference Verification Without Performance Tradeoffs." arXiv:2606.00279
-  (v1 29 May 2026, v2 5 Jun 2026). [venue] 2026 workshop best paper.
-  https://arxiv.org/abs/2606.00279 — code: https://github.com/NaciCankaya/hardware_rounding_error_predictor
+- [removed 2026-10-17: unverified prior-art characterization]
 
 - Thinking Machines Lab. "Defeating Nondeterminism in LLM Inference." Blog post, Sep 2025.
   https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/ — code:

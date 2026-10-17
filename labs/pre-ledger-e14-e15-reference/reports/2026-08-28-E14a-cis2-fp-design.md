@@ -76,16 +76,8 @@ receipt — there is no third-party re-derivation artifact analogous to
   batch invariance (checking only near-margin decisions); presupposes
   batch-invariant kernels already exist, does not itself solve cross-ISA
   identity. UNVERIFIED beyond abstract by this sweep. ([arXiv](https://arxiv.org/pdf/2605.30218))
-- "LLM-42: Enabling Determinism in LLM Inference with Verified
-  Speculation," arXiv:2601.17768 — determinism via speculative-decoding
-  verification, a different mechanism (verify a fast/slow model pair
-  agree) than reduction-order pinning. UNVERIFIED beyond abstract.
-  ([arXiv](https://arxiv.org/pdf/2601.17768))
-- "Demystifying Numerical Instability in LLM Inference: Achieving
-  Reproducible Inference for Mission-Critical Tasks with HEAL,"
-  arXiv:2606.21023 — surveys numerical-instability sources in LLM serving
-  and proposes a reproducibility framework (HEAL); relevant survey of the
-  same problem space, engineering-discipline register rather than a
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
   cross-ISA bit-identity spec. UNVERIFIED beyond abstract. ([arXiv](https://arxiv.org/pdf/2606.21023))
 - "DiFR: Inference Verification Despite Nondeterminism," arXiv:2511.20621 —
   explicitly targets verifying inference *without* assuming determinism

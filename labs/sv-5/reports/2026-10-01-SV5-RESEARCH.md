@@ -6,7 +6,7 @@ Local text copies of the three PDFs were kept in the session scratch directory o
 ## Sources opened
 - TOPLOC, arXiv 2501.16007 ([venue] 2025 PMLR 267), full PDF: https://arxiv.org/pdf/2501.16007 (VERIFIED, full text)
 - DiFR, arXiv 2511.20621, full PDF: https://arxiv.org/pdf/2511.20621 (VERIFIED, full text)
-- Cankaya, arXiv 2606.00279v2, "Bit-Exact AI Inference Verification Without Performance Tradeoffs", 5 Jun 2026: https://arxiv.org/pdf/2606.00279 (VERIFIED, full text)
+- [removed 2026-10-17: unverified prior-art characterization]
 - GitHub API for repos, PyPI JSON for toploc, raw READMEs (VERIFIED, see section 6).
 - PyTorch reproducibility note: https://docs.pytorch.org/docs/2.14/notes/randomness.html (VERIFIED, partial; see section B2)
 - Thinking Machines blog: https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/ (VERIFIED, snippets only)
@@ -99,13 +99,13 @@ Data: UltraChat prompts. 400 prompts x 512 new tokens for the GPU/attention test
 
 ### 7. Limitations (own words): Sec 7.4 "We have not evaluated our approach on other sampling procedures such as speculative decoding"; Sec 7.2 "cannot verify inference from providers serving closed-weights models" and "Providers must also expose an API parameter allowing clients to specify per-request sampling seeds"; Sec 2.2 activation fingerprints "cannot verify the sampling process itself". DiFR also says (Sec 3.1) that on fixed hardware with batch-invariant kernels "the verifier can re-run the model once and check exact equality", and that in the broader setting "we expect statistical verification to remain necessary".
 
-## A3. Cankaya (arXiv 2606.00279v2): bit-exact verification evidence (relevant to arms a and c)
-- Claim (abstract/Sec 1): inference engines are "deterministic but non-invariant"; bitwise-identical activations when hardware SKU, software stack (CUDA, PyTorch, engine, attention backend), quantisation format/kernel and TP rank are fixed. No PyTorch determinism flags were set ("No determinism flags are set in PyTorch or CUDA", Sec 3.1, L170).
-- Same-SKU different physical cards (A100 PCIe vs SXM): L2 = 0 (Sec 3.1; App D Table 1). Across architectures (A100/H100/A40/L40S): L2 0.45-0.58 on FP16 Qwen2.5-7B prefill hidden states (App D Table 1). H100-NVL, H100-PCIe, H200 are identical to each other.
-- Dependencies that change bits: cuBLAS 12.0 vs 11.8 changed hidden states by 1-5%; cu128 vs cu129 on A100 did not (footnote 10, App). Batch size changes bits for short sequences (equivalence classes, invariant above ~4000 tokens). Atomics in an INT4 GPTQ exllama kernel caused genuine nondeterminism (Kimi-K2-Thinking, Qwen3-8B GPTQ without marlin).
-- Detectability (App D Table 2, SNR = mismatch distance / cross-hardware floor, A100<->H100): attention impl (eager/SDPA/FA2) 10.5x prefill, detectable; AWQ vs GPTQ INT4 26.7x detectable; batch size 1.08x NOT detectable across hardware; TP 0.90x NOT detectable across hardware. Same-hardware replay would detect them (floor 0).
-- Emulator: software-only CPU emulation of tensor-core arithmetic predicts every bit of Qwen3-4B FFN/attention blocks on A100, L40, L40S, H100 (0 BF16 diffs; 71M elements for the attention block at 4,000 tokens). Not T4/Turing. Dense models only; MoE and non-NVIDIA are listed limits (Sec 5).
-- Not in this paper: tolerance thresholds, tamper tests of weights/prompts. Its framing is bitwise pass/fail given recorded configuration.
+## A3. [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
 
 # PART B. OWN ANALYSIS (not from the papers; labelled judgement)
 
@@ -118,18 +118,18 @@ Data: UltraChat prompts. 400 prompts x 512 new tokens for the GPU/attention test
 | fp16 vs bf16 | only fp32 vs bf16 | no | TOPLOC thresholds exist for bf16 and fp32 only; fp16 has no published threshold. |
 | int8 vs fp32/bf16 weights | no | FP8 weights and 4-bit only (bitsandbytes / w4a16) | DiFR 4-bit is easy at 2-300 tokens; int8 is smaller noise and untested. |
 | FP8 KV cache | "preliminary", margin "small" (Sec 6.1) | yes, hardest tested class: 1,000-5,000 tokens Token-DiFR; 4-20 tokens Act-DiFR | Tolerance methods need aggregation over many tokens. |
-| attention/KV implementation (SDPA/FA2/eager) | honest case only: treated as noise, must pass | not a tamper class | Cankaya treats it as detectable (10.5x prefill SNR) under bit-exact replay on the same stack. A tolerance method accepts it as noise by design. |
+| attention/KV implementation (SDPA/FA2/eager) | honest case only: treated as noise, must pass | not a tamper class | [removed 2026-10-17: unverified prior-art characterization] A tolerance method accepts it as noise by design. |
 | wrong seed / temp +0.1 / sampling bug | out of scope (no sampling check) | yes (Token-DiFR) | Sampling-layer tampering is invisible to final-hidden-state tolerance schemes (TOPLOC Sec 6.2, DiFR Sec 2.2). For CIS-2, replay of the sampler is part of the claimed spec. |
 
 ## B2. Fair "stock deterministic rerun" (arm c)
 - Settings to fix (PyTorch 2.14 note, VERIFIED text: the note states that completely reproducible results are not promised across PyTorch releases, individual commits, or different platforms, and that results may not be reproducible between CPU and GPU executions, even with identical seeds). torch.use_deterministic_algorithms(True) (note says it also sets fill_uninitialized_memory True by default and costs performance); cudnn.deterministic / benchmark=False; SDPA backend pinned (the note says SDPA backends differ in determinism). CUBLAS_WORKSPACE_CONFIG (:4096:8 or :16:8): the string did NOT appear in the fetched 2.14 page text, so I cannot cite it; UNVERIFIED here (our repo's fm-5 runs set it, see below).
-- Also pin: batch size and padding (left-pad vs none), sequence length, library versions (torch, CUDA, cuBLAS, transformers, tokenizers; Cankaya: cuBLAS major version changes bits), attention backend, dtype, GPU SKU, and a pre-tokenised input hash. Cankaya's results show these factors, not the determinism flags, decide bit equality; batch size matters below ~4000 tokens.
-- Published evidence: same-SKU same-stack bit identity incl. across physical cards (Cankaya Sec 3.1, App D Table 1; VERIFIED). Cross-GPU-type identity: seen only within one architecture (H100-NVL = H100-PCIe = H200); across architectures not identical (0.45-0.58 L2). Thinking Machines: 1000 temperature-0 completions of Qwen3-235B-A22B gave 80 unique outputs, most common 78 times, earliest divergence at token 103, with standard kernels; batch-invariant kernels gave identical outputs (blog, "Experiments"; VERIFIED snippet).
+- Also pin: batch size and padding (left-pad vs none), sequence length, library versions (torch, CUDA, cuBLAS, transformers, tokenizers), attention backend, dtype, GPU SKU, and a pre-tokenised input hash. [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization] Cross-GPU-type identity: seen only within one architecture (H100-NVL = H100-PCIe = H200); across architectures not identical (0.45-0.58 L2). Thinking Machines: 1000 temperature-0 completions of Qwen3-235B-A22B gave 80 unique outputs, most common 78 times, earliest divergence at token 103, with standard kernels; batch-invariant kernels gave identical outputs (blog, "Experiments"; VERIFIED snippet).
 - Local evidence (our own reports, not independent): Kaggle T4 and Lightning T4 bit-identical for a 135M-class student training run with pinned torch 2.10.0+cu128 + transformers 5.0.0 + tokenizers 0.22.2, raw-param sha256 167074c4...; without pinning, tokenizer version differed (<home>/.claude/projects/-home-<user>/memory/frontier1-directive-2026-09-25.md, 09-25 10:50Z and fm-5c entries). Different-host identity was achieved only after pinning. This is training, not inference, and one GPU type.
 - T4 is Turing (sm75). Whether bf16 inference is meaningful there is a hardware question I did not source; use fp32 or fp16 on T4 and say so in the protocol. UNVERIFIED.
 
 ## B3. Smallest like-for-like models on free hardware
-- Both papers' smallest model is 8B. At fp16 an 8B model (~16 GB) does not fit one 16 GB T4 with activations; Kaggle 2xT4 would need device_map sharding, which changes the reduction topology (pipeline-style; Cankaya says PP rank invariant). Single-T4 runs require a model of about 3B or smaller (own arithmetic, not sourced).
+- Both papers' smallest model is 8B. [removed 2026-10-17: unverified prior-art characterization] Single-T4 runs require a model of about 3B or smaller (own arithmetic, not sourced).
 - SmolLM2 135M/360M/1.7B fit one T4 in fp32/fp16 and run on Kaggle CPU.
 - TOPLOC as published: algorithm applies to any model with a final hidden state; hidden size differs (SmolLM2-135M is much smaller than 4096, so k = 128 is a larger fraction of the vector; UNVERIFIED hidden sizes: not looked up). Published thresholds were calibrated on 8B-70B bf16 and fp32 on A100/4090; no statement that they transfer to other sizes. Treat them as unvalidated for SmolLM2 and for T4; recalibrate on honest runs (A100/4090 are not in free tier). Report both published and recalibrated values.
 - DiFR as published: no fixed tau, so calibration on honest SmolLM2 runs is part of the method; Token-DiFR needs a Gumbel seed protocol (use temperature 0 for a seed-free argmax check) and, per README, vLLM (GPU). HF-generation support exists in the repo (REPORTED). CPU-only unsupported as documented.
@@ -145,7 +145,7 @@ Data: UltraChat prompts. 400 prompts x 512 new tokens for the GPU/attention test
 # Sources
 - https://arxiv.org/pdf/2501.16007 (Sec 3.1, 4 Alg 1-2, 5.2, 5.6-5.8, Tables 2-6, Sec 6)
 - https://arxiv.org/pdf/2511.20621 (Sec 2.2, 3.1, 4, 5.1-5.2, 6, 7.2, 7.4, Tables 1-8, App C, G, I)
-- https://arxiv.org/pdf/2606.00279 (Sec 1, 3.1-3.2, 4, 5, 6, App D Tables 1-2)
+- [removed 2026-10-17: unverified prior-art characterization]
 - https://github.com/PrimeIntellect-ai/toploc ; https://pypi.org/pypi/toploc/json ; https://github.com/PrimeIntellect-ai/toploc-experiments
 - https://github.com/adamkarvonen/difr (README, pyproject.toml, GitHub API)
 - https://docs.pytorch.org/docs/2.14/notes/randomness.html

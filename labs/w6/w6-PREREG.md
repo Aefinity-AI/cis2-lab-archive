@@ -7,7 +7,7 @@ How many next-token decisions change if the exponential used in SmolLM2-135M inf
 
 ## 2. What prior art already shows (honest)
 - Correctly-rounded libm is KNOWN in isolation: CORE-MATH (exhaustively checked binary32 functions, about the speed of glibc; gitlab.inria.fr/core-math/core-math, MIT or LGPL-class per file, licence re-read at pin) and RLIBM-32 (2104.04043 [R]) report ULP and speed. Gensyn Verde (2502.19405 [V]) re-implements exp, sin, cos and tanh to control operation order and reports practical overhead but no libm-only figure.
-- Inside transformer inference the sweep found no measurement of the effect of a correctly-rounded or bitwise-fixed exp on decoding (SPEED-SIZE P2: searches returned only NPU/FPGA approximation papers; the bit-exact stack papers RepOps, RepDL, 2606.00279 and Hawkeye treat accumulation order and tensor-core rounding, not libm). Sweep limits as in the register.
+- [removed 2026-10-17: unverified prior-art characterization] Sweep limits as in the register.
 - Our own CIS-2 specification already pins its own exponential (`cis2_exp_pinned` in `gpu/cis2_math.h`, a strict sequential Horner polynomial, no FMA; Rust twin `exp_pinned` in cis2-fp `src/math.rs`; internal ULP-range work E26/E27). So the production CIS-2 digest does not call glibc at all. This lab therefore measures a hypothetical (what if an implementation delegated exp to libm), which is exactly the question a tolerance-based L2 proposal has to answer. It does not change any existing pinned digest.
 - Register ids: 2104.04043, 2502.19405 (`state/reports/prior-art/PRIOR-ART.md`); magnitude logic from MarginGate 2605.30218 [V] and our sv-5d (flips live at tiny margins; cross-ISA noise gave 1.8-2.4 flips per million).
 
