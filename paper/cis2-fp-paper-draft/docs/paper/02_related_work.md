@@ -9,45 +9,9 @@ the type system. Wording, receipt structure, and disclosure conventions in this 
 directly from CIS-1's; §5 and §8 note the specific places CIS-2 is currently weaker (fewer
 independent implementations of a standing verifier tool, no physical non-cloud aarch64 leg).
 
-**GPU run-to-run determinism (same-stack).** Thinking Machines Lab's "Defeating Nondeterminism in
-LLM Inference" (blog post + `batch_invariant_ops`) argues that batch-size-dependent reduction
-order, not floating-point non-associativity itself, is the dominant cause of nondeterminism in
-GPU-served LLM inference, and ships batch-invariant RMSNorm/matmul/attention kernels that give
-bit-identical output across repeated runs at fixed batch size, on one hardware/software stack.
-LLM-42 (arXiv:2601.17768) achieves deterministic decoding under dynamic batching via a
-decode-verify-rollback scheduling protocol on top of SGLang, without rewriting GPU kernels.
-MarginGate (arXiv:2605.30218) layers sparse margin-triggered verification on top of
-batch-invariant serving to catch drift cheaply. All three solve **run-to-run determinism within
-one serving stack** — the same GPU, the same kernels, repeated. None claims or attempts
-cross-language or cross-ISA reproduction from a written specification, and none defines a
-full-logit-vector, third-party-recomputable receipt; a bit-identical result on one stack says
-nothing about what a second, independently-built implementation on different silicon would
-compute. CIS-2's problem is orthogonal to this line: it is CPU-only, and its determinism claim is
-across implementations and ISAs, not across repeated runs of one binary (though same-process
-repeat-run determinism is also a stated CIS-2 conformance clause, spec §12.4).
+**GPU run-to-run determinism (same-stack).** Thinking Machines Lab's "Defeating Nondeterminism in LLM Inference" (blog post + `batch_invariant_ops`) argues that batch-size-dependent reduction order, not floating-point non-associativity itself, is the dominant cause of nondeterminism in GPU-served LLM inference, and ships batch-invariant RMSNorm/matmul/attention kernels that give bit-identical output across repeated runs at fixed batch size, on one hardware/software stack. [removed 2026-10-17: unverified prior-art characterization] MarginGate (arXiv:2605.30218) layers sparse margin-triggered verification on top of batch-invariant serving to catch drift cheaply. All of these solve **run-to-run determinism within one serving stack** — the same GPU, the same kernels, repeated. None claims or attempts cross-language or cross-ISA reproduction from a written specification, and none defines a full-logit-vector, third-party-recomputable receipt; a bit-identical result on one stack says nothing about what a second, independently-built implementation on different silicon would compute. CIS-2's problem is orthogonal to this line: it is CPU-only, and its determinism claim is across implementations and ISAs, not across repeated runs of one binary (though same-process repeat-run determinism is also a stated CIS-2 conformance clause, spec §12.4).
 
-**Closest prior work: GPU-silicon-emulation bit-exactness.** Cankaya, "Bit-Exact AI Inference
-Verification Without Performance Tradeoffs" (arXiv:2606.00279, [venue] 2026 workshop best
-paper) is the single closest candidate in *goal*: third-party-checkable bit-exact verification of
-an inference result. Its mechanism is the opposite of CIS-2's. Cankaya exhaustively probes
-NVIDIA's Special Function Units via inline PTX and caches their exact hardware outputs (e.g., a
-4 GB table mapping every 32-bit input for `MUFU.EX2`), then emulates that specific silicon's
-transcendental behavior in software to check a GPU inference run against itself without needing
-matching GPU hardware at verify time. This is **emulating one vendor's non-standard hardware
-math**, tested only on NVIDIA GPUs (A100, L40, L40S, H100; the paper's own stated limitation is
-"Only NVIDIA GPUs"), verified against that same vendor's cuBLAS/CUTLASS — a single implementation
-and codebase, on one hardware vendor's silicon; no independent reimplementation is reported. There
-is no written specification for a second party
-to implement from, no cross-language claim, no CPU or cross-ISA claim, and — per a full-text
-read of both preprint versions, not the abstract alone — no full-logit-vector digest: the
-proposed receipt is a single interior-tensor cryptographic fingerprint, described as a proposal
-citing external hashing work, not a built and demonstrated third-party recompute protocol. CIS-2
-takes the opposite approach at every one of these axes: it avoids depending on any vendor's
-non-standard lookup-table hardware behavior entirely, by using pinned polynomial transcendentals
-that any IEEE-754-conformant scalar CPU unit reproduces identically; it is defined as a written
-document reimplemented from text by independent parties; it spans two CPU ISAs and two languages;
-and its receipt folds the complete per-step logit vector, not one interior tensor, and is
-actually built, run, and cross-checked (§4–§5), not proposed.
+[removed 2026-10-17: unverified prior-art characterization]
 
 **Correctly-rounded elementary functions.** CORE-MATH and the RLIBM family (RLIBM-32,
 RLIBM-PROG, RLIBM-MultiRound; arXiv:2104.04043, 2111.12852, 2504.07409) generate 0.5-ULP
@@ -111,8 +75,6 @@ to ignore, not a guarantee.
 
 **Novelty summary.** No candidate found in this search combines (i) a written normative fp32
 numeric spec, (ii) independent multi-language reimplementation, (iii) cross-ISA (x86_64/aarch64)
-verification, and (iv) a full-logit bit-identical, third-party-recomputable receipt. The closest
-work is GPU-vendor-silicon-emulation-based, single-implementation, and receipt-as-proposal
-(arXiv:2606.00279, distinguished in detail above); the remaining candidates address adjacent but
+verification, and (iv) a full-logit bit-identical, third-party-recomputable receipt. [removed 2026-10-17: unverified prior-art characterization] The remaining candidates address adjacent but
 distinct problems — same-stack run-to-run determinism, correctly-rounded math-library
 construction, thread-count reduction reproducibility, or provenance attestation.

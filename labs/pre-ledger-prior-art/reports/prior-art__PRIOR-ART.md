@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 2609.25624 ReproFuse | fused-upcast GEMM, bitwise-identical linear layers across Ampere/Ada/Hopper; 1.17-3.1x faster than prior | V | W1, A4, standards memo |
 | 2601.07239 Stochastic CHAOS | argues against deterministic inference (hides uncertainty) | V | framing: determinism for audit/replay, not for serving |
-| 2601.17768 LLM-42 | decode-verify-rollback; batch-invariant GEMM 63 % slower at peak; det. mode 24-36 % slower | V | P1, rust-5 |
+| [removed 2026-10-17: unverified prior-art characterization] |
 | 2605.30218 MarginGate | batch-induced flips 0.3-1.3 % of steps (GPU BF16), risk at low top-2 margin; verifier fires 15-19 % | V | W3, sv-5d |
 | 2506.09501 | BF16 decision flips with batch size | V | sv-5c/d, H1 |
 | 2606.03019 | reproducibility as copyleft (licensing) | V | standards memo only |
@@ -22,7 +22,7 @@
 | 2502.11880 bitnet.cpp, 2407.00088 T-MAC, 2504.12285 BitNet 2B4T | ternary CPU kernels (AVX2/NEON), 2B4T 29 ms CPU TPOT | R/V | W2, W10 |
 | 2407.12327 Spectra/TriLM, 2502.02631 ParetoQ, 2510.13998 | sub-1B ternary loss gap; 1.58-bit scaling | V/R | Z1, mx-s1 framing |
 | 2502.19405 Verde, 2106.11872 Zhuang, 2609.17380 OPEN-1B | fixed-order training tax 30-60 % matmul, T4 218/374 %; up to 746 % | V | W9, Z6, rust-3 |
-| 2603.20421 Hawkeye, 2606.00279, 2605.19537 | GPU-vendor numeric portability of quantised weights | V | W1, Z3 |
+| [removed 2026-10-17: unverified prior-art characterization] |
 | 2411.13757 GenBFA, 2509.21843, 2412.07192, 2511.02866 LM-Fix | bit-flip attacks and detection (> 94 % at TVL 200) | V | Z4, bit-flip page |
 | 2202.05262 ROME, 2210.07229 MEMIT, 2405.02765 | model editing and edit detection | V/R | W4 |
 | 2104.04043 RLIBM-32, CORE-MATH | correctly-rounded libm ~1.1x glibc | R/V | W6, L2 tolerance |

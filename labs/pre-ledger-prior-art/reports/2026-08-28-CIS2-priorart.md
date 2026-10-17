@@ -17,16 +17,14 @@ The load-bearing, unusual combination is: (1) a **written spec**, not a shared c
 - **Thinking Machines Lab, "Defeating Nondeterminism in LLM Inference"** (blog, Sep 2025) + `batch_invariant_ops` GitHub repo. Claim: batch-size-dependent reduction order, not FP non-associativity + scheduling, is the main cause of run-to-run nondeterminism in GPU serving; ships batch-invariant RMSNorm/matmul/attention kernels; shows bit-identical outputs across 1,000 repeated runs of Qwen3-8B **on one GPU setup**. — [thinkingmachines.ai](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/), [GitHub](https://github.com/thinking-machines-lab/batch_invariant_ops)
   **Distinction:** single hardware/software stack, run-to-run determinism at fixed batch size, GPU kernel engineering. No cross-language, no cross-ISA, no written spec for independent reimplementation, no full-logit digest, no receipt. Not prior art for the claim; it's the widely-cited motivating problem statement, useful to cite as "the problem this displaces," not as competing work.
 
-- **LLM-42: Enabling Determinism in LLM Inference with Verified Speculation** (arXiv:2601.17768, Jan 2026; Microsoft, GitHub `microsoft/llm-42`, built on SGLang). Claim: decode-verify-rollback scheduling protocol achieves deterministic decoding under dynamic batching without rewriting GPU kernels. — [arXiv:2601.17768](https://arxiv.org/abs/2601.17768), [GitHub](https://github.com/microsoft/llm-42)
-  **Distinction:** same-stack determinism (single serving engine, GPU), a scheduling trick not a numeric spec. No cross-language/cross-ISA claim, no full-logit bit-identity across independent implementations, no receipt/verification artifact for third parties.
+- [removed 2026-10-17: unverified prior-art characterization]
 
 - **MarginGate: Sparse Margin-Triggered Verification for Batch-Invariant LLM Inference** (arXiv:2605.30218). Verification scheme layered on top of batch-invariant serving to catch drift cheaply. — [arXiv:2605.30218](https://arxiv.org/pdf/2605.30218)
   **Distinction:** verification-by-sampling/margin-triggering within one serving stack; not cross-ISA/cross-language, not a spec, not full-logit digest.
 
 ### (b) Cross-platform floating-point reproducibility (CPU/ISA-portable)
 
-- **Cankaya, "Bit-Exact AI Inference Verification Without Performance Tradeoffs"** (arXiv:2606.00279, v1 29 May 2026 / v2 5 Jun 2026). Claim: bitwise-precise recomputation of GPU inference (vLLM, HF transformers) is achievable without perf-degrading determinism flags, by caching exact silicon lookup-table outputs of NVIDIA MUFU (RSQ/EX2/RCP) transcendental units and emulating them in software; shown across multiple NVIDIA GPU variants without needing matching hardware at verify time. — [arXiv:2606.00279](https://arxiv.org/abs/2606.00279)
-  **This is the closest candidate found.** It shares the goal (third-party recomputable bit-exact verification of an AI inference result) and the mechanism-of-attack (pin down the non-portable/non-standard low-level numeric primitives — for them, GPU MUFU lookup tables; for CIS-2, x87/SSE transcendentals and FMA contraction). **Sharp distinction:** Cankaya's approach is GPU-vendor-specific silicon-table emulation across NVIDIA GPU *variants* (still one ISA family, one vendor, one software stack: vLLM/HF); it is not cross-language (no Rust vs C), not cross-ISA in the CPU sense (no x86_64 vs aarch64), and is not built from a human-written normative spec independently reimplemented by separate codebases — it's emulation/caching of one reference implementation's hardware behavior, not multi-implementation convergence to a shared abstract spec. It also is not evidenced (from the abstract/available text) to check the *full logit vector*; framed as auditing accumulated rounding error as a signature, closer to an anomaly-detection framing than a bit-identical full-tensor witness digest. **This is the single citation that most needs distinguishing in the CIS-2 paper.**
+- [removed 2026-10-17: unverified prior-art characterization]
 
 - **CORE-MATH** and **RLIBM family** (RLIBM-32, RLIBM-PROG, RLIBM-MultiRound — arXiv:2104.04043, 2111.12852, 2504.07409, GitHub `rutgers-apl/rlibm-all`). Claim: generate correctly-rounded (0.5-ULP) elementary-function implementations for fp32/other formats, portable because IEEE-754 basic ops are correctly rounded on x86-64/ARM/RISC-V by standard. — [arXiv:2104.04043](https://arxiv.org/abs/2104.04043)
   **Distinction:** these are math-library-construction papers (how to build correctly-rounded transcendentals), a *tool* CIS-2's pinned-polynomial approach could cite/use, not a competing claim about transformer-forward-pass reproducibility. CIS-2 deliberately does NOT claim correct rounding of transcendentals (that would still leave cross-ISA hardware sqrt/div rounding differences in some corners) — it claims a specific *pinned polynomial with hex coefficients*, sidestepping libm entirely. No overlap in claim scope, only adjacent tooling.
@@ -55,19 +53,19 @@ One relevant hit: a "from-scratch Rust+CUDA inference engine, bit-exact by const
 ## Limitations of this pass
 
 - Web search only; did not directly crawl ACL Anthology, [venue]/[venue]/[venue] proceedings pages, or run arXiv's own search API — relied on general web search surfacing arXiv/venue results, which is usually adequate for high-visibility work but can miss workshop papers or non-indexed venue PDFs.
-- ~~Did not verify full text of arXiv:2606.00279 beyond abstract-level fetch.~~ **CLOSED 2026-08-28** by `2026-08-28-CIS2-priorart-fulltext.md`, which read the v2 full text (arxiv.org/html/2606.00279v2) and the author's repo. Verdict CONFIRMED DISTINCT: the paper is explicitly scoped "Only NVIDIA GPUs", is one self-verifying codebase with no normative document, and its receipt is an unbuilt proposal over a single interior tensor. Re-confirmed independently 2026-09-09. Do not re-open this as an unexamined threat.
+- [removed 2026-10-17: unverified prior-art characterization]
 - No direct confirmation of the unconfirmed GitHub "bit-exact by construction" Rust+CUDA repo; treat as a loose end, not a finding.
 
 ## NOVELTY VERDICT: CLEAR
 
-No candidate found combines (i) a written normative fp32 spec, (ii) independent multi-language reimplementation, (iii) cross-ISA (x86_64/aarch64) verification, and (iv) full-logit bit-identical digest with third-party-recomputable receipt. The closest work (Cankaya, arXiv:2606.00279) is GPU-vendor-silicon-emulation-based and single-stack; the rest is single-hardware run-to-run determinism (Thinking Machines/LLM-42/MarginGate), math-library tooling (CORE-MATH/RLIBM), reduction-library reproducibility (ReproBLAS/CNR), or build/provenance attestation (SLSA/in-toto/Kettle/Laminator) — each addresses an adjacent but distinct problem. No blocker filed; this is a "clear" verdict, not "threatened."
+[removed 2026-10-17: unverified prior-art characterization]
 
 ## Three closest works
 
-1. Cankaya, "Bit-Exact AI Inference Verification Without Performance Tradeoffs" — arXiv:2606.00279 — https://arxiv.org/abs/2606.00279
+1. [removed 2026-10-17: unverified prior-art characterization]
 2. Thinking Machines Lab, "Defeating Nondeterminism in LLM Inference" — https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/ (+ https://github.com/thinking-machines-lab/batch_invariant_ops)
-3. Gond et al., "LLM-42: Enabling Determinism in LLM Inference with Verified Speculation" — arXiv:2601.17768 — https://arxiv.org/abs/2601.17768
+3. [removed 2026-10-17: unverified prior-art characterization]
 
 ## Single citation most needing explicit distinguishing in the paper
 
-**arXiv:2606.00279 (Cankaya, "Bit-Exact AI Inference Verification Without Performance Tradeoffs")** — closest in *goal* (third-party bit-exact verification of inference), must be explicitly distinguished on: GPU-silicon-emulation vs. CPU-portable pinned-arithmetic spec; single-vendor/single-stack vs. cross-language+cross-ISA; anomaly-signature framing vs. full-logit bit-identical digest; trust-the-cached-hardware-table vs. reimplement-from-a-written-spec.
+[removed 2026-10-17: unverified prior-art characterization]

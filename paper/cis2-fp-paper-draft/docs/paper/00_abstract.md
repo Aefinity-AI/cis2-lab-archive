@@ -7,41 +7,4 @@ Aefinity AI Inc., Orange, Texas
 
 ## Abstract
 
-Floating-point transformer inference is treated as unavoidably nondeterministic across hardware:
-parallel reduction order, FMA contraction, and platform math libraries all differ between x86_64
-and aarch64, and between compilers, so "the same model on the same input" usually means "output
-that agrees to within a tolerance," not bit-for-bit. We show this is not a property of IEEE-754
-binary32 arithmetic, but a property of leaving its degrees of freedom unpinned. CIS-2 is a
-normative specification — reduction order, FMA contraction, denormal handling, and transcendental
-routing all pinned by fiat — for the fp32 decode path of a standard (non-ternary, non-quantized)
-transformer. Three implementations, written independently from the spec text alone by isolated AI
-coding agents (Claude, via Claude Code, operated by one human author, on a single day) in two
-languages (Rust, C11), reproduce a single SHA-256 witness digest folded over the complete fp32
-logit vector at every decode step — not just the argmax token — bit-for-bit, on a pinned test
-vector (SmolLM2-135M, a 16-token greedy decode), across x86_64 and aarch64 (both clean-rooms) and
-across gcc and clang (the C clean-room). The reference implementation alone additionally holds
-across a 20-cell compiler/optimization-level matrix, a second model family (Qwen2.5-0.5B/1.5B),
-and decode horizons up to 512 tokens — legs the clean-rooms have not yet reproduced. The clean-room process itself is part of the evidence: a first independent attempt from a
-design memo alone failed to converge, exposing spec gaps (five, per the clean-room's own
-accounting; the two load-bearing ones were the transcendental coefficient route and the RoPE
-`inv_freq` construction); a second attempt from
-the corrected spec converged on the first try; a third, cross-language attempt in C converged on
-every value except the top-level witness digest, and diagnosing that residual mismatch exposed a
-genuine self-contradiction in the spec's own prose (a witness-chain byte-ordering clause that
-did not match the reference it purported to describe) — not a numerics bug. Fixing the spec text
-closed the gap on the first retry. We report this history in full, including the mismatches,
-because a specification whose own failure modes are legible and fixable is stronger evidence of
-sufficiency than a specification that happened to work once. We report no timing or throughput
-numbers: this is a verifiability and safety result, not a performance result. We situate CIS-2
-against the closest prior work, a GPU-vendor-silicon-table-emulation scheme (arXiv:2606.00279)
-that shares the goal of bit-exact inference verification but not the mechanism, the platform
-scope, or the multi-implementation structure, and against same-stack GPU determinism work
-(Thinking Machines Lab's batch-invariant kernels, LLM-42, MarginGate) that solves run-to-run
-determinism within one serving stack rather than cross-platform, cross-language reproduction from
-a written contract. We report the result's honest limits without softening them: the scope is
-fp32 scalar reference code (not a fast kernel), CPU-only, greedy decoding, models up to 1.5B
-parameters, and a RoPE trigonometric range reduction whose accuracy against a high-precision
-oracle degrades beyond roughly 512 tokens even though its bit-for-bit determinism does not; a
-consumer-device (phone-class) aarch64 leg remains open.
-The specification, the reference implementation, both clean-room verifiers, and the CI and
-hardware logs are released under Apache-2.0 (repository `Aefinity-AI/cis2-spec`).
+Floating-point transformer inference is treated as unavoidably nondeterministic across hardware: parallel reduction order, FMA contraction, and platform math libraries all differ between x86_64 and aarch64, and between compilers, so "the same model on the same input" usually means "output that agrees to within a tolerance," not bit-for-bit. We show this is not a property of IEEE-754 binary32 arithmetic, but a property of leaving its degrees of freedom unpinned. CIS-2 is a normative specification — reduction order, FMA contraction, denormal handling, and transcendental routing all pinned by fiat — for the fp32 decode path of a standard (non-ternary, non-quantized) transformer. Three implementations, written independently from the spec text alone by isolated AI coding agents (Claude, via Claude Code, operated by one human author, on a single day) in two languages (Rust, C11), reproduce a single SHA-256 witness digest folded over the complete fp32 logit vector at every decode step — not just the argmax token — bit-for-bit, on a pinned test vector (SmolLM2-135M, a 16-token greedy decode), across x86_64 and aarch64 (both clean-rooms) and across gcc and clang (the C clean-room). The reference implementation alone additionally holds across a 20-cell compiler/optimization-level matrix, a second model family (Qwen2.5-0.5B/1.5B), and decode horizons up to 512 tokens — legs the clean-rooms have not yet reproduced. The clean-room process itself is part of the evidence: a first independent attempt from a design memo alone failed to converge, exposing spec gaps (five, per the clean-room's own accounting; the two load-bearing ones were the transcendental coefficient route and the RoPE `inv_freq` construction); a second attempt from the corrected spec converged on the first try; a third, cross-language attempt in C converged on every value except the top-level witness digest, and diagnosing that residual mismatch exposed a genuine self-contradiction in the spec's own prose (a witness-chain byte-ordering clause that did not match the reference it purported to describe) — not a numerics bug. Fixing the spec text closed the gap on the first retry. We report this history in full, including the mismatches, because a specification whose own failure modes are legible and fixable is stronger evidence of sufficiency than a specification that happened to work once. We report no timing or throughput numbers: this is a verifiability and safety result, not a performance result. [removed 2026-10-17: unverified prior-art characterization] We report the result's honest limits without softening them: the scope is fp32 scalar reference code (not a fast kernel), CPU-only, greedy decoding, models up to 1.5B parameters, and a RoPE trigonometric range reduction whose accuracy against a high-precision oracle degrades beyond roughly 512 tokens even though its bit-for-bit determinism does not; a consumer-device (phone-class) aarch64 leg remains open. The specification, the reference implementation, both clean-room verifiers, and the CI and hardware logs are released under Apache-2.0 (repository `Aefinity-AI/cis2-spec`).

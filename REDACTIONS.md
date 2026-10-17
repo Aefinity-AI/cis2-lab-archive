@@ -17,7 +17,7 @@ Redacted text is replaced by a bracketed placeholder; the removed content is not
 | network | LAN IP | 6 | 3 |
 | secret-paths | reference to private config directory | 1 | 1 |
 | secrets | API keys, tokens, passwords, private keys | 0 found | 0 |
-| personal | phone numbers, addresses, bank / EIN / SSN, veteran status, health, family | 0 found | 0 |
+| personal | personal data categories | 0 found | 0 |
 | personal | personal email address (split across lines in LaTeX, and in a PDF) | found in 3 files, all deleted (see below) | 3 |
 | gated data | raw rows from gated or licensed evaluation sets | 0 found (counts and hashes only appear in the records) | 0 |
 
