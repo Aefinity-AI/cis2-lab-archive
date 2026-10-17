@@ -64,12 +64,8 @@ claims.
     same-hardware, same-software-stack guarantee, not a cross-ISA one
     ([Thinking Machines Lab blog](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/);
     memo §1.1).
-  - **MarginGate** (arXiv:2605.30218) and **LLM-42** (arXiv:2601.17768) build verification schemes
-    on top of an assumed-nondeterministic or speculative-decoding setting; neither pins a
-    cross-ISA reduction-order contract (memo §1.2).
-  - **Cankaya's bit-exact verification** (arXiv:2606.00279) is GPU-only and NVIDIA-emulation-based
-    (definitive-win-candidates report, ranked-option 1), a different substrate than the CPU/aarch64
-    scope here.
+  - [removed 2026-10-17: unverified prior-art characterization]
+  - [removed 2026-10-17: unverified prior-art characterization]
   - **glibc libm cross-platform divergence**: transcendental functions (`sin`, `cos`, `exp`) are
     only faithfully rounded (≤1 ULP, not exact-to-nearest) under IEEE 754 §1.6 (memo §1.6), and
     glibc's x86_64 and aarch64 implementations are separate codebases that can and do disagree by
@@ -133,7 +129,7 @@ claims.
 - **Sharpest differentiator, stated plainly**: no work reviewed in this sweep (memo §1, the
   definitive-win-candidates critic pass) makes a structural cross-ISA bit-identical claim for
   floating-point LLM inference with an independently re-derivable receipt. Batch invariance is
-  same-hardware; MarginGate/LLM-42 assume or build on it; Cankaya is GPU-only; zkML and TEE
+  same-hardware; [removed 2026-10-17: unverified prior-art characterization] zkML and TEE
   attestation answer a different question. This gap, not a speed or size claim, is CIS-2's stated
   contribution (definitive-win-candidates synthesis, ranked option 1).
 

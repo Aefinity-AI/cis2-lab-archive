@@ -105,10 +105,7 @@ Do say, and this is defensible line by line:
 
 ## 4. Correction to the estate's own file
 
-The brief that prompted this said arXiv:2606.00279's "full text was never read." That was true of
-`2026-08-28-CIS2-priorart.md`; it was superseded the same day by `2026-08-28-CIS2-priorart-fulltext.md`.
-I re-verified it independently today rather than trust either file. It holds, and it holds for a reason worth
-using: Cankaya's method needs a **4 GB cached table per transcendental instruction per GPU generation** —
+[removed 2026-10-17: unverified prior-art characterization]
 
 > "we cached their exact hardware outputs (e.g. a 4GB table mapping every 32-bit input for MUFU.EX2)"
 
@@ -123,6 +120,6 @@ not get re-opened a third time.
 - https://arxiv.org/pdf/2603.14332 (A2Auth — full text extracted locally and read)
 - https://arxiv.org/pdf/2606.04193 (Notarized Agents)
 - https://arxiv.org/pdf/2512.17259 (Verifiability-First Agents)
-- https://arxiv.org/abs/2606.00279 and https://arxiv.org/html/2606.00279v2 (Cankaya)
+- [removed 2026-10-17: unverified prior-art characterization]
 - https://github.com/agno-agi/agno/issues/6892, https://pipelab.org/learn/agent-action-receipts/,
   https://agentpatterns.ai/security/cryptographic-governance-audit-trail/

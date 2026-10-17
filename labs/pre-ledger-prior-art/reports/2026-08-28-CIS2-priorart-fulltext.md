@@ -1,7 +1,6 @@
-# CIS-2 Prior-Art Row 10 — Full-Text Read: arXiv:2606.00279 (Cankaya)
+# [removed 2026-10-17: unverified prior-art characterization]
 
-Date: 2026-08-28
-Method: Full-text fetch of https://arxiv.org/html/2606.00279v2 (HTML rendering, both v1/v2 available; v2 dated 5 Jun 2026), plus abstract page https://arxiv.org/abs/2606.00279 and author code repo https://github.com/NaciCankaya/hardware_rounding_error_predictor. This supersedes the abstract-only pass in state/reports/2026-08-28-CIS2-priorart.md item (b)/#1.
+[removed 2026-10-17: unverified prior-art characterization]
 
 Context: paper won best-paper at [venue] 2026 workshop (confirms visibility/must-cite status, does not change scope).
 
@@ -11,7 +10,7 @@ Context: paper won best-paper at [venue] 2026 workshop (confirms visibility/must
 
 ## (2) Written spec + independent reimplementation, or one tool verifying itself?
 
-**One tool verifying itself.** The "spec" is a cached hardware table, not a normative document: "we cached their exact hardware outputs (e.g. a 4GB table mapping every 32-bit input for MUFU.EX2)." Source is a single-author GitHub repo (github.com/NaciCankaya/hardware_rounding_error_predictor); no second independent implementation exists or is claimed. Verification target is NVIDIA's own cuBLAS/CUTLASS — i.e., checking one vendor's silicon against a cached recording of that same vendor's silicon, not convergence of independent implementations toward a shared abstract spec.
+[removed 2026-10-17: unverified prior-art characterization]
 
 ## (3) CPU / fp32 / cross-ISA?
 
@@ -27,7 +26,7 @@ Context: paper won best-paper at [venue] 2026 workshop (confirms visibility/must
 
 ## Sharp contrast table
 
-| Axis | Cankaya 2606.00279 (full text) | CIS-2 |
+| [removed 2026-10-17: unverified prior-art characterization] |
 |---|---|---|
 | Hardware scope | NVIDIA GPUs only (A100/L40/L40S/H100), explicit "Only NVIDIA GPUs" limitation | CPU-only, cross-ISA x86_64 + aarch64 |
 | Implementation diversity | 1 codebase, 1 author, self-verified against same vendor's cuBLAS/CUTLASS | ≥2 independent codebases, 2 languages (Rust, C), converging from a written spec |
@@ -38,7 +37,7 @@ Context: paper won best-paper at [venue] 2026 workshop (confirms visibility/must
 
 ## Newer-paper check (Jul–Aug 2026)
 
-Searched for citations/close relatives post-dating 2606.00279. No paper found that is closer to CIS-2's claim than the original. Nearest tangential hit, arXiv:2607.26316 ("Route-Block Membership Selects Packed-AWQ Arithmetic") — different problem (quantization-format arithmetic selection mechanism study), not cross-ISA/cross-language bit-exact fp32 reproduction; not competing. arXiv:2608.02774 ("Privacy-Preserving AI Verification via Minimal Information Disclosure") is about verification-under-privacy-constraints, orthogonal (no cross-platform reproducibility claim); not competing. No new candidate displaces or narrows the prior sweep's verdict.
+[removed 2026-10-17: unverified prior-art characterization]
 
 ## VERDICT: CONFIRMED DISTINCT
 
@@ -46,12 +45,12 @@ Full-text read strengthens, not weakens, the abstract-level conclusion. The pape
 
 ## Honesty note
 
-Full text was retrieved and read (HTML rendering of v2, arxiv.org/html/2606.00279v2), not just the abstract — this closes the "did not verify full text" limitation flagged in the prior abstract-only report. This is now a full de-risk of row 10 for this single closest candidate, not a partial one.
+[removed 2026-10-17: unverified prior-art characterization]
 
 ## Sources
 
-- https://arxiv.org/abs/2606.00279
-- https://arxiv.org/html/2606.00279v2
-- https://arxiv.org/pdf/2606.00279
-- https://github.com/NaciCankaya/hardware_rounding_error_predictor
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
+- [removed 2026-10-17: unverified prior-art characterization]
 - Prior abstract-level sweep: state/reports/2026-08-28-CIS2-priorart.md

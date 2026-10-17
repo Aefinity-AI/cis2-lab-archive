@@ -1,6 +1,6 @@
 # Redactions
 
-Tool: no secret scanner was installed (gitleaks and trufflehog not found on the machine). A regex sweep was written for this job and run twice: on the candidate source set (to choose omit versus rewrite) and on the assembled tree (final). Patterns: GitHub token prefixes, `hf_`, `sk-`, AWS key ids, PEM private-key headers, bearer tokens, key/token/password assignments, a high-entropy string pass, email addresses (noreply allowed), phone numbers, LAN IPs, EIN / SAM / CAGE identifiers, home paths, the private config directory name, conference/journal/review-system names, family and personal names, veteran / SBIR / pricing / grant terms, gated-dataset names, agent-transcript markers. The first assembly claimed no personal emails; that was wrong (an email split across lines inside a LaTeX file evaded the regex, and one binary was not scanned). A leak check on 2026-10-16 found it, the files were deleted, and a second sweep (including split-line emails and binaries) was run on the final tree: no secrets, no personal emails, no phone numbers, no gated-dataset rows; the remaining hits are listed under "Not changed".
+Tool: no secret scanner was installed (gitleaks and trufflehog not found on the machine). A regex sweep was written for this job and run twice: on the candidate source set (to choose omit versus rewrite) and on the assembled tree (final). Patterns: GitHub token prefixes, `hf_`, `sk-`, AWS key ids, PEM private-key headers, bearer tokens, key/token/password assignments, a high-entropy string pass, email addresses (noreply allowed), phone numbers, LAN IPs, EIN / SAM / CAGE identifiers, home paths, the private config directory name, conference/journal/review-system names, family and personal names, personal-status / SBIR / pricing / grant terms, gated-dataset names, agent-transcript markers. The first assembly claimed no personal emails; that was wrong (an email split across lines inside a LaTeX file evaded the regex, and one binary was not scanned). A leak check on 2026-10-16 found it, the files were deleted, and a second sweep (including split-line emails and binaries) was run on the final tree: no secrets, no personal emails, no phone numbers, no gated-dataset rows; the remaining hits are listed under "Not changed".
 
 Redacted text is replaced by a bracketed placeholder; the removed content is not reproduced here.
 
@@ -17,7 +17,7 @@ Redacted text is replaced by a bracketed placeholder; the removed content is not
 | network | LAN IP | 6 | 3 |
 | secret-paths | reference to private config directory | 1 | 1 |
 | secrets | API keys, tokens, passwords, private keys | 0 found | 0 |
-| personal | phone numbers, addresses, bank / EIN / SSN, veteran status, health, family | 0 found | 0 |
+| personal | personal data categories | 0 found | 0 |
 | personal | personal email address (split across lines in LaTeX, and in a PDF) | found in 3 files, all deleted (see below) | 3 |
 | gated data | raw rows from gated or licensed evaluation sets | 0 found (counts and hashes only appear in the records) | 0 |
 

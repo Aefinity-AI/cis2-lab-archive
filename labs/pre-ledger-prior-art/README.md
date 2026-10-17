@@ -5,7 +5,7 @@
 
 ## Reports
 
-- `reports/2026-08-28-CIS2-priorart-fulltext.md`: CIS-2 Prior-Art Row 10 — Full-Text Read: arXiv:2606.00279 (Cankaya)
+- [removed 2026-10-17: unverified prior-art characterization]
   - report states: Context: paper won best-paper at [venue] 2026 workshop (confirms visibility/must-cite status, does not change scope).
 - `reports/2026-08-28-CIS2-priorart.md`: CIS-2 Prior-Art / Novelty Memo — fp32 Transformer Cross-Language/Cross-ISA Bit-Identical Spec
   - report states: The load-bearing, unusual combination is: (1) a **written spec**, not a shared codebase; (2) **cross-language AND cross-ISA** reproduction, not just cross-run-same-binary; (3) **full logit vector** bit-identity (not just
